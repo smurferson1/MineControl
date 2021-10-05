@@ -1,1 +1,1 @@
-# DesktopMiner
+# MineControl
