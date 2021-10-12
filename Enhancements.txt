@@ -1,0 +1,12 @@
+Options to archive or import charts.
+Remembering chart and/or log data (i.e. reloading and picking up where we left off on startup).
+Hard-code system metrics and base metric query options so they can't be changed by user.
+Make separate lists that bind to grids in places where this isn't happening yet (like stats, apps).
+Consider combining stats and metrics.
+Decouple everything, in particular from UI.
+Write automated unit tests.
+Replace chart controls with a more flexible control like LiveCharts.
+Chart customization (colors, series locations, etc.).
+Allow custom metrics and stats.
+Internationalize.
+Remember UI positioning and sizing.
