@@ -6,7 +6,7 @@ Lightweight temperature management, scheduling, and data aggregation for casual 
 - Optionally managing execution of a GPU and/or CPU mining application for charting and logging their output in a central location (as long as they provide console or systray output), and scheduling their execution.
 - Finding relevant data in the output text with customizable regular expressions.
 
-Specific hardware monitor and GPU controller applications are not mentioned to avoid legal issues. The default MineControl configuration happens to be compatible with the most popular hardware monitor and GPU controller applications for NVIDIA GPUs. Hint: they rhyme with **RidesharePimpo** and **MakeThemCry RaptorChurner**.
+Specific hardware monitor and GPU controller applications are not mentioned to avoid legal issues. The default MineControl configuration happens to be compatible with the most popular hardware monitor and GPU controller applications for NVIDIA GPUs. Hint: they rhyme with **RidesharePimpo** and **MakeThemCry ButterChurner**.
 
 ## Donations
 MineControl is free and open source. Crypto donations are however appreciated and will keep the developer(s) motivated to fix and improve things. Current wallets for donation:
