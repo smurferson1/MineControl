@@ -6,7 +6,7 @@ A power tool for temperature management, scheduling, and data aggregation during
 - Optionally managing execution of an external GPU and/or CPU mining app and charting/logging their output centrally.
 - Finding relevant data in raw text with customizable regular expressions.
 
-Specific hardware monitor and GPU controller applications are not mentioned in order to avoid legal issues, but the default configuration happens to be compatible with the most popular hardware monitor and GPU controller applications for NVIDIA GPUs. Hint: they rhyme with **RidesharePimpo** and **MakeThemCry ButterChurner**.
+Specific hardware monitor and GPU controller applications are not mentioned in order to avoid legal issues, but the default configuration happens to be compatible with the most popular hardware monitor and GPU controller applications for NVIDIA and AMD GPUs. Hint: they rhyme with **RidesharePimpo** and **MakeThemCry ButterChurner**.
 
 ## Donations
 MineControl is free and open source. Crypto donations are however appreciated and will keep the developer(s) motivated to fix and improve things. Current wallets for donation:
@@ -31,6 +31,18 @@ MineControl is free and open source. Crypto donations are however appreciated an
 - Log aggregation from MineControl and miners.
 - Archiving of logs and configuration.
 - More customization than most plebs could ask for.
+
+## Key Un-features
+
+- Doesn't support more than 1 GPU or CPU.
+- Doesn't support more than 1 GPU or CPU miner.
+- Not internationalized, translated, or respectful of Windows regional settings.
+- Kind of ugly.
+- Not very user friendly.
+- Chart data and stats can't be archived or restored.
+- Probably some allowed configurations that would make no sense or cause errors or crashes.
+- Engineering: badly engineered with a bunch of logic attached to the form and stuff. Sorry.
+- Most temperature and power management features are GPU-only.
 
 ## Instructions
 
@@ -61,14 +73,3 @@ MineControl is free and open source. Crypto donations are however appreciated an
   - Disable GPU and CPU miner Keep Logs option. 
   - Data tracking: disable metrics you don't need. 
   - Data Tracking: use the UserValue method for units and algos that don't change. Reduces processing a tiny bit.
-
-## Key Un-features
-- Doesn't support more than 1 GPU or CPU.
-- Doesn't support more than 1 GPU or CPU miner.
-- Not internationalized, translated, or respectful of Windows regional settings.
-- Kind of ugly.
-- Not very user friendly.
-- Chart data and stats can't be archived or restored.
-- Probably some allowed configurations that would make no sense or cause errors or crashes.
-- Engineering: badly engineered with a bunch of logic attached to the form and stuff. Sorry.
-- Most temperature and power management features are GPU-only.
