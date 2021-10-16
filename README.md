@@ -1,12 +1,12 @@
 # MineControl 
 
-Lightweight temperature management, scheduling, and data aggregation for casual cryptocurrency mining, mainly for us plebs with a single GPU and CPU running **Windows**. It can automatically keep your miners and hardware running within your parameters and give nice data about what's going on (e.g. charts, averages, kWh). This is accomplished by:
-- Reading temperatures and power usage from an external hardware monitor application. Any hardware monitor that can output metrics to system tray tooltips or console window should function once customized.
-- Setting GPU power profile via an external GPU controller application. Any GPU controller that accepts parameters through the command line should function once customized.
-- Optionally managing execution of a GPU and/or CPU mining application for charting and logging their output in a central location (as long as they provide console or systray output), and scheduling their execution.
-- Finding relevant data in the output text with customizable regular expressions.
+A power tool for temperature management, scheduling, and data aggregation during casual cryptocurrency mining, mainly for us plebs with a single GPU and CPU running **Windows**. It can automatically keep your miners and hardware running within your parameters and give more data about what's going on (e.g. charts, averages, kWh). This is accomplished by:
+- Reading temperatures and other sensor data from an external hardware monitor app.
+- Setting GPU power profile via an external GPU controller app.
+- Optionally managing execution of a GPU and/or CPU mining application and charting/logging their output centrally.
+- Finding relevant data in the raw external app text with customizable regular expressions.
 
-Specific hardware monitor and GPU controller applications are not mentioned to avoid legal issues. The default MineControl configuration happens to be compatible with the most popular hardware monitor and GPU controller applications for NVIDIA GPUs. Hint: they rhyme with **RidesharePimpo** and **MakeThemCry ButterChurner**.
+Specific hardware monitor and GPU controller applications are not mentioned in order to avoid legal issues, but the default configuration happens to be compatible with the most popular hardware monitor and GPU controller applications for NVIDIA GPUs. Hint: they rhyme with **RidesharePimpo** and **MakeThemCry ButterChurner**.
 
 ## Donations
 MineControl is free and open source. Crypto donations are however appreciated and will keep the developer(s) motivated to fix and improve things. Current wallets for donation:
@@ -15,14 +15,14 @@ MineControl is free and open source. Crypto donations are however appreciated an
 ## DISCLAIMERS
 
 - MineControl is NOT guaranteed to work correctly or protect your computer in all circumstances. It is in development and subject to being shit, making mistakes, or missing *YOUR* mistakes. **USE AT YOUR OWN RISK**. It is *essential* to configure MineControl carefully and watch it for a while to be sure it's doing what you intend. Your temps and power usage *CAN* go too high if you misconfigure MineControl or it makes a booboo.
-- MineControl does not do anything nefarious like take your mining profits or send anything to anyone whatsoever, **IF DOWNLOADED FROM THIS GITHUB REPO**. Feel free to inspect the code or compile yourself, but DO NOT get MineControl from anywhere or anyone else, as it can easily be compromised by attackers and redistributed in a nearly identical application.
+- MineControl won't take your mining profits or send anything to anyone, **IF DOWNLOADED FROM THIS GITHUB REPO**. Feel free to inspect the code or compile yourself, but DO NOT get MineControl from anywhere or anyone else, since software can easily be compromised by attackers and redistributed in a nearly identical form.
 - As with most other software developed in free time for fun, there is no guarantee from the developer to provide support or updates of any kind.
 
 ## Key Features
 
+- Customizable input from external apps via system tray tooltips or console using regular expressions.
 - Charting and statistics for many metrics like GPU memory junction temperature, hash rate, power usage (W and kWh), averages, etc. Hash rate data can be split by algorithm when using a miner that supports algo-switching.
-- Low resource consumption. Designed to use 0% GPU and <1% CPU most of the time. Run minimized for best performance.
-- More customization than a pleb could ask for.
+- Low resource consumption. Designed to use 0% GPU and <1% CPU most of the time.
 - System tray display of GPU power level, GPU miner status, and CPU miner status.
 - Customizable GPU temperature (or memory junction temperature) range, controlled with up to 5 power profiles.
 - GPU failsafe protections to shut off the GPU miner if max temp is exceeded at lowest power, or while the temp is unknown.
@@ -30,7 +30,7 @@ MineControl is free and open source. Crypto donations are however appreciated an
 - Optional miner auto-shutoff during user activity.
 - Log aggregation from MineControl and miners.
 - Archiving of logs and configuration.
-
+- More customization than most plebs could ask for.
 
 ## Instructions
 
@@ -46,16 +46,21 @@ MineControl is free and open source. Crypto donations are however appreciated an
 
 ## Tips
 
-- DO NOT run MineControl elevated (i.e. with Windows administrator privileges) if controlling GPU and CPU miner. In testing, there appeared to be a bug with PhoenixMiner that caused MASSIVELY increased GPU temps after several minutes when MineControl was elevated, for no apparent reason.
-- DO run MineControl using a Windows administrator account if any of the controlled applications require admin privileges, and make sure Windows is configured so that additional popups are not displayed when MineControl launches miners and applications. Popular hardware monitor and GPU controller software DOES require admin rights.
+- DO NOT run MineControl elevated (i.e. with Windows administrator privileges) if controlling GPU and CPU miner. In testing, there appeared to be a bug with PhoenixMiner that caused **masssively** increased GPU temps after several minutes when MineControl was elevated, for no apparent reason.
+- DO run MineControl using a Windows administrator account if any of the controlled applications require admin privileges, and make sure Windows is configured so that additional admin popups are not displayed when MineControl launches miners and applications. Popular hardware monitor and GPU controller software *does* require admin rights.
 - There are detailed tooltips for most settings to explain what they do.
-- To maintain low resource consumption, enable clearing logs and charts at least once per day. Data built up much longer than that WILL raise CPU use and slow down the UI.
-- When MineControl runs a miner, the normal miner window will NOT show, because its output is being fully redirected to MineControl and cannot be shown in its normal fashion. To verify the miner is running, check it in Task Manager (Windows). To see miner log entries in MineControl, enable Keep Logs for the miner, otherwise they're just gone, yo. Note: any text coloring from the miner is not kept.
+- When MineControl runs a miner, the normal miner window will *not* show, because its output is being entirely redirected to MineControl and cannot be shown in its normal window. To verify the miner is running, check it in Task Manager (Windows). To see miner log entries in MineControl, enable Keep Logs for the miner, otherwise they're just gone, yo. Note: any text coloring from the miner is not kept.
 - When MineControl recognizes a log entry from a miner as input for a metric (like when a RegEx match is found), it categorizes the log entry as "Input" and appends what it found. This can be used to debug your data tracking customizations if needed. This only shows up if Keep Logs for the miner is enabled.
-- Understanding the MineControl system tray icon: GPU miner is the left bar, GPU power step is the number in the middle, and CPU miner is the right bar. 
-  - Miner "bar" colors: black = disabled by user, green = running, yellow = stopped due to user activity, gray = stopped due to schedule, red = stopped due to error.
-- Avoid changing polling interval too much. Too low will use more resources, and too high will allow temps and other things to get out of hand for longer. 5000ms is a pretty good spot.
-- To minimize MineControl resource consumption: disable GPU and CPU miner log capturing. Minimize MineControl. Up the polling interval to at least 5000ms. Disable tracking for metrics you don't need. Use a UserValue for units and algos that don't change.
+- Understanding the MineControl system tray icon: 
+  - GPU miner is the left bar, GPU power step is the number in the middle, and CPU miner is the right bar. 
+  - Miner bar colors: black = disabled by user, green = running, yellow = stopped due to user activity, gray = stopped due to schedule, red = stopped due to error.
+- Maintaining performance and low resource consumption:
+  - Run minimized when not attended.
+  - Enable clearing logs and charts at least once per day. Data built up much longer than that *will* raise CPU use and slow down the UI.
+  - Avoid changing polling interval by much. Too low will use more resources, and too high will allow temps and other things to get out of hand for longer. 5000ms is a pretty good spot.
+  - Disable GPU and CPU miner Keep Logs option. 
+  - Data tracking: disable metrics you don't need. 
+  - Data Tracking: use the UserValue method for units and algos that don't change. Reduces processing a tiny bit.
 
 ## Key Un-features
 - Not currently internationalized, translated or respectful of Windows regional settings.
@@ -63,5 +68,5 @@ MineControl is free and open source. Crypto donations are however appreciated an
 - Not very user friendly.
 - Chart data and stats can't be archived or restored.
 - Probably some config options allowed that would make no sense or cause problems or crashes.
-- Engineering: badly engineered with a bunch of logic attached to the form. Sorry.
+- Engineering: badly engineered with a bunch of logic attached to the form and stuff. Sorry.
 - Most temperature and power management features are GPU-only right now.
