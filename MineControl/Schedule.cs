@@ -104,9 +104,9 @@ namespace MineControl
         /// <summary>
         /// Returns the node with the given ID, if it exists.
         /// </summary>       
-        public ScheduleNode GetNodeById(Guid id)
+        public ScheduleNode GetNodeById(Guid? id)
         {
-            if (id == Guid.Empty)
+            if (id == Guid.Empty || id == null)
             {
                 return null;
             }
@@ -131,7 +131,7 @@ namespace MineControl
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public string GetNodeDescription(Guid id)
+        public string GetNodeDescription(Guid? id)
         {
             ScheduleNode node = GetNodeById(id);
             if (node != null)
@@ -161,11 +161,11 @@ namespace MineControl
         /// Returns the parent of the node with the given ID if present, null if it's a top level node, and an exception if node with that ID doesn't exist.
         /// </summary>
         /// <param name="id">ID of node whose parent we're looking for</param>
-        public ScheduleNode GetNodeParent(Guid id)
+        public ScheduleNode GetNodeParent(Guid? id)
         {
             foreach (ScheduleNode node in Nodes)
             {
-                if (node.Id.Equals(id))
+                if (id != null && node.Id.Equals(id))
                 {
                     // top level node, no parent
                     return null;
@@ -188,7 +188,7 @@ namespace MineControl
         /// Returns the nodes list of the parent of the node with the given ID, and an exception if node with that ID doesn't exist.
         /// </summary>
         /// <param name="id">ID of node whose parent we're looking for</param>
-        public List<ScheduleNode> GetNodeParentNodes(Guid id)
+        public List<ScheduleNode> GetNodeParentNodes(Guid? id)
         {
             ScheduleNode parent = GetNodeParent(id);
             return parent == null ? Nodes : ((BranchingNode)parent).Children;            

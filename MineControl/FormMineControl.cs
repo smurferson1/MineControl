@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Windows.Forms;
@@ -537,7 +538,7 @@ namespace MineControl
                 
                 foreach (Metric metric in loadedMetrics)
                 {   
-                    if (Metrics.Count(x => x.Name == metric.Name) == 0)
+                    if (!Metrics.Any(x => x.Name == metric.Name))
                     {
                         Metrics.Add(metric);
                     }
@@ -580,7 +581,7 @@ namespace MineControl
                     // reselect previous schedule if present
                     if (selectedScheduleId != null)
                     {
-                        comboBoxScheduleSchedules.SelectedIndex = Schedules.IndexOf(Schedules.Where(x => x.Id == selectedScheduleId).Last());
+                        comboBoxScheduleSchedules.SelectedIndex = Schedules.IndexOf(Schedules.Last(x => x.Id == selectedScheduleId));
                     }
                 }
             }
@@ -683,9 +684,9 @@ namespace MineControl
 
             try
             {
-                if (Settings.archivesArchiveConfig && Directory.GetFiles(GetConfigArchiveFolder()).Count() == 0)
+                if (Settings.archivesArchiveConfig && !Directory.GetFiles(GetConfigArchiveFolder()).Any())
                 {
-                    ArchiveChangedConfig(DateTime.Now, true);
+                    ArchiveChangedConfig(true);
                 }
             }
             catch (Exception ex)
@@ -823,16 +824,12 @@ namespace MineControl
                         UpdateMinerState(true);
                         configNeedsArchiving = true;
                         break;
-                    case nameof(Settings.minerEnableAutomation):                        
+                    case nameof(Settings.minerEnableAutomation):
+                    case nameof(Settings.tempEnableAutomation):
                         UpdateMinerState(true);
                         UpdateMinerState(false);        
                         // note: basic control setting that does not trigger archiving
-                        break;
-                    case nameof(Settings.tempEnableAutomation):
-                        UpdateMinerState(true);
-                        UpdateMinerState(false);
-                        // note: basic control setting that does not trigger archiving
-                        break;
+                        break;                  
 
                     // other changes that can be applied immediately
                     case nameof(Settings.tempPollingIntervalMillisecs):
@@ -881,7 +878,7 @@ namespace MineControl
         /// <param name="statName">Name of the stat, or "*SetAll*" if all stats are to be updated</param>
         /// <param name="value">Value that will be set for the stat(s)</param>
         /// <returns>true if a stat was updated</returns>
-        private bool SetStat(string statName, string value)
+        private void SetStat(string statName, string value)
         {            
             string effectiveValue = value.Trim() == string.Empty ? Const.BlankInfo : value;
 
@@ -897,20 +894,17 @@ namespace MineControl
                 {
                     row.Cells[1].Value = effectiveValue;
                     row.Cells[ColStatsLastUpdate.Index].Value = DateTime.Now;
-                    row.DefaultCellStyle.ForeColor = Color.Black;                    
-                    return true;
+                    row.DefaultCellStyle.ForeColor = Color.Black;
+                    return;
                 }
             }
 
+            // add as a new row if it doesn't exist
             if (statName != "*SetAll*")
             {
                 int idx = dataGridViewStats.Rows.Add(statName, effectiveValue, DateTime.Now);
                 dataGridViewStats.Rows[idx].DefaultCellStyle.ForeColor = Color.Black;
-                
-                return true;
             }
-
-            return statName == "*SetAll*";                      
         }
 
         private void InitializeAutomationFromSavedState()
@@ -1083,22 +1077,19 @@ namespace MineControl
                     // process the input
                     bool inputFound = false;
                     string inputValue;
-                    string inputLogValues = string.Empty;
+                    StringBuilder inputLogValues = new StringBuilder();
                     try
                     {
                         foreach (Metric metric in Metrics)
                         {
-                            if (metric.Source == applicableSource && metric.IsEnabled)
+                            if (metric.Source == applicableSource && metric.IsEnabled && metric.UpdateFromInput(e.Data, false, false))
                             {
-                                if (metric.UpdateFromInput(e.Data, false, false))
+                                inputFound = true;
+                                inputValue = metric.Type == MetricType.Number ? metric.NumericResult.ToString() : metric.SelectionResult;
+                                inputLogValues.Append($"({metric.Name}={inputValue})");
+                                if (!(metric.Name.Contains("Unit") || metric.Name.Contains("Algo")))
                                 {
-                                    inputFound = true;
-                                    inputValue = metric.Type == MetricType.Number ? metric.NumericResult.ToString() : metric.SelectionResult;
-                                    inputLogValues += $"({metric.Name}={inputValue})";
-                                    if (!(metric.Name.Contains("Unit") || metric.Name.Contains("Algo")))
-                                    {
-                                        SetStat(metric.Name, inputValue);
-                                    }
+                                    SetStat(metric.Name, inputValue);
                                 }
                             }
                         }
@@ -1109,7 +1100,7 @@ namespace MineControl
                     }
                     finally
                     {
-                        string logMsg = inputLogValues == string.Empty ? e.Data : $"{e.Data} <MineControl inputs: {inputLogValues}>";
+                        string logMsg = inputLogValues.ToString() == string.Empty ? e.Data : $"{e.Data} <MineControl inputs: {inputLogValues}>";
 
                         if (applicableSource == MetricSource.GPUMiner && Settings.minerGPUShowLogs)
                             AddLogEntry(logMsg, inputFound ? LogType.Input : LogType.Info, LogSource.GPUMiner);
@@ -1289,7 +1280,7 @@ namespace MineControl
                 if (StartArchiveAndClear(out DateTime evalStartTime))
                 {
                     ArchiveAndClearOldLogs(evalStartTime);
-                    ArchiveChangedConfig(evalStartTime);
+                    ArchiveChangedConfig();
                     ClearOldChartData(evalStartTime);
                     DeleteOldArchives(evalStartTime);
                 }
@@ -1382,7 +1373,7 @@ namespace MineControl
                 foreach (Series series in chart.Series)
                 {
                     points = series.Points.Where(p => DateTime.FromOADate(p.XValue) <= timeCutoff).ToList();
-                    for (int i = points.Count() - 1; i >= 0; i--)
+                    for (int i = points.Count - 1; i >= 0; i--)
                     {
                         series.Points.Remove(points[i]);
                     }
@@ -1390,7 +1381,7 @@ namespace MineControl
             }
         }
 
-        private void ArchiveChangedConfig(DateTime evalStartTime, bool forceArchive = false)
+        private void ArchiveChangedConfig(bool forceArchive = false)
         {
             if (Settings.archivesArchiveConfig && (configNeedsArchiving || forceArchive))
             {
@@ -1422,7 +1413,7 @@ namespace MineControl
                 // find any log entries in scope                
                 DataRow[] rowsToActOn = dataTableLog.Select($"Time <= #{timeCutoff}#");
 
-                if (rowsToActOn.Count() > 0)
+                if (rowsToActOn.Any())
                 {
                     StreamWriter writer = null;
                     bool archiveEnabled = Settings.archivesLogManagementType.Contains("Archive");
@@ -1463,7 +1454,7 @@ namespace MineControl
                     }
                     finally
                     {
-                        writer.Close();
+                        writer?.Close();
                     }
                 }
             }
@@ -1815,8 +1806,7 @@ namespace MineControl
 
         private object CalculateRate(Series series, double denominator, CalculationMethod calculationMethod = CalculationMethod.Lookbehind)
         {
-            // TODO: implement lookahead calculationmethod
-            //DateTime now = DateTime.Now;
+            // TODO: implement lookahead calculationmethod            
             DateTime previousTime = DateTime.MinValue;
             double totalXandY = 0.0;
             double totalElapsed = 0.0;
@@ -1843,14 +1833,14 @@ namespace MineControl
             if ((Series(cGPUMemJuncTemp).Points.Count > 0) && (Series(cGPUHashRate).Points.Count > 0))
             {
                 double minimum = Math.Min(Series(cGPUMemJuncTemp).Points.FindMinByValue().YValues[0], Series(cGPUHashRate).Points.FindMinByValue().YValues[0]) - 2;
-                if (minimum != double.NaN)                
+                if (!double.IsNaN(minimum))                
                     Chart(cGPU).ChartAreas[0].AxisY2.Minimum = minimum;
                 if (Settings.chartMinTempOnYAxisEnabled && (Chart(cGPU).ChartAreas[0].AxisY2.Minimum < Settings.chartMinTempOnYAxisValue))
                 {
                     Chart(cGPU).ChartAreas[0].AxisY2.Minimum = Settings.chartMinTempOnYAxisValue;
                 }
                 double maximum = Math.Max(Series(cGPUMemJuncTemp).Points.FindMaxByValue().YValues[0], Series(cGPUHashRate).Points.FindMaxByValue().YValues[0]) + 2;
-                if (maximum != double.NaN)
+                if (!double.IsNaN(maximum))
                     Chart(cGPU).ChartAreas[0].AxisY2.Maximum = maximum;
             }
             else
@@ -1882,6 +1872,7 @@ namespace MineControl
             if (Series(cCPUHashRate).Points.Count > 0)
             {
                 Chart(cCPU).ChartAreas[0].AxisY2.Minimum = Series(cCPUHashRate).Points.FindMinByValue().YValues[0];
+                // TODO: figure out whether to adapt the commented code
                 //if (Settings.chartMinTempOnYAxisEnabled && (Chart(cCPU).ChartAreas[0].AxisY2.Minimum < Settings.chartMinTempOnYAxisValue))
                 //{
                 //    Chart(cCPU).ChartAreas[0].AxisY2.Minimum = Settings.chartMinTempOnYAxisValue;
@@ -1963,20 +1954,20 @@ namespace MineControl
                             scheduleNode = CreateTimeNodeFromUI();
                         }
                         schedule.AddNode(parentId, scheduleNode, null);
-                        treeNode = parentNodes.Add(schedule.GetNodeDescription(scheduleNode.Id));
-                        treeNode.Tag = scheduleNode.Id;
+                        treeNode = parentNodes.Add(schedule.GetNodeDescription(scheduleNode?.Id));
+                        treeNode.Tag = scheduleNode?.Id;
 
                         scheduleNode = new ElseNode(Guid.Empty);
                         schedule.AddNode(parentId, scheduleNode, null);
-                        treeNode = parentNodes.Add(schedule.GetNodeDescription(scheduleNode.Id));
-                        treeNode.Tag = scheduleNode.Id;
+                        treeNode = parentNodes.Add(schedule.GetNodeDescription(scheduleNode?.Id));
+                        treeNode.Tag = scheduleNode?.Id;
                     }
                     else if (radioButtonScheduleResult.Checked)
                     {
                         scheduleNode = CreateActionNodeFromUI();
                         schedule.AddNode(parentId, scheduleNode, null);
-                        treeNode = parentNodes.Add(schedule.GetNodeDescription(scheduleNode.Id));
-                        treeNode.Tag = scheduleNode.Id;
+                        treeNode = parentNodes.Add(schedule.GetNodeDescription(scheduleNode?.Id));
+                        treeNode.Tag = scheduleNode?.Id;
                     }
 
                     // reload to show the new node
@@ -2086,7 +2077,7 @@ namespace MineControl
             {
                 try
                 {
-                    return Schedules.Where(x => x.Id.ToString() == Settings.minerGPUSchedule.ToString()).First();
+                    return Schedules.First(x => x.Id.ToString() == Settings.minerGPUSchedule.ToString());
                 }
                 catch
                 {
@@ -2100,7 +2091,7 @@ namespace MineControl
             {
                 try
                 {
-                    return Schedules.Where(x => x.Id.ToString() == Settings.minerCPUSchedule.ToString()).First();
+                    return Schedules.First(x => x.Id.ToString() == Settings.minerCPUSchedule.ToString());
                 }
                 catch
                 {
@@ -2191,13 +2182,10 @@ namespace MineControl
                     treeViewSchedule.SelectedNode = node;
                     return true;
                 }
-                if (node.Nodes.Count > 0)
+                if (node.Nodes.Count > 0 && SelectTreeNodeByScheduleNodeId(node.Nodes, selectedNodeId))
                 {
-                    if (SelectTreeNodeByScheduleNodeId(node.Nodes, selectedNodeId))
-                    {
-                        return true;
-                    }
-                }
+                    return true;
+                }                
             }
             return false;
         }
@@ -2273,7 +2261,7 @@ namespace MineControl
         {
             try
             {
-                return Metrics.Where(x => (x.Name == metricName)).First();
+                return Metrics.First(x => (x.Name == metricName));
             }
             catch
             {
@@ -2285,7 +2273,7 @@ namespace MineControl
         {
             try
             {
-                return Charts.Where(x => (x.Name == chartName)).First();
+                return Charts.First(x => (x.Name == chartName));
             }
             catch
             {
@@ -2297,7 +2285,7 @@ namespace MineControl
         {
             try
             {
-                return Metrics.Where(x => (x.Name == metricName)).First().Series;
+                return Metrics.First(x => (x.Name == metricName)).Series;
             }
             catch
             {
@@ -2313,20 +2301,17 @@ namespace MineControl
         private void dataGridViewApps_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             // provide user the option of setting the app path
-            if (e.ColumnIndex == ColAppPath.Index)
-            {
-                if (openFileDialogAppPath.ShowDialog() == DialogResult.OK)
+            if (e.ColumnIndex == ColAppPath.Index && openFileDialogAppPath.ShowDialog() == DialogResult.OK)
+            {               
+                dataGridViewApps.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = openFileDialogAppPath.FileName;
+
+                // if name is empty, default to the application name without extension
+                if (dataGridViewApps.Rows[e.RowIndex].Cells[ColAppName.Index].Value.ToString().Trim() == string.Empty)
                 {
-                    dataGridViewApps.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = openFileDialogAppPath.FileName;
-
-                    // if name is empty, default to the application name without extension
-                    if (dataGridViewApps.Rows[e.RowIndex].Cells[ColAppName.Index].Value.ToString().Trim() == string.Empty)
-                    {
-                        dataGridViewApps.Rows[e.RowIndex].Cells[ColAppName.Index].Value = Path.GetFileNameWithoutExtension(openFileDialogAppPath.FileName);
-                    }
-
-                    SaveSettingsFromUI();
+                    dataGridViewApps.Rows[e.RowIndex].Cells[ColAppName.Index].Value = Path.GetFileNameWithoutExtension(openFileDialogAppPath.FileName);
                 }
+
+                SaveSettingsFromUI();                
             }
         }
 
@@ -2400,7 +2385,7 @@ namespace MineControl
             // archive everything remaining on exit
             DateTime now = DateTime.Now;
             ArchiveAndClearOldLogs(now, true);
-            ArchiveChangedConfig(now);
+            ArchiveChangedConfig();
         }
 
         private void notifyIconMain_Open(object sender, EventArgs e)
@@ -2676,12 +2661,9 @@ namespace MineControl
                 }
                 Metrics[e.RowIndex].Query = value;
             }
-            if (e.ColumnIndex == ColDataMethod.Index)
-            {
-                if (e.FormattedValue.ToString() == MetricMethod.InternalValue.ToString())
-                {
-                    ShowTooltipNotification("Note: InternalValue doesn't do anything when set by user", ToolTipIcon.Warning);
-                }
+            if (e.ColumnIndex == ColDataMethod.Index && e.FormattedValue.ToString() == MetricMethod.InternalValue.ToString())
+            {                
+                ShowTooltipNotification("Note: InternalValue doesn't do anything when set by user", ToolTipIcon.Warning);                
             }
         }
 

@@ -233,7 +233,7 @@ namespace MineControl
         public DateTime LastResultTime { get; private set; } = DateTime.MinValue;
 
         [JsonIgnore]
-        public IChartManager ChartManager = null;
+        public IChartManager ChartManager { get; set; } = null;
 
         /// <summary>
         /// Assigns properties of given metric to this metric
@@ -273,7 +273,7 @@ namespace MineControl
                 return;
             }
 
-            string unit = Unit == null || Unit.SelectionResult.Length == 0 ? "" : $" ({Unit.SelectionResult})";
+            string localUnit = Unit == null || Unit.SelectionResult.Length == 0 ? "" : $" ({Unit.SelectionResult})";
             string grouping = GroupedBy == null || GroupedBy.SelectionResult.Length == 0 ? "" : $" w/ {GroupedBy.SelectionResult}";
             
             // handle grouping if series name has been set
@@ -285,11 +285,11 @@ namespace MineControl
                     bool found = false; 
 
                     // first look for another series on the same chart that fits this metric and grouping
-                    foreach (Series series in Chart.Series)
+                    foreach (Series s in Chart.Series)
                     {
-                        if (!found && series.Name.Contains(Name) && series.Name.Contains(grouping))
+                        if (!found && s.Name.Contains(Name) && s.Name.Contains(grouping))
                         {
-                            Series = series;
+                            Series = s;
                             found = true;
                         }
                     }
@@ -300,11 +300,11 @@ namespace MineControl
                         ChartManager.CreateChartSeries(Chart.Name, this, Series.ChartType, Series.YAxisType);
                     }
                 }
-                Series.Name = $"{this.Name}{unit}{grouping}";
+                Series.Name = $"{this.Name}{localUnit}{grouping}";
             }
             
             // set info
-            Series.Name = $"{this.Name}{unit}{grouping}";
+            Series.Name = $"{this.Name}{localUnit}{grouping}";
             Series.Enabled = IsEnabled && Series.Points.Count > 0;       
         }
 

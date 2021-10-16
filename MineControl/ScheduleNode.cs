@@ -15,17 +15,16 @@ namespace MineControl
     /// Top level of abstraction for schedule nodes
     /// </summary>
     public abstract class ScheduleNode
-    {
-        //public ScheduleNode Parent { get; } = null;
+    {        
         public Guid Id { get; set; }
 
-        public ScheduleNode() 
+        protected ScheduleNode() 
         {
             Id = Guid.NewGuid();
         }
 
         [JsonConstructor]
-        public ScheduleNode(Guid id)
+        protected ScheduleNode(Guid id)
         {            
             Id = id;
             if (Id == Guid.Empty)
@@ -50,9 +49,9 @@ namespace MineControl
         /// </summary>
         /// <param name="id">GUID of the node</param>
         /// <returns>Node with supplied guid, if present. Null otherwise.</returns>
-        public virtual ScheduleNode GetNodeById(Guid id)
+        public virtual ScheduleNode GetNodeById(Guid? id)
         {
-            if (Id.Equals(id))
+            if (id != null && Id.Equals(id))
             {
                 return this;
             }
@@ -65,7 +64,7 @@ namespace MineControl
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public virtual ScheduleNode GetNodeParent(Guid id)
+        public virtual ScheduleNode GetNodeParent(Guid? id)
         {
             return null;
         }
@@ -96,10 +95,10 @@ namespace MineControl
         [JsonIgnore]
         public List<ScheduleNode> Children { get; set; } = new List<ScheduleNode>();
 
-        public BranchingNode(): base() { }
+        protected BranchingNode(): base() { }
 
         [JsonConstructor]
-        public BranchingNode(Guid id) : base(id) { }
+        protected BranchingNode(Guid id) : base(id) { }
 
         public override List<ScheduleNode> GetNodesById(Guid id)
         {
@@ -127,7 +126,7 @@ namespace MineControl
         /// </summary>
         /// <param name="id">GUID of the node</param>
         /// <returns>Node with supplied guid, if present. Null otherwise.</returns>
-        public override ScheduleNode GetNodeById(Guid id)
+        public override ScheduleNode GetNodeById(Guid? id)
         {
             ScheduleNode nodeAnswer;
             foreach (ScheduleNode child in Children)
@@ -142,7 +141,7 @@ namespace MineControl
             return base.GetNodeById(id);
         }
         
-        public override ScheduleNode GetNodeParent(Guid id)
+        public override ScheduleNode GetNodeParent(Guid? id)
         {
             if (this.Children.Count == 0)
             {
@@ -152,7 +151,7 @@ namespace MineControl
             {
                 foreach (ScheduleNode node in Children)
                 {
-                    if (node.Id.Equals(id))
+                    if (id != null && node.Id.Equals(id))
                     {
                         return this;
                     }
@@ -180,8 +179,7 @@ namespace MineControl
                 {
                     return;
                 }
-            }
-            return;
+            }            
         }
 
         public override string GetDescription()
@@ -251,19 +249,13 @@ namespace MineControl
 
             if ((ValidMonths.Count > 0) && ValidMonths.Contains(today.Month))
             {
-                if (today.Month == ValidMonths[0])
-                {
-                    if (today.Day < StartDay)
-                    {
-                        result = false;
-                    }
+                if (today.Month == ValidMonths[0] && today.Day < StartDay)
+                {                    
+                    result = false;                    
                 }
-                if (today.Month == ValidMonths[ValidMonths.Count])
-                {
-                    if (today.Day > EndDay)
-                    {
-                        result = false;
-                    }
+                if (today.Month == ValidMonths[ValidMonths.Count] && today.Day > EndDay)
+                {                    
+                    result = false;                    
                 }
             }
             else
@@ -374,17 +366,17 @@ namespace MineControl
         {
             if (SelectedDays.Count > 0)
             {
-                string result = "Day is ";
+                StringBuilder result = new StringBuilder("Day is ");
                 bool firstDay = true;
 
                 foreach (DayOfWeek day in SelectedDays)
                 {
-                    result += firstDay ? "" : " or ";
-                    result += Enum.GetName(day.GetType(), day);
+                    result.Append(firstDay ? "" : " or ");
+                    result.Append(Enum.GetName(day.GetType(), day));
                     firstDay = false;
                 }
 
-                return result;
+                return result.ToString();
             }
 
             return "Undefined day of the week";
@@ -531,9 +523,9 @@ namespace MineControl
             ActionNode = 6
         }
 
-        public override bool CanConvert(Type type)
+        public override bool CanConvert(Type typeToConvert)
         {
-            return typeof(ScheduleNode).IsAssignableFrom(type);
+            return typeof(ScheduleNode).IsAssignableFrom(typeToConvert);
         }
 
         public override ScheduleNode Read(

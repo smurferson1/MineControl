@@ -2717,19 +2717,7 @@ namespace MineControl
 
         }
 
-        #endregion
-#pragma warning disable CS0169 // The field 'FormMineControl.nameDataGridViewTextBoxColumn' is never used
-        private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
-#pragma warning restore CS0169 // The field 'FormMineControl.nameDataGridViewTextBoxColumn' is never used
-#pragma warning disable CS0169 // The field 'FormMineControl.typeDataGridViewTextBoxColumn' is never used
-        private System.Windows.Forms.DataGridViewComboBoxColumn typeDataGridViewTextBoxColumn;
-#pragma warning restore CS0169 // The field 'FormMineControl.typeDataGridViewTextBoxColumn' is never used
-#pragma warning disable CS0169 // The field 'FormMineControl.statusDataGridViewTextBoxColumn' is never used
-        private System.Windows.Forms.DataGridViewTextBoxColumn statusDataGridViewTextBoxColumn;
-#pragma warning restore CS0169 // The field 'FormMineControl.statusDataGridViewTextBoxColumn' is never used
-#pragma warning disable CS0169 // The field 'FormMineControl.pathDataGridViewTextBoxColumn' is never used
-        private System.Windows.Forms.DataGridViewTextBoxColumn pathDataGridViewTextBoxColumn;
-#pragma warning restore CS0169 // The field 'FormMineControl.pathDataGridViewTextBoxColumn' is never used
+        #endregion        
         private System.Windows.Forms.Timer timerMain;
         private System.Windows.Forms.ToolTip toolTipMain;
         private System.Windows.Forms.OpenFileDialog openFileDialogAppPath;
