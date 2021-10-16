@@ -1,10 +1,10 @@
 # MineControl 
 
-A power tool for temperature management, scheduling, and data aggregation during casual cryptocurrency mining, mainly for us plebs with a single GPU and CPU running **Windows**. It can automatically keep your miners and hardware running within your parameters and give more data about what's going on (e.g. charts, averages, kWh). This is accomplished by:
+A power tool for temperature management, scheduling, and data aggregation during casual cryptocurrency mining. For us plebs with a single GPU and CPU running **Windows**. It can automatically keep your miners and hardware running within your parameters and give you data about what's going on (e.g. charts, averages, kWh). This is accomplished by:
 - Reading temperatures and other sensor data from an external hardware monitor app.
 - Setting GPU power profile via an external GPU controller app.
-- Optionally managing execution of a GPU and/or CPU mining application and charting/logging their output centrally.
-- Finding relevant data in the raw external app text with customizable regular expressions.
+- Optionally managing execution of an external GPU and/or CPU mining app and charting/logging their output centrally.
+- Finding relevant data in raw text with customizable regular expressions.
 
 Specific hardware monitor and GPU controller applications are not mentioned in order to avoid legal issues, but the default configuration happens to be compatible with the most popular hardware monitor and GPU controller applications for NVIDIA GPUs. Hint: they rhyme with **RidesharePimpo** and **MakeThemCry ButterChurner**.
 
@@ -63,10 +63,12 @@ MineControl is free and open source. Crypto donations are however appreciated an
   - Data Tracking: use the UserValue method for units and algos that don't change. Reduces processing a tiny bit.
 
 ## Key Un-features
-- Not currently internationalized, translated or respectful of Windows regional settings.
+- Doesn't support more than 1 GPU or CPU.
+- Doesn't support more than 1 GPU or CPU miner.
+- Not internationalized, translated, or respectful of Windows regional settings.
 - Kind of ugly.
 - Not very user friendly.
 - Chart data and stats can't be archived or restored.
-- Probably some config options allowed that would make no sense or cause problems or crashes.
+- Probably some allowed configurations that would make no sense or cause errors or crashes.
 - Engineering: badly engineered with a bunch of logic attached to the form and stuff. Sorry.
-- Most temperature and power management features are GPU-only right now.
+- Most temperature and power management features are GPU-only.
