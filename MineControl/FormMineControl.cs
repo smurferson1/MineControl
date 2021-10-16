@@ -271,7 +271,7 @@ namespace MineControl
             comboBoxScheduleStartMonth.DataSource = CultureInfo.InvariantCulture.DateTimeFormat.MonthNames.Take(12).ToList();
             comboBoxScheduleStartMonth.SelectedIndex = 0;
             comboBoxScheduleEndMonth.DataSource = CultureInfo.InvariantCulture.DateTimeFormat.MonthNames.Take(12).ToList();
-            comboBoxScheduleEndMonth.SelectedText = CultureInfo.InvariantCulture.DateTimeFormat.MonthNames.Take(12).ToList().Last();
+            comboBoxScheduleEndMonth.SelectedText = CultureInfo.InvariantCulture.DateTimeFormat.MonthNames.Take(12).Last();
             UpdateScheduleDaysComboBoxesFromUI();
             PositionNodeButtons();
         }
@@ -377,10 +377,7 @@ namespace MineControl
                 // find the chart if it was already created
                 foreach (Control control in tab.Controls)
                 {
-                    if (control is Chart)
-                    {
-                        chart = (Chart)control;
-                    }
+                    chart = control as Chart;
                 }
             }
 
@@ -467,11 +464,11 @@ namespace MineControl
             }
             if (!Settings.minerGPUSchedule.Equals(Guid.Empty))
             {
-                comboBoxMinerGPUSchedule.SelectedValue = Schedules.Where(x => x.Id.Equals(Settings.minerGPUSchedule)).First().Id;
+                comboBoxMinerGPUSchedule.SelectedValue = Schedules.First(x => x.Id.Equals(Settings.minerGPUSchedule)).Id;
             }
             if (!Settings.minerCPUSchedule.Equals(Guid.Empty))
             {
-                comboBoxMinerCPUSchedule.SelectedValue = Schedules.Where(x => x.Id.Equals(Settings.minerCPUSchedule)).First().Id;
+                comboBoxMinerCPUSchedule.SelectedValue = Schedules.First(x => x.Id.Equals(Settings.minerCPUSchedule)).Id;
             }
             checkBoxMinerGPUUserActivityShutoff.Checked = Settings.minerGPUUserActivityShutoff;
             checkBoxMinerCPUUserActivityShutoff.Checked = Settings.minerCPUUserActivityShutoff;
@@ -540,7 +537,7 @@ namespace MineControl
                 
                 foreach (Metric metric in loadedMetrics)
                 {   
-                    if (Metrics.Where(x => x.Name == metric.Name).Count() == 0)
+                    if (Metrics.Count(x => x.Name == metric.Name) == 0)
                     {
                         Metrics.Add(metric);
                     }
@@ -1307,9 +1304,9 @@ namespace MineControl
         {
             if (Settings.archivesDeleteOldFiles)
             {
-                DateTime archiveAgeCutoff = evalStartTime.AddDays(Settings.archivesDeleteOldFilesDays);
-                int deletedLogs = 0;
-                int deletedConfigs = 0;
+                DateTime archiveAgeCutoff = evalStartTime.AddDays(-Settings.archivesDeleteOldFilesDays);
+                int deletedLogCount = 0;
+                int deletedConfigCount = 0;
 
                 // delete old log archives
                 DirectoryInfo directory = new DirectoryInfo(GetArchiveFolder());
@@ -1317,7 +1314,7 @@ namespace MineControl
                 foreach (var file in files)
                 {
                     file.Delete();
-                    deletedLogs++;
+                    deletedLogCount++;
                 }
 
                 // delete old config archives
@@ -1326,12 +1323,12 @@ namespace MineControl
                 foreach (var file in files)
                 {
                     file.Delete();
-                    deletedConfigs++;
+                    deletedConfigCount++;
                 }
 
-                if (deletedLogs + deletedConfigs > 0)
+                if (deletedLogCount + deletedConfigCount > 0)
                 {
-                    AddLogEntry($"Deleted {deletedLogs} log archive files and {deletedConfigs} config archive files older than {Settings.archivesDeleteOldFilesDays} days");
+                    AddLogEntry($"Deleted {deletedLogCount} log archive files and {deletedConfigCount} config archive files older than {Settings.archivesDeleteOldFilesDays} days");
                 }
             }
         }
@@ -1379,15 +1376,15 @@ namespace MineControl
         private void ClearOldChartData(DateTime evalStartTime)
         {
             DateTime timeCutoff = GetTimeCutoff(evalStartTime, Settings.archivesClearOldChartsUnit, Settings.archivesClearOldChartsValue);
-            IEnumerable<DataPoint> points;
+            List<DataPoint> points;
             foreach (Chart chart in Charts)
             {
                 foreach (Series series in chart.Series)
                 {
-                    points = series.Points.Where(p => DateTime.FromOADate(p.XValue) <= timeCutoff);
-                    foreach (DataPoint point in points)
+                    points = series.Points.Where(p => DateTime.FromOADate(p.XValue) <= timeCutoff).ToList();
+                    for (int i = points.Count() - 1; i >= 0; i--)
                     {
-                        series.Points.Remove(point);
+                        series.Points.Remove(points[i]);
                     }
                 }
             }
@@ -2785,6 +2782,12 @@ namespace MineControl
         private void comboBoxScheduleMonth_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateScheduleDaysComboBoxesFromUI();
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            // TODO: enable only for public release
+            //System.Diagnostics.Process.Start("https://github.com/smurferson1/MineControl");
         }
     }
 }

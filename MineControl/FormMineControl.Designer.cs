@@ -30,7 +30,7 @@ namespace MineControl
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMineControl));
             this.timerMain = new System.Windows.Forms.Timer(this.components);
             this.toolTipMain = new System.Windows.Forms.ToolTip(this.components);
@@ -217,6 +217,7 @@ namespace MineControl
             this.openFileDialogBackups = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialogBackups = new System.Windows.Forms.SaveFileDialog();
             this.folderBrowserDialogBackups = new System.Windows.Forms.FolderBrowserDialog();
+            this.linkLabelHelpDonate = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempSteppingBuffer)).BeginInit();
             this.tabControlMain.SuspendLayout();
             this.tabPageConfig.SuspendLayout();
@@ -470,12 +471,12 @@ namespace MineControl
             // checkBoxMinerCPUShowLogs
             // 
             this.checkBoxMinerCPUShowLogs.AutoSize = true;
-            this.checkBoxMinerCPUShowLogs.Location = new System.Drawing.Point(324, 77);
+            this.checkBoxMinerCPUShowLogs.Location = new System.Drawing.Point(348, 77);
             this.checkBoxMinerCPUShowLogs.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.checkBoxMinerCPUShowLogs.Name = "checkBoxMinerCPUShowLogs";
-            this.checkBoxMinerCPUShowLogs.Size = new System.Drawing.Size(96, 19);
+            this.checkBoxMinerCPUShowLogs.Size = new System.Drawing.Size(80, 19);
             this.checkBoxMinerCPUShowLogs.TabIndex = 10;
-            this.checkBoxMinerCPUShowLogs.Text = "Capture Logs";
+            this.checkBoxMinerCPUShowLogs.Text = "Keep Logs";
             this.checkBoxMinerCPUShowLogs.UseVisualStyleBackColor = true;
             this.checkBoxMinerCPUShowLogs.CheckedChanged += new System.EventHandler(this.SettingChanged);
             // 
@@ -506,7 +507,7 @@ namespace MineControl
             // radioButtonCPUModeDontControl
             // 
             this.radioButtonCPUModeDontControl.AutoSize = true;
-            this.radioButtonCPUModeDontControl.Location = new System.Drawing.Point(324, 20);
+            this.radioButtonCPUModeDontControl.Location = new System.Drawing.Point(332, 20);
             this.radioButtonCPUModeDontControl.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.radioButtonCPUModeDontControl.Name = "radioButtonCPUModeDontControl";
             this.radioButtonCPUModeDontControl.Size = new System.Drawing.Size(97, 19);
@@ -519,7 +520,7 @@ namespace MineControl
             // radioButtonCPUModeAlwaysOff
             // 
             this.radioButtonCPUModeAlwaysOff.AutoSize = true;
-            this.radioButtonCPUModeAlwaysOff.Location = new System.Drawing.Point(164, 20);
+            this.radioButtonCPUModeAlwaysOff.Location = new System.Drawing.Point(179, 20);
             this.radioButtonCPUModeAlwaysOff.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.radioButtonCPUModeAlwaysOff.Name = "radioButtonCPUModeAlwaysOff";
             this.radioButtonCPUModeAlwaysOff.Size = new System.Drawing.Size(82, 19);
@@ -735,12 +736,12 @@ namespace MineControl
             // checkBoxMinerGPUShowLogs
             // 
             this.checkBoxMinerGPUShowLogs.AutoSize = true;
-            this.checkBoxMinerGPUShowLogs.Location = new System.Drawing.Point(314, 77);
+            this.checkBoxMinerGPUShowLogs.Location = new System.Drawing.Point(348, 75);
             this.checkBoxMinerGPUShowLogs.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.checkBoxMinerGPUShowLogs.Name = "checkBoxMinerGPUShowLogs";
-            this.checkBoxMinerGPUShowLogs.Size = new System.Drawing.Size(96, 19);
+            this.checkBoxMinerGPUShowLogs.Size = new System.Drawing.Size(80, 19);
             this.checkBoxMinerGPUShowLogs.TabIndex = 8;
-            this.checkBoxMinerGPUShowLogs.Text = "Capture Logs";
+            this.checkBoxMinerGPUShowLogs.Text = "Keep Logs";
             this.checkBoxMinerGPUShowLogs.UseVisualStyleBackColor = true;
             this.checkBoxMinerGPUShowLogs.CheckedChanged += new System.EventHandler(this.SettingChanged);
             // 
@@ -770,7 +771,7 @@ namespace MineControl
             // radioButtonGPUModeDontControl
             // 
             this.radioButtonGPUModeDontControl.AutoSize = true;
-            this.radioButtonGPUModeDontControl.Location = new System.Drawing.Point(314, 20);
+            this.radioButtonGPUModeDontControl.Location = new System.Drawing.Point(331, 20);
             this.radioButtonGPUModeDontControl.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.radioButtonGPUModeDontControl.Name = "radioButtonGPUModeDontControl";
             this.radioButtonGPUModeDontControl.Size = new System.Drawing.Size(97, 19);
@@ -783,7 +784,7 @@ namespace MineControl
             // radioButtonGPUModeAlwaysOff
             // 
             this.radioButtonGPUModeAlwaysOff.AutoSize = true;
-            this.radioButtonGPUModeAlwaysOff.Location = new System.Drawing.Point(161, 20);
+            this.radioButtonGPUModeAlwaysOff.Location = new System.Drawing.Point(173, 20);
             this.radioButtonGPUModeAlwaysOff.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.radioButtonGPUModeAlwaysOff.Name = "radioButtonGPUModeAlwaysOff";
             this.radioButtonGPUModeAlwaysOff.Size = new System.Drawing.Size(82, 19);
@@ -855,7 +856,7 @@ namespace MineControl
             "Minutes",
             "Hours",
             "Days"});
-            this.comboBoxArchivesClearOldChartsUnit.Location = new System.Drawing.Point(238, 117);
+            this.comboBoxArchivesClearOldChartsUnit.Location = new System.Drawing.Point(239, 117);
             this.comboBoxArchivesClearOldChartsUnit.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.comboBoxArchivesClearOldChartsUnit.Name = "comboBoxArchivesClearOldChartsUnit";
             this.comboBoxArchivesClearOldChartsUnit.Size = new System.Drawing.Size(68, 23);
@@ -915,7 +916,7 @@ namespace MineControl
             "Minutes",
             "Hours",
             "Days"});
-            this.comboBoxArchivesArchiveIntervalUnit.Location = new System.Drawing.Point(155, 52);
+            this.comboBoxArchivesArchiveIntervalUnit.Location = new System.Drawing.Point(156, 52);
             this.comboBoxArchivesArchiveIntervalUnit.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.comboBoxArchivesArchiveIntervalUnit.Name = "comboBoxArchivesArchiveIntervalUnit";
             this.comboBoxArchivesArchiveIntervalUnit.Size = new System.Drawing.Size(70, 23);
@@ -941,7 +942,7 @@ namespace MineControl
             "Minutes",
             "Hours",
             "Days"});
-            this.comboBoxArchivesLogManagementUnit.Location = new System.Drawing.Point(326, 87);
+            this.comboBoxArchivesLogManagementUnit.Location = new System.Drawing.Point(325, 87);
             this.comboBoxArchivesLogManagementUnit.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.comboBoxArchivesLogManagementUnit.Name = "comboBoxArchivesLogManagementUnit";
             this.comboBoxArchivesLogManagementUnit.Size = new System.Drawing.Size(103, 23);
@@ -2432,8 +2433,8 @@ namespace MineControl
             // ColLogMessage
             // 
             this.ColLogMessage.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.ColLogMessage.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.ColLogMessage.DefaultCellStyle = dataGridViewCellStyle2;
             this.ColLogMessage.HeaderText = "Message";
             this.ColLogMessage.MinimumWidth = 30;
             this.ColLogMessage.Name = "ColLogMessage";
@@ -2487,7 +2488,7 @@ namespace MineControl
             // checkBoxEnableTempControl
             // 
             this.checkBoxEnableTempControl.AutoSize = true;
-            this.checkBoxEnableTempControl.Location = new System.Drawing.Point(386, 22);
+            this.checkBoxEnableTempControl.Location = new System.Drawing.Point(382, 20);
             this.checkBoxEnableTempControl.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.checkBoxEnableTempControl.Name = "checkBoxEnableTempControl";
             this.checkBoxEnableTempControl.Size = new System.Drawing.Size(132, 19);
@@ -2500,7 +2501,7 @@ namespace MineControl
             // checkBoxEnableMinerAutomation
             // 
             this.checkBoxEnableMinerAutomation.AutoSize = true;
-            this.checkBoxEnableMinerAutomation.Location = new System.Drawing.Point(204, 21);
+            this.checkBoxEnableMinerAutomation.Location = new System.Drawing.Point(201, 20);
             this.checkBoxEnableMinerAutomation.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.checkBoxEnableMinerAutomation.Name = "checkBoxEnableMinerAutomation";
             this.checkBoxEnableMinerAutomation.Size = new System.Drawing.Size(131, 19);
@@ -2513,6 +2514,7 @@ namespace MineControl
             // 
             this.groupBoxControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBoxControl.Controls.Add(this.linkLabelHelpDonate);
             this.groupBoxControl.Controls.Add(this.labelStatusDisplay);
             this.groupBoxControl.Controls.Add(this.label1);
             this.groupBoxControl.Controls.Add(this.buttonStopAutomation);
@@ -2555,7 +2557,7 @@ namespace MineControl
             // buttonStopAutomation
             // 
             this.buttonStopAutomation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonStopAutomation.Location = new System.Drawing.Point(818, 16);
+            this.buttonStopAutomation.Location = new System.Drawing.Point(819, 15);
             this.buttonStopAutomation.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.buttonStopAutomation.Name = "buttonStopAutomation";
             this.buttonStopAutomation.Size = new System.Drawing.Size(88, 27);
@@ -2567,7 +2569,7 @@ namespace MineControl
             // buttonStartAutomation
             // 
             this.buttonStartAutomation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonStartAutomation.Location = new System.Drawing.Point(723, 16);
+            this.buttonStartAutomation.Location = new System.Drawing.Point(723, 15);
             this.buttonStartAutomation.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.buttonStartAutomation.Name = "buttonStartAutomation";
             this.buttonStartAutomation.Size = new System.Drawing.Size(88, 27);
@@ -2614,6 +2616,17 @@ namespace MineControl
             // openFileDialogBackups
             // 
             this.openFileDialogBackups.FileName = "openFileDialogBackupPath";
+            // 
+            // linkLabelHelpDonate
+            // 
+            this.linkLabelHelpDonate.AutoSize = true;
+            this.linkLabelHelpDonate.Location = new System.Drawing.Point(631, 22);
+            this.linkLabelHelpDonate.Name = "linkLabelHelpDonate";
+            this.linkLabelHelpDonate.Size = new System.Drawing.Size(81, 15);
+            this.linkLabelHelpDonate.TabIndex = 5;
+            this.linkLabelHelpDonate.TabStop = true;
+            this.linkLabelHelpDonate.Text = "Help / Donate";
+            this.linkLabelHelpDonate.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // FormMineControl
             // 
@@ -2705,10 +2718,18 @@ namespace MineControl
         }
 
         #endregion
+#pragma warning disable CS0169 // The field 'FormMineControl.nameDataGridViewTextBoxColumn' is never used
         private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
+#pragma warning restore CS0169 // The field 'FormMineControl.nameDataGridViewTextBoxColumn' is never used
+#pragma warning disable CS0169 // The field 'FormMineControl.typeDataGridViewTextBoxColumn' is never used
         private System.Windows.Forms.DataGridViewComboBoxColumn typeDataGridViewTextBoxColumn;
+#pragma warning restore CS0169 // The field 'FormMineControl.typeDataGridViewTextBoxColumn' is never used
+#pragma warning disable CS0169 // The field 'FormMineControl.statusDataGridViewTextBoxColumn' is never used
         private System.Windows.Forms.DataGridViewTextBoxColumn statusDataGridViewTextBoxColumn;
+#pragma warning restore CS0169 // The field 'FormMineControl.statusDataGridViewTextBoxColumn' is never used
+#pragma warning disable CS0169 // The field 'FormMineControl.pathDataGridViewTextBoxColumn' is never used
         private System.Windows.Forms.DataGridViewTextBoxColumn pathDataGridViewTextBoxColumn;
+#pragma warning restore CS0169 // The field 'FormMineControl.pathDataGridViewTextBoxColumn' is never used
         private System.Windows.Forms.Timer timerMain;
         private System.Windows.Forms.ToolTip toolTipMain;
         private System.Windows.Forms.OpenFileDialog openFileDialogAppPath;
@@ -2894,6 +2915,7 @@ namespace MineControl
         private System.Windows.Forms.DataGridViewTextBoxColumn ColLogType;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColLogTime;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColLogMessage;
+        private System.Windows.Forms.LinkLabel linkLabelHelpDonate;
     }
 }
 
