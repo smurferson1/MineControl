@@ -27,14 +27,18 @@ namespace MineControl
 
         public static double GetMinYValue(Series series)
         {
-            DataPoint point = series.Points.FindMinByValue();
-            return point == null ? double.NaN : point.YValues[0];
+            using (DataPoint point = series.Points.FindMinByValue())
+            {
+                return point == null ? double.NaN : point.YValues[0];
+            }
         }
 
         public static double GetMaxYValue(Series series)
         {
-            DataPoint point = series.Points.FindMaxByValue();
-            return point == null ? double.NaN : point.YValues[0];
+            using (DataPoint point = series.Points.FindMaxByValue())
+            {
+                return point == null ? double.NaN : point.YValues[0];
+            }
         }
 
         /// <summary>

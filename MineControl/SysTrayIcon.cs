@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace MineControl
@@ -9,6 +10,10 @@ namespace MineControl
         public static Color GPUColor { get; set; } = Color.Transparent;
         public static Color CPUColor { get; set; } = Color.Transparent;
         public static int GPUPowerStep { get; set; } = -1;
+        private static IntPtr? lastIconHandle = null;
+
+        [System.Runtime.InteropServices.DllImport("user32.dll", CharSet = CharSet.Auto)]
+        extern static bool DestroyIcon(IntPtr handle);
 
         // TODO: this is duplicated
         private static Properties.Settings settings = Properties.Settings.Default;
@@ -99,67 +104,69 @@ namespace MineControl
 
         // modified example from: https://stackoverflow.com/questions/36379547/writing-text-to-the-system-tray-instead-of-an-icon
         private static void SetTextIcon(NotifyIcon notifyIcon, string char1, string char2, Color char1Color, Color char2Color, Color backgroundColorLeft, Color backgroundColorRight, Color borderColor)
-        {
-            Brush brushTextShadow = new SolidBrush(Color.Black);
-            Brush brush1 = new SolidBrush(char1Color);
-            Brush brush2 = new SolidBrush(char2Color);
-            Brush brushBackgroundLeft = new SolidBrush(backgroundColorLeft);
-            Brush brushBackgroundRight = new SolidBrush(backgroundColorRight);
-            Bitmap bitmapText = new Bitmap(16, 16);
-            Graphics g = System.Drawing.Graphics.FromImage(bitmapText);
-            Pen p = new Pen(borderColor, 1);
+        {           
+            using Brush brushTextShadow = new SolidBrush(Color.Black);
+            using Brush brush1 = new SolidBrush(char1Color);
+            using Brush brush2 = new SolidBrush(char2Color);
+            using Brush brushBackgroundLeft = new SolidBrush(backgroundColorLeft);
+            using Brush brushBackgroundRight = new SolidBrush(backgroundColorRight);
+            using Bitmap bitmapText = new Bitmap(16, 16);
+            using Graphics g = System.Drawing.Graphics.FromImage(bitmapText);
+            using Pen p = new Pen(borderColor, 1);
 
-            try
+            IntPtr hIcon;
+            g.Clear(Color.Transparent);
+            g.FillRectangle(brushBackgroundLeft, new Rectangle(0, 0, 8, 16));
+            g.FillRectangle(brushBackgroundRight, new Rectangle(8, 0, 8, 16));
+            g.FillRectangle(Brushes.Black, new Rectangle(3, 0, 10, 16));
+            //g.DrawRectangle(p, new Rectangle(0, 0, 15, 15));
+            g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit;
+            if ((char1.Length > 0) && (char2.Length > 0))
             {
-                IntPtr hIcon;
-                g.Clear(Color.Transparent);
-                g.FillRectangle(brushBackgroundLeft, new Rectangle(0, 0, 8, 16));
-                g.FillRectangle(brushBackgroundRight, new Rectangle(8, 0, 8, 16));
-                g.FillRectangle(Brushes.Black, new Rectangle(3, 0, 10, 16));
-                //g.DrawRectangle(p, new Rectangle(0, 0, 15, 15));
-                g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit;
-                if ((char1.Length > 0) && (char2.Length > 0))
-                {
-                    Font fontToUse = new Font("Tahoma", 11, FontStyle.Bold, GraphicsUnit.Pixel);
-                    //Size sizeOfText = TextRenderer.MeasureText(char1, fontToUse);                    
-                    //g.FillRectangle(Brushes.Black, new Rectangle(new Point(-1, 1), sizeOfText));
+                using Font fontToUse = new Font("Tahoma", 11, FontStyle.Bold, GraphicsUnit.Pixel);
+                //Size sizeOfText = TextRenderer.MeasureText(char1, fontToUse);                    
+                //g.FillRectangle(Brushes.Black, new Rectangle(new Point(-1, 1), sizeOfText));
                     
-                    //g.DrawString(char1[0].ToString(), fontToUse, brushTextShadow, -1, 0);
-                    g.DrawString(char1[0].ToString(), fontToUse, brush1, -1, 1);
-                    //g.DrawString(char2[0].ToString(), fontToUse, brushTextShadow, 7, 0);
-                    g.DrawString(char2[0].ToString(), fontToUse, brush2, 7, 1);
-                }
-                else if ((char1.Length) > 0)
-                {
-                    Font fontToUse = new Font("Tahoma", 15, FontStyle.Bold, GraphicsUnit.Pixel);
-                    //Size sizeOfText = TextRenderer.MeasureText(char1, fontToUse);
-                    //g.FillRectangle(Brushes.Black, new Rectangle(new Point(0, -1), sizeOfText));
-                    
-                    //g.DrawString(char1[0].ToString(), fontToUse, brushTextShadow, -1, -1);
-                    //g.DrawString(char1[0].ToString(), fontToUse, brushTextShadow, 1, -1);
-                    //g.DrawString(char1[0].ToString(), fontToUse, brushTextShadow, -1, 0);
-                    //g.DrawString(char1[0].ToString(), fontToUse, brushTextShadow, 1, 0);
-                    g.DrawString(char1[0].ToString(), fontToUse, brush1, 0, -1);
-                }
-                else if ((char2.Length) > 0)
-                {
-                    Font fontToUse = new Font("Tahoma", 15, FontStyle.Bold, GraphicsUnit.Pixel);
-                    //Size sizeOfText = TextRenderer.MeasureText(char2, fontToUse);
-                    //g.FillRectangle(Brushes.Black, new Rectangle(new Point(0, -1), sizeOfText));
-                    
-                    //g.DrawString(char2[0].ToString(), fontToUse, brushTextShadow, -1, -1);
-                    //g.DrawString(char2[0].ToString(), fontToUse, brushTextShadow, 1, -1);
-                    //g.DrawString(char2[0].ToString(), fontToUse, brushTextShadow, -1, 0);
-                    //g.DrawString(char2[0].ToString(), fontToUse, brushTextShadow, 1, 0);
-                    g.DrawString(char2[0].ToString(), fontToUse, brush2, 0, -1);
-                }
-                hIcon = (bitmapText.GetHicon());
-                notifyIcon.Icon = System.Drawing.Icon.FromHandle(hIcon);
+                //g.DrawString(char1[0].ToString(), fontToUse, brushTextShadow, -1, 0);
+                g.DrawString(char1[0].ToString(), fontToUse, brush1, -1, 1);
+                //g.DrawString(char2[0].ToString(), fontToUse, brushTextShadow, 7, 0);
+                g.DrawString(char2[0].ToString(), fontToUse, brush2, 7, 1);
             }
-            finally
+            else if ((char1.Length) > 0)
             {
-                g.Dispose();
+                using Font fontToUse = new Font("Tahoma", 15, FontStyle.Bold, GraphicsUnit.Pixel);
+                //Size sizeOfText = TextRenderer.MeasureText(char1, fontToUse);
+                //g.FillRectangle(Brushes.Black, new Rectangle(new Point(0, -1), sizeOfText));
+                    
+                //g.DrawString(char1[0].ToString(), fontToUse, brushTextShadow, -1, -1);
+                //g.DrawString(char1[0].ToString(), fontToUse, brushTextShadow, 1, -1);
+                //g.DrawString(char1[0].ToString(), fontToUse, brushTextShadow, -1, 0);
+                //g.DrawString(char1[0].ToString(), fontToUse, brushTextShadow, 1, 0);
+                g.DrawString(char1[0].ToString(), fontToUse, brush1, 0, -1);
             }
+            else if ((char2.Length) > 0)
+            {
+                using Font fontToUse = new Font("Tahoma", 15, FontStyle.Bold, GraphicsUnit.Pixel);
+                //Size sizeOfText = TextRenderer.MeasureText(char2, fontToUse);
+                //g.FillRectangle(Brushes.Black, new Rectangle(new Point(0, -1), sizeOfText));
+                    
+                //g.DrawString(char2[0].ToString(), fontToUse, brushTextShadow, -1, -1);
+                //g.DrawString(char2[0].ToString(), fontToUse, brushTextShadow, 1, -1);
+                //g.DrawString(char2[0].ToString(), fontToUse, brushTextShadow, -1, 0);
+                //g.DrawString(char2[0].ToString(), fontToUse, brushTextShadow, 1, 0);
+                g.DrawString(char2[0].ToString(), fontToUse, brush2, 0, -1);
+            }
+            hIcon = (bitmapText.GetHicon());            
+
+            // set the new icon and clean up the old one at the end if needed
+            Icon lastIcon = notifyIcon.Icon;
+            notifyIcon.Icon = System.Drawing.Icon.FromHandle(hIcon);            
+            if (lastIconHandle != null)
+            {
+                lastIcon.Dispose();                
+                DestroyIcon(lastIconHandle.Value);
+            }
+            lastIconHandle = hIcon;
         }
     }
 }

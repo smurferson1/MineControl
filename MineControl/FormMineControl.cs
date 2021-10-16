@@ -1244,11 +1244,13 @@ namespace MineControl
             }
 
             // TODO: consider using LaunchProcess for this instead
-            Process p = new Process();
-            p.StartInfo.FileName = Settings.appGPUControllerPath;
-            p.StartInfo.Arguments = processParams;
-            p.StartInfo.UseShellExecute = true;
-            p.Start();
+            using (Process p = new Process())
+            {
+                p.StartInfo.FileName = Settings.appGPUControllerPath;
+                p.StartInfo.Arguments = processParams;
+                p.StartInfo.UseShellExecute = true;
+                p.Start();
+            }
 
             LastGPUStepChange = DateTime.Now;
             trackBarGPUPowerStep.Value = step;            
@@ -1455,6 +1457,7 @@ namespace MineControl
                     finally
                     {
                         writer?.Close();
+                        writer?.Dispose();
                     }
                 }
             }
@@ -2386,6 +2389,15 @@ namespace MineControl
             DateTime now = DateTime.Now;
             ArchiveAndClearOldLogs(now, true);
             ArchiveChangedConfig();
+
+            // dispose global IDisposables
+            ProcessGPUMiner.Dispose();
+            ProcessCPUMiner.Dispose();
+            ProcessHardwareMonitor.Dispose();
+            ProcessGPUController.Dispose();
+            bindingSourceSchedules.Dispose();
+            bindingSourceGPUSchedule.Dispose();
+            bindingSourceCPUSchedule.Dispose();
         }
 
         private void notifyIconMain_Open(object sender, EventArgs e)
