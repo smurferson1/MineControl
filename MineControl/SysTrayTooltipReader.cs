@@ -25,7 +25,7 @@ namespace MineControl
             if (hProcess == IntPtr.Zero)
                 throw new Win32Exception(Marshal.GetLastWin32Error());
 
-            var size = (IntPtr)Marshal.SizeOf<TBBUTTONINFOW>();
+            var size = (IntPtr)Marshal.SizeOf<TBButtonInfoW>();
             var buffer = VirtualAllocEx(hProcess, IntPtr.Zero, size, MEM_COMMIT, PAGE_READWRITE);
             if (buffer == IntPtr.Zero)
             {
@@ -35,42 +35,39 @@ namespace MineControl
 
             for (int i = 0; i < count; i++)
             {
-                var btn = new TBBUTTONINFOW();
+                var btn = new TBButtonInfoW();
                 btn.cbSize = size.ToInt32();
                 btn.dwMask = TBIF_BYINDEX | TBIF_COMMAND;
                 if (WriteProcessMemory(hProcess, buffer, ref btn, size, out var written))
                 {
                     // we want the identifier
                     var res = SendMessage(handle, TB_GETBUTTONINFOW, (IntPtr)i, buffer);
-                    if (res.ToInt32() >= 0)
-                    {
-                        if (ReadProcessMemory(hProcess, buffer, ref btn, size, out var read))
+                    if (res.ToInt32() >= 0 && ReadProcessMemory(hProcess, buffer, ref btn, size, out var read))
+                    {                        
+                        // now get display text using the identifier
+                        // first pass we ask for size
+                        var textSize = SendMessage(handle, TB_GETBUTTONTEXTW, (IntPtr)btn.idCommand, IntPtr.Zero);
+                        if (textSize.ToInt32() != -1)
                         {
-                            // now get display text using the identifier
-                            // first pass we ask for size
-                            var textSize = SendMessage(handle, TB_GETBUTTONTEXTW, (IntPtr)btn.idCommand, IntPtr.Zero);
-                            if (textSize.ToInt32() != -1)
+                            // we need to allocate for the terminating zero and unicode
+                            var utextSize = (IntPtr)((1 + textSize.ToInt32()) * 2);
+                            var textBuffer = VirtualAllocEx(hProcess, IntPtr.Zero, utextSize, MEM_COMMIT, PAGE_READWRITE);
+                            if (textBuffer != IntPtr.Zero)
                             {
-                                // we need to allocate for the terminating zero and unicode
-                                var utextSize = (IntPtr)((1 + textSize.ToInt32()) * 2);
-                                var textBuffer = VirtualAllocEx(hProcess, IntPtr.Zero, utextSize, MEM_COMMIT, PAGE_READWRITE);
-                                if (textBuffer != IntPtr.Zero)
+                                res = SendMessage(handle, TB_GETBUTTONTEXTW, (IntPtr)btn.idCommand, textBuffer);
+                                if (res == textSize)
                                 {
-                                    res = SendMessage(handle, TB_GETBUTTONTEXTW, (IntPtr)btn.idCommand, textBuffer);
-                                    if (res == textSize)
+                                    var localBuffer = Marshal.AllocHGlobal(utextSize.ToInt32());
+                                    if (ReadProcessMemory(hProcess, textBuffer, localBuffer, utextSize, out read))
                                     {
-                                        var localBuffer = Marshal.AllocHGlobal(utextSize.ToInt32());
-                                        if (ReadProcessMemory(hProcess, textBuffer, localBuffer, utextSize, out read))
-                                        {
-                                            var text = Marshal.PtrToStringUni(localBuffer);
-                                            sb.AppendLine(text);                                            
-                                        }
-                                        Marshal.FreeHGlobal(localBuffer);
+                                        var text = Marshal.PtrToStringUni(localBuffer);
+                                        sb.AppendLine(text);                                            
                                     }
-                                    VirtualFreeEx(hProcess, textBuffer, IntPtr.Zero, MEM_RELEASE);
+                                    Marshal.FreeHGlobal(localBuffer);
                                 }
+                                VirtualFreeEx(hProcess, textBuffer, IntPtr.Zero, MEM_RELEASE);
                             }
-                        }
+                        }                        
                     }
                 }
             }            
@@ -96,10 +93,10 @@ namespace MineControl
         private static extern bool CloseHandle(IntPtr hObject);
 
         [DllImport("kernel32", SetLastError = true)]
-        private static extern bool WriteProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, ref TBBUTTONINFOW lpBuffer, IntPtr nSize, out IntPtr lpNumberOfBytesWritten);
+        private static extern bool WriteProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, ref TBButtonInfoW lpBuffer, IntPtr nSize, out IntPtr lpNumberOfBytesWritten);
 
         [DllImport("kernel32", SetLastError = true)]
-        private static extern bool ReadProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, ref TBBUTTONINFOW lpBuffer, IntPtr nSize, out IntPtr lpNumberOfBytesRead);
+        private static extern bool ReadProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, ref TBButtonInfoW lpBuffer, IntPtr nSize, out IntPtr lpNumberOfBytesRead);
 
         [DllImport("kernel32", SetLastError = true)]
         private static extern bool ReadProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, IntPtr lpBuffer, IntPtr nSize, out IntPtr lpNumberOfBytesRead);
@@ -132,7 +129,7 @@ namespace MineControl
         private static int PROCESS_ALL_ACCESS => IsWindowsVistaOrAbove() ? 0x001FFFFF : 0x001F0FFF;
 
         [StructLayout(LayoutKind.Sequential)]
-        private struct TBBUTTONINFOW
+        private struct TBButtonInfoW
         {
             public int cbSize;
             public int dwMask;

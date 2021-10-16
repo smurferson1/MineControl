@@ -7,12 +7,12 @@ namespace MineControl
     {
         // From https://www.pinvoke.net/default.aspx/user32.GetLastInputInfo
         [DllImport("user32.dll")]
-        static extern bool GetLastInputInfo(ref LASTINPUTINFO plii);
+        static extern bool GetLastInputInfo(ref LastInputInfo plii);
 
         [StructLayout(LayoutKind.Sequential)]
-        struct LASTINPUTINFO
+        struct LastInputInfo
         {
-            public static readonly int SizeOf = Marshal.SizeOf(typeof(LASTINPUTINFO));
+            public static readonly int SizeOf = Marshal.SizeOf(typeof(LastInputInfo));
 
             [MarshalAs(UnmanagedType.U4)]
             public UInt32 cbSize;
@@ -23,7 +23,7 @@ namespace MineControl
         public static uint GetLastInputTimeInSecs()
         {
             uint idleTime = 0;
-            LASTINPUTINFO lastInputInfo = new LASTINPUTINFO();
+            LastInputInfo lastInputInfo = new LastInputInfo();
             lastInputInfo.cbSize = (uint)Marshal.SizeOf(lastInputInfo);
             lastInputInfo.dwTime = 0;
 

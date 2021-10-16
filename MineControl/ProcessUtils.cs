@@ -11,7 +11,7 @@ namespace MineControl
     public static class ProcessUtils
     {
         [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
-        public static extern bool TerminateProcess(IntPtr hProcess, uint uExitCode);
+        private static extern bool TerminateProcess(IntPtr hProcess, uint uExitCode);
 
         /// <summary>
         /// Refreshes process info and returns running status
@@ -40,10 +40,8 @@ namespace MineControl
         /// <returns> True if at least 1 instance of _processName is running on the system </returns>
         public static bool IsProcessRunningByName(string _processName)
         {
-            Process[] procname = Process.GetProcessesByName(_processName);
-            {
-                return procname.Length > 0;
-            }
+            Process[] procname = Process.GetProcessesByName(_processName);            
+            return procname.Length > 0;            
         }
 
         /// <summary>

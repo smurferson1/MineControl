@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace MineControl
 {
     // For shared constants
-    class Const
+    public static class Const
     {   
         // general
         public const string UnknownTemp = "Unknown";
