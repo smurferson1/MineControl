@@ -1,6 +1,6 @@
 # MineControl 
 
-Lightweight temperature management, scheduling, and data aggregation for cryptocurrency mining on a GPU and/or CPU, mainly for us plebs with a single GPU and CPU running Windows. It can automatically keep your miners and hardware running within your parameters and give nice data about what's going on (e.g. charts, averages, kWh). This is accomplished by:
+Lightweight temperature management, scheduling, and data aggregation for cryptocurrency mining on a GPU and/or CPU, mainly for us plebs with a single GPU and CPU running **Windows**. It can automatically keep your miners and hardware running within your parameters and give nice data about what's going on (e.g. charts, averages, kWh). This is accomplished by:
 - Reading temperatures and power usage from an external hardware monitor application. Any hardware monitor that can output metrics to system tray tooltips or console window should function once customized.
 - Setting GPU power profile via an external GPU controller application. Any GPU controller that accepts parameters through the command line should function once customized.
 - Optionally managing execution of a GPU and/or CPU mining application for charting and logging their output in a central location (as long as they provide console or systray output), and scheduling their execution.
