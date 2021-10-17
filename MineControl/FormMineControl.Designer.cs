@@ -30,7 +30,7 @@ namespace MineControl
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMineControl));
             this.timerMain = new System.Windows.Forms.Timer(this.components);
             this.toolTipMain = new System.Windows.Forms.ToolTip(this.components);
@@ -205,6 +205,7 @@ namespace MineControl
             this.checkBoxEnableTempControl = new System.Windows.Forms.CheckBox();
             this.checkBoxEnableMinerAutomation = new System.Windows.Forms.CheckBox();
             this.groupBoxControl = new System.Windows.Forms.GroupBox();
+            this.linkLabelHelpDonate = new System.Windows.Forms.LinkLabel();
             this.labelStatusDisplay = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.buttonStopAutomation = new System.Windows.Forms.Button();
@@ -217,7 +218,6 @@ namespace MineControl
             this.openFileDialogBackups = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialogBackups = new System.Windows.Forms.SaveFileDialog();
             this.folderBrowserDialogBackups = new System.Windows.Forms.FolderBrowserDialog();
-            this.linkLabelHelpDonate = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempSteppingBuffer)).BeginInit();
             this.tabControlMain.SuspendLayout();
             this.tabPageConfig.SuspendLayout();
@@ -2433,8 +2433,8 @@ namespace MineControl
             // ColLogMessage
             // 
             this.ColLogMessage.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.ColLogMessage.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.ColLogMessage.DefaultCellStyle = dataGridViewCellStyle1;
             this.ColLogMessage.HeaderText = "Message";
             this.ColLogMessage.MinimumWidth = 30;
             this.ColLogMessage.Name = "ColLogMessage";
@@ -2530,6 +2530,17 @@ namespace MineControl
             this.groupBoxControl.TabStop = false;
             this.groupBoxControl.Text = "Automation Control";
             // 
+            // linkLabelHelpDonate
+            // 
+            this.linkLabelHelpDonate.AutoSize = true;
+            this.linkLabelHelpDonate.Location = new System.Drawing.Point(631, 20);
+            this.linkLabelHelpDonate.Name = "linkLabelHelpDonate";
+            this.linkLabelHelpDonate.Size = new System.Drawing.Size(81, 15);
+            this.linkLabelHelpDonate.TabIndex = 5;
+            this.linkLabelHelpDonate.TabStop = true;
+            this.linkLabelHelpDonate.Text = "Help / Donate";
+            this.linkLabelHelpDonate.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
             // labelStatusDisplay
             // 
             this.labelStatusDisplay.AutoSize = true;
@@ -2616,17 +2627,6 @@ namespace MineControl
             // openFileDialogBackups
             // 
             this.openFileDialogBackups.FileName = "openFileDialogBackupPath";
-            // 
-            // linkLabelHelpDonate
-            // 
-            this.linkLabelHelpDonate.AutoSize = true;
-            this.linkLabelHelpDonate.Location = new System.Drawing.Point(631, 22);
-            this.linkLabelHelpDonate.Name = "linkLabelHelpDonate";
-            this.linkLabelHelpDonate.Size = new System.Drawing.Size(81, 15);
-            this.linkLabelHelpDonate.TabIndex = 5;
-            this.linkLabelHelpDonate.TabStop = true;
-            this.linkLabelHelpDonate.Text = "Help / Donate";
-            this.linkLabelHelpDonate.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // FormMineControl
             // 

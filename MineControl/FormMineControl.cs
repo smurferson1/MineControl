@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -17,6 +18,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 namespace MineControl
 {
     // TODO: confirm app running statuses somehow, perhaps in the timer on an occasional basis
+    // TODO: provide a way to remember settings across versions, since right now it starts over each time version number changes
     public partial class FormMineControl : Form, IChartManager
     {        
         // consts for app grid rows
@@ -67,7 +69,7 @@ namespace MineControl
         private DateTime GPUOverheatStartTime { get; set; } = DateTime.MinValue;
         private DateTime GPUOverheatShutoffTime { get; set; } = DateTime.MinValue;
         private DateTime LastGPUStepChange { get; set; } = DateTime.Now;
-                
+
         // miner management        
         private MinerState GPUState { get; set; } = MinerState.Uninitialized;
         private MinerState CPUState { get; set; } = MinerState.Uninitialized;
@@ -141,6 +143,9 @@ namespace MineControl
 
         private void InitializeUI()
         {   
+            // update title
+            this.Text += $" v{Assembly.GetEntryAssembly().GetName().Version}";
+            
             // set up grids and their data sources
             dataGridViewApps.Rows.Add("GPU Miner", "", "Unknown", "");
             dataGridViewApps.Rows.Add("CPU Miner", "", "Unknown", "");
@@ -236,9 +241,6 @@ namespace MineControl
             // default to hours
             numericUpDownChartShowLastX.Value = 3;
             comboBoxChartShowLastUnit.SelectedIndex = comboBoxChartShowLastUnit.Items.IndexOf("Hours");
-
-            // set initial tray icon
-            SysTrayIcon.UpdateTextIcon(notifyIconMain, true, GPUState, CPUState);
 
             // bind other data sources
             bindingSourceSchedules = new BindingSource();
@@ -811,8 +813,7 @@ namespace MineControl
                         break;
 
                     // nothing required
-                    case nameof(Settings.controlRunning):     
-                    case nameof(Settings.tempSpeedStep):  // Note: notification for this setting is handled elsewhere                    
+                    case nameof(Settings.controlRunning):    
                         break;
 
                     // miner changes that can be applied immediately
@@ -829,7 +830,10 @@ namespace MineControl
                         UpdateMinerState(true);
                         UpdateMinerState(false);        
                         // note: basic control setting that does not trigger archiving
-                        break;                  
+                        break;
+                    case nameof(Settings.tempSpeedStep):  // Note: applying this setting is handled elsewhere                    
+                        SysTrayIcon.UpdateTextIcon(notifyIconMain, false, GPUState, CPUState);
+                        break;
 
                     // other changes that can be applied immediately
                     case nameof(Settings.tempPollingIntervalMillisecs):
@@ -1274,8 +1278,7 @@ namespace MineControl
             UpdatePolledMetrics();
             UpdateChartScales(false);            
             UpdatePolledStats();
-            UpdateStatColors();
-            SysTrayIcon.UpdateTextIcon(notifyIconMain, false, GPUState, CPUState);
+            UpdateStatColors();            
 
             try
             {
@@ -1711,7 +1714,7 @@ namespace MineControl
             }
             else
             {
-                CPUState = newMinerState;
+                CPUState = newMinerState;                
                 if (runMiner && !ProcessUtils.IsProcessRunningFromObject(ProcessCPUMiner))
                 {
                     if (reasonToLog.Length > 0)
@@ -1727,7 +1730,8 @@ namespace MineControl
                                         
                     CloseProcess(ProcessCPUMiner, Settings.appCPUMinerPath, Settings.appCPUMinerName, "CPU Miner", cCPUMinerIndex, ref isCPUMinerRunning);
                 }
-            }            
+            }
+            SysTrayIcon.UpdateTextIcon(notifyIconMain, false, GPUState, CPUState);
         }
 
         /// <summary>
