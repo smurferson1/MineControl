@@ -6,7 +6,7 @@ A power tool for temperature management, scheduling, and data aggregation during
 - Optionally managing execution of an external GPU and/or CPU mining app and charting/logging their output centrally.
 - Finding relevant data in raw text with customizable regular expressions.
 
-Specific hardware monitor and GPU controller applications are not mentioned in order to avoid legal issues, but the default configuration happens to be compatible with the most popular hardware monitor and GPU controller applications for NVIDIA and AMD GPUs. Hint: they rhyme with **RidesharePimpo** and **MakeThemCry ButterChurner**.
+Specific hardware monitor and GPU controller applications are not mentioned in order to avoid legal issues, but the default configuration happens to be compatible with the most popular hardware monitor and GPU controller applications for NVIDIA and AMD GPUs. Hint: they rhyme with **RidesharePimpo** and **HeStoleMy ButterChurner**.
 
 ## Donations
 MineControl is free and open source. Crypto donations are however appreciated and will keep the developer(s) motivated to fix and improve things. Current wallets for donation:
@@ -44,24 +44,35 @@ MineControl is free and open source. Crypto donations are however appreciated an
 - Engineering: badly engineered with a bunch of logic attached to the form and stuff. Sorry.
 - Most temperature and power management features are GPU-only.
 
+## Requirements
+
+- Windows 10
+- .NET 5
+- A hardware monitor app, *if* MineControl should monitor hardware sensors and automate actions based on sensor readings.
+- A GPU controller app, *if* MineControl should automate GPU power stepping for temperature control.
+- A GPU and/or CPU miner app that outputs to a console window, *if* MineControl should aggregate GPU/CPU miner data and control their execution.
+- MineControl **must** be both 1) started using an administrator account, and 2) **not** running elevated (i.e. admin privileges).
+- UAC (User Account Control) in Windows **must** be configured low enough that the logged in user is not prompted to confirm execution of applications as admin. Otherwise automated execution of miners and apps, including power stepping, will cause a bunch of UAC prompts and not work.
+
 ## Instructions
 
 1) Install the hardware monitor, GPU controller application, GPU and/or CPU miner you want to use. MineControl was tested using **PhoenixMiner** for GPU and **XMRig** (MoneroOcean version) for CPU, so these are supported by default.
 2) Configure the miner(s) and test them to make sure they run correctly and send crypto to your wallet address.
-3) Configure the hardware monitor output, which is done inside of the hardware monitor application. For RidesharePimpo, you MUST enable system tray output for the metrics you want to track, like GPU memory junction temp, as this is what MineControl uses to read data. This can be enabled individually through the right-click menu for each sensor row.
+3) Configure the hardware monitor output, which is done inside of the hardware monitor application. For RidesharePimpo, you MUST enable system tray output for the metrics you want to track, like GPU memory junction temp, as this is what MineControl uses to read data. This can be enabled individually through the right-click menu for each sensor row. In addition, the **systray icons must be visible on the taskbar to be read by MineControl**, not in the overflow section. To be really sure, you can enable the "Always show all icons in the notification area" option in Windows taskbar settings for notification icons.
 3) Configure the power profiles inside of the GPU controller application. This is ***EXTREMELY IMPORTANT***. You have full control over your power profiles, so you can set voltage curves or whatever you like. This should go from lowest power (lowest temp) in profile 1 to highest power in profile 5. To prevent MineControl from using a profile, change the parameter for the profile (under "Command Line Params" in GPU Temperature Management) to blank or something invalid. **Keep in mind that your temperature control will only be as good as your range of power profiles.**
 4) Configure miners and applications by pointing to their executable. Batch files are supported but you *must* add the exact application (EXE) name *without* extension in the "App" cell, case-insensitive.
-5) Configure Data Tracking metrics as needed for your miners and applications, and disable metrics you don't use. This is the tough part, but may not be necessary if you're using all of RidesharePimpo, MakeThemCry ButterChurner, PhoenixMiner, and xmrig. Use the "RegEx" method for any metric you need to customize. An easy way to do this is paste example output from the application into https://regexr.com/ for easyish learning and testing. There is a "View SysTray" button in MineControl that can be used to get a current example of that output (use Ctrl+C to copy the text out of the popup).
+5) Configure Data Tracking metrics as needed for your miners and applications, and disable metrics you don't use. This is the tough part, but may not be necessary if you're using all of RidesharePimpo, HeStoleMy ButterChurner, PhoenixMiner, and xmrig. Use the "RegEx" method for any metric you need to customize. An easy way to do this is paste example output from the application into https://regexr.com/ for easyish learning and testing. There is a "View SysTray" button in MineControl that can be used to get a current example of that output (use Ctrl+C to copy the text out of the popup).
 6) Configure your target GPU temps and anything else you care about.
 7) Press Start!
 8) Monitor periodically for a while to make sure your config is working to your satisfaction and not doing anything bad.
 
 ## Tips
 
-- DO NOT run MineControl elevated (i.e. with Windows administrator privileges) if controlling GPU and CPU miner. In testing, there appeared to be a bug with PhoenixMiner that caused **masssively** increased GPU temps after several minutes when MineControl was elevated, for no apparent reason.
+- MineControl can only see data for sensors that exist in your PC. Some power supplies provide wattage sensor readings and some do not, for example. Your GPU may also not report a memory junction temperature.
+- DO NOT run MineControl elevated (i.e. with Windows administrator privileges) if controlling GPU and CPU miner. In testing, there appeared to be a bug with PhoenixMiner that caused **massively** increased GPU temps after several minutes when MineControl was elevated, for no apparent reason.
 - DO run MineControl using a Windows administrator account if any of the controlled applications require admin privileges, and make sure Windows is configured so that additional admin popups are not displayed when MineControl launches miners and applications. Popular hardware monitor and GPU controller software *does* require admin rights.
 - There are detailed tooltips for most settings to explain what they do.
-- When MineControl runs a miner, the normal miner window will *not* show, because its output is being entirely redirected to MineControl and cannot be shown in its normal window. To verify the miner is running, check it in Task Manager (Windows). To see miner log entries in MineControl, enable Keep Logs for the miner, otherwise they're just gone, yo. Note: any text coloring from the miner is not kept.
+- When MineControl runs a miner, the normal miner window will *not* show, because its output is being entirely redirected to MineControl and wouldn't show in its normal window. To verify the miner is running, check it in Task Manager (Windows). To see miner log entries in MineControl, enable Keep Logs for the miner, otherwise they're just gone, yo. Note: any text coloring from the miner is not kept.
 - When MineControl recognizes a log entry from a miner as input for a metric (like when a RegEx match is found), it categorizes the log entry as "Input" and appends what it found. This can be used to debug your data tracking customizations if needed. This only shows up if Keep Logs for the miner is enabled.
 - Understanding the MineControl system tray icon: 
   - GPU miner is the left bar, GPU power step is the number in the middle, and CPU miner is the right bar. 
