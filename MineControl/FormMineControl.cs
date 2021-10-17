@@ -211,8 +211,7 @@ namespace MineControl
             ColDataQuery.Items.Add(@"(?<=[E][t][h][ ][s][p][e][e][d][:][ ]\d +[.]\d +[ ])\w+");
             ColDataQuery.Items.Add(@"(?<=[m][i][n][e][r][ ]+[s][p][e][e][d][ ][0-9ms/]+[ ][0-9\.]+[ ])\d+[.]*\d+");
 
-            // init stats in a logical order
-            // TODO: ensure all are calculated appropriately
+            // init stats in a logical order            
             SetStat(cGPUPowerStep, "");
             SetStat(cAvgGPUPowerStep, "");
             SetStat(cGPUMemJuncTemp, "");
@@ -1829,47 +1828,61 @@ namespace MineControl
                 runtime.Days, runtime.Hours, runtime.Minutes, runtime.Seconds, runtime.Milliseconds);    
             SetStat(cRuntime, formattedRuntime);
         }
-                
-        private double CalculateAverage(Series series, CalculationMethod calculationMethod = CalculationMethod.Lookbehind)
+        
+        private (double, double) CalculateAreaAndTotalTime(Series series, CalculationMethod calculationMethod)
         {            
-            // TODO: implement lookahead calculationMethod
-            DateTime previousTime = DateTime.MinValue;
-            double totalXandY = 0.0;
-            double totalElapsed = 0.0;
-            double lastElapsed;
+            if (series == null || !series.Points.Any())
+            {
+                return (double.NaN, double.NaN);
+            }
+
+            // get total time and x+y area            
+            DataPoint previousPoint = null;
+            double totalArea = 0.0;
+            double totalTime = 0.0;
+            double lastTime;
             foreach (DataPoint point in series.Points)
             {
-                if (previousTime != DateTime.MinValue)
+                if (previousPoint != null)
                 {
-                    lastElapsed = (DateTime.FromOADate(point.XValue) - previousTime).TotalSeconds;
-                    totalElapsed += lastElapsed;
-                    totalXandY += (point.YValues[0] * lastElapsed);
+                    lastTime = (DateTime.FromOADate(point.XValue) - DateTime.FromOADate(previousPoint.XValue)).TotalSeconds;
+                    totalTime += lastTime;
+                    totalArea += (calculationMethod == CalculationMethod.Lookahead ? previousPoint.YValues[0] : point.YValues[0]) * lastTime;
                 }
-                previousTime = DateTime.FromOADate(point.XValue);
+                previousPoint = point;
             }
-            // calculate average as (previous total + (current * number of seconds elapsed at this point)) / total elapsed seconds
-            return Math.Round(totalXandY / totalElapsed, 2);
+
+            // include area after last point if we're using the lookahead method            
+            DataPoint lastP = series.Points.Last();
+            if (calculationMethod == CalculationMethod.Lookahead && !double.IsNaN(lastP.YValues[0]))
+            {
+                lastTime = (DateTime.Now - DateTime.FromOADate(lastP.XValue)).TotalSeconds;
+                totalTime += lastTime;
+                totalArea += lastP.YValues[0] * lastTime;
+                
+            }
+
+            return (totalArea, totalTime);
         }
 
-        private object CalculateRate(Series series, double denominator, CalculationMethod calculationMethod = CalculationMethod.Lookbehind)
+        private double CalculateAverage(Series series, CalculationMethod calculationMethod)
+        {            
+            double totalArea;
+            double totalTime;
+            (totalArea, totalTime) = CalculateAreaAndTotalTime(series, calculationMethod);
+            
+            // calculate average as (previous total area + total area since last data point [if doing Lookahead]) / total elapsed time            
+            return Math.Round(totalArea / totalTime, 2);
+        }
+
+        private object CalculateRate(Series series, double denominator, CalculationMethod calculationMethod)
         {
-            // TODO: implement lookahead calculationmethod            
-            DateTime previousTime = DateTime.MinValue;
-            double totalXandY = 0.0;
-            double totalElapsed = 0.0;
-            double lastElapsed;
-            foreach (DataPoint point in series.Points)
-            {
-                if (previousTime != DateTime.MinValue)
-                {
-                    lastElapsed = (DateTime.FromOADate(point.XValue) - previousTime).TotalSeconds;
-                    totalElapsed += lastElapsed;
-                    totalXandY += (point.YValues[0] * lastElapsed);
-                }
-                previousTime = DateTime.FromOADate(point.XValue);
-            }
-            // calculate average as (previous total + (current * number of seconds elapsed at this point)) / total elapsed seconds
-            return Math.Round((totalXandY) / denominator, 3);
+            double totalArea;
+            double totalTime;
+            (totalArea, totalTime) = CalculateAreaAndTotalTime(series, calculationMethod);
+
+            // calculate rate as (previous total area + total area since last data point [if doing Lookahead]) / denominator
+            return Math.Round(totalArea / denominator, 3);
         }
 
         private void UpdateChartScales(bool includeGPUPowerStep)
@@ -1879,16 +1892,23 @@ namespace MineControl
             // TODO: make it work when series 1 or 2 is MIA
             if ((Series(cGPUMemJuncTemp).Points.Count > 0) && (Series(cGPUHashRate).Points.Count > 0))
             {
-                double minimum = Math.Min(Series(cGPUMemJuncTemp).Points.FindMinByValue().YValues[0], Series(cGPUHashRate).Points.FindMinByValue().YValues[0]) - 2;
-                if (!double.IsNaN(minimum))                
-                    Chart(cGPU).ChartAreas[0].AxisY2.Minimum = minimum;
-                if (Settings.chartMinTempOnYAxisEnabled && (Chart(cGPU).ChartAreas[0].AxisY2.Minimum < Settings.chartMinTempOnYAxisValue))
+                double tempMin = Series(cGPUMemJuncTemp).Points.FindMinByValue().YValues[0];
+                if (Settings.chartMinTempOnYAxisEnabled)
                 {
-                    Chart(cGPU).ChartAreas[0].AxisY2.Minimum = Settings.chartMinTempOnYAxisValue;
+                    tempMin = Math.Max(tempMin, Settings.chartMinTempOnYAxisValue);
                 }
-                double maximum = Math.Max(Series(cGPUMemJuncTemp).Points.FindMaxByValue().YValues[0], Series(cGPUHashRate).Points.FindMaxByValue().YValues[0]) + 2;
-                if (!double.IsNaN(maximum))
-                    Chart(cGPU).ChartAreas[0].AxisY2.Maximum = maximum;
+
+                double axisMin = Math.Min(tempMin, Series(cGPUHashRate).Points.FindMinByValue().YValues[0]) - 2;
+                if (!double.IsNaN(axisMin))
+                {
+                    Chart(cGPU).ChartAreas[0].AxisY2.Minimum = axisMin;
+                }
+
+                double axisMax = Math.Max(Series(cGPUMemJuncTemp).Points.FindMaxByValue().YValues[0], Series(cGPUHashRate).Points.FindMaxByValue().YValues[0]) + 2;
+                if (!double.IsNaN(axisMax))
+                {
+                    Chart(cGPU).ChartAreas[0].AxisY2.Maximum = axisMax;
+                }
             }
             else
             {
