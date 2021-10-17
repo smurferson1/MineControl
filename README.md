@@ -78,7 +78,7 @@ MineControl is free and open source. Crypto donations are however appreciated an
 - When MineControl recognizes a log entry from a miner as input for a metric (like when a RegEx match is found), it categorizes the log entry as "Input" and appends what it found. This can be used to debug your data tracking customizations if needed. This only shows up if Keep Logs for the miner is enabled.
 - Understanding the MineControl system tray icon: 
   - GPU miner is the left bar, GPU power step is the number in the middle, and CPU miner is the right bar. 
-  - Miner bar colors: black = disabled by user, green = running, yellow = stopped due to user activity, gray = stopped due to schedule, red = stopped due to error.
+  - Miner bar colors: black = disabled by user, green = running, yellow = stopped due to user activity, gray = stopped due to schedule, orange = stopped due to unknown temp or overheating, red = stopped due to other error.
 - Maintaining performance and low resource consumption:
   - Run minimized when not attended.
   - Enable clearing logs and charts at least once per day. Data built up much longer than that *will* raise CPU use and slow down the UI.
