@@ -16,8 +16,8 @@ MineControl is free and open source. Crypto donations are however appreciated an
 
 ## DISCLAIMERS
 
-- MineControl is NOT guaranteed to work correctly or protect your computer in all circumstances. It is in development and subject to being shit, making mistakes, or missing *YOUR* mistakes. **USE AT YOUR OWN RISK**. It is *essential* to configure MineControl carefully and watch it for a while to be sure it's doing what you intend. Your temps and power usage *CAN* go too high if you misconfigure MineControl or it makes a booboo.
-- MineControl won't take your mining profits or send anything to anyone, **IF DOWNLOADED FROM THIS GITHUB REPO**. Feel free to inspect the code or compile yourself, but DO NOT get MineControl from anywhere or anyone else, since software can easily be compromised by attackers and redistributed in a nearly identical form.
+- MineControl is NOT guaranteed to work correctly or protect your computer in all circumstances. It is in development and subject to being shit, making mistakes, or missing *YOUR* mistakes. **USE AT YOUR OWN RISK**. It's best to configure MineControl carefully and watch it for a while to be sure it's doing what you intend. Your temps and power usage *CAN* go too high if you misconfigure MineControl or it makes a booboo.
+- MineControl won't take your mining profits or send anything to anyone, **IF DOWNLOADED FROM THIS GITHUB REPO**. Feel free to inspect the code or compile yourself, but DO NOT download MineControl from anywhere or anyone else, since software can easily be compromised by attackers and redistributed in a nearly identical form.
 - As with most other software developed in free time for fun, there is no guarantee from the developer to provide support or updates of any kind.
 
 ## Key Features
@@ -57,15 +57,15 @@ MineControl is free and open source. Crypto donations are however appreciated an
 
 ## Instructions
 
-1) Install the hardware monitor, GPU controller application, GPU and/or CPU miner you want to use. MineControl was tested using **PhoenixMiner** for GPU and **XMRig** (MoneroOcean version) for CPU, so these are supported by default.
+1) Install the hardware monitor, GPU controller, GPU and/or CPU miner you want to use. MineControl was tested using **PhoenixMiner** for GPU and **XMRig** (MoneroOcean version) for CPU, so these are supported by default.
 2) Configure the miner(s) and test them to make sure they run correctly and send crypto to your wallet address.
-3) Configure the hardware monitor output, which is done inside of the hardware monitor application. For RidesharePimpo, you MUST enable system tray output for the metrics you want to track, like GPU memory junction temp, as this is what MineControl uses to read data. This can be enabled individually through the right-click menu for each sensor row. In addition, the **systray icons must be visible on the taskbar to be read by MineControl**, not in the overflow section. To be really sure, you can enable the "Always show all icons in the notification area" option in Windows taskbar settings for notification icons.
-3) Configure the power profiles inside of the GPU controller application. This is ***EXTREMELY IMPORTANT***. You have full control over your power profiles, so you can set voltage curves or whatever you like. This should go from lowest power (lowest temp) in profile 1 to highest power in profile 5. To prevent MineControl from using a profile, change the parameter for the profile (under "Command Line Params" in GPU Temperature Management) to blank or something invalid. **Keep in mind that your temperature control will only be as good as your range of power profiles.**
-4) Configure miners and applications by pointing to their executable. Batch files are supported but you *must* add the exact application (EXE) name *without* extension in the "App" cell, case-insensitive.
-5) Configure Data Tracking metrics as needed for your miners and applications, and disable metrics you don't use. This is the tough part, but may not be necessary if you're using all of RidesharePimpo, MenStoleMy ButterChurner, PhoenixMiner, and xmrig. Use the "RegEx" method for any metric you need to customize. An easy way to do this is paste example output from the application into https://regexr.com/ for easyish learning and testing. There is a "View SysTray" button in MineControl that can be used to get a current example of that output (use Ctrl+C to copy the text out of the popup).
-6) Configure your target GPU temps and anything else you care about.
-7) Press Start!
-8) Monitor periodically for a while to make sure your config is working to your satisfaction and not doing anything bad.
+3) Configure the hardware monitor output, which is done inside of the hardware monitor application. For RidesharePimpo, this means enabling system tray output for the metrics you want to track, like GPU memory junction temp, as this is what MineControl uses to read data. This can be enabled through the right-click menu for the sensor row. In addition, the **systray icons must be visible on the taskbar to be read by MineControl**, not hidden in the overflow area. To be really sure, you can enable the "Always show all icons in the notification area" option in Windows taskbar settings for notification icons.
+4) Configure the power profiles inside of the GPU controller application. You have full control over your power profiles, so you can set voltage curves or whatever you like. This should go from lowest power (lowest temp) in profile 1 to highest power in profile 5. **Your temperature control and hash rates will only be as good as your power profiles.**
+5) Configure miners and applications by pointing to their executables at the top of the Config tab. Batch files are supported but you **must** set the exact application (EXE) name of the miner **without** extension in the "Process Name" cell.
+6) Configure Data Tracking metrics as needed for your miners and applications, and disable metrics you don't use. This can be tedious, but may not be necessary if you're using RidesharePimpo, MenStoleMy ButterChurner, PhoenixMiner, and xmrig. Use the "RegEx" method for any metric you need to customize. An easy way to do this is to paste example output from the application into https://regexr.com/ for easyish learning and testing. There is a "View SysTray" button in MineControl that can be used to get a current example of that output (use Ctrl+C to copy the text out of the popup).
+7) Configure your target GPU temps and anything else you care about.
+8) Press Start!
+9) Monitor periodically for a while to make sure your config is working to your satisfaction and not doing anything bad.
 
 ## Tips
 
@@ -86,3 +86,4 @@ MineControl is free and open source. Crypto donations are however appreciated an
   - Disable GPU and CPU miner Keep Logs option. 
   - Data tracking: disable metrics you don't need. 
   - Data Tracking: use the UserValue method for units and algos that don't change. Reduces processing a tiny bit.
+- To prevent MineControl from using a GPU power profile, change the parameter for the profile (under "Command Line Params" in GPU Temperature Management) to blank or something invalid.
