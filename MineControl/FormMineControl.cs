@@ -1370,6 +1370,7 @@ namespace MineControl
         private void ClearOldChartData(DateTime evalStartTime)
         {
             DateTime timeCutoff = GetTimeCutoff(evalStartTime, Settings.archivesClearOldChartsUnit, Settings.archivesClearOldChartsValue);
+            bool logged = false;
             List<DataPoint> points;
             foreach (Chart chart in Charts)
             {
@@ -1378,7 +1379,13 @@ namespace MineControl
                     points = series.Points.Where(p => DateTime.FromOADate(p.XValue) <= timeCutoff).ToList();
                     for (int i = points.Count - 1; i >= 0; i--)
                     {
-                        series.Points.Remove(points[i]);
+                        if (!logged)
+                        {
+                            // only log the clearing if we actually found something to clear
+                            AddLogEntry($"Clearing chart data older than {timeCutoff}");
+                            logged = true;
+                        }
+                        series.Points.Remove(points[i]);                        
                     }
                 }
             }
@@ -1887,6 +1894,8 @@ namespace MineControl
 
         private void UpdateChartScales(bool includeGPUPowerStep)
         {
+            int axisPadding = 2;
+
             // update GPU temp axis to fit current data
             // TODO: ensure this works when visible points have a different min and max than the full set
             // TODO: make it work when series 1 or 2 is MIA
@@ -1894,17 +1903,17 @@ namespace MineControl
             {
                 double tempMin = Series(cGPUMemJuncTemp).Points.FindMinByValue().YValues[0];
                 if (Settings.chartMinTempOnYAxisEnabled)
-                {
-                    tempMin = Math.Max(tempMin, Settings.chartMinTempOnYAxisValue);
+                {                    
+                    tempMin = Math.Max(tempMin, Settings.chartMinTempOnYAxisValue + axisPadding);
                 }
 
-                double axisMin = Math.Min(tempMin, Series(cGPUHashRate).Points.FindMinByValue().YValues[0]) - 2;
+                double axisMin = Math.Min(tempMin, Series(cGPUHashRate).Points.FindMinByValue().YValues[0]) - axisPadding;
                 if (!double.IsNaN(axisMin))
                 {
                     Chart(cGPU).ChartAreas[0].AxisY2.Minimum = axisMin;
                 }
 
-                double axisMax = Math.Max(Series(cGPUMemJuncTemp).Points.FindMaxByValue().YValues[0], Series(cGPUHashRate).Points.FindMaxByValue().YValues[0]) + 2;
+                double axisMax = Math.Max(Series(cGPUMemJuncTemp).Points.FindMaxByValue().YValues[0], Series(cGPUHashRate).Points.FindMaxByValue().YValues[0]) + axisPadding;
                 if (!double.IsNaN(axisMax))
                 {
                     Chart(cGPU).ChartAreas[0].AxisY2.Maximum = axisMax;
@@ -1938,13 +1947,13 @@ namespace MineControl
             // update CPU axis to fit current data
             if (Series(cCPUHashRate).Points.Count > 0)
             {
-                Chart(cCPU).ChartAreas[0].AxisY2.Minimum = Series(cCPUHashRate).Points.FindMinByValue().YValues[0];
+                Chart(cCPU).ChartAreas[0].AxisY2.Minimum = Series(cCPUHashRate).Points.FindMinByValue().YValues[0] - axisPadding;
                 // TODO: figure out whether to adapt the commented code
                 //if (Settings.chartMinTempOnYAxisEnabled && (Chart(cCPU).ChartAreas[0].AxisY2.Minimum < Settings.chartMinTempOnYAxisValue))
                 //{
                 //    Chart(cCPU).ChartAreas[0].AxisY2.Minimum = Settings.chartMinTempOnYAxisValue;
                 //}
-                Chart(cCPU).ChartAreas[0].AxisY2.Maximum = Series(cCPUHashRate).Points.FindMaxByValue().YValues[0] + 2;
+                Chart(cCPU).ChartAreas[0].AxisY2.Maximum = Series(cCPUHashRate).Points.FindMaxByValue().YValues[0] + axisPadding;
 
                 if (Math.Round((Chart(cCPU).ChartAreas[0].AxisY2.Maximum - Chart(cCPU).ChartAreas[0].AxisY2.Minimum) / 20, 0) > 0)
                     Chart(cCPU).ChartAreas[0].AxisY2.Interval = Math.Round((Chart(cCPU).ChartAreas[0].AxisY2.Maximum - Chart(cCPU).ChartAreas[0].AxisY2.Minimum) / 20, 0);
