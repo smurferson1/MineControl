@@ -1897,11 +1897,12 @@ namespace MineControl
 
         private void UpdateChartScales(bool includeGPUPowerStep)
         {
-            int axisPadding = 2;
-
-            // update GPU temp axis to fit current data
             // TODO: ensure this works when visible points have a different min and max than the full set
             // TODO: make it work when series 1 or 2 is MIA
+            // TODO: perhaps only update this (and other visual stuff) when the form is visible, to save resources
+            int axisPadding = 2;
+
+            // update GPU temp axis to fit current data            
             if ((Series(cGPUMemJuncTemp).Points.Count > 0) && (Series(cGPUHashRate).Points.Count > 0))
             {
                 double tempMin = Series(cGPUMemJuncTemp).Points.FindMinByValue().YValues[0];
@@ -1913,13 +1914,13 @@ namespace MineControl
                 double axisMin = Math.Min(tempMin, Series(cGPUHashRate).Points.FindMinByValue().YValues[0]) - axisPadding;
                 if (!double.IsNaN(axisMin))
                 {
-                    Chart(cGPU).ChartAreas[0].AxisY2.Minimum = axisMin;
+                    Chart(cGPU).ChartAreas[0].AxisY2.Minimum = Math.Round(axisMin);
                 }
 
                 double axisMax = Math.Max(Series(cGPUMemJuncTemp).Points.FindMaxByValue().YValues[0], Series(cGPUHashRate).Points.FindMaxByValue().YValues[0]) + axisPadding;
                 if (!double.IsNaN(axisMax))
                 {
-                    Chart(cGPU).ChartAreas[0].AxisY2.Maximum = axisMax;
+                    Chart(cGPU).ChartAreas[0].AxisY2.Maximum = Math.Round(axisMax);
                 }
             }
             else
@@ -1950,13 +1951,13 @@ namespace MineControl
             // update CPU axis to fit current data
             if (Series(cCPUHashRate).Points.Count > 0)
             {
-                Chart(cCPU).ChartAreas[0].AxisY2.Minimum = Series(cCPUHashRate).Points.FindMinByValue().YValues[0] - axisPadding;
+                Chart(cCPU).ChartAreas[0].AxisY2.Minimum = Math.Round(Series(cCPUHashRate).Points.FindMinByValue().YValues[0] - axisPadding);
                 // TODO: figure out whether to adapt the commented code
                 //if (Settings.chartMinTempOnYAxisEnabled && (Chart(cCPU).ChartAreas[0].AxisY2.Minimum < Settings.chartMinTempOnYAxisValue))
                 //{
                 //    Chart(cCPU).ChartAreas[0].AxisY2.Minimum = Settings.chartMinTempOnYAxisValue;
                 //}
-                Chart(cCPU).ChartAreas[0].AxisY2.Maximum = Series(cCPUHashRate).Points.FindMaxByValue().YValues[0] + axisPadding;
+                Chart(cCPU).ChartAreas[0].AxisY2.Maximum = Math.Round(Series(cCPUHashRate).Points.FindMaxByValue().YValues[0] + axisPadding);
 
                 if (Math.Round((Chart(cCPU).ChartAreas[0].AxisY2.Maximum - Chart(cCPU).ChartAreas[0].AxisY2.Minimum) / 20, 0) > 0)
                     Chart(cCPU).ChartAreas[0].AxisY2.Interval = Math.Round((Chart(cCPU).ChartAreas[0].AxisY2.Maximum - Chart(cCPU).ChartAreas[0].AxisY2.Minimum) / 20, 0);
