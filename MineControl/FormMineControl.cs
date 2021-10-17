@@ -609,14 +609,14 @@ namespace MineControl
                 SaveSchedulesFromList();
 
             // apps grid
-            Settings.appGPUMinerName = dataGridViewApps.Rows[cGPUMinerIndex].Cells[ColAppName.Index].Value.ToString();
-            Settings.appGPUMinerPath = dataGridViewApps.Rows[cGPUMinerIndex].Cells[ColAppPath.Index].Value.ToString();
-            Settings.appCPUMinerName = dataGridViewApps.Rows[cCPUMinerIndex].Cells[ColAppName.Index].Value.ToString();
-            Settings.appCPUMinerPath = dataGridViewApps.Rows[cCPUMinerIndex].Cells[ColAppPath.Index].Value.ToString();
-            Settings.appHardwareMonitorName = dataGridViewApps.Rows[cHWMonitorIndex].Cells[ColAppName.Index].Value.ToString();
-            Settings.appHardwareMonitorPath = dataGridViewApps.Rows[cHWMonitorIndex].Cells[ColAppPath.Index].Value.ToString();
-            Settings.appGPUControllerName = dataGridViewApps.Rows[cGPUControllerIndex].Cells[ColAppName.Index].Value.ToString();
-            Settings.appGPUControllerPath = dataGridViewApps.Rows[cGPUControllerIndex].Cells[ColAppPath.Index].Value.ToString();
+            Settings.appGPUMinerName = dataGridViewApps.Rows[cGPUMinerIndex].Cells[ColAppName.Index].Value?.ToString() ?? string.Empty;
+            Settings.appGPUMinerPath = dataGridViewApps.Rows[cGPUMinerIndex].Cells[ColAppPath.Index].Value?.ToString() ?? string.Empty;
+            Settings.appCPUMinerName = dataGridViewApps.Rows[cCPUMinerIndex].Cells[ColAppName.Index].Value?.ToString() ?? string.Empty;
+            Settings.appCPUMinerPath = dataGridViewApps.Rows[cCPUMinerIndex].Cells[ColAppPath.Index].Value?.ToString() ?? string.Empty;
+            Settings.appHardwareMonitorName = dataGridViewApps.Rows[cHWMonitorIndex].Cells[ColAppName.Index].Value?.ToString() ?? string.Empty;
+            Settings.appHardwareMonitorPath = dataGridViewApps.Rows[cHWMonitorIndex].Cells[ColAppPath.Index].Value?.ToString() ?? string.Empty;
+            Settings.appGPUControllerName = dataGridViewApps.Rows[cGPUControllerIndex].Cells[ColAppName.Index].Value?.ToString() ?? string.Empty;
+            Settings.appGPUControllerPath = dataGridViewApps.Rows[cGPUControllerIndex].Cells[ColAppPath.Index].Value?.ToString() ?? string.Empty;
 
             // miner management            
             Settings.minerEnableAutomation = checkBoxEnableMinerAutomation.Checked;
