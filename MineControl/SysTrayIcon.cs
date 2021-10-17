@@ -119,41 +119,21 @@ namespace MineControl
             g.FillRectangle(brushBackgroundLeft, new Rectangle(0, 0, 8, 16));
             g.FillRectangle(brushBackgroundRight, new Rectangle(8, 0, 8, 16));
             g.FillRectangle(Brushes.Black, new Rectangle(3, 0, 10, 16));
-            //g.DrawRectangle(p, new Rectangle(0, 0, 15, 15));
             g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit;
             if ((char1.Length > 0) && (char2.Length > 0))
             {
                 using Font fontToUse = new Font("Tahoma", 11, FontStyle.Bold, GraphicsUnit.Pixel);
-                //Size sizeOfText = TextRenderer.MeasureText(char1, fontToUse);                    
-                //g.FillRectangle(Brushes.Black, new Rectangle(new Point(-1, 1), sizeOfText));
-                    
-                //g.DrawString(char1[0].ToString(), fontToUse, brushTextShadow, -1, 0);
                 g.DrawString(char1[0].ToString(), fontToUse, brush1, -1, 1);
-                //g.DrawString(char2[0].ToString(), fontToUse, brushTextShadow, 7, 0);
                 g.DrawString(char2[0].ToString(), fontToUse, brush2, 7, 1);
             }
             else if ((char1.Length) > 0)
             {
                 using Font fontToUse = new Font("Tahoma", 15, FontStyle.Bold, GraphicsUnit.Pixel);
-                //Size sizeOfText = TextRenderer.MeasureText(char1, fontToUse);
-                //g.FillRectangle(Brushes.Black, new Rectangle(new Point(0, -1), sizeOfText));
-                    
-                //g.DrawString(char1[0].ToString(), fontToUse, brushTextShadow, -1, -1);
-                //g.DrawString(char1[0].ToString(), fontToUse, brushTextShadow, 1, -1);
-                //g.DrawString(char1[0].ToString(), fontToUse, brushTextShadow, -1, 0);
-                //g.DrawString(char1[0].ToString(), fontToUse, brushTextShadow, 1, 0);
                 g.DrawString(char1[0].ToString(), fontToUse, brush1, 0, -1);
             }
             else if ((char2.Length) > 0)
             {
                 using Font fontToUse = new Font("Tahoma", 15, FontStyle.Bold, GraphicsUnit.Pixel);
-                //Size sizeOfText = TextRenderer.MeasureText(char2, fontToUse);
-                //g.FillRectangle(Brushes.Black, new Rectangle(new Point(0, -1), sizeOfText));
-                    
-                //g.DrawString(char2[0].ToString(), fontToUse, brushTextShadow, -1, -1);
-                //g.DrawString(char2[0].ToString(), fontToUse, brushTextShadow, 1, -1);
-                //g.DrawString(char2[0].ToString(), fontToUse, brushTextShadow, -1, 0);
-                //g.DrawString(char2[0].ToString(), fontToUse, brushTextShadow, 1, 0);
                 g.DrawString(char2[0].ToString(), fontToUse, brush2, 0, -1);
             }
             hIcon = (bitmapText.GetHicon());            
