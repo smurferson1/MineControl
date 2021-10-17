@@ -16,8 +16,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
 namespace MineControl
-{
-    // TODO: confirm app running statuses somehow, perhaps in the timer on an occasional basis
+{    
     // TODO: provide a way to remember settings across versions, since right now it starts over each time version number changes
     public partial class FormMineControl : Form, IChartManager
     {        
@@ -39,9 +38,9 @@ namespace MineControl
         private const string cGPUHashRateUnit = "GPU Hash Rate Unit";
         private const string cAvgGPUHashRate = "Avg GPU Hash Rate";
         private const string cGPUHashAlgo = "GPU Hash Algo";
-        private const string cGPUMemJuncTemp = "GPU Mem Junc Temp";
-        private const string cGPUMemJuncTempUnit = "GPU Mem Junc Temp Unit";
-        private const string cAvgGPUMemJuncTemp = "Avg GPU Mem Junc Temp";
+        private const string cGPUMemJuncTemp = "GPU/Mem Junc Temp";
+        private const string cGPUMemJuncTempUnit = "GPU/Mem Junc Temp Unit";
+        private const string cAvgGPUMemJuncTemp = "Avg GPU/Mem Junc Temp";
         private const string cCPUHashRate = "CPU Hash Rate";
         private const string cCPUHashRateUnit = "CPU Hash Rate Unit";
         private const string cAvgCPUHashRate = "Avg CPU Hash Rate";
@@ -1738,51 +1737,92 @@ namespace MineControl
         /// Updates stats for items controlled on a polling cycle
         /// </summary>
         private void UpdatePolledStats()
-        {    
-            // TODO: include lookahead for averages that should have it
-            // current GPU power step
-            SetStat(cGPUPowerStep, Settings.tempSpeedStep.ToString());
-
-            // TODO: for all averages, account for zero/X values. may require plotting them as well.
-            // TODO: need to add a "virtual" point for averages of change-only metrics like power step, in case it stays the same for a long time without a new point
+        {
+            // TODO: for all averages and rates, account for zero/X values. may require plotting them as well.
+            // TODO: simplify code and reduce redundancy. May be best to combine with metrics collection somehow.
+             
+            // current GPU power step (always shown)
+            if (Metric(cGPUPowerStep).IsEnabled)
+            {
+                SetStat(cGPUPowerStep, Settings.tempSpeedStep.ToString());
+            }
+            
             // average GPU power step
             // calculate average
-            if (Series(cGPUPowerStep).Points.Count > 0)
+            if (Series(cGPUPowerStep).Points.Count > 0 && Metric(cGPUPowerStep).IsEnabled)
             {
-                SetStat(cAvgGPUPowerStep, CalculateAverage(Series(cGPUPowerStep)).ToString());                
+                SetStat(cAvgGPUPowerStep, CalculateAverage(Series(cGPUPowerStep), CalculationMethod.Lookahead).ToString());                
             }
 
             // current GPU temp - covered elsewhere            
 
             // average GPU temp
-            if (Series(cGPUMemJuncTemp).Points.Count > 0)
+            if (Series(cGPUMemJuncTemp).Points.Count > 0 && Metric(cGPUMemJuncTemp).IsEnabled)
             {
-                SetStat(cAvgGPUMemJuncTemp, CalculateAverage(Series(cGPUMemJuncTemp)).ToString());
+                SetStat(cAvgGPUMemJuncTemp, CalculateAverage(Series(cGPUMemJuncTemp), CalculationMethod.Lookahead).ToString());
             }
 
             // average GPU hash rate
-            if (Series(cGPUHashRate).Points.Count > 0)
+            if (Series(cGPUHashRate).Points.Count > 0 && Metric(cGPUHashRate).IsEnabled)
             {
-                SetStat(cAvgGPUHashRate, CalculateAverage(Series(cGPUHashRate)).ToString());
+                SetStat(cAvgGPUHashRate, CalculateAverage(Series(cGPUHashRate), CalculationMethod.Lookbehind).ToString());
+            }
+
+            // CPU temp and average
+            if (Series(cCPUTemp).Points.Count > 0 && Metric(cCPUTemp).IsEnabled)
+            {
+                SetStat(cCPUTemp, Metric(cCPUTemp).NumericResult.ToString());
+                SetStat(cAvgCPUTemp, CalculateAverage(Series(cCPUTemp), CalculationMethod.Lookahead).ToString());
             }
 
             // average CPU hash rate
-            if (Series(cCPUHashRate).Points.Count > 0)
+            if (Series(cCPUHashRate).Points.Count > 0 && Metric(cCPUHashRate).IsEnabled)
             {
-                SetStat(cAvgCPUHashRate, CalculateAverage(Series(cCPUHashRate)).ToString());
+                SetStat(cAvgCPUHashRate, CalculateAverage(Series(cCPUHashRate), CalculationMethod.Lookbehind).ToString());
             }
 
-            // current total power
-            SetStat(cTotalPower, Metric(cTotalPower).NumericResult.ToString());
+            // total power
+            if (Metric(cTotalPower).IsEnabled)
+            {
+                SetStat(cTotalPower, Metric(cTotalPower).NumericResult.ToString());
+            }
 
             // average total power and kWh
-            if (Series(cTotalPower).Points.Count > 0)
+            if (Series(cTotalPower).Points.Count > 0 && Metric(cTotalPower).IsEnabled)
             {
-                SetStat(cAvgTotalPower, CalculateAverage(Series(cTotalPower)).ToString());
+                SetStat(cAvgTotalPower, CalculateAverage(Series(cTotalPower), CalculationMethod.Lookbehind).ToString());
                 // kWh = sum of watts per second / 60 (seconds in a minute) * 60 (minutes in an hour) * 1000 (kilo)
-                SetStat(cTotalPowerUse, CalculateRate(Series(cTotalPower), 60 * 60 * 1000).ToString());
+                SetStat(cTotalPowerUse, CalculateRate(Series(cTotalPower), 60 * 60 * 1000, CalculationMethod.Lookbehind).ToString());
             }
 
+            // current GPU power
+            if (Metric(cGPUPower).IsEnabled)
+            {
+                SetStat(cGPUPower, Metric(cGPUPower).NumericResult.ToString());
+            }
+
+            // average GPU power and kWh
+            if (Series(cGPUPower).Points.Count > 0 && Metric(cGPUPower).IsEnabled)
+            {
+                SetStat(cAvgGPUPower, CalculateAverage(Series(cGPUPower), CalculationMethod.Lookbehind).ToString());
+                // kWh = sum of watts per second / 60 (seconds in a minute) * 60 (minutes in an hour) * 1000 (kilo)
+                SetStat(cGPUPowerUse, CalculateRate(Series(cGPUPower), 60 * 60 * 1000, CalculationMethod.Lookbehind).ToString());
+            }
+
+            // current GPU power
+            if (Metric(cCPUPower).IsEnabled)
+            {
+                SetStat(cCPUPower, Metric(cCPUPower).NumericResult.ToString());
+            }
+
+            // average GPU power and kWh
+            if (Series(cCPUPower).Points.Count > 0 && Metric(cCPUPower).IsEnabled)
+            {
+                SetStat(cAvgCPUPower, CalculateAverage(Series(cCPUPower), CalculationMethod.Lookbehind).ToString());
+                // kWh = sum of watts per second / 60 (seconds in a minute) * 60 (minutes in an hour) * 1000 (kilo)
+                SetStat(cCPUPowerUse, CalculateRate(Series(cCPUPower), 60 * 60 * 1000, CalculationMethod.Lookbehind).ToString());
+            }
+            
             // runtime (elapsed time since application start)         
             TimeSpan runtime = DateTime.Now - StartupTimestamp;                        
             string formattedRuntime = String.Format("{0:0}D {1:00}:{2:00}:{3:00}.{4:000}",
