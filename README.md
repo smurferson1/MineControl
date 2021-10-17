@@ -36,8 +36,7 @@ MineControl is free and open source. Crypto donations are however appreciated an
 
 ## Key Un-features
 
-- Doesn't support more than 1 GPU or CPU.
-- Doesn't support more than 1 GPU or CPU miner.
+- Doesn't support more than one GPU or CPU miner. One of each, that's it.
 - Not internationalized, translated, or respectful of Windows regional settings.
 - Kind of ugly.
 - Not very user friendly.
