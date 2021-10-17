@@ -387,12 +387,13 @@ namespace MineControl
                 Series series;                
                 series = chart.Series.Add("");
 
-                series.BorderWidth = 2;
+                series.BorderWidth = seriesChartType == SeriesChartType.Line ? 1 : 2;
                 series.ChartArea = "chartArea1";
                 series.ChartType = seriesChartType;
                 series.Legend = "legend1";
                 series.MarkerColor = yAxisType == AxisType.Primary ? Color.Blue : Color.Red;  //Y1 is always blue, Y2 is always red
                 series.MarkerStyle = MarkerStyle.Circle;
+                series.MarkerSize = seriesChartType == SeriesChartType.Line ? 4 : 6;
                 series.SmartLabelStyle.IsOverlappedHidden = false;
                 series.Name = chart.Series.Count.ToString(); // placeholder name
                 series.XValueType = ChartValueType.DateTime;
@@ -1533,12 +1534,14 @@ namespace MineControl
             foreach (DataGridViewRow row in dataGridViewStats.Rows)
             {
                 lastUpdate = (DateTime)(row.Cells[ColStatsLastUpdate.Index].Value);
-                if (lastUpdate <= DateTime.Now.AddMinutes(-1))
+                if (lastUpdate <= DateTime.Now.AddMinutes(-1.05))
                 {
+                    // MORE than a minute old
                     row.DefaultCellStyle.ForeColor = Color.LightGray;
                 }
-                else if (lastUpdate <= (DateTime.Now.AddMilliseconds(-Settings.tempPollingIntervalMillisecs)))
+                else if (lastUpdate <= (DateTime.Now.AddMilliseconds(-(Settings.tempPollingIntervalMillisecs * 2))))
                 {                    
+                    // 2 polling cycles old
                     row.DefaultCellStyle.ForeColor = Color.Gray;
                 }
             }
