@@ -11,3 +11,4 @@ Allow user to add new metrics and stats.
 Internationalize.
 Remember UI positioning and sizing.
 Provide daily reports, like kWh used on each day, and average values per day.
+Provide basic metrics on MineControl itself, like CPU or memory use.

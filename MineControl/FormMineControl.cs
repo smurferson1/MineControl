@@ -307,7 +307,7 @@ namespace MineControl
             if (visibleGroupBox != null)
             {
                 panelScheduleNodeButtons.Top = visibleGroupBox.Location.Y + visibleGroupBox.Height + 6;
-            }                      
+            }            
         }
 
         public void CreateChartSeries(string chartName, Metric metricNumber, SeriesChartType seriesChartType, AxisType yAxisType)
@@ -1895,11 +1895,17 @@ namespace MineControl
             return Math.Round(totalArea / denominator, 3);
         }
 
-        private void UpdateChartScales(bool includeGPUPowerStep)
+        private void UpdateChartScales(bool includeGPUPowerStep, bool forceUpdate = false)
         {
             // TODO: ensure this works when visible points have a different min and max than the full set
             // TODO: make it work when series 1 or 2 is MIA
-            // TODO: perhaps only update this (and other visual stuff) when the form is visible, to save resources
+            
+            // don't bother updating scales if user won't see the chart
+            if (!forceUpdate && (WindowState == FormWindowState.Minimized || tabControlMain.SelectedTab != tabPageAnalytics))
+            {
+                return;
+            }
+            
             int axisPadding = 2;
 
             // update GPU temp axis to fit current data            
@@ -2334,7 +2340,7 @@ namespace MineControl
                 }
             }
 
-            UpdateChartScales(true);
+            UpdateChartScales(true, true);
         }
 
         private Metric Metric(string metricName)
@@ -2479,9 +2485,11 @@ namespace MineControl
 
         private void notifyIconMain_Open(object sender, EventArgs e)
         {            
+            // We make sure window is visible by minimizing and re-displaying in its previous state, or Normal if it was minimized. 
+            FormWindowState oldState = WindowState;            
+            WindowState = FormWindowState.Minimized;            
             Show();
-            this.Restore();
-            BringToFront();
+            WindowState = oldState == FormWindowState.Minimized ? FormWindowState.Normal : oldState;            
         }
 
         private void buttonChartClearData_Click(object sender, EventArgs e)
@@ -2855,7 +2863,15 @@ namespace MineControl
             UpdateScheduleDaysComboBoxesFromUI();
         }
 
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void tabControlMain_Selected(object sender, TabControlEventArgs e)
+        {                        
+            if (e.TabPage.Equals(tabPageAnalytics))
+            {
+                UpdateChartScales(false);
+            }
+        }
+
+        private void linkLabelHelpDonate_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             // TODO: enable only for public release
             //System.Diagnostics.Process.Start("https://github.com/smurferson1/MineControl");

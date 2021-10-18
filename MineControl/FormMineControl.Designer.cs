@@ -202,6 +202,9 @@ namespace MineControl
             this.checkBoxLogAutoScroll = new System.Windows.Forms.CheckBox();
             this.checkBoxLogColorCode = new System.Windows.Forms.CheckBox();
             this.comboBoxLogFilter = new System.Windows.Forms.ComboBox();
+            this.tabPageAbout = new System.Windows.Forms.TabPage();
+            this.label3 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.checkBoxEnableTempControl = new System.Windows.Forms.CheckBox();
             this.checkBoxEnableMinerAutomation = new System.Windows.Forms.CheckBox();
             this.groupBoxControl = new System.Windows.Forms.GroupBox();
@@ -269,6 +272,8 @@ namespace MineControl
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownChartMinTempOnYAxisValue)).BeginInit();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLog)).BeginInit();
+            this.tabPageAbout.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBoxControl.SuspendLayout();
             this.contextMenuStripSysTray.SuspendLayout();
             this.SuspendLayout();
@@ -426,12 +431,14 @@ namespace MineControl
             this.tabControlMain.Controls.Add(this.tabPageConfig);
             this.tabControlMain.Controls.Add(this.tabPageSchedule);
             this.tabControlMain.Controls.Add(this.tabPageAnalytics);
+            this.tabControlMain.Controls.Add(this.tabPageAbout);
             this.tabControlMain.Location = new System.Drawing.Point(1, 2);
             this.tabControlMain.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tabControlMain.Name = "tabControlMain";
             this.tabControlMain.SelectedIndex = 0;
             this.tabControlMain.Size = new System.Drawing.Size(922, 943);
             this.tabControlMain.TabIndex = 7;
+            this.tabControlMain.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControlMain_Selected);
             // 
             // tabPageConfig
             // 
@@ -2485,6 +2492,37 @@ namespace MineControl
             this.comboBoxLogFilter.KeyDown += new System.Windows.Forms.KeyEventHandler(this.comboBoxLogFilter_KeyDown);
             this.comboBoxLogFilter.Validated += new System.EventHandler(this.comboBoxLogFilter_Changed);
             // 
+            // tabPageAbout
+            // 
+            this.tabPageAbout.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPageAbout.Controls.Add(this.label3);
+            this.tabPageAbout.Controls.Add(this.pictureBox1);
+            this.tabPageAbout.Location = new System.Drawing.Point(4, 24);
+            this.tabPageAbout.Name = "tabPageAbout";
+            this.tabPageAbout.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageAbout.Size = new System.Drawing.Size(914, 915);
+            this.tabPageAbout.TabIndex = 3;
+            this.tabPageAbout.Text = "About";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label3.Location = new System.Drawing.Point(59, 27);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(106, 21);
+            this.label3.TabIndex = 1;
+            this.label3.Text = "MineControl";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::MineControl.Properties.Resources.MineControlLogo;
+            this.pictureBox1.Location = new System.Drawing.Point(20, 19);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(33, 33);
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            // 
             // checkBoxEnableTempControl
             // 
             this.checkBoxEnableTempControl.AutoSize = true;
@@ -2539,7 +2577,7 @@ namespace MineControl
             this.linkLabelHelpDonate.TabIndex = 5;
             this.linkLabelHelpDonate.TabStop = true;
             this.linkLabelHelpDonate.Text = "Help / Donate";
-            this.linkLabelHelpDonate.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            this.linkLabelHelpDonate.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelHelpDonate_LinkClicked);
             // 
             // labelStatusDisplay
             // 
@@ -2595,7 +2633,7 @@ namespace MineControl
             this.notifyIconMain.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIconMain.Icon")));
             this.notifyIconMain.Text = "MineControl";
             this.notifyIconMain.Visible = true;
-            this.notifyIconMain.Click += new System.EventHandler(this.notifyIconMain_Open);
+            this.notifyIconMain.DoubleClick += new System.EventHandler(this.notifyIconMain_Open);
             // 
             // contextMenuStripSysTray
             // 
@@ -2710,6 +2748,9 @@ namespace MineControl
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLog)).EndInit();
+            this.tabPageAbout.ResumeLayout(false);
+            this.tabPageAbout.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBoxControl.ResumeLayout(false);
             this.groupBoxControl.PerformLayout();
             this.contextMenuStripSysTray.ResumeLayout(false);
@@ -2904,6 +2945,9 @@ namespace MineControl
         private System.Windows.Forms.DataGridViewTextBoxColumn ColLogTime;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColLogMessage;
         private System.Windows.Forms.LinkLabel linkLabelHelpDonate;
+        private System.Windows.Forms.TabPage tabPageAbout;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 

@@ -5,20 +5,6 @@ namespace System.Windows.Forms
 {
     public static class Extensions
     {
-        // from https://stackoverflow.com/questions/354445/restore-windowstate-from-minimized 
-        [DllImport("user32.dll")]
-        private static extern int ShowWindow(IntPtr hWnd, uint Msg);
-
-        private const uint SW_RESTORE = 0x09;
-
-        public static void Restore(this Form form)
-        {
-            if (form.WindowState == FormWindowState.Minimized)
-            {
-                ShowWindow(form.Handle, SW_RESTORE);
-            }
-        }
-
         // from https://stackoverflow.com/questions/2203975/move-node-in-tree-up-or-down
         public static void MoveUp(this TreeNode node)
         {
