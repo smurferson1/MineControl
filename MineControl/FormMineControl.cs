@@ -2876,5 +2876,11 @@ namespace MineControl
             // TODO: enable only for public release
             //System.Diagnostics.Process.Start("https://github.com/smurferson1/MineControl");
         }
+
+        private void linkLabelAboutLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            // TODO: enable only for public release
+            //System.Diagnostics.Process.Start("https://github.com/smurferson1/MineControl");
+        }
     }
 }
