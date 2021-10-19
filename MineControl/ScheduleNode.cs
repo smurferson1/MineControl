@@ -404,24 +404,25 @@ namespace MineControl
 
         public override bool Evaluate(List<ScheduleAction> actions)
         {  
-            bool result = false;
-            TimeSpan startSpan = new TimeSpan(StartTime.Hour, StartTime.Minute, StartTime.Second);
-            TimeSpan endSpan = new TimeSpan(EndTime.Hour, EndTime.Minute, EndTime.Second);
+            bool result = false;  
+
+            // represent times independently from dates, as timespans
+            TimeSpan startSpan = StartTime.TimeOfDay;
+            TimeSpan endSpan = EndTime.TimeOfDay;
             TimeSpan now = DateTime.Now.TimeOfDay;
-                       
-            // From here: https://stackoverflow.com/questions/1504494/find-if-current-time-falls-in-a-time-range
-            if (StartTime <= EndTime)
+
+            if (StartTime > EndTime)
             {
-                // start and stop times are in the same day
-                if (now >= startSpan && now <= endSpan)
+                // time rolls over to the next day, so we need to be after start or before end
+                if (now >= startSpan || now <= endSpan)
                 {
                     result = true;
                 }
             }
             else
             {
-                // start and stop times are in different days
-                if (now >= startSpan || now <= endSpan)
+                // time doesn't roll over to the next day, so we need to be between start and end
+                if (now >= startSpan && now <= endSpan)
                 {
                     result = true;
                 }
@@ -507,8 +508,7 @@ namespace MineControl
     }
 
     /// <summary>
-    /// Json converter for serializing and deserializing ScheduleNodes polymorphically
-    /// Started from example here: https://stackoverflow.com/questions/58074304/is-polymorphic-deserialization-possible-in-system-text-json
+    /// Json converter for serializing and deserializing ScheduleNodes polymorphically    
     /// </summary>
     public class ScheduleNodeConverter : JsonConverter<ScheduleNode>
     {

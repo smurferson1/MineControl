@@ -32,7 +32,6 @@ namespace MineControl
             if (GetLastInputInfo(ref lastInputInfo))
             {
                 uint lastInputTick = lastInputInfo.dwTime;
-
                 idleTime = envTicks - lastInputTick;
             }
 

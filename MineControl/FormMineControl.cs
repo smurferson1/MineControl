@@ -267,8 +267,7 @@ namespace MineControl
             // resize groupbox
             // initial radioButton
             radioButtonScheduleCalendar.Checked = true;
-            // calendar
-            // from: https://stackoverflow.com/questions/34364373/how-can-i-populate-a-months-combobox-and-a-years-combobox-from-a-supplied-ye
+            // calendar            
             comboBoxScheduleStartMonth.DataSource = CultureInfo.InvariantCulture.DateTimeFormat.MonthNames.Take(12).ToList();
             comboBoxScheduleStartMonth.SelectedIndex = 0;
             comboBoxScheduleEndMonth.DataSource = CultureInfo.InvariantCulture.DateTimeFormat.MonthNames.Take(12).ToList();
@@ -2195,7 +2194,6 @@ namespace MineControl
 
         private void UpdateScheduleDaysComboBoxesFromUI()
         {
-            // from: https://stackoverflow.com/questions/30034822/how-do-i-fill-a-combobox-with-days-in-month-using-an-datetime-daysinmonth
             string currentDayText;
             if (comboBoxScheduleStartMonth.SelectedIndex >= 0)
             {
@@ -2871,16 +2869,18 @@ namespace MineControl
             }
         }
 
-        private void linkLabelHelpDonate_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void linkLabelGithub_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            // TODO: enable only for public release
-            //System.Diagnostics.Process.Start("https://github.com/smurferson1/MineControl");
-        }
-
-        private void linkLabelAboutLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            // TODO: enable only for public release
-            //System.Diagnostics.Process.Start("https://github.com/smurferson1/MineControl");
+#if RELEASE
+            using (Process p = new Process())
+            {
+                p.StartInfo.UseShellExecute = true;
+                p.StartInfo.FileName = "https://github.com/smurferson1/MineControl";
+                p.Start();
+            }  
+#else
+            MessageBox.Show("Link clicked");
+#endif
         }
     }
 }

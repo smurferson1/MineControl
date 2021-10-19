@@ -93,7 +93,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="generalSysTrayDisplayMode" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="chartMinTempOnYAxisEnabled" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>

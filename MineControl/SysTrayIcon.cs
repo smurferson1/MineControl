@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -9,8 +10,7 @@ namespace MineControl
     {
         public static Color GPUColor { get; set; } = Color.Transparent;
         public static Color CPUColor { get; set; } = Color.Transparent;
-        public static int GPUPowerStep { get; set; } = -1;
-        private static IntPtr? lastIconHandle = null;
+        public static int GPUPowerStep { get; set; } = -1;       
 
         [System.Runtime.InteropServices.DllImport("user32.dll", CharSet = CharSet.Auto)]
         extern static bool DestroyIcon(IntPtr handle);
@@ -20,11 +20,7 @@ namespace MineControl
 
         /// <summary>
         /// Updates icon, but only if it's different from before
-        /// </summary>
-        /// <param name="notifyIcon"></param>
-        /// <param name="forceRedraw"></param>
-        /// <param name="gpuState"></param>
-        /// <param name="cpuState"></param>
+        /// </summary>        
         /// <returns>True if icon was updated</returns>
         public static bool UpdateTextIcon(NotifyIcon notifyIcon, bool forceRedraw, MinerState gpuState, MinerState cpuState)
         {
@@ -34,39 +30,39 @@ namespace MineControl
             // only update the icon if it ***needs*** to be redrawn (this is to save resources)
             switch ((SysTrayIconTextMode)settings.generalSysTrayDisplayMode)
             {
-                case SysTrayIconTextMode.MinerActiveStatus:
-                    if ((forceRedraw) || (gpuColor != SysTrayIcon.GPUColor) || (cpuColor != SysTrayIcon.CPUColor))
+                // old code for different display info
+                /*case SysTrayIconTextMode.MinerActiveStatus:
+                    if ((forceRedraw) || (gpuColor != GPUColor) || (cpuColor != CPUColor))
                     {
-                        SysTrayIcon.GPUColor = gpuColor;
-                        SysTrayIcon.CPUColor = cpuColor;
-                        SysTrayIcon.SetTextIcon(
+                        GPUColor = gpuColor;
+                        CPUColor = cpuColor;                        
+                        SetTextIcon(
                             notifyIcon,
-                            "G",
-                            "C",
+                            'G',
+                            'C',
                             gpuColor,
                             cpuColor,
-                            Color.Transparent,
-                            Color.Transparent,
-                            Color.Green);
+                            Color.Black,
+                            Color.Black);
                         return true;
                     }
-                    break;
+                    break;*/
 
+                case SysTrayIconTextMode.MinerActiveStatus:
                 case SysTrayIconTextMode.GPUPowerStep:
-                    if ((forceRedraw) || (SysTrayIcon.GPUPowerStep != settings.tempSpeedStep) || (gpuColor != SysTrayIcon.GPUColor) || (cpuColor != SysTrayIcon.CPUColor))
+                    if (forceRedraw || (GPUPowerStep != settings.tempSpeedStep) || (gpuColor != GPUColor) || (cpuColor != CPUColor))
                     {
-                        SysTrayIcon.GPUColor = gpuColor;
-                        SysTrayIcon.CPUColor = cpuColor;
-                        SysTrayIcon.GPUPowerStep = settings.tempSpeedStep;
-                        SysTrayIcon.SetTextIcon(
+                        GPUColor = gpuColor;
+                        CPUColor = cpuColor;
+                        GPUPowerStep = settings.tempSpeedStep;                        
+                        SetTextIcon(
                             notifyIcon,
-                            SysTrayIcon.GPUPowerStep.ToString(),
-                            "",
+                            GPUPowerStep.ToString()[0],
+                            null,
                             Color.White,
                             Color.Transparent,
                             gpuColor,
-                            cpuColor,
-                            Color.White);
+                            cpuColor);
                         return true;
                     }
                     break;
@@ -102,51 +98,51 @@ namespace MineControl
             }
         }
 
-        // modified example from: https://stackoverflow.com/questions/36379547/writing-text-to-the-system-tray-instead-of-an-icon
-        private static void SetTextIcon(NotifyIcon notifyIcon, string char1, string char2, Color char1Color, Color char2Color, Color backgroundColorLeft, Color backgroundColorRight, Color borderColor)
-        {           
-            using Brush brushTextShadow = new SolidBrush(Color.Black);
+        /// <summary>
+        /// Creates an image using the provided chars and colors, and applies it to the provided NotifyIcon.
+        /// If only one of the chars is present, that char is drawn in the center at a larger font.
+        /// Provides option for colored bars on left and right as well.
+        /// </summary>        
+        private static void SetTextIcon(NotifyIcon notifyIcon, char? char1, char? char2, Color char1Color, Color char2Color, Color barColorLeft, Color barColorRight)
+        {     
             using Brush brush1 = new SolidBrush(char1Color);
             using Brush brush2 = new SolidBrush(char2Color);
-            using Brush brushBackgroundLeft = new SolidBrush(backgroundColorLeft);
-            using Brush brushBackgroundRight = new SolidBrush(backgroundColorRight);
-            using Bitmap bitmapText = new Bitmap(16, 16);
-            using Graphics g = System.Drawing.Graphics.FromImage(bitmapText);
-            using Pen p = new Pen(borderColor, 1);
-
-            IntPtr hIcon;
+            using Brush brushBarLeft = new SolidBrush(barColorLeft);
+            using Brush brushBarRight = new SolidBrush(barColorRight);
+            using Bitmap bitmap = new Bitmap(16, 16);
+            using Graphics g = Graphics.FromImage(bitmap);            
+                        
+            // fill background and bars
             g.Clear(Color.Transparent);
-            g.FillRectangle(brushBackgroundLeft, new Rectangle(0, 0, 8, 16));
-            g.FillRectangle(brushBackgroundRight, new Rectangle(8, 0, 8, 16));
+            g.FillRectangle(brushBarLeft, new Rectangle(0, 0, 8, 16));
+            g.FillRectangle(brushBarRight, new Rectangle(8, 0, 8, 16));
             g.FillRectangle(Brushes.Black, new Rectangle(3, 0, 10, 16));
-            g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit;
-            if ((char1.Length > 0) && (char2.Length > 0))
-            {
-                using Font fontToUse = new Font("Tahoma", 11, FontStyle.Bold, GraphicsUnit.Pixel);
-                g.DrawString(char1[0].ToString(), fontToUse, brush1, -1, 1);
-                g.DrawString(char2[0].ToString(), fontToUse, brush2, 7, 1);
-            }
-            else if ((char1.Length) > 0)
-            {
-                using Font fontToUse = new Font("Tahoma", 15, FontStyle.Bold, GraphicsUnit.Pixel);
-                g.DrawString(char1[0].ToString(), fontToUse, brush1, 0, -1);
-            }
-            else if ((char2.Length) > 0)
-            {
-                using Font fontToUse = new Font("Tahoma", 15, FontStyle.Bold, GraphicsUnit.Pixel);
-                g.DrawString(char2[0].ToString(), fontToUse, brush2, 0, -1);
-            }
-            hIcon = (bitmapText.GetHicon());            
 
-            // set the new icon and clean up the old one at the end if needed
-            Icon lastIcon = notifyIcon.Icon;
-            notifyIcon.Icon = System.Drawing.Icon.FromHandle(hIcon);            
-            if (lastIconHandle != null)
-            {
-                lastIcon.Dispose();                
-                DestroyIcon(lastIconHandle.Value);
+            // draw chars if we have any
+            g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
+            if ((char1 != null) && (char2 != null))
+            {                
+                using Font font = new Font("Tahoma", 11, FontStyle.Bold, GraphicsUnit.Pixel);     
+                g.DrawString(char1.ToString(), font, brush1, -1, 1);
+                g.DrawString(char2.ToString(), font, brush2, 7, 1);
             }
-            lastIconHandle = hIcon;
+            else if (char1 != null || char2 != null)
+            {
+                using Font font = new Font("Tahoma", 15, FontStyle.Bold, GraphicsUnit.Pixel);
+                g.DrawString(
+                    char1 != null ? char1.ToString() : char2.ToString(), 
+                    font, 
+                    char1 != null ? brush1 : brush2, 
+                    0, 
+                    -1);
+            }
+
+            // set the new icon and dispose of the old one at the end to avoid memory leaks
+            IntPtr hIcon = bitmap.GetHicon();
+            Icon previousIcon = notifyIcon.Icon;
+            notifyIcon.Icon = Icon.FromHandle(hIcon);            
+            previousIcon.Dispose();
+            DestroyIcon(hIcon);
         }
     }
 }
