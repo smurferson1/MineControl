@@ -2316,25 +2316,28 @@ namespace MineControl
 
         private void ChartShowConfigChanged(object sender, EventArgs e)
         {
-            if (radioButtonChartShowAll.Checked)
+            foreach (Chart chart in Charts)
             {
-                Chart(cGPU).ChartAreas[0].AxisX.Minimum = Double.NaN;
-                Chart(cGPU).ChartAreas[0].AxisX.Maximum = Double.NaN;
-            }
-            else if (radioButtonChartShowLastX.Checked)
-            {
-                switch (comboBoxChartShowLastUnit.SelectedItem.ToString())
+                if (radioButtonChartShowAll.Checked)
                 {
-                    case "Minutes":
-                        Chart(cGPU).ChartAreas[0].AxisX.Minimum = DateTime.Now.AddMinutes(-(int)numericUpDownChartShowLastX.Value).ToOADate();
-                        break;
-                    case "Hours":
-                        Chart(cGPU).ChartAreas[0].AxisX.Minimum = DateTime.Now.AddHours(-(int)numericUpDownChartShowLastX.Value).ToOADate();
-                        break;
-                    case "Days":
-                        Chart(cGPU).ChartAreas[0].AxisX.Minimum = DateTime.Now.AddDays(-(int)numericUpDownChartShowLastX.Value).ToOADate();
-                        break;
+                    chart.ChartAreas[0].AxisX.Minimum = Double.NaN;
+                    chart.ChartAreas[0].AxisX.Maximum = Double.NaN;
+                }
+                else if (radioButtonChartShowLastX.Checked)
+                {
+                    switch (comboBoxChartShowLastUnit.SelectedItem.ToString())
+                    {
+                        case "Minutes":
+                            chart.ChartAreas[0].AxisX.Minimum = DateTime.Now.AddMinutes(-(int)numericUpDownChartShowLastX.Value).ToOADate();
+                            break;
+                        case "Hours":
+                            chart.ChartAreas[0].AxisX.Minimum = DateTime.Now.AddHours(-(int)numericUpDownChartShowLastX.Value).ToOADate();
+                            break;
+                        case "Days":
+                            chart.ChartAreas[0].AxisX.Minimum = DateTime.Now.AddDays(-(int)numericUpDownChartShowLastX.Value).ToOADate();
+                            break;
 
+                    }
                 }
             }
 
