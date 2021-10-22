@@ -15,7 +15,7 @@ Names of hardware monitor and GPU controller apps are omitted in order to avoid 
 MineControl is free and open source. Crypto donations are however appreciated and will keep the developer(s) motivated to fix and improve things. Current wallets for donation:
 - TBD
 
-If you want to see additional donation options, contact the developer.
+If you want to see additional donation options added here, please contact the developer.
 
 ## License
 
@@ -25,8 +25,8 @@ Note: CC BY-SA is specifically required due to adaptation of certain code from S
 
 ## DISCLAIMERS
 
-- MineControl is NOT guaranteed to work correctly or protect your computer in all circumstances. It is in development and subject to being shit, making mistakes, or missing *YOUR* mistakes. **USE AT YOUR OWN RISK**. It's best to configure MineControl carefully and watch it for a while to be sure it's doing what you intend. Your temps and power usage *CAN* go too high if you misconfigure MineControl or it makes a booboo.
-- MineControl won't do nefarious things like take your mining profits or send anything to anyone, **AS LONG AS YOU DOWNLOADED FROM THIS GITHUB REPO**. Feel free to inspect the code or compile yourself, but DO NOT download MineControl from anywhere or anyone else, since software can easily be compromised by attackers and redistributed in a nearly identical form.
+- MineControl is NOT guaranteed to work correctly or protect your computer in all circumstances. It is in development and subject to being shit, making mistakes, or missing *YOUR* mistakes. **USE AT YOUR OWN RISK**. Please configure MineControl carefully and watch it for a while to be sure it's doing what you intend. Your temps and power usage *CAN* go too high if you misconfigure MineControl or it makes a booboo.
+- MineControl won't do nefarious things like take your mining profits or send anything to anyone, **AS LONG AS YOU DOWNLOADED IT FROM THIS GITHUB REPO**. Feel free to inspect the code or compile yourself, but DO NOT download MineControl from anywhere or anyone else, since software can easily be compromised by attackers and redistributed in a nearly identical form.
 - As with most other software developed in free time for fun, there is no guarantee from the developer to provide support or updates of any kind.
 
 ## Key Features
