@@ -17,8 +17,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace MineControl
 {    
-    // TODO: provide a way to remember settings across versions, since right now it starts over each time version number changes
-    // TODO: auto-close instances after the first
+    // TODO: provide a way to remember settings across versions, since right now it starts over each time version number changes    
     public partial class FormMineControl : Form, IChartManager, ILog
     {        
         // consts for app grid rows
@@ -208,12 +207,7 @@ namespace MineControl
             CreateChartSeriesForMetric(cCPU, Metric(cCPUHashRate), SeriesChartType.Line, AxisType.Secondary);
             CreateChartSeriesForMetric(cResources, Metric(cTotalPower), SeriesChartType.Line, AxisType.Secondary);
             CreateChartSeriesForMetric(cResources, Metric(cGPUPower), SeriesChartType.Line, AxisType.Secondary);
-            CreateChartSeriesForMetric(cResources, Metric(cCPUPower), SeriesChartType.Line, AxisType.Secondary);
-            // system-defined metric query options (always present)
-            // TODO: update and/or include in default settings
-            ColDataQuery.Items.Add(@"(?<=[E][t][h][ ][s][p][e][e][d][:][ ])\d+[.]\d+");
-            ColDataQuery.Items.Add(@"(?<=[E][t][h][ ][s][p][e][e][d][:][ ]\d +[.]\d +[ ])\w+");
-            ColDataQuery.Items.Add(@"(?<=[m][i][n][e][r][ ]+[s][p][e][e][d][ ][0-9ms/]+[ ][0-9\.]+[ ])\d+[.]*\d+");
+            CreateChartSeriesForMetric(cResources, Metric(cCPUPower), SeriesChartType.Line, AxisType.Secondary);                        
 
             // init stats in a logical order            
             SetStat(cGPUPowerStep, "");
@@ -1330,7 +1324,7 @@ namespace MineControl
                 foreach (var file in files)
                 {
                     file.Delete();
-                    deletedLogCount++;
+                    ++deletedLogCount;
                 }
 
                 // delete old config archives
@@ -1339,7 +1333,7 @@ namespace MineControl
                 foreach (var file in files)
                 {
                     file.Delete();
-                    deletedConfigCount++;
+                    ++deletedConfigCount;
                 }
 
                 if (deletedLogCount + deletedConfigCount > 0)
@@ -1429,7 +1423,7 @@ namespace MineControl
             do
             {
                 configArchivePath = Path.Combine(GetConfigArchiveFolder(), $"userArchive{i:000}.config");
-                i++;
+                ++i;
             }
             while (File.Exists(configArchivePath));
             return configArchivePath;
@@ -2352,18 +2346,26 @@ namespace MineControl
       
         private void dataGridViewApps_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.ColumnIndex == ColAppPath.Index)
+            {
+                UserSelectAppPathForRow(e.RowIndex);
+            }
+        }
+
+        private void UserSelectAppPathForRow(int rowIndex)
+        {
             // provide user the option of setting the app path
-            if (e.ColumnIndex == ColAppPath.Index && openFileDialogAppPath.ShowDialog() == DialogResult.OK)
-            {               
-                dataGridViewApps.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = openFileDialogAppPath.FileName;
+            if (openFileDialogAppPath.ShowDialog() == DialogResult.OK)
+            {
+                dataGridViewApps.Rows[rowIndex].Cells[ColAppPath.Index].Value = openFileDialogAppPath.FileName;
 
                 // if name is empty, default to the application name without extension
-                if (dataGridViewApps.Rows[e.RowIndex].Cells[ColAppName.Index].Value.ToString().Trim() == string.Empty)
+                if (dataGridViewApps.Rows[rowIndex].Cells[ColAppName.Index].Value.ToString().Trim() == string.Empty)
                 {
-                    dataGridViewApps.Rows[e.RowIndex].Cells[ColAppName.Index].Value = Path.GetFileNameWithoutExtension(openFileDialogAppPath.FileName);
+                    dataGridViewApps.Rows[rowIndex].Cells[ColAppName.Index].Value = Path.GetFileNameWithoutExtension(openFileDialogAppPath.FileName);
                 }
 
-                SaveSettingsFromUI();                
+                SaveSettingsFromUI();
             }
         }
 
@@ -2743,7 +2745,7 @@ namespace MineControl
         private void dataGridViewMetrics_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {     
             // mark internal metrics read-only
-            for (int i = e.RowIndex; i < e.RowIndex + e.RowCount; i++)
+            for (int i = e.RowIndex; i < e.RowIndex + e.RowCount; ++i)
             {               
                 foreach (DataGridViewCell cell in dataGridViewMetrics.Rows[i].Cells)
                 {
@@ -2899,6 +2901,29 @@ namespace MineControl
                 {
                     MessageBox.Show("Can't move this node down, either because it's already at the bottom, or because a node that would be switched isn't allowed to move.");
                 }
+            }
+        }
+
+        private void buttonDataRemoveUnusedQueryOptions_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Remove ALL query options in the list that aren't currently assigned to a metric?", Text, MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                for (int i = ColDataQuery.Items.Count - 1; i >= 0; --i)
+                {
+                    if (!Metrics.Any(x => x.Query == ColDataQuery.Items[i].ToString()))
+                    {
+                        ColDataQuery.Items.RemoveAt(i);
+                    }
+                }
+                SaveSettingsFromUI();
+            }
+        }
+
+        private void dataGridViewApps_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == ColAppChooseButton.Index)
+            {
+                UserSelectAppPathForRow(e.RowIndex);
             }
         }
     }

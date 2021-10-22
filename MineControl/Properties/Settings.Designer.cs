@@ -673,7 +673,22 @@ namespace MineControl.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"[
+  ""Ethash"",
+  """",
+  ""(?\u003C=Core Max\u002B[\\r\\n])\\w\u002B[.]?\\w\u002B"",
+  ""(?\u003C=Core Max\u002B[\\r\\n][\\d\\.]\u002B[ ]).*"",
+  ""(?\u003C=PSU Power \\(sum\\)\u002B[\\r\\n])\\w\u002B[.]?\\w\u002B"",
+  ""(?\u003C=GPU Power[\\r\\n])\\w\u002B[.]?\\w\u002B"",
+  ""(?\u003C=CPU Package Power[\\r\\n])\\w\u002B[.]?\\w\u002B"",
+  ""(?\u003C=GPU Memory Junction Temperature\u002B[\\r\\n])\\w\u002B[.]?\\w\u002B"",
+  ""(?\u003C=GPU Memory Junction Temperature\u002B[\\r\\n][\\d\\.]\u002B[ ]).*"",
+  ""(?\u003C=Eth speed: )\\d\u002B[.]\\d\u002B"",
+  ""(?\u003C=Eth speed: \\d\u002B[.]\\d\u002B[ ])[A-Za-z/]\u002B"",
+  ""(?\u003C=miner[ ]\u002Bspeed [0-9ms/]\u002B[ ][0-9\\.]\u002B[ ])\\d\u002B[.]*\\d\u002B"",
+  ""(?\u003C=miner[ ]\u002Bspeed [0-9msna/. ]\u002B)\\w\u002B[/][s](?=[ ])"",
+  ""(?\u003C=[0-9ms/. ]\u002Buse[ ]\u002Bprofile[ ]\u002B)\\w\u002B""
+]")]
         public string metricsSerializedMetricQueryOptions {
             get {
                 return ((string)(this["metricsSerializedMetricQueryOptions"]));

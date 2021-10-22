@@ -30,7 +30,7 @@ namespace MineControl
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMineControl));
             this.timerMain = new System.Windows.Forms.Timer(this.components);
             this.toolTipMain = new System.Windows.Forms.ToolTip(this.components);
@@ -44,6 +44,8 @@ namespace MineControl
             this.buttonScheduleCreateNode = new System.Windows.Forms.Button();
             this.buttonScheduleUpdateNode = new System.Windows.Forms.Button();
             this.label34 = new System.Windows.Forms.Label();
+            this.buttonScheduleMoveNodeUp = new System.Windows.Forms.Button();
+            this.buttonScheduleMoveNodeDown = new System.Windows.Forms.Button();
             this.openFileDialogAppPath = new System.Windows.Forms.OpenFileDialog();
             this.tabControlMain = new System.Windows.Forms.TabControl();
             this.tabPageConfig = new System.Windows.Forms.TabPage();
@@ -101,7 +103,8 @@ namespace MineControl
             this.ColDataInputSource = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.ColDataMethod = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.ColDataQuery = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.buttonDataViewSysTray = new System.Windows.Forms.Button();
+            this.buttonDataViewSysTrayTooltips = new System.Windows.Forms.Button();
+            this.buttonDataRemoveUnusedQueryOptions = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.numericUpDownTempMax = new System.Windows.Forms.NumericUpDown();
@@ -130,10 +133,6 @@ namespace MineControl
             this.label7 = new System.Windows.Forms.Label();
             this.groupBoxMinersAndApps = new System.Windows.Forms.GroupBox();
             this.dataGridViewApps = new System.Windows.Forms.DataGridView();
-            this.ColAppType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColAppName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColAppStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColAppPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPageSchedule = new System.Windows.Forms.TabPage();
             this.groupBoxScheduleNodeDetails = new System.Windows.Forms.GroupBox();
             this.panelScheduleNodeButtons = new System.Windows.Forms.Panel();
@@ -231,8 +230,11 @@ namespace MineControl
             this.openFileDialogBackups = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialogBackups = new System.Windows.Forms.SaveFileDialog();
             this.folderBrowserDialogBackups = new System.Windows.Forms.FolderBrowserDialog();
-            this.buttonScheduleMoveNodeUp = new System.Windows.Forms.Button();
-            this.buttonScheduleMoveNodeDown = new System.Windows.Forms.Button();
+            this.ColAppType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColAppName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColAppStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColAppPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColAppChooseButton = new System.Windows.Forms.DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempSteppingBuffer)).BeginInit();
             this.tabControlMain.SuspendLayout();
             this.tabPageConfig.SuspendLayout();
@@ -430,6 +432,32 @@ namespace MineControl
             this.label34.TabIndex = 57;
             this.label34.Text = "Archive Interval";
             this.toolTipMain.SetToolTip(this.label34, "How often archiving and data retention rules are evaluated.");
+            // 
+            // buttonScheduleMoveNodeUp
+            // 
+            this.buttonScheduleMoveNodeUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonScheduleMoveNodeUp.Location = new System.Drawing.Point(185, 499);
+            this.buttonScheduleMoveNodeUp.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.buttonScheduleMoveNodeUp.Name = "buttonScheduleMoveNodeUp";
+            this.buttonScheduleMoveNodeUp.Size = new System.Drawing.Size(120, 27);
+            this.buttonScheduleMoveNodeUp.TabIndex = 24;
+            this.buttonScheduleMoveNodeUp.Text = "Move Node Up";
+            this.toolTipMain.SetToolTip(this.buttonScheduleMoveNodeUp, "Deletes the selected node and any nodes that depend on it");
+            this.buttonScheduleMoveNodeUp.UseVisualStyleBackColor = true;
+            this.buttonScheduleMoveNodeUp.Click += new System.EventHandler(this.buttonScheduleMoveNodeUp_Click);
+            // 
+            // buttonScheduleMoveNodeDown
+            // 
+            this.buttonScheduleMoveNodeDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonScheduleMoveNodeDown.Location = new System.Drawing.Point(358, 499);
+            this.buttonScheduleMoveNodeDown.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.buttonScheduleMoveNodeDown.Name = "buttonScheduleMoveNodeDown";
+            this.buttonScheduleMoveNodeDown.Size = new System.Drawing.Size(120, 27);
+            this.buttonScheduleMoveNodeDown.TabIndex = 25;
+            this.buttonScheduleMoveNodeDown.Text = "Move Node Down";
+            this.toolTipMain.SetToolTip(this.buttonScheduleMoveNodeDown, "Deletes the selected node and any nodes that depend on it");
+            this.buttonScheduleMoveNodeDown.UseVisualStyleBackColor = true;
+            this.buttonScheduleMoveNodeDown.Click += new System.EventHandler(this.buttonScheduleMoveNodeDown_Click);
             // 
             // openFileDialogAppPath
             // 
@@ -1060,7 +1088,8 @@ namespace MineControl
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxDataTracking.Controls.Add(this.dataGridViewMetrics);
-            this.groupBoxDataTracking.Controls.Add(this.buttonDataViewSysTray);
+            this.groupBoxDataTracking.Controls.Add(this.buttonDataViewSysTrayTooltips);
+            this.groupBoxDataTracking.Controls.Add(this.buttonDataRemoveUnusedQueryOptions);
             this.groupBoxDataTracking.Location = new System.Drawing.Point(8, 700);
             this.groupBoxDataTracking.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBoxDataTracking.Name = "groupBoxDataTracking";
@@ -1150,17 +1179,29 @@ namespace MineControl
             this.ColDataQuery.HeaderText = "Query/User Value";
             this.ColDataQuery.Name = "ColDataQuery";
             // 
-            // buttonDataViewSysTray
+            // buttonDataViewSysTrayTooltips
             // 
-            this.buttonDataViewSysTray.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonDataViewSysTray.Location = new System.Drawing.Point(782, 0);
-            this.buttonDataViewSysTray.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.buttonDataViewSysTray.Name = "buttonDataViewSysTray";
-            this.buttonDataViewSysTray.Size = new System.Drawing.Size(104, 24);
-            this.buttonDataViewSysTray.TabIndex = 1;
-            this.buttonDataViewSysTray.Text = "View SysTray";
-            this.buttonDataViewSysTray.UseVisualStyleBackColor = true;
-            this.buttonDataViewSysTray.Click += new System.EventHandler(this.buttonDataViewSysTray_Click);
+            this.buttonDataViewSysTrayTooltips.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonDataViewSysTrayTooltips.Location = new System.Drawing.Point(747, 0);
+            this.buttonDataViewSysTrayTooltips.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.buttonDataViewSysTrayTooltips.Name = "buttonDataViewSysTrayTooltips";
+            this.buttonDataViewSysTrayTooltips.Size = new System.Drawing.Size(139, 24);
+            this.buttonDataViewSysTrayTooltips.TabIndex = 1;
+            this.buttonDataViewSysTrayTooltips.Text = "View SysTray Tooltips";
+            this.buttonDataViewSysTrayTooltips.UseVisualStyleBackColor = true;
+            this.buttonDataViewSysTrayTooltips.Click += new System.EventHandler(this.buttonDataViewSysTray_Click);
+            // 
+            // buttonDataRemoveUnusedQueryOptions
+            // 
+            this.buttonDataRemoveUnusedQueryOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonDataRemoveUnusedQueryOptions.Location = new System.Drawing.Point(554, 0);
+            this.buttonDataRemoveUnusedQueryOptions.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.buttonDataRemoveUnusedQueryOptions.Name = "buttonDataRemoveUnusedQueryOptions";
+            this.buttonDataRemoveUnusedQueryOptions.Size = new System.Drawing.Size(185, 24);
+            this.buttonDataRemoveUnusedQueryOptions.TabIndex = 2;
+            this.buttonDataRemoveUnusedQueryOptions.Text = "Remove Unused Query Options";
+            this.buttonDataRemoveUnusedQueryOptions.UseVisualStyleBackColor = true;
+            this.buttonDataRemoveUnusedQueryOptions.Click += new System.EventHandler(this.buttonDataRemoveUnusedQueryOptions_Click);
             // 
             // groupBox2
             // 
@@ -1541,7 +1582,8 @@ namespace MineControl
             this.ColAppType,
             this.ColAppName,
             this.ColAppStatus,
-            this.ColAppPath});
+            this.ColAppPath,
+            this.ColAppChooseButton});
             this.dataGridViewApps.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewApps.Location = new System.Drawing.Point(4, 16);
             this.dataGridViewApps.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1550,41 +1592,9 @@ namespace MineControl
             this.dataGridViewApps.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dataGridViewApps.Size = new System.Drawing.Size(889, 129);
             this.dataGridViewApps.TabIndex = 1;
+            this.dataGridViewApps.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewApps_CellContentClick);
             this.dataGridViewApps.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewApps_CellDoubleClick);
             this.dataGridViewApps.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_CellValueChanged);
-            // 
-            // ColAppType
-            // 
-            this.ColAppType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.ColAppType.HeaderText = "App";
-            this.ColAppType.Name = "ColAppType";
-            this.ColAppType.ReadOnly = true;
-            this.ColAppType.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.ColAppType.Width = 51;
-            // 
-            // ColAppName
-            // 
-            this.ColAppName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.ColAppName.HeaderText = "Process Name";
-            this.ColAppName.Name = "ColAppName";
-            this.ColAppName.ToolTipText = "Exact name of launched process as shown in Task Manager, WITHOUT file extension";
-            this.ColAppName.Width = 101;
-            // 
-            // ColAppStatus
-            // 
-            this.ColAppStatus.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.ColAppStatus.HeaderText = "Status";
-            this.ColAppStatus.Name = "ColAppStatus";
-            this.ColAppStatus.ReadOnly = true;
-            this.ColAppStatus.Width = 62;
-            // 
-            // ColAppPath
-            // 
-            this.ColAppPath.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.ColAppPath.HeaderText = "Full Start Path";
-            this.ColAppPath.Name = "ColAppPath";
-            this.ColAppPath.ToolTipText = "Complete path for launching the process, including file name and extension (can b" +
-    "e an executable script)";
             // 
             // tabPageSchedule
             // 
@@ -2454,8 +2464,8 @@ namespace MineControl
             // ColLogMessage
             // 
             this.ColLogMessage.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.ColLogMessage.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.ColLogMessage.DefaultCellStyle = dataGridViewCellStyle2;
             this.ColLogMessage.HeaderText = "Message";
             this.ColLogMessage.MinimumWidth = 30;
             this.ColLogMessage.Name = "ColLogMessage";
@@ -2782,31 +2792,55 @@ namespace MineControl
             // 
             this.openFileDialogBackups.FileName = "openFileDialogBackupPath";
             // 
-            // buttonScheduleMoveNodeUp
+            // ColAppType
             // 
-            this.buttonScheduleMoveNodeUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonScheduleMoveNodeUp.Location = new System.Drawing.Point(185, 499);
-            this.buttonScheduleMoveNodeUp.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.buttonScheduleMoveNodeUp.Name = "buttonScheduleMoveNodeUp";
-            this.buttonScheduleMoveNodeUp.Size = new System.Drawing.Size(120, 27);
-            this.buttonScheduleMoveNodeUp.TabIndex = 24;
-            this.buttonScheduleMoveNodeUp.Text = "Move Node Up";
-            this.toolTipMain.SetToolTip(this.buttonScheduleMoveNodeUp, "Deletes the selected node and any nodes that depend on it");
-            this.buttonScheduleMoveNodeUp.UseVisualStyleBackColor = true;
-            this.buttonScheduleMoveNodeUp.Click += new System.EventHandler(this.buttonScheduleMoveNodeUp_Click);
+            this.ColAppType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.ColAppType.Frozen = true;
+            this.ColAppType.HeaderText = "App Type";
+            this.ColAppType.Name = "ColAppType";
+            this.ColAppType.ReadOnly = true;
+            this.ColAppType.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ColAppType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ColAppType.Width = 59;
             // 
-            // buttonScheduleMoveNodeDown
+            // ColAppName
             // 
-            this.buttonScheduleMoveNodeDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonScheduleMoveNodeDown.Location = new System.Drawing.Point(358, 499);
-            this.buttonScheduleMoveNodeDown.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.buttonScheduleMoveNodeDown.Name = "buttonScheduleMoveNodeDown";
-            this.buttonScheduleMoveNodeDown.Size = new System.Drawing.Size(120, 27);
-            this.buttonScheduleMoveNodeDown.TabIndex = 25;
-            this.buttonScheduleMoveNodeDown.Text = "Move Node Down";
-            this.toolTipMain.SetToolTip(this.buttonScheduleMoveNodeDown, "Deletes the selected node and any nodes that depend on it");
-            this.buttonScheduleMoveNodeDown.UseVisualStyleBackColor = true;
-            this.buttonScheduleMoveNodeDown.Click += new System.EventHandler(this.buttonScheduleMoveNodeDown_Click);
+            this.ColAppName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.ColAppName.Frozen = true;
+            this.ColAppName.HeaderText = "Process Name";
+            this.ColAppName.Name = "ColAppName";
+            this.ColAppName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ColAppName.ToolTipText = "Exact name of launched process as shown in Task Manager, WITHOUT file extension";
+            this.ColAppName.Width = 82;
+            // 
+            // ColAppStatus
+            // 
+            this.ColAppStatus.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.ColAppStatus.Frozen = true;
+            this.ColAppStatus.HeaderText = "Status";
+            this.ColAppStatus.Name = "ColAppStatus";
+            this.ColAppStatus.ReadOnly = true;
+            this.ColAppStatus.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ColAppStatus.Width = 43;
+            // 
+            // ColAppPath
+            // 
+            this.ColAppPath.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.ColAppPath.HeaderText = "Full Start Path";
+            this.ColAppPath.Name = "ColAppPath";
+            this.ColAppPath.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ColAppPath.ToolTipText = "Complete path for launching the process, including file name and extension (can b" +
+    "e an executable script)";
+            // 
+            // ColAppChooseButton
+            // 
+            this.ColAppChooseButton.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.ColAppChooseButton.HeaderText = "";
+            this.ColAppChooseButton.Name = "ColAppChooseButton";
+            this.ColAppChooseButton.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ColAppChooseButton.Text = "...";
+            this.ColAppChooseButton.UseColumnTextForButtonValue = true;
+            this.ColAppChooseButton.Width = 5;
             // 
             // FormMineControl
             // 
@@ -3057,7 +3091,7 @@ namespace MineControl
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialogBackups;
         private System.Windows.Forms.GroupBox groupBoxDataTracking;
         private System.Windows.Forms.DataGridView dataGridViewMetrics;
-        private System.Windows.Forms.Button buttonDataViewSysTray;
+        private System.Windows.Forms.Button buttonDataViewSysTrayTooltips;
         private System.Windows.Forms.NumericUpDown numericUpDownTempMax;
         private System.Windows.Forms.NumericUpDown numericUpDownTempMin;
         private System.Windows.Forms.Label label6;
@@ -3078,10 +3112,6 @@ namespace MineControl
         private System.Windows.Forms.Button buttonGeneralResetConfig;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SplitContainer splitContainer2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColAppType;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColAppName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColAppStatus;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColAppPath;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColLogSource;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColLogType;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColLogTime;
@@ -3102,6 +3132,12 @@ namespace MineControl
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.Button buttonScheduleMoveNodeDown;
         private System.Windows.Forms.Button buttonScheduleMoveNodeUp;
+        private System.Windows.Forms.Button buttonDataRemoveUnusedQueryOptions;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColAppType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColAppName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColAppStatus;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColAppPath;
+        private System.Windows.Forms.DataGridViewButtonColumn ColAppChooseButton;
     }
 }
 
