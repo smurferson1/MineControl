@@ -190,8 +190,8 @@ namespace MineControl
             this.ColStatsValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColStatsLastUpdate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPageAnalyticsOptions = new System.Windows.Forms.TabPage();
-            this.numericUpDownChartMinTempOnYAxisValue = new System.Windows.Forms.NumericUpDown();
-            this.checkBoxChartMinTempOnYAxisEnabled = new System.Windows.Forms.CheckBox();
+            this.numericUpDownChartMinGPUTempOnYAxisValue = new System.Windows.Forms.NumericUpDown();
+            this.checkBoxChartMinGPUTempOnYAxisEnabled = new System.Windows.Forms.CheckBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label32 = new System.Windows.Forms.Label();
             this.dataGridViewLog = new System.Windows.Forms.DataGridView();
@@ -279,7 +279,7 @@ namespace MineControl
             this.tabPageStats.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewStats)).BeginInit();
             this.tabPageAnalyticsOptions.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownChartMinTempOnYAxisValue)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownChartMinGPUTempOnYAxisValue)).BeginInit();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLog)).BeginInit();
             this.tabPageAbout.SuspendLayout();
@@ -2329,8 +2329,8 @@ namespace MineControl
             // tabPageAnalyticsOptions
             // 
             this.tabPageAnalyticsOptions.BackColor = System.Drawing.SystemColors.Control;
-            this.tabPageAnalyticsOptions.Controls.Add(this.numericUpDownChartMinTempOnYAxisValue);
-            this.tabPageAnalyticsOptions.Controls.Add(this.checkBoxChartMinTempOnYAxisEnabled);
+            this.tabPageAnalyticsOptions.Controls.Add(this.numericUpDownChartMinGPUTempOnYAxisValue);
+            this.tabPageAnalyticsOptions.Controls.Add(this.checkBoxChartMinGPUTempOnYAxisEnabled);
             this.tabPageAnalyticsOptions.Location = new System.Drawing.Point(4, 24);
             this.tabPageAnalyticsOptions.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tabPageAnalyticsOptions.Name = "tabPageAnalyticsOptions";
@@ -2339,33 +2339,33 @@ namespace MineControl
             this.tabPageAnalyticsOptions.TabIndex = 1;
             this.tabPageAnalyticsOptions.Text = "Options";
             // 
-            // numericUpDownChartMinTempOnYAxisValue
+            // numericUpDownChartMinGPUTempOnYAxisValue
             // 
-            this.numericUpDownChartMinTempOnYAxisValue.Location = new System.Drawing.Point(148, 17);
-            this.numericUpDownChartMinTempOnYAxisValue.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.numericUpDownChartMinTempOnYAxisValue.Name = "numericUpDownChartMinTempOnYAxisValue";
-            this.numericUpDownChartMinTempOnYAxisValue.Size = new System.Drawing.Size(40, 23);
-            this.numericUpDownChartMinTempOnYAxisValue.TabIndex = 21;
-            this.numericUpDownChartMinTempOnYAxisValue.Value = new decimal(new int[] {
+            this.numericUpDownChartMinGPUTempOnYAxisValue.Location = new System.Drawing.Point(162, 18);
+            this.numericUpDownChartMinGPUTempOnYAxisValue.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.numericUpDownChartMinGPUTempOnYAxisValue.Name = "numericUpDownChartMinGPUTempOnYAxisValue";
+            this.numericUpDownChartMinGPUTempOnYAxisValue.Size = new System.Drawing.Size(40, 23);
+            this.numericUpDownChartMinGPUTempOnYAxisValue.TabIndex = 21;
+            this.numericUpDownChartMinGPUTempOnYAxisValue.Value = new decimal(new int[] {
             80,
             0,
             0,
             0});
-            this.numericUpDownChartMinTempOnYAxisValue.ValueChanged += new System.EventHandler(this.SettingChanged);
+            this.numericUpDownChartMinGPUTempOnYAxisValue.ValueChanged += new System.EventHandler(this.SettingChanged);
             // 
-            // checkBoxChartMinTempOnYAxisEnabled
+            // checkBoxChartMinGPUTempOnYAxisEnabled
             // 
-            this.checkBoxChartMinTempOnYAxisEnabled.AutoSize = true;
-            this.checkBoxChartMinTempOnYAxisEnabled.Checked = true;
-            this.checkBoxChartMinTempOnYAxisEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxChartMinTempOnYAxisEnabled.Location = new System.Drawing.Point(12, 18);
-            this.checkBoxChartMinTempOnYAxisEnabled.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.checkBoxChartMinTempOnYAxisEnabled.Name = "checkBoxChartMinTempOnYAxisEnabled";
-            this.checkBoxChartMinTempOnYAxisEnabled.Size = new System.Drawing.Size(133, 19);
-            this.checkBoxChartMinTempOnYAxisEnabled.TabIndex = 20;
-            this.checkBoxChartMinTempOnYAxisEnabled.Text = "Min Temp On Y Axis";
-            this.checkBoxChartMinTempOnYAxisEnabled.UseVisualStyleBackColor = true;
-            this.checkBoxChartMinTempOnYAxisEnabled.CheckedChanged += new System.EventHandler(this.SettingChanged);
+            this.checkBoxChartMinGPUTempOnYAxisEnabled.AutoSize = true;
+            this.checkBoxChartMinGPUTempOnYAxisEnabled.Checked = true;
+            this.checkBoxChartMinGPUTempOnYAxisEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxChartMinGPUTempOnYAxisEnabled.Location = new System.Drawing.Point(12, 18);
+            this.checkBoxChartMinGPUTempOnYAxisEnabled.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.checkBoxChartMinGPUTempOnYAxisEnabled.Name = "checkBoxChartMinGPUTempOnYAxisEnabled";
+            this.checkBoxChartMinGPUTempOnYAxisEnabled.Size = new System.Drawing.Size(140, 19);
+            this.checkBoxChartMinGPUTempOnYAxisEnabled.TabIndex = 20;
+            this.checkBoxChartMinGPUTempOnYAxisEnabled.Text = "Min GPU Temp On Y2";
+            this.checkBoxChartMinGPUTempOnYAxisEnabled.UseVisualStyleBackColor = true;
+            this.checkBoxChartMinGPUTempOnYAxisEnabled.CheckedChanged += new System.EventHandler(this.SettingChanged);
             // 
             // groupBox3
             // 
@@ -2486,7 +2486,7 @@ namespace MineControl
             this.comboBoxLogFilter.FormattingEnabled = true;
             this.comboBoxLogFilter.Items.AddRange(new object[] {
             "None",
-            "Source = \'DMM\'",
+            "Source = \'MineControl\'",
             "Source = \'GPU Miner\'",
             "Source = \'CPU Miner\'",
             "Type = \'Info\'",
@@ -2856,7 +2856,7 @@ namespace MineControl
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewStats)).EndInit();
             this.tabPageAnalyticsOptions.ResumeLayout(false);
             this.tabPageAnalyticsOptions.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownChartMinTempOnYAxisValue)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownChartMinGPUTempOnYAxisValue)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLog)).EndInit();
@@ -2955,8 +2955,8 @@ namespace MineControl
         private System.Windows.Forms.TreeView treeViewSchedule;
         private System.Windows.Forms.Button buttonScheduleDeleteNode;
         private System.Windows.Forms.Button buttonScheduleCreateSubNode;
-        private System.Windows.Forms.NumericUpDown numericUpDownChartMinTempOnYAxisValue;
-        private System.Windows.Forms.CheckBox checkBoxChartMinTempOnYAxisEnabled;
+        private System.Windows.Forms.NumericUpDown numericUpDownChartMinGPUTempOnYAxisValue;
+        private System.Windows.Forms.CheckBox checkBoxChartMinGPUTempOnYAxisEnabled;
         private System.Windows.Forms.CheckBox checkBoxMinerCPUUserActivityShutoff;
         private System.Windows.Forms.CheckBox checkBoxMinerGPUUserActivityShutoff;
         private System.Windows.Forms.NumericUpDown numericUpDownMinerUserActivityTimeout;

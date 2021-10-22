@@ -7,6 +7,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
 namespace MineControl
@@ -234,6 +235,8 @@ namespace MineControl
 
         [JsonIgnore]
         public IChartManager ChartManager { get; set; } = null;
+        [JsonIgnore]
+        public ILog Log { get; set; } = null;
 
         /// <summary>
         /// Assigns properties of given metric to this metric
@@ -264,7 +267,7 @@ namespace MineControl
 
         /// <summary>
         /// Updates series info and adds/switches series if needed based on grouping.
-        /// Assumes that Chart and Series are not null.
+        /// Assumes that Chart, Series, ChartManager, and Log are not null.
         /// </summary>
         private void UpdateSeries()
         {
@@ -275,19 +278,27 @@ namespace MineControl
 
             string localUnit = Unit == null || Unit.SelectionResult.Length == 0 ? "" : $" ({Unit.SelectionResult})";
             string grouping = GroupedBy == null || GroupedBy.SelectionResult.Length == 0 ? "" : $" w/ {GroupedBy.SelectionResult}";
-            
-            // handle grouping if series name has been set
+#if DEBUG
+            Log?.Append($"UpdateSeries called for '{this.Name}'", LogType.Debug);
+# endif
+            // look for grouping changes, but only if we have an existing grouping
             if (GroupedBy != null && Series.Name.Length > 1)
             {
+#if DEBUG
+                Log?.Append($"Found grouping for '{this.Name}'", LogType.Debug);
+# endif
                 // check grouping metric in case we need to change to a different series
-                if (!Series.Name.Contains(grouping) && Series.Name.Contains("/w"))
+                if (!Series.Name.EndsWith(grouping) && Series.Name.Contains(" w/ "))
                 {
+#if DEBUG
+                    Log?.Append($"Found grouping change from '{Series.Name}' to '{this.Name}{localUnit}{grouping}'", LogType.Debug);
+# endif
                     bool found = false; 
 
                     // first look for another series on the same chart that fits this metric and grouping
                     foreach (Series s in Chart.Series)
                     {
-                        if (!found && s.Name.Contains(Name) && s.Name.Contains(grouping))
+                        if (!found && s.Name.Contains(this.Name) && s.Name.EndsWith(grouping))
                         {
                             Series = s;
                             found = true;
@@ -297,10 +308,13 @@ namespace MineControl
                     // if not found, create a new series
                     if (!found)
                     {
-                        ChartManager.CreateChartSeries(Chart.Name, this, Series.ChartType, Series.YAxisType);
+# if DEBUG
+                        Log?.Append($"Creating {Chart.Name} chart series '{this.Name}{localUnit}{grouping}' from change in grouping", LogType.Debug);
+# endif
+                        // note: will set the new series for us
+                        ChartManager.CreateChartSeriesForMetric(Chart.Name, this, Series.ChartType, Series.YAxisType);                             
                     }
-                }
-                Series.Name = $"{this.Name}{localUnit}{grouping}";
+                }                
             }
             
             // set info

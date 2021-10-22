@@ -18,7 +18,8 @@ using System.Windows.Forms.DataVisualization.Charting;
 namespace MineControl
 {    
     // TODO: provide a way to remember settings across versions, since right now it starts over each time version number changes
-    public partial class FormMineControl : Form, IChartManager
+    // TODO: auto-close instances after the first
+    public partial class FormMineControl : Form, IChartManager, ILog
     {        
         // consts for app grid rows
         private const int cGPUMinerIndex = 0;
@@ -182,6 +183,7 @@ namespace MineControl
             Metrics.Add(new Metric(false, cGPUHashAlgo, MetricType.Selection, MetricSource.GPUMiner, MetricMethod.RegEx, ""));
             Metric(cGPUHashRate).GroupedBy = Metric(cGPUHashAlgo);
             Metric(cGPUHashRate).ChartManager = this;
+            Metric(cGPUHashRate).Log = this;
             Metrics.Add(new Metric(false, cGPUMemJuncTemp, MetricType.Number, MetricSource.SysTray, MetricMethod.RegEx, ""));
             Metrics.Add(new Metric(false, cGPUMemJuncTempUnit, MetricType.Selection, MetricSource.SysTray, MetricMethod.RegEx, ""));
             Metric(cGPUMemJuncTemp).Unit = Metric(cGPUMemJuncTempUnit);
@@ -191,6 +193,7 @@ namespace MineControl
             Metrics.Add(new Metric(false, cCPUHashAlgo, MetricType.Selection, MetricSource.CPUMiner, MetricMethod.RegEx, ""));
             Metric(cCPUHashRate).GroupedBy = Metric(cCPUHashAlgo);
             Metric(cCPUHashRate).ChartManager = this;
+            Metric(cCPUHashRate).Log = this;
             Metrics.Add(new Metric(false, cCPUTemp, MetricType.Number, MetricSource.SysTray, MetricMethod.RegEx, ""));
             Metrics.Add(new Metric(false, cCPUTempUnit, MetricType.Selection, MetricSource.SysTray, MetricMethod.RegEx, ""));
             Metric(cCPUTemp).Unit = Metric(cCPUTempUnit);
@@ -198,14 +201,14 @@ namespace MineControl
             Metrics.Add(new Metric(false, cGPUPower, MetricType.Number, MetricSource.SysTray, MetricMethod.RegEx, ""));
             Metrics.Add(new Metric(false, cCPUPower, MetricType.Number, MetricSource.SysTray, MetricMethod.RegEx, ""));
             // create chart series for metrics that need one
-            CreateChartSeries(cGPU, Metric(cGPUPowerStep), SeriesChartType.StepLine, AxisType.Primary);
-            CreateChartSeries(cGPU, Metric(cGPUMemJuncTemp), SeriesChartType.Line, AxisType.Secondary);
-            CreateChartSeries(cGPU, Metric(cGPUHashRate), SeriesChartType.Line, AxisType.Secondary);
-            CreateChartSeries(cCPU, Metric(cCPUTemp), SeriesChartType.Line, AxisType.Secondary);
-            CreateChartSeries(cCPU, Metric(cCPUHashRate), SeriesChartType.Line, AxisType.Secondary);
-            CreateChartSeries(cResources, Metric(cTotalPower), SeriesChartType.Line, AxisType.Secondary);
-            CreateChartSeries(cResources, Metric(cGPUPower), SeriesChartType.Line, AxisType.Secondary);
-            CreateChartSeries(cResources, Metric(cCPUPower), SeriesChartType.Line, AxisType.Secondary);
+            CreateChartSeriesForMetric(cGPU, Metric(cGPUPowerStep), SeriesChartType.StepLine, AxisType.Primary);
+            CreateChartSeriesForMetric(cGPU, Metric(cGPUMemJuncTemp), SeriesChartType.Line, AxisType.Secondary);
+            CreateChartSeriesForMetric(cGPU, Metric(cGPUHashRate), SeriesChartType.Line, AxisType.Secondary);
+            CreateChartSeriesForMetric(cCPU, Metric(cCPUTemp), SeriesChartType.Line, AxisType.Secondary);
+            CreateChartSeriesForMetric(cCPU, Metric(cCPUHashRate), SeriesChartType.Line, AxisType.Secondary);
+            CreateChartSeriesForMetric(cResources, Metric(cTotalPower), SeriesChartType.Line, AxisType.Secondary);
+            CreateChartSeriesForMetric(cResources, Metric(cGPUPower), SeriesChartType.Line, AxisType.Secondary);
+            CreateChartSeriesForMetric(cResources, Metric(cCPUPower), SeriesChartType.Line, AxisType.Secondary);
             // system-defined metric query options (always present)
             ColDataQuery.Items.Add(@"(?<=[E][t][h][ ][s][p][e][e][d][:][ ])\d+[.]\d+");
             ColDataQuery.Items.Add(@"(?<=[E][t][h][ ][s][p][e][e][d][:][ ]\d +[.]\d +[ ])\w+");
@@ -309,7 +312,7 @@ namespace MineControl
             }            
         }
 
-        public void CreateChartSeries(string chartName, Metric metricNumber, SeriesChartType seriesChartType, AxisType yAxisType)
+        public void CreateChartSeriesForMetric(string chartName, Metric metricToChart, SeriesChartType seriesChartType, AxisType yAxisType)
         {
             TabPage tab = null;
             Chart chart = null;
@@ -398,8 +401,8 @@ namespace MineControl
                 series.XValueType = ChartValueType.DateTime;
                 series.YAxisType = yAxisType;
 
-                metricNumber.Chart = chart;
-                metricNumber.Series = series;                
+                metricToChart.Chart = chart;
+                metricToChart.Series = series;                
             }
             else
             {
@@ -502,8 +505,8 @@ namespace MineControl
             checkBoxMinimizeToSysTray.Checked = Settings.controlMinimizeToSysTray;
             
             // chart
-            checkBoxChartMinTempOnYAxisEnabled.Checked = Settings.chartMinTempOnYAxisEnabled;
-            numericUpDownChartMinTempOnYAxisValue.Value = Settings.chartMinTempOnYAxisValue;
+            checkBoxChartMinGPUTempOnYAxisEnabled.Checked = Settings.chartMinTempOnYAxisEnabled;
+            numericUpDownChartMinGPUTempOnYAxisValue.Value = Settings.chartMinTempOnYAxisValue;
 
             // archives and data retention
             checkBoxArchivesArchiveConfig.Checked = Settings.archivesArchiveConfig;
@@ -657,8 +660,8 @@ namespace MineControl
             Settings.controlMinimizeToSysTray = checkBoxMinimizeToSysTray.Checked;
             
             // chart            
-            Settings.chartMinTempOnYAxisEnabled = checkBoxChartMinTempOnYAxisEnabled.Checked;
-            Settings.chartMinTempOnYAxisValue = (int)numericUpDownChartMinTempOnYAxisValue.Value;
+            Settings.chartMinTempOnYAxisEnabled = checkBoxChartMinGPUTempOnYAxisEnabled.Checked;
+            Settings.chartMinTempOnYAxisValue = (int)numericUpDownChartMinGPUTempOnYAxisValue.Value;
 
             // archives and data retention
             Settings.archivesArchiveConfig = checkBoxArchivesArchiveConfig.Checked;
@@ -1182,9 +1185,20 @@ namespace MineControl
                 }
             }            
         }
-                        
+
+        public void Append(string entry, LogType logType = LogType.Info, LogSource logSource = LogSource.Internal)
+        {
+            AddLogEntry(entry, logType, logSource);
+        }
+
         private void AddLogEntry(string entry, LogType logType = LogType.Info, LogSource logSource = LogSource.Internal)
         {
+            // can't invoke until control has been created, so entries at this stage are lost
+            if (!this.Created)
+            {
+                return;
+            }
+            
             Invoke(new Action(() =>
             {
                 string logSourceText;
@@ -1907,7 +1921,7 @@ namespace MineControl
             
             int axisPadding = 2;
 
-            // update GPU temp axis to fit current data            
+            // update GPU Y2 axis to fit current data            
             if ((Series(cGPUMemJuncTemp).Points.Count > 0) && (Series(cGPUHashRate).Points.Count > 0))
             {
                 double tempMin = Series(cGPUMemJuncTemp).Points.FindMinByValue().YValues[0];
@@ -1933,43 +1947,40 @@ namespace MineControl
                 Chart(cGPU).ChartAreas[0].AxisY2.Minimum = 0;
                 Chart(cGPU).ChartAreas[0].AxisY2.Maximum = 1;
             }
-            
-            if (Chart(cGPU).ChartAreas[0].AxisY2.Maximum - Chart(cGPU).ChartAreas[0].AxisY2.Minimum <= 10)
-            {
-                Chart(cGPU).ChartAreas[0].AxisY2.Interval = 1;
-            }
-            else if (Chart(cGPU).ChartAreas[0].AxisY2.Maximum - Chart(cGPU).ChartAreas[0].AxisY2.Minimum > 40)
-            {
-                Chart(cGPU).ChartAreas[0].AxisY2.Interval = 4;
-            }
-            else
-            {
-                Chart(cGPU).ChartAreas[0].AxisY2.Interval = 2;
-            }
+
+            Chart(cGPU).ChartAreas[0].AxisY2.Interval = 
+                Math.Max(Math.Round((Chart(cGPU).ChartAreas[0].AxisY2.Maximum - Chart(cGPU).ChartAreas[0].AxisY2.Minimum) / (Chart(cGPU).Height / 15)), 1);
 
             if (includeGPUPowerStep)
             {
                 // always set GPU power step axis to the available power steps
-                ChartUtils.SetChartAxisScale(Chart(cGPU).ChartAreas[0].AxisY, trackBarGPUPowerStep.Minimum, trackBarGPUPowerStep.Maximum, 0);                
+                ChartUtils.SetChartAxisScale(Chart(cGPU).ChartAreas[0].AxisY, trackBarGPUPowerStep.Minimum, trackBarGPUPowerStep.Maximum, Chart(cGPU).Height, 0);                
             }
 
-            // update CPU axis to fit current data
-            if (Series(cCPUHashRate).Points.Count > 0)
+            // update CPU Y2 axis to fit current data            
+            if ((Series(cCPUTemp).Points.Count > 0) && (Series(cCPUHashRate).Points.Count > 0))
+            {                
+                double axisMin = Math.Min(Series(cCPUTemp).Points.FindMinByValue().YValues[0], Series(cCPUHashRate).Points.FindMinByValue().YValues[0]) - axisPadding;
+                if (!double.IsNaN(axisMin))
+                {
+                    Chart(cCPU).ChartAreas[0].AxisY2.Minimum = Math.Round(axisMin);
+                }
+
+                double axisMax = Math.Max(Series(cCPUTemp).Points.FindMaxByValue().YValues[0], Series(cCPUHashRate).Points.FindMaxByValue().YValues[0]) + axisPadding;
+                if (!double.IsNaN(axisMax))
+                {
+                    Chart(cCPU).ChartAreas[0].AxisY2.Maximum = Math.Round(axisMax);
+                }
+            }
+            else
             {
-                Chart(cCPU).ChartAreas[0].AxisY2.Minimum = Math.Round(Series(cCPUHashRate).Points.FindMinByValue().YValues[0] - axisPadding);
-                // TODO: figure out whether to adapt the commented code
-                //if (Settings.chartMinTempOnYAxisEnabled && (Chart(cCPU).ChartAreas[0].AxisY2.Minimum < Settings.chartMinTempOnYAxisValue))
-                //{
-                //    Chart(cCPU).ChartAreas[0].AxisY2.Minimum = Settings.chartMinTempOnYAxisValue;
-                //}
-                Chart(cCPU).ChartAreas[0].AxisY2.Maximum = Math.Round(Series(cCPUHashRate).Points.FindMaxByValue().YValues[0] + axisPadding);
-
-                if (Math.Round((Chart(cCPU).ChartAreas[0].AxisY2.Maximum - Chart(cCPU).ChartAreas[0].AxisY2.Minimum) / 20, 0) > 0)
-                    Chart(cCPU).ChartAreas[0].AxisY2.Interval = Math.Round((Chart(cCPU).ChartAreas[0].AxisY2.Maximum - Chart(cCPU).ChartAreas[0].AxisY2.Minimum) / 20, 0);
-                else
-                    Chart(cCPU).ChartAreas[0].AxisY2.Interval = 1;
+                Chart(cCPU).ChartAreas[0].AxisY2.Minimum = 0;
+                Chart(cCPU).ChartAreas[0].AxisY2.Maximum = 1;
             }
-
+            
+            Chart(cCPU).ChartAreas[0].AxisY2.Interval = 
+                Math.Max(Math.Round((Chart(cCPU).ChartAreas[0].AxisY2.Maximum - Chart(cCPU).ChartAreas[0].AxisY2.Minimum) / (Chart(cCPU).Height / 15)),1);                
+            
             ChartUtils.UpdateChartAxisScale(Chart(cResources));            
         }
 

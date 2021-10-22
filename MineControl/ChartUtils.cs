@@ -53,32 +53,29 @@ namespace MineControl
             if (axisType == AxisType.Primary || axisType == null)
             {
                 (min, max) = GetMinAndMaxYValue(chart, AxisType.Primary);
-                SetChartAxisScale(chart.ChartAreas[0].AxisY, min, max, 2);
+                SetChartAxisScale(chart.ChartAreas[0].AxisY, min, max, chart.Height, 2);
             }
             if (axisType == AxisType.Secondary || axisType == null)
             {
                 (min, max) = GetMinAndMaxYValue(chart, AxisType.Secondary);
-                SetChartAxisScale(chart.ChartAreas[0].AxisY2, min, max, 2);
+                SetChartAxisScale(chart.ChartAreas[0].AxisY2, min, max, chart.Height, 2);
             }
         }
         
-        public static void SetChartAxisScale(Axis chartAxis, double min, double max, double padding)
+        public static void SetChartAxisScale(Axis chartAxis, double min, double max, double height, double padding)
         {
             if (!min.Equals(double.NaN) && !max.Equals(double.NaN))
             {
                 chartAxis.Minimum = Math.Round(Math.Max(min - padding, 0), 0);
                 chartAxis.Maximum = Math.Round(Math.Max(max + padding, 0), 0);
-
-                if (Math.Round((chartAxis.Maximum - chartAxis.Minimum) / 20, 0) > 0)
-                    chartAxis.Interval = Math.Round((chartAxis.Maximum - chartAxis.Minimum) / 20, 0);
-                else
-                    chartAxis.Interval = 1;
+                chartAxis.Interval = Math.Max(Math.Round((chartAxis.Maximum - chartAxis.Minimum) / (height / 15)), 1);
             }
             else
             {
                 // dummy values
                 chartAxis.Minimum = 0;
                 chartAxis.Maximum = 1;
+                chartAxis.Interval = 1;
             }
         }
     }

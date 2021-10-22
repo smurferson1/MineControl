@@ -9,6 +9,6 @@ namespace MineControl
 {
     public interface IChartManager
     {
-        public void CreateChartSeries(string chartName, Metric metricNumber, SeriesChartType seriesChartType, AxisType yAxisType);
+        public void CreateChartSeriesForMetric(string chartName, Metric metric, SeriesChartType seriesChartType, AxisType yAxisType);
     }
 }
