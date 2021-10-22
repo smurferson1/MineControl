@@ -17,7 +17,7 @@ MineControl is free and open source. Crypto donations are however appreciated an
 If you want to see additional donation options, contact the developer.
 
 ## License
-MineControl is licensed under **Creative Commons CC-BY-SA 4.0** (see License.txt). This license is specifically required due to adaptation of certain code from StackOverflow. For attribution, see MineControl's About tab, or the source code.
+MineControl is licensed under **Creative Commons "CC BY-SA 4.0"** (see License.txt). This license is specifically required due to adaptation of certain code from StackOverflow. For attribution, see MineControl's About tab, or the source code.
 
 ## DISCLAIMERS
 
