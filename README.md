@@ -64,7 +64,7 @@ See Issues area for comprehensive list, and add to it if you find a bug.
 - A hardware monitor app, *if* MineControl should monitor hardware sensors and automate actions based on sensor readings.
 - A GPU controller app, *if* MineControl should automate GPU power stepping for temperature control.
 - A GPU and/or CPU miner app that outputs to a console window, *if* MineControl should aggregate GPU/CPU miner data and control their execution.
-- MineControl **must** be both 1) started using an administrator account, and 2) **not** running elevated (i.e. admin privileges).
+- MineControl must be **both** 1) started using an administrator account, and 2) **not** running elevated (i.e. admin privileges).
 - UAC (User Account Control) in Windows **must** be configured low enough that the logged in user is not prompted to confirm execution of applications as admin. Otherwise automated execution of miners and apps, including power stepping, will cause a bunch of UAC prompts and not work.
 - You'll probably need to exclude MineControl from virus scanning. As with most crypto mining apps, it's flagged as a false positive.
 
