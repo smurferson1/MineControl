@@ -11,13 +11,17 @@ Names of hardware monitor and GPU controller apps are omitted in order to avoid 
 ![image](https://user-images.githubusercontent.com/91922614/138532772-a657dc16-2947-4f0b-8315-203717929fcc.png)
 
 ## Donations
+
 MineControl is free and open source. Crypto donations are however appreciated and will keep the developer(s) motivated to fix and improve things. Current wallets for donation:
 - TBD
 
 If you want to see additional donation options, contact the developer.
 
 ## License
-MineControl is licensed under **Creative Commons "CC BY-SA 4.0"** (see License.txt). This license is specifically required due to adaptation of certain code from StackOverflow. For attribution, see MineControl's About tab, or the source code.
+
+MineControl is licensed under the Creative Commons Attribution-ShareAlike 4.0 International Public License, a.k.a. **CC BY-SA 4.0** (see License.txt).
+
+Note: CC BY-SA is specifically required due to adaptation of certain code from StackOverflow. For attribution, see MineControl's About tab, or the source code.
 
 ## DISCLAIMERS
 
