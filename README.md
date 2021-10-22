@@ -8,6 +8,8 @@ A **power** tool for temperature management, scheduling, and data aggregation wh
 
 Names of hardware monitor and GPU controller apps are omitted in order to avoid legal issues, but the default config is compatible with the most popular hardware monitor and GPU controller apps. These support both NVIDIA and AMD GPUs. Hint: they rhyme with **RidesharePimpo** and **PamStoleMy ButterChurner**.
 
+![image](https://user-images.githubusercontent.com/91922614/138532772-a657dc16-2947-4f0b-8315-203717929fcc.png)
+
 ## Donations
 MineControl is free and open source. Crypto donations are however appreciated and will keep the developer(s) motivated to fix and improve things. Current wallets for donation:
 - TBD
