@@ -1,6 +1,6 @@
 # MineControl 
 
-A **power** tool for temperature management, scheduling, and data aggregation while mining cryptocurrency. For us plebs with a single GPU and CPU running **Windows 10**. It can automatically keep your miners and hardware running within your parameters and give you nice data (e.g. charts, averages, kWh). This is accomplished by:
+A **power** tool for temperature management, scheduling, and data aggregation while mining cryptocurrency. For us plebs with a single GPU and CPU running **Windows 10 x64**. It can automatically keep your miners and hardware running within your parameters and give you nice data (e.g. charts, averages, kWh). This is accomplished by:
 - Reading temperatures and other sensor data from an external hardware monitor app.
 - Setting GPU power profile via an external GPU controller app.
 - Optionally managing execution of an external GPU and/or CPU mining app and charting/logging their output centrally.
@@ -46,7 +46,7 @@ MineControl is free and open source. Crypto donations are however appreciated an
 
 ## Requirements
 
-- Windows 10
+- Windows 10 x64 (at least)
 - .NET 5
 - A hardware monitor app, *if* MineControl should monitor hardware sensors and automate actions based on sensor readings.
 - A GPU controller app, *if* MineControl should automate GPU power stepping for temperature control.
