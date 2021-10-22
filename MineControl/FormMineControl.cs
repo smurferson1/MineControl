@@ -2053,13 +2053,13 @@ namespace MineControl
                     }
                     else if (radioButtonScheduleResult.Checked)
                     {
-                        MessageBox.Show("Actions can't exist alongside other nodes at the same level");
+                        MessageBox.Show("Result nodes can't exist alongside other nodes at the same level. Add as a standalone sub-node instead).");
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Node not created or created incorrectly due to an exception: \n{ex.GetType()}\n{ex.Message}");
+                MessageBox.Show($"Node not created, or created incorrectly, due to an exception: \n{ex.GetType()}\n{ex.Message}");
             }
         }
 
@@ -2538,12 +2538,17 @@ namespace MineControl
                 if (MessageBox.Show("Any children will be deleted, and nodes at the same level will be deleted if this is an 'else' node or a standalone 'if' node. Continue?", 
                     this.Text, MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    SelectedSchedule.DeleteNode((Guid)treeViewSchedule.SelectedNode.Tag);
+                    if (SelectedSchedule.DeleteNode((Guid)treeViewSchedule.SelectedNode.Tag))
+                    {
+                        SaveSchedulesFromList();
 
-                    SaveSchedulesFromList();
-
-                    // reload to show the deletion(s)
-                    LoadScheduleToTreeView(SelectedSchedule);
+                        // reload to show the deletion(s)
+                        LoadScheduleToTreeView(SelectedSchedule);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Couldn't delete the node for an unknown reason.");
+                    }                    
                 }
             }
         }
@@ -2849,6 +2854,52 @@ namespace MineControl
 #else
             MessageBox.Show("Link clicked");
 #endif
+        }
+
+        private void buttonScheduleMoveNodeUp_Click(object sender, EventArgs e)
+        {
+            if (treeViewSchedule.SelectedNode == null)
+            {                
+                MessageBox.Show("No node is selected to move.");
+            }
+            else
+            {
+                Guid nodeId = (Guid)treeViewSchedule.SelectedNode.Tag;
+                if (SelectedSchedule.MoveNodeUp(nodeId))
+                {
+                    SaveSchedulesFromList();
+
+                    // reload to show the move
+                    LoadScheduleToTreeView(SelectedSchedule, nodeId);
+                }
+                else
+                {
+                    MessageBox.Show("Can't move this node up, either because it's already at the top, or because a node that would be switched isn't allowed to move.");
+                }
+            }
+        }
+
+        private void buttonScheduleMoveNodeDown_Click(object sender, EventArgs e)
+        {
+            if (treeViewSchedule.SelectedNode == null)
+            {
+                MessageBox.Show("No node is selected to move.");
+            }
+            else
+            {
+                Guid nodeId = (Guid)treeViewSchedule.SelectedNode.Tag;
+                if (SelectedSchedule.MoveNodeDown(nodeId))
+                {
+                    SaveSchedulesFromList();
+
+                    // reload to show the move
+                    LoadScheduleToTreeView(SelectedSchedule, nodeId);
+                }
+                else
+                {
+                    MessageBox.Show("Can't move this node down, either because it's already at the bottom, or because a node that would be switched isn't allowed to move.");
+                }
+            }
         }
     }
 }

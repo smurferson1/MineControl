@@ -30,7 +30,7 @@ namespace MineControl
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMineControl));
             this.timerMain = new System.Windows.Forms.Timer(this.components);
             this.toolTipMain = new System.Windows.Forms.ToolTip(this.components);
@@ -231,6 +231,8 @@ namespace MineControl
             this.openFileDialogBackups = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialogBackups = new System.Windows.Forms.SaveFileDialog();
             this.folderBrowserDialogBackups = new System.Windows.Forms.FolderBrowserDialog();
+            this.buttonScheduleMoveNodeUp = new System.Windows.Forms.Button();
+            this.buttonScheduleMoveNodeDown = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempSteppingBuffer)).BeginInit();
             this.tabControlMain.SuspendLayout();
             this.tabPageConfig.SuspendLayout();
@@ -1587,6 +1589,8 @@ namespace MineControl
             // tabPageSchedule
             // 
             this.tabPageSchedule.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPageSchedule.Controls.Add(this.buttonScheduleMoveNodeDown);
+            this.tabPageSchedule.Controls.Add(this.buttonScheduleMoveNodeUp);
             this.tabPageSchedule.Controls.Add(this.groupBoxScheduleNodeDetails);
             this.tabPageSchedule.Controls.Add(this.buttonScheduleDeleteNode);
             this.tabPageSchedule.Controls.Add(this.buttonScheduleDeleteSchedule);
@@ -2450,8 +2454,8 @@ namespace MineControl
             // ColLogMessage
             // 
             this.ColLogMessage.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.ColLogMessage.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.ColLogMessage.DefaultCellStyle = dataGridViewCellStyle3;
             this.ColLogMessage.HeaderText = "Message";
             this.ColLogMessage.MinimumWidth = 30;
             this.ColLogMessage.Name = "ColLogMessage";
@@ -2778,6 +2782,32 @@ namespace MineControl
             // 
             this.openFileDialogBackups.FileName = "openFileDialogBackupPath";
             // 
+            // buttonScheduleMoveNodeUp
+            // 
+            this.buttonScheduleMoveNodeUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonScheduleMoveNodeUp.Location = new System.Drawing.Point(185, 499);
+            this.buttonScheduleMoveNodeUp.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.buttonScheduleMoveNodeUp.Name = "buttonScheduleMoveNodeUp";
+            this.buttonScheduleMoveNodeUp.Size = new System.Drawing.Size(120, 27);
+            this.buttonScheduleMoveNodeUp.TabIndex = 24;
+            this.buttonScheduleMoveNodeUp.Text = "Move Node Up";
+            this.toolTipMain.SetToolTip(this.buttonScheduleMoveNodeUp, "Deletes the selected node and any nodes that depend on it");
+            this.buttonScheduleMoveNodeUp.UseVisualStyleBackColor = true;
+            this.buttonScheduleMoveNodeUp.Click += new System.EventHandler(this.buttonScheduleMoveNodeUp_Click);
+            // 
+            // buttonScheduleMoveNodeDown
+            // 
+            this.buttonScheduleMoveNodeDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonScheduleMoveNodeDown.Location = new System.Drawing.Point(358, 499);
+            this.buttonScheduleMoveNodeDown.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.buttonScheduleMoveNodeDown.Name = "buttonScheduleMoveNodeDown";
+            this.buttonScheduleMoveNodeDown.Size = new System.Drawing.Size(120, 27);
+            this.buttonScheduleMoveNodeDown.TabIndex = 25;
+            this.buttonScheduleMoveNodeDown.Text = "Move Node Down";
+            this.toolTipMain.SetToolTip(this.buttonScheduleMoveNodeDown, "Deletes the selected node and any nodes that depend on it");
+            this.buttonScheduleMoveNodeDown.UseVisualStyleBackColor = true;
+            this.buttonScheduleMoveNodeDown.Click += new System.EventHandler(this.buttonScheduleMoveNodeDown_Click);
+            // 
             // FormMineControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -3070,6 +3100,8 @@ namespace MineControl
         private System.Windows.Forms.ListBox listBoxAboutAttribution;
         private System.Windows.Forms.LinkLabel linkLabelAboutLink;
         private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.Button buttonScheduleMoveNodeDown;
+        private System.Windows.Forms.Button buttonScheduleMoveNodeUp;
     }
 }
 

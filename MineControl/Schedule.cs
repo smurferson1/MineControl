@@ -215,7 +215,82 @@ namespace MineControl
             LastEvaluatedActions = result;
             return result;
         }
-        
+
+        /// <summary>
+        /// Tries to move node up within its current level, if the move is valid. 
+        /// </summary>
+        /// <param name="id">ID of the node to move up</param>
+        /// <returns>True if move was made</returns>
+        public bool MoveNodeUp(Guid id)
+        {
+            bool result = false;
+            try
+            {
+                ScheduleNode node = GetNodeById(id);
+                List<ScheduleNode> parentNodes = GetNodeParentNodes(id);                
+                int nodeIndex = parentNodes.IndexOf(node);
+
+                if (nodeIndex > 0 && CanMoveNode(id) && CanMoveNode(parentNodes[nodeIndex - 1].Id))
+                {
+                    result = true;
+                    parentNodes.Remove(node);
+                    parentNodes.Insert(nodeIndex - 1, node);                    
+                }
+            }
+            catch
+            {
+                // some exceptions are expected -- only pass on the exception if node collection might be messed up
+                if (result)
+                    throw;
+            }
+            return result;
+        }
+
+        public bool MoveNodeDown(Guid id)
+        {
+            bool result = false;
+            try
+            {
+                ScheduleNode node = GetNodeById(id);
+                List<ScheduleNode> parentNodes = GetNodeParentNodes(id);
+                int nodeIndex = parentNodes.IndexOf(node);
+
+                if (nodeIndex < parentNodes.Count - 1 && CanMoveNode(id) && CanMoveNode(parentNodes[nodeIndex + 1].Id))
+                {
+                    result = true;
+                    parentNodes.Remove(node);
+                    parentNodes.Insert(nodeIndex + 1, node);
+                }
+            }
+            catch
+            {
+                // some exceptions are expected -- only pass on the exception if node collection might be messed up
+                if (result)
+                    throw;
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Returns true if moving the node within its current nodes collection would be valid. 
+        /// Ignores movability other nodes in the collection.
+        /// </summary>
+        public bool CanMoveNode(Guid id)
+        {
+            bool result = false;
+            try
+            {
+                ScheduleNode node = GetNodeById(id);
+                result = (node is BranchingNode) && !(node is ElseNode);
+            }
+            catch
+            {
+                // ignore exceptions so we just return the result
+            }
+            return result;
+        }
+
+
         /// <summary>
         /// Attempts to delete node with the given ID and returns true if successful.
         /// Will ensure correct schedule format after node deletion, i.e. no orphan ifs or elses.
