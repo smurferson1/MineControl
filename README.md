@@ -54,6 +54,7 @@ MineControl is free and open source. Crypto donations are however appreciated an
 - A GPU and/or CPU miner app that outputs to a console window, *if* MineControl should aggregate GPU/CPU miner data and control their execution.
 - MineControl **must** be both 1) started using an administrator account, and 2) **not** running elevated (i.e. admin privileges).
 - UAC (User Account Control) in Windows **must** be configured low enough that the logged in user is not prompted to confirm execution of applications as admin. Otherwise automated execution of miners and apps, including power stepping, will cause a bunch of UAC prompts and not work.
+- You will probably need to exclude MineControl from virus scanning. As with most crypto mining apps, it's flagged as a false positive.
 
 ## Instructions
 
@@ -69,6 +70,7 @@ MineControl is free and open source. Crypto donations are however appreciated an
 
 ## Tips
 
+- If MineControl stops running or disappears altogether, make sure it wasn't flagged as a virus.
 - Sensor data and GPU power step only update on charts when the value changes, not periodically.
 - MineControl can't get data from sensors that don't exist. Some power supplies provide wattage sensor readings and some don't, for example. Your GPU may also not report a memory junction temperature.
 - DO NOT run MineControl elevated (i.e. with Windows administrator privileges) if controlling GPU and CPU miner. In testing, there appeared to be a bug with PhoenixMiner that caused **massively** increased GPU temps after several minutes when MineControl was elevated, for no apparent reason.
