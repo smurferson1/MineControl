@@ -27,6 +27,7 @@ MineControl is free and open source. Crypto donations are however appreciated an
 - System tray display of GPU power level, GPU miner status, and CPU miner status.
 - Customizable GPU temperature (or memory junction temperature) range, controlled with up to 5 power profiles.
 - GPU failsafe protections to shut off the GPU miner if max temp is exceeded at lowest power, or while the temp is unknown.
+- Crash safety: if MineControl crashes, miners under its control will also close.
 - Advanced scheduling for execution of GPU and CPU miner, for example to avoid high power consumption during peak hours of 5-8PM on weekdays during summer.
 - Optional miner auto-shutoff during user activity.
 - Log aggregation from MineControl and miners.
