@@ -12,6 +12,11 @@ Names of hardware monitor and GPU controller apps are omitted in order to avoid 
 MineControl is free and open source. Crypto donations are however appreciated and will keep the developer(s) motivated to fix and improve things. Current wallets for donation:
 - TBD
 
+If you want to see additional donation options, contact the developer.
+
+## License
+MineControl is licensed under **Creative Commons CC-BY-SA 4.0** (see License.txt). This license is specifically required due to adaptation of certain code from StackOverflow. For attribution, see MineControl's About tab, or the source code.
+
 ## DISCLAIMERS
 
 - MineControl is NOT guaranteed to work correctly or protect your computer in all circumstances. It is in development and subject to being shit, making mistakes, or missing *YOUR* mistakes. **USE AT YOUR OWN RISK**. It's best to configure MineControl carefully and watch it for a while to be sure it's doing what you intend. Your temps and power usage *CAN* go too high if you misconfigure MineControl or it makes a booboo.
@@ -37,18 +42,19 @@ MineControl is free and open source. Crypto donations are however appreciated an
 ## Key Un-features
 
 - Only supports one GPU miner and one CPU miner at a time. One of each, that's it.
-- Not internationalized, translated, or respectful of Windows regional settings.
-- Kind of ugly.
+- Most temperature/power management features are GPU-only.
+- Not internationalized, translated, or respectful of most Windows regional settings.
 - Not very user friendly.
-- Chart data and stats can't be archived or restored.
+- Chart data and stats aren't remembered or archived, i.e. you lose them when MineControl closes.
 - Probably some allowed configurations that would make no sense or cause errors or crashes.
 - Engineering: badly engineered with a bunch of logic attached to the form and stuff. Sorry.
-- Most temperature and power management features are GPU-only.
+
+See Issues area for comprehensive list, and add to it if you find a bug.
 
 ## Requirements
 
 - Windows 10 x64 (at least)
-- .NET 5
+- .NET 5 installed
 - A hardware monitor app, *if* MineControl should monitor hardware sensors and automate actions based on sensor readings.
 - A GPU controller app, *if* MineControl should automate GPU power stepping for temperature control.
 - A GPU and/or CPU miner app that outputs to a console window, *if* MineControl should aggregate GPU/CPU miner data and control their execution.
@@ -58,10 +64,11 @@ MineControl is free and open source. Crypto donations are however appreciated an
 
 ## Instructions
 
-1) Install the hardware monitor, GPU controller, GPU and/or CPU miner you want to use. MineControl was tested using **PhoenixMiner** for GPU and **XMRig** (MoneroOcean version) for CPU, so these are supported by default. TeamRedMiner was also verified as working when RegExes are properly customized.
-2) Configure the miner(s) and test them to make sure they run correctly and send crypto to your wallet address.
-3) Configure the hardware monitor output, which is done inside of the hardware monitor application. For RidesharePimpo, this means starting up with the **sensors only** option, then enabling system tray output for the metrics you want to track (like GPU memory junction temp), since MineControl relies on systray tooltips to read data. SysTray output can be enabled from the right-click menu for the sensor row. In addition, the **systray icons must be visible on the taskbar to be read by MineControl**, not hidden in the overflow area (screensaver/screen lock doesn't break anything). To be really sure, you can enable the "Always show all icons in the notification area" option in Windows taskbar settings for notification icons.
-4) Configure the power profiles inside of the GPU controller application. You have full control over your power profiles, so you can set voltage curves or whatever you like. This should go from lowest power (lowest temp) in profile 1 to highest power in profile 5. **Your temperature control and hash rates will only be as good as your power profiles.**
+Note: Steps assume you have nothing already on your PC. For experienced miners, much of the setup will already be completed.
+1) Install the hardware monitor, GPU controller, GPU and/or CPU miner you want to use. MineControl was tested using **PhoenixMiner** for GPU and **XMRig** (MoneroOcean version) for CPU, so these should work by default. TeamRedMiner was also verified as working with some RegEx customization.
+2) Configure and test the miner(s) independently to make sure they run correctly and send crypto to your wallet address.
+3) Configure the hardware monitor output from *inside* of the hardware monitor application. For RidesharePimpo, this means starting up with the **sensors only** option, then enabling system tray output for the metrics you want to track (like GPU memory junction temp), since MineControl relies on systray tooltips to read data. SysTray output can be enabled from the right-click menu for the sensor row. In addition, the **systray icons must be visible on the taskbar to be read by MineControl**, not hidden in the overflow area (screensaver/screen lock doesn't break anything). To be really sure, you can enable the "Always show all icons in the notification area" option in Windows taskbar settings for notification icons.
+4) Configure the power profiles *inside* of the GPU controller application. You have full control over your power profiles, so you can set voltage curves or whatever you like. These should progress from lowest power (lowest temp) in profile 1 to highest power in profile 5. **Your temperature control and hash rates will only be as good as your power profiles.**
 5) Configure miners and applications by pointing to their executables at the top of the Config tab. Batch files are supported but you **must** set the exact application (EXE) name of the miner *without* extension in the "Process Name" cell.
 6) Configure Data Tracking metrics as needed for your miners and applications, and disable metrics you don't use. This can be tedious, but may not be necessary if you're using RidesharePimpo, PamStoleMy ButterChurner, PhoenixMiner, and xmrig. Use the "RegEx" method for any metric you need to customize. An easy way to do this is to paste example output from the application into https://regexr.com/ for easyish learning and testing. There is a "View SysTray" button in MineControl that can be used to get a current example of that output (use Ctrl+C to copy the text out of the popup).
 7) Configure your target GPU temps and anything else you care about.
