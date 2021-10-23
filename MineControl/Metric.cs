@@ -446,9 +446,8 @@ namespace MineControl
             }
             catch (Exception ex)
             {
-                throw;
-                //return false;
-                // TODO: see if this can be logged instead of thrown, then return false
+                Log?.Append($"Exception occurred while trying to update input for metric '{Name}': {ex.GetType()} - {ex.Message}", LogType.Error);
+                return false;                
             }
         }
     }    
