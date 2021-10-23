@@ -18,7 +18,7 @@ namespace MineControl
     public class Metric
     {
         public Metric() : this(false, "", MetricType.Number, MetricSource.SysTray, MetricMethod.RegEx, "") { }
-        
+                
         public Metric(bool isEnabled, string name, MetricType type, MetricSource source, MetricMethod method, string query)
         { 
             IsEnabled = isEnabled; 
@@ -27,6 +27,19 @@ namespace MineControl
             Source = source; 
             Method = method;             
             Query = query;            
+        }
+                
+        public Metric(bool isEnabled, string name, MetricType type, MetricSource source, MetricMethod method, string query,
+            ILog log, IChartManager chartManager = null)
+        {
+            IsEnabled = isEnabled;
+            Name = name;
+            Type = type;
+            Source = source;
+            Method = method;
+            Query = query;            
+            Log = log;
+            ChartManager = chartManager;
         }
 
         /// <summary>
