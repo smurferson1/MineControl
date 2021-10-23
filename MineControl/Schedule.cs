@@ -393,8 +393,10 @@ namespace MineControl
         /// </summary>
         public void RegenerateIds()
         {
-            // TODO
-            throw new NotImplementedException();
+            foreach (ScheduleNode node in Nodes)
+            {
+                node.RegenerateIds();
+            }
         }
     }
 }

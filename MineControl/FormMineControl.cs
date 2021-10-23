@@ -2669,10 +2669,11 @@ namespace MineControl
             // duplicate the schedule with new name and internal IDs
             Schedules.Add(JsonSerializer.Deserialize<Schedule>(SelectedSchedule.Serialize(jsonOptionsScheduleNodes), jsonOptionsScheduleNodes));
             Schedules.Last().RegenerateIds();
-            Schedules.Last().Name += " (Copy)";      
+            Schedules.Last().Name += " (Copy)";
             
             // save and select
             SaveSchedulesFromList();
+            LoadSchedulesToUI();
             comboBoxScheduleSchedules.SelectedIndex = Schedules.Count - 1;                
         }
 

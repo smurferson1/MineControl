@@ -29,8 +29,21 @@ namespace MineControl
             Id = id;
             if (Id == Guid.Empty)
             {
-                Id = Guid.NewGuid();
+                GenerateId();
             }
+        }
+
+        protected void GenerateId()
+        {
+            Id = Guid.NewGuid();
+        }
+
+        /// <summary>
+        /// Regenerates ID for this node
+        /// </summary>
+        public virtual void RegenerateIds()
+        {
+            GenerateId();
         }
 
         /// <summary>
@@ -89,16 +102,25 @@ namespace MineControl
     /// <summary>
     /// A schedule node with branching capability (i.e. 0 or more children)
     /// </summary>
-    public abstract class BranchingNode: ScheduleNode
-    {       
+    public abstract class BranchingNode : ScheduleNode
+    {
         // ignore children, because there is custom JSON conversion to avoid circular loops (see ScheduleNodeConverter)
         [JsonIgnore]
         public List<ScheduleNode> Children { get; set; } = new List<ScheduleNode>();
 
-        protected BranchingNode(): base() { }
+        protected BranchingNode() : base() { }
 
         [JsonConstructor]
         protected BranchingNode(Guid id) : base(id) { }
+
+        public override void RegenerateIds()
+        {
+            foreach (ScheduleNode child in Children)
+            {
+                child.RegenerateIds();
+            }
+            base.RegenerateIds();
+        }
 
         public override List<ScheduleNode> GetNodesById(Guid id)
         {

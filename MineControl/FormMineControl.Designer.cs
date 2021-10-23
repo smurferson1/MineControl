@@ -30,7 +30,7 @@ namespace MineControl
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMineControl));
             this.timerMain = new System.Windows.Forms.Timer(this.components);
             this.toolTipMain = new System.Windows.Forms.ToolTip(this.components);
@@ -207,6 +207,7 @@ namespace MineControl
             this.checkBoxLogColorCode = new System.Windows.Forms.CheckBox();
             this.comboBoxLogFilter = new System.Windows.Forms.ComboBox();
             this.tabPageAbout = new System.Windows.Forms.TabPage();
+            this.linkLabelAboutLicense = new System.Windows.Forms.LinkLabel();
             this.linkLabelAboutLink = new System.Windows.Forms.LinkLabel();
             this.label28 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
@@ -234,7 +235,6 @@ namespace MineControl
             this.openFileDialogBackups = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialogBackups = new System.Windows.Forms.SaveFileDialog();
             this.folderBrowserDialogBackups = new System.Windows.Forms.FolderBrowserDialog();
-            this.linkLabelAboutLicense = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempSteppingBuffer)).BeginInit();
             this.tabControlMain.SuspendLayout();
             this.tabPageConfig.SuspendLayout();
@@ -543,6 +543,7 @@ namespace MineControl
             // comboBoxMinerCPUSchedule
             // 
             this.comboBoxMinerCPUSchedule.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxMinerCPUSchedule.DropDownWidth = 600;
             this.comboBoxMinerCPUSchedule.FormattingEnabled = true;
             this.comboBoxMinerCPUSchedule.Location = new System.Drawing.Point(114, 46);
             this.comboBoxMinerCPUSchedule.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -807,6 +808,7 @@ namespace MineControl
             // comboBoxMinerGPUSchedule
             // 
             this.comboBoxMinerGPUSchedule.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxMinerGPUSchedule.DropDownWidth = 600;
             this.comboBoxMinerGPUSchedule.FormattingEnabled = true;
             this.comboBoxMinerGPUSchedule.Location = new System.Drawing.Point(114, 46);
             this.comboBoxMinerGPUSchedule.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -2135,6 +2137,7 @@ namespace MineControl
             // comboBoxScheduleSchedules
             // 
             this.comboBoxScheduleSchedules.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxScheduleSchedules.DropDownWidth = 600;
             this.comboBoxScheduleSchedules.FormattingEnabled = true;
             this.comboBoxScheduleSchedules.Location = new System.Drawing.Point(12, 7);
             this.comboBoxScheduleSchedules.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -2514,8 +2517,8 @@ namespace MineControl
             // ColLogMessage
             // 
             this.ColLogMessage.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.ColLogMessage.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.ColLogMessage.DefaultCellStyle = dataGridViewCellStyle1;
             this.ColLogMessage.HeaderText = "Message";
             this.ColLogMessage.MinimumWidth = 30;
             this.ColLogMessage.Name = "ColLogMessage";
@@ -2587,6 +2590,17 @@ namespace MineControl
             this.tabPageAbout.Size = new System.Drawing.Size(914, 915);
             this.tabPageAbout.TabIndex = 3;
             this.tabPageAbout.Text = "About";
+            // 
+            // linkLabelAboutLicense
+            // 
+            this.linkLabelAboutLicense.AutoSize = true;
+            this.linkLabelAboutLicense.Location = new System.Drawing.Point(69, 77);
+            this.linkLabelAboutLicense.Name = "linkLabelAboutLicense";
+            this.linkLabelAboutLicense.Size = new System.Drawing.Size(77, 15);
+            this.linkLabelAboutLicense.TabIndex = 12;
+            this.linkLabelAboutLicense.TabStop = true;
+            this.linkLabelAboutLicense.Text = "CC BY-SA 4.0";
+            this.linkLabelAboutLicense.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelAboutLicense_LinkClicked);
             // 
             // linkLabelAboutLink
             // 
@@ -2832,17 +2846,6 @@ namespace MineControl
             // openFileDialogBackups
             // 
             this.openFileDialogBackups.FileName = "openFileDialogBackupPath";
-            // 
-            // linkLabelAboutLicense
-            // 
-            this.linkLabelAboutLicense.AutoSize = true;
-            this.linkLabelAboutLicense.Location = new System.Drawing.Point(69, 77);
-            this.linkLabelAboutLicense.Name = "linkLabelAboutLicense";
-            this.linkLabelAboutLicense.Size = new System.Drawing.Size(77, 15);
-            this.linkLabelAboutLicense.TabIndex = 12;
-            this.linkLabelAboutLicense.TabStop = true;
-            this.linkLabelAboutLicense.Text = "CC BY-SA 4.0";
-            this.linkLabelAboutLicense.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelAboutLicense_LinkClicked);
             // 
             // FormMineControl
             // 
