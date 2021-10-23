@@ -841,7 +841,7 @@ namespace MineControl
                         // note: basic control setting that does not trigger archiving
                         break;
                     case nameof(Settings.tempSpeedStep):  // Note: applying this setting is handled elsewhere                    
-                        SysTrayIcon.UpdateTextIcon(notifyIconMain, false, GPUState, CPUState);
+                        SysTrayIcon.UpdateTextIcon(notifyIconMain, false, GPUState, CPUState, Settings.tempSpeedStep, (SysTrayIconTextMode)Settings.generalSysTrayDisplayMode);
                         break;
 
                     // other changes that can be applied immediately
@@ -1769,7 +1769,7 @@ namespace MineControl
                     CloseProcess(ProcessCPUMiner, Settings.appCPUMinerPath, Settings.appCPUMinerName, "CPU Miner", cCPUMinerIndex, ref isCPUMinerRunning);
                 }
             }
-            SysTrayIcon.UpdateTextIcon(notifyIconMain, false, GPUState, CPUState);
+            SysTrayIcon.UpdateTextIcon(notifyIconMain, false, GPUState, CPUState, Settings.tempSpeedStep, (SysTrayIconTextMode)Settings.generalSysTrayDisplayMode);
         }
 
         /// <summary>

@@ -15,20 +15,17 @@ namespace MineControl
         [System.Runtime.InteropServices.DllImport("user32.dll", CharSet = CharSet.Auto)]
         extern static bool DestroyIcon(IntPtr handle);
 
-        // TODO: this is duplicated
-        private static Properties.Settings settings = Properties.Settings.Default;
-
         /// <summary>
         /// Updates icon, but only if it's different from before
         /// </summary>        
         /// <returns>True if icon was updated</returns>
-        public static bool UpdateTextIcon(NotifyIcon notifyIcon, bool forceRedraw, MinerState gpuState, MinerState cpuState)
+        public static bool UpdateTextIcon(NotifyIcon notifyIcon, bool forceRedraw, MinerState gpuState, MinerState cpuState, int gpuPowerStep, SysTrayIconTextMode iconDisplayMode)
         {
             Color gpuColor = GetColorFromMinerState(gpuState);
             Color cpuColor = GetColorFromMinerState(cpuState);
 
             // only update the icon if it ***needs*** to be redrawn (this is to save resources)
-            switch ((SysTrayIconTextMode)settings.generalSysTrayDisplayMode)
+            switch (iconDisplayMode)
             {
                 // old code for different display info
                 /*case SysTrayIconTextMode.MinerActiveStatus:
@@ -50,11 +47,11 @@ namespace MineControl
 
                 case SysTrayIconTextMode.MinerActiveStatus:
                 case SysTrayIconTextMode.GPUPowerStep:
-                    if (forceRedraw || (GPUPowerStep != settings.tempSpeedStep) || (gpuColor != GPUColor) || (cpuColor != CPUColor))
+                    if (forceRedraw || (GPUPowerStep != gpuPowerStep) || (gpuColor != GPUColor) || (cpuColor != CPUColor))
                     {
                         GPUColor = gpuColor;
                         CPUColor = cpuColor;
-                        GPUPowerStep = settings.tempSpeedStep;                        
+                        GPUPowerStep = gpuPowerStep;                        
                         SetTextIcon(
                             notifyIcon,
                             GPUPowerStep.ToString()[0],
