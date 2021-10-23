@@ -1729,8 +1729,7 @@ namespace MineControl
         /// <param name="newMinerState">Desired state of the miner</param>
         /// <param name="reasonToLog">Explanation for the state change to be logged. If blank, no reason will be logged</param>
         private void SyncMinerState(bool doOnGPU, MinerState newMinerState, string reasonToLog)
-        {
-            // TODO: fix "unknown" status in datagridview when miner is verified as not running 
+        {            
             bool runMiner = newMinerState == MinerState.Running;    
             if (doOnGPU)
             {
@@ -1778,9 +1777,6 @@ namespace MineControl
         /// </summary>
         private void UpdatePolledStats()
         {
-            // TODO: for all averages and rates, account for zero/X values. may require plotting them as well.
-            // TODO: simplify code and reduce redundancy. May be best to combine with metrics collection somehow.
-             
             // current GPU power step (always shown)
             if (Metric(cGPUPowerStep).IsEnabled)
             {
