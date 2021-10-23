@@ -349,6 +349,40 @@ namespace MineControl
             }
         }
 
+        /// <summary>
+        /// Attempts to replace node that has nodeId with newNode (inheriting children), and ensures compatibility before replacing.
+        /// </summary>
+        /// <returns>True if replacement was successful. False if incompatible.</returns>
+        internal bool ReplaceNode(Guid nodeId, ScheduleNode newNode)
+        {            
+            List<ScheduleNode> parentNodes = this.GetNodeParentNodes(nodeId);
+            ScheduleNode oldNode = this.GetNodeById(nodeId);
+            int nodeIndex = parentNodes.IndexOf(oldNode);
+                        
+            if (oldNode != null && newNode != null && CanReplaceNode(oldNode, newNode))
+            {
+                if (oldNode is BranchingNode && newNode is BranchingNode)
+                {
+                    (newNode as BranchingNode).Children = (oldNode as BranchingNode).Children;
+                }
+                parentNodes.Remove(oldNode);
+                parentNodes.Insert(nodeIndex, newNode);
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Returns true if replacing oldNode with newNode would be valid.
+        /// Ignores movability other nodes in the collection.
+        /// </summary>
+        private bool CanReplaceNode(ScheduleNode oldNode, ScheduleNode newNode)
+        {
+            return oldNode.GetType().Equals(newNode.GetType()) 
+                || ((oldNode is BranchingNode) && (newNode is BranchingNode) && !(oldNode is ElseNode) && !(newNode is ElseNode)
+                || ((oldNode is ActionNode) && (newNode is ActionNode)));
+        }
+
         public string Serialize(JsonSerializerOptions options)
         {
             return JsonSerializer.Serialize(this, options);

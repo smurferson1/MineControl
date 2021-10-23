@@ -2069,6 +2069,48 @@ namespace MineControl
             }
         }
 
+        private bool UpdateScheduleNodeFromUI(TreeNode selectedNode)
+        {
+            bool result = false;
+            try
+            {
+                Schedule schedule = SelectedSchedule;
+                ScheduleNode newNode = null;
+
+                if (radioButtonScheduleCalendar.Checked)
+                {
+                    newNode = CreateCalendarNodeFromUI();
+                }
+                else if (radioButtonScheduleDaysOfWeek.Checked)
+                {
+                    newNode = CreateWeekNodeFromUI();
+                }
+                else if (radioButtonScheduleTime.Checked)
+                {
+                    newNode = CreateTimeNodeFromUI();
+                }
+                else if (radioButtonScheduleResult.Checked)
+                {
+                    newNode = CreateActionNodeFromUI();
+                }
+
+                if (newNode != null)
+                { 
+                    result = schedule.ReplaceNode((Guid)selectedNode.Tag, newNode);
+                    if (result)
+                    {
+                        // reload to show the updated node
+                        LoadScheduleToTreeView(schedule, newNode.Id);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Node not updated, or updated incorrectly, due to an exception: \n{ex.GetType()}\n{ex.Message}");
+            }
+            return result;
+        }
+
         private CalendarNode CreateCalendarNodeFromUI()
         {
             int startDay = comboBoxScheduleStartDay.Text == "Last" ? 32 : Convert.ToInt32(comboBoxScheduleStartDay.Text);
@@ -2528,8 +2570,12 @@ namespace MineControl
         }
 
         private void buttonScheduleCreateSubNode_Click(object sender, EventArgs e)
-        {            
-            if (treeViewSchedule.SelectedNode != null)
+        {
+            if (treeViewSchedule.SelectedNode == null)
+            {
+                MessageBox.Show("No node is selected, can't create a new sub-node.");
+            }
+            else
             {
                 CreateScheduleNodeFromUI(treeViewSchedule.SelectedNode.Nodes, treeViewSchedule.SelectedNode);
                 SaveSchedulesFromList();
@@ -2547,20 +2593,32 @@ namespace MineControl
         
         private void buttonScheduleUpdateNode_Click(object sender, EventArgs e)
         {
-            //TODO
-
-            SaveSchedulesFromList();
-        }
+            if (treeViewSchedule.SelectedNode == null)
+            {
+                MessageBox.Show("No node is selected, can't update.");
+            }
+            else
+            {
+                if (UpdateScheduleNodeFromUI(treeViewSchedule.SelectedNode))
+                {
+                    SaveSchedulesFromList();
+                }   
+                else
+                {
+                    MessageBox.Show("Couldn't update node. Selected node might be incompatible with the new Node Details.");
+                }
+            }
+        }        
 
         private void buttonScheduleDeleteNode_Click(object sender, EventArgs e)
         {
             if (treeViewSchedule.SelectedNode == null)
             {
-                MessageBox.Show("No node is selected to delete.");
+                MessageBox.Show("No node is selected, can't delete.");
             }
             else
             {                
-                if (MessageBox.Show("Any children will be deleted, and nodes at the same level will be deleted if this is an 'else' node or a standalone 'if' node. Continue?", 
+                if (MessageBox.Show("Any children will be deleted, and nodes at the same level will be deleted if this is an 'else' node or the only 'if' node. Continue?", 
                     this.Text, MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     if (SelectedSchedule.DeleteNode((Guid)treeViewSchedule.SelectedNode.Tag))
@@ -2880,7 +2938,7 @@ namespace MineControl
         {
             if (treeViewSchedule.SelectedNode == null)
             {                
-                MessageBox.Show("No node is selected to move.");
+                MessageBox.Show("No node is selected, can't move.");
             }
             else
             {
@@ -2903,7 +2961,7 @@ namespace MineControl
         {
             if (treeViewSchedule.SelectedNode == null)
             {
-                MessageBox.Show("No node is selected to move.");
+                MessageBox.Show("No node is selected, can't move.");
             }
             else
             {
