@@ -133,6 +133,11 @@ namespace MineControl
             this.label7 = new System.Windows.Forms.Label();
             this.groupBoxMinersAndApps = new System.Windows.Forms.GroupBox();
             this.dataGridViewApps = new System.Windows.Forms.DataGridView();
+            this.ColAppType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColAppName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColAppStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColAppPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColAppChooseButton = new System.Windows.Forms.DataGridViewButtonColumn();
             this.tabPageSchedule = new System.Windows.Forms.TabPage();
             this.groupBoxScheduleNodeDetails = new System.Windows.Forms.GroupBox();
             this.panelScheduleNodeButtons = new System.Windows.Forms.Panel();
@@ -208,7 +213,6 @@ namespace MineControl
             this.listBoxAboutAttribution = new System.Windows.Forms.ListBox();
             this.label26 = new System.Windows.Forms.Label();
             this.listBoxAboutLibraries = new System.Windows.Forms.ListBox();
-            this.labelAboutLicense = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
             this.labelAboutVersion = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -230,11 +234,7 @@ namespace MineControl
             this.openFileDialogBackups = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialogBackups = new System.Windows.Forms.SaveFileDialog();
             this.folderBrowserDialogBackups = new System.Windows.Forms.FolderBrowserDialog();
-            this.ColAppType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColAppName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColAppStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColAppPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColAppChooseButton = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.linkLabelAboutLicense = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempSteppingBuffer)).BeginInit();
             this.tabControlMain.SuspendLayout();
             this.tabPageConfig.SuspendLayout();
@@ -1596,6 +1596,56 @@ namespace MineControl
             this.dataGridViewApps.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewApps_CellDoubleClick);
             this.dataGridViewApps.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_CellValueChanged);
             // 
+            // ColAppType
+            // 
+            this.ColAppType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.ColAppType.Frozen = true;
+            this.ColAppType.HeaderText = "App Type";
+            this.ColAppType.Name = "ColAppType";
+            this.ColAppType.ReadOnly = true;
+            this.ColAppType.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ColAppType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ColAppType.Width = 59;
+            // 
+            // ColAppName
+            // 
+            this.ColAppName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.ColAppName.Frozen = true;
+            this.ColAppName.HeaderText = "Process Name";
+            this.ColAppName.Name = "ColAppName";
+            this.ColAppName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ColAppName.ToolTipText = "Exact name of launched process as shown in Task Manager, WITHOUT file extension";
+            this.ColAppName.Width = 82;
+            // 
+            // ColAppStatus
+            // 
+            this.ColAppStatus.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.ColAppStatus.Frozen = true;
+            this.ColAppStatus.HeaderText = "Status";
+            this.ColAppStatus.Name = "ColAppStatus";
+            this.ColAppStatus.ReadOnly = true;
+            this.ColAppStatus.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ColAppStatus.Width = 43;
+            // 
+            // ColAppPath
+            // 
+            this.ColAppPath.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.ColAppPath.HeaderText = "Full Start Path";
+            this.ColAppPath.Name = "ColAppPath";
+            this.ColAppPath.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ColAppPath.ToolTipText = "Complete path for launching the process, including file name and extension (can b" +
+    "e an executable script)";
+            // 
+            // ColAppChooseButton
+            // 
+            this.ColAppChooseButton.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.ColAppChooseButton.HeaderText = "";
+            this.ColAppChooseButton.Name = "ColAppChooseButton";
+            this.ColAppChooseButton.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ColAppChooseButton.Text = "...";
+            this.ColAppChooseButton.UseColumnTextForButtonValue = true;
+            this.ColAppChooseButton.Width = 5;
+            // 
             // tabPageSchedule
             // 
             this.tabPageSchedule.BackColor = System.Drawing.SystemColors.Control;
@@ -2519,13 +2569,13 @@ namespace MineControl
             // tabPageAbout
             // 
             this.tabPageAbout.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPageAbout.Controls.Add(this.linkLabelAboutLicense);
             this.tabPageAbout.Controls.Add(this.linkLabelAboutLink);
             this.tabPageAbout.Controls.Add(this.label28);
             this.tabPageAbout.Controls.Add(this.label27);
             this.tabPageAbout.Controls.Add(this.listBoxAboutAttribution);
             this.tabPageAbout.Controls.Add(this.label26);
             this.tabPageAbout.Controls.Add(this.listBoxAboutLibraries);
-            this.tabPageAbout.Controls.Add(this.labelAboutLicense);
             this.tabPageAbout.Controls.Add(this.label25);
             this.tabPageAbout.Controls.Add(this.labelAboutVersion);
             this.tabPageAbout.Controls.Add(this.label4);
@@ -2541,7 +2591,7 @@ namespace MineControl
             // linkLabelAboutLink
             // 
             this.linkLabelAboutLink.AutoSize = true;
-            this.linkLabelAboutLink.Location = new System.Drawing.Point(263, 89);
+            this.linkLabelAboutLink.Location = new System.Drawing.Point(261, 97);
             this.linkLabelAboutLink.Name = "linkLabelAboutLink";
             this.linkLabelAboutLink.Size = new System.Drawing.Size(252, 15);
             this.linkLabelAboutLink.TabIndex = 11;
@@ -2552,26 +2602,26 @@ namespace MineControl
             // label28
             // 
             this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(20, 89);
+            this.label28.Location = new System.Drawing.Point(20, 97);
             this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(247, 15);
+            this.label28.Size = new System.Drawing.Size(245, 15);
             this.label28.TabIndex = 10;
-            this.label28.Text = "For information, updates, and donations, visit";
+            this.label28.Text = "For information, updates, and to donate, visit";
             // 
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(20, 246);
+            this.label27.Location = new System.Drawing.Point(20, 267);
             this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(98, 15);
+            this.label27.Size = new System.Drawing.Size(65, 15);
             this.label27.TabIndex = 9;
-            this.label27.Text = "Other Attribution";
+            this.label27.Text = "Attribution";
             // 
             // listBoxAboutAttribution
             // 
             this.listBoxAboutAttribution.FormattingEnabled = true;
             this.listBoxAboutAttribution.ItemHeight = 15;
-            this.listBoxAboutAttribution.Location = new System.Drawing.Point(20, 264);
+            this.listBoxAboutAttribution.Location = new System.Drawing.Point(20, 285);
             this.listBoxAboutAttribution.Name = "listBoxAboutAttribution";
             this.listBoxAboutAttribution.Size = new System.Drawing.Size(568, 94);
             this.listBoxAboutAttribution.TabIndex = 8;
@@ -2579,7 +2629,7 @@ namespace MineControl
             // label26
             // 
             this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(20, 117);
+            this.label26.Location = new System.Drawing.Point(20, 132);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(122, 15);
             this.label26.TabIndex = 7;
@@ -2589,24 +2639,15 @@ namespace MineControl
             // 
             this.listBoxAboutLibraries.FormattingEnabled = true;
             this.listBoxAboutLibraries.ItemHeight = 15;
-            this.listBoxAboutLibraries.Location = new System.Drawing.Point(20, 135);
+            this.listBoxAboutLibraries.Location = new System.Drawing.Point(20, 150);
             this.listBoxAboutLibraries.Name = "listBoxAboutLibraries";
             this.listBoxAboutLibraries.Size = new System.Drawing.Size(568, 94);
             this.listBoxAboutLibraries.TabIndex = 6;
             // 
-            // labelAboutLicense
-            // 
-            this.labelAboutLicense.AutoSize = true;
-            this.labelAboutLicense.Location = new System.Drawing.Point(70, 72);
-            this.labelAboutLicense.Name = "labelAboutLicense";
-            this.labelAboutLicense.Size = new System.Drawing.Size(23, 15);
-            this.labelAboutLicense.TabIndex = 5;
-            this.labelAboutLicense.Text = "<>";
-            // 
             // label25
             // 
             this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(20, 72);
+            this.label25.Location = new System.Drawing.Point(20, 76);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(52, 15);
             this.label25.TabIndex = 4;
@@ -2792,55 +2833,16 @@ namespace MineControl
             // 
             this.openFileDialogBackups.FileName = "openFileDialogBackupPath";
             // 
-            // ColAppType
+            // linkLabelAboutLicense
             // 
-            this.ColAppType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.ColAppType.Frozen = true;
-            this.ColAppType.HeaderText = "App Type";
-            this.ColAppType.Name = "ColAppType";
-            this.ColAppType.ReadOnly = true;
-            this.ColAppType.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.ColAppType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.ColAppType.Width = 59;
-            // 
-            // ColAppName
-            // 
-            this.ColAppName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.ColAppName.Frozen = true;
-            this.ColAppName.HeaderText = "Process Name";
-            this.ColAppName.Name = "ColAppName";
-            this.ColAppName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.ColAppName.ToolTipText = "Exact name of launched process as shown in Task Manager, WITHOUT file extension";
-            this.ColAppName.Width = 82;
-            // 
-            // ColAppStatus
-            // 
-            this.ColAppStatus.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.ColAppStatus.Frozen = true;
-            this.ColAppStatus.HeaderText = "Status";
-            this.ColAppStatus.Name = "ColAppStatus";
-            this.ColAppStatus.ReadOnly = true;
-            this.ColAppStatus.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.ColAppStatus.Width = 43;
-            // 
-            // ColAppPath
-            // 
-            this.ColAppPath.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.ColAppPath.HeaderText = "Full Start Path";
-            this.ColAppPath.Name = "ColAppPath";
-            this.ColAppPath.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.ColAppPath.ToolTipText = "Complete path for launching the process, including file name and extension (can b" +
-    "e an executable script)";
-            // 
-            // ColAppChooseButton
-            // 
-            this.ColAppChooseButton.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.ColAppChooseButton.HeaderText = "";
-            this.ColAppChooseButton.Name = "ColAppChooseButton";
-            this.ColAppChooseButton.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.ColAppChooseButton.Text = "...";
-            this.ColAppChooseButton.UseColumnTextForButtonValue = true;
-            this.ColAppChooseButton.Width = 5;
+            this.linkLabelAboutLicense.AutoSize = true;
+            this.linkLabelAboutLicense.Location = new System.Drawing.Point(69, 77);
+            this.linkLabelAboutLicense.Name = "linkLabelAboutLicense";
+            this.linkLabelAboutLicense.Size = new System.Drawing.Size(77, 15);
+            this.linkLabelAboutLicense.TabIndex = 12;
+            this.linkLabelAboutLicense.TabStop = true;
+            this.linkLabelAboutLicense.Text = "CC BY-SA 4.0";
+            this.linkLabelAboutLicense.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelAboutLicense_LinkClicked);
             // 
             // FormMineControl
             // 
@@ -3122,7 +3124,6 @@ namespace MineControl
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label labelAboutVersion;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label labelAboutLicense;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.ListBox listBoxAboutLibraries;
@@ -3138,6 +3139,7 @@ namespace MineControl
         private System.Windows.Forms.DataGridViewTextBoxColumn ColAppStatus;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColAppPath;
         private System.Windows.Forms.DataGridViewButtonColumn ColAppChooseButton;
+        private System.Windows.Forms.LinkLabel linkLabelAboutLicense;
     }
 }
 

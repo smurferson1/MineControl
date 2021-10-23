@@ -19,7 +19,8 @@ namespace MineControl
 {    
     // TODO: provide a way to remember settings across versions, since right now it starts over each time version number changes    
     public partial class FormMineControl : Form, IChartManager, ILog
-    {        
+    {
+        #region Local Consts
         // consts for app grid rows
         private const int cGPUMinerIndex = 0;
         private const int cCPUMinerIndex = 1;
@@ -58,7 +59,9 @@ namespace MineControl
         private const string cAvgCPUPower = "Avg CPU Power (W)";
         private const string cCPUPowerUse = "CPU Power Use (kWh)";
         private const string cRuntime = "Runtime";
+        #endregion
 
+        #region Local Vars And Props
         // application
         private bool IsInitializing { get; set; } = true;
         private bool CanQuit { get; set; } = false;
@@ -80,8 +83,9 @@ namespace MineControl
         private BindingSource bindingSourceSchedules;
         private BindingSource bindingSourceGPUSchedule;
         private BindingSource bindingSourceCPUSchedule;
-                        
+
         // processes
+        Job job = new Job();
         private Process ProcessGPUMiner { get; } = new Process();
         private bool isGPUMinerRunning= false;
         private Process ProcessCPUMiner { get; } = new Process();
@@ -125,6 +129,7 @@ namespace MineControl
             WriteIndented = true,
             PropertyNameCaseInsensitive = true
         };
+        #endregion
 
         public FormMineControl()
         {
@@ -142,9 +147,10 @@ namespace MineControl
 
         private void InitializeUI()
         {   
-            // update title
+            // display version
             this.Text += $" v{Assembly.GetEntryAssembly().GetName().Version}";
-            
+            labelAboutVersion.Text = Assembly.GetEntryAssembly().GetName().Version.ToString();
+
             // set up grids and their data sources
             dataGridViewApps.Rows.Add("GPU Miner", "", "Unknown", "");
             dataGridViewApps.Rows.Add("CPU Miner", "", "Unknown", "");
@@ -938,8 +944,7 @@ namespace MineControl
         }
 
         private void LaunchProcess(Process process, string path, string name, string logName, ref bool isRunning, int gridRow, bool fullControl)
-        {
-            // TODO: can this be launched as a child process that will ALWAYS exit when the parent ends? To prevent miners continuing to run after a crash or force close. Maybe https://stackoverflow.com/questions/3342941/kill-child-process-when-parent-process-is-killed
+        { 
             if (File.Exists(path) && (name.Trim() != string.Empty))
             {
                 if (fullControl)
@@ -977,7 +982,21 @@ namespace MineControl
                             isRunning = true;
                             dataGridViewApps.Rows[gridRow].Cells[ColAppStatus.Index].Value = "Running";
                             process.BeginOutputReadLine();
-                            AddLogEntry($"{logName} app \"{name}\" started at path \"{path}\"");
+
+                            // add to job so it will close if MC crashes
+                            bool isCrashSafe = false;
+                            try
+                            {
+                                isCrashSafe = job.AddProcess(process.Id);                                
+                            }
+                            catch
+                            { 
+                                // eat any failures here
+                            }                                              
+                            
+                            AddLogEntry(
+                                $"{logName} app \"{name}\" started at path \"{path}\" under full control {(isCrashSafe ? "with" : "WITHOUT")} crash safety", 
+                                isCrashSafe ? LogType.Info : LogType.Warning);                      
                         }
                         catch (Exception ex)
                         {
@@ -1028,9 +1047,9 @@ namespace MineControl
                     process.Kill();                    
                     AddLogEntry($"{logName} app \"{Path.GetFileNameWithoutExtension(path)}\" killed");
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // do nothing
+                    AddLogEntry($"{logName} app \"{name}\" kill may have failed due to exception: {ex.GetType()} - {ex.Message}");
                 }
             }
 
@@ -1042,15 +1061,13 @@ namespace MineControl
                     AddLogEntry($"{logName} app \"{name}\" extra instance(s) killed");
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                // do nothing
+                AddLogEntry($"{logName} app \"{name}\" extra instance kill may have failed due to exception: {ex.GetType()} - {ex.Message}");
             }
 
             isRunning = false;
-            dataGridViewApps.Rows[gridRow].Cells[ColAppStatus.Index].Value = "Stopped";
-
-            // TODO: add warning if process wasn't killed successfully
+            dataGridViewApps.Rows[gridRow].Cells[ColAppStatus.Index].Value = "Stopped";            
         }
 
         private void ProcessOutputReceived(object sender, DataReceivedEventArgs e)
@@ -1260,8 +1277,7 @@ namespace MineControl
             {
                 processParams = Settings.tempPowerStepParam5;
             }
-
-            // TODO: consider using LaunchProcess for this instead
+            
             using (Process p = new Process())
             {
                 p.StartInfo.FileName = Settings.appGPUControllerPath;
@@ -2303,6 +2319,33 @@ namespace MineControl
             UpdateChartScales(true, true);
         }
 
+        private void OpenLink(string link)
+        {
+            using (Process p = new Process())
+            {
+                p.StartInfo.UseShellExecute = true;
+                p.StartInfo.FileName = link;
+                p.Start();
+            }
+        }
+
+        private void PromptToSelectAppPathForRow(int rowIndex)
+        {
+            // provide user the option of setting the app path
+            if (openFileDialogAppPath.ShowDialog() == DialogResult.OK)
+            {
+                dataGridViewApps.Rows[rowIndex].Cells[ColAppPath.Index].Value = openFileDialogAppPath.FileName;
+
+                // if name is empty, default to the application name without extension
+                if (dataGridViewApps.Rows[rowIndex].Cells[ColAppName.Index].Value.ToString().Trim() == string.Empty)
+                {
+                    dataGridViewApps.Rows[rowIndex].Cells[ColAppName.Index].Value = Path.GetFileNameWithoutExtension(openFileDialogAppPath.FileName);
+                }
+
+                SaveSettingsFromUI();
+            }
+        }
+
         private Metric Metric(string metricName)
         {
             try
@@ -2348,26 +2391,9 @@ namespace MineControl
         {
             if (e.ColumnIndex == ColAppPath.Index)
             {
-                UserSelectAppPathForRow(e.RowIndex);
+                PromptToSelectAppPathForRow(e.RowIndex);
             }
-        }
-
-        private void UserSelectAppPathForRow(int rowIndex)
-        {
-            // provide user the option of setting the app path
-            if (openFileDialogAppPath.ShowDialog() == DialogResult.OK)
-            {
-                dataGridViewApps.Rows[rowIndex].Cells[ColAppPath.Index].Value = openFileDialogAppPath.FileName;
-
-                // if name is empty, default to the application name without extension
-                if (dataGridViewApps.Rows[rowIndex].Cells[ColAppName.Index].Value.ToString().Trim() == string.Empty)
-                {
-                    dataGridViewApps.Rows[rowIndex].Cells[ColAppName.Index].Value = Path.GetFileNameWithoutExtension(openFileDialogAppPath.FileName);
-                }
-
-                SaveSettingsFromUI();
-            }
-        }
+        }        
 
         private void dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
@@ -2449,6 +2475,7 @@ namespace MineControl
             bindingSourceSchedules.Dispose();
             bindingSourceGPUSchedule.Dispose();
             bindingSourceCPUSchedule.Dispose();
+            job.Dispose();
         }
 
         private void notifyIconMain_Open(object sender, EventArgs e)
@@ -2847,12 +2874,7 @@ namespace MineControl
         private void linkLabelGithub_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
 #if RELEASE
-            using (Process p = new Process())
-            {
-                p.StartInfo.UseShellExecute = true;
-                p.StartInfo.FileName = "https://github.com/smurferson1/MineControl";
-                p.Start();
-            }  
+            OpenLink("https://github.com/smurferson1/MineControl");
 #else
             MessageBox.Show("Link clicked");
 #endif
@@ -2923,8 +2945,13 @@ namespace MineControl
         {
             if (e.ColumnIndex == ColAppChooseButton.Index)
             {
-                UserSelectAppPathForRow(e.RowIndex);
+                PromptToSelectAppPathForRow(e.RowIndex);
             }
+        }
+
+        private void linkLabelAboutLicense_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            OpenLink("https://creativecommons.org/licenses/by-sa/4.0/");
         }
     }
 }
