@@ -291,15 +291,10 @@ namespace MineControl
 
             string localUnit = Unit == null || Unit.SelectionResult.Length == 0 ? "" : $" ({Unit.SelectionResult})";
             string grouping = GroupedBy == null || GroupedBy.SelectionResult.Length == 0 ? "" : $" w/ {GroupedBy.SelectionResult}";
-#if DEBUG
-            Log?.Append($"UpdateSeries called for '{this.Name}'", LogType.Debug);
-# endif
+
             // look for grouping changes, but only if we have an existing grouping
             if (GroupedBy != null && Series.Name.Length > 1)
             {
-#if DEBUG
-                Log?.Append($"Found grouping for '{this.Name}'", LogType.Debug);
-# endif
                 // check grouping metric in case we need to change to a different series
                 if (!Series.Name.EndsWith(grouping) && Series.Name.Contains(" w/ "))
                 {
@@ -315,6 +310,9 @@ namespace MineControl
                         {
                             Series = s;
                             found = true;
+#if DEBUG
+                            Log?.Append($"Shifting to existing series for {Chart.Name} chart series '{this.Name}{localUnit}{grouping}'", LogType.Debug);
+# endif
                         }
                     }
 
