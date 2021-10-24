@@ -102,7 +102,7 @@ namespace MineControl
         // settings
         private Properties.Settings Settings { get; } = Properties.Settings.Default;
         private List<string> ChangedSettings { get; } = new List<string>();
-        private bool configNeedsArchiving { get; set; } = false;
+        private bool ConfigNeedsArchiving { get; set; } = false;
 
         // logs
         private DataTable dataTableLog;
@@ -785,7 +785,7 @@ namespace MineControl
                     case nameof(Settings.chartMinTempOnYAxisEnabled):
                     case nameof(Settings.chartMinTempOnYAxisValue):
                         UpdateChartScales(false);
-                        configNeedsArchiving = true;
+                        ConfigNeedsArchiving = true;
                         break;
 
                     // applied automatically but needs archiving
@@ -830,7 +830,7 @@ namespace MineControl
                     case nameof(Settings.archivesClearOldCharts):
                     case nameof(Settings.archivesClearOldChartsValue):
                     case nameof(Settings.archivesClearOldChartsUnit):
-                        configNeedsArchiving = true;
+                        ConfigNeedsArchiving = true;
                         break;
 
                     // nothing required
@@ -840,11 +840,11 @@ namespace MineControl
                     // miner changes that can be applied immediately
                     case nameof(Settings.minerCPUMode):
                         UpdateMinerState(false);
-                        configNeedsArchiving = true;
+                        ConfigNeedsArchiving = true;
                         break;
                     case nameof(Settings.minerGPUMode):
                         UpdateMinerState(true);
-                        configNeedsArchiving = true;
+                        ConfigNeedsArchiving = true;
                         break;
                     case nameof(Settings.minerEnableAutomation):
                     case nameof(Settings.tempEnableAutomation):
@@ -859,12 +859,12 @@ namespace MineControl
                     // other changes that can be applied immediately
                     case nameof(Settings.tempPollingIntervalMillisecs):
                         timerMain.Interval = Settings.tempPollingIntervalMillisecs;
-                        configNeedsArchiving = true;
+                        ConfigNeedsArchiving = true;
                         break;
 
                     default:
                         settingApplied = false;
-                        configNeedsArchiving = true;
+                        ConfigNeedsArchiving = true;
                         break;
                 }
 
@@ -1436,11 +1436,10 @@ namespace MineControl
         }
 
         private void ArchiveChangedConfig(bool forceArchive = false)
-        {
-            // TODO: fix issue where identical/near identical config is saved a bunch of times, perhaps after app is restarted
-            if (Settings.archivesArchiveConfig && (configNeedsArchiving || forceArchive))
+        {            
+            if (Settings.archivesArchiveConfig && (ConfigNeedsArchiving || forceArchive))
             {
-                configNeedsArchiving = false;
+                ConfigNeedsArchiving = false;
                 ExportConfig(GetNextConfigArchiveFilePath());
             }
         }
