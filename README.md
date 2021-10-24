@@ -1,6 +1,6 @@
 # MineControl
 
-A **power tool** for automating temperature management, scheduling, and data aggregation while mining cryptocurrency. For us plebs with a single GPU and CPU running **Windows 10 x64**. It can automatically keep your miners and hardware running within your parameters and give you nice data (e.g. charts, averages, kWh), with more customization than you probably need. This is accomplished by:
+A **power tool** for automating temperature management, scheduling, and data aggregation while mining cryptocurrency. For us plebs with a single GPU and CPU running **Windows 10 x64**. It can automatically keep your miners and hardware running within your parameters and give you nice data (e.g. charts, averages, kWh). This is accomplished by:
 - Reading temperatures and other sensor data from an external hardware monitor app.
 - Setting GPU power profile through an external GPU controller app.
 - Optionally managing execution of an external GPU and/or CPU mining app and capturing their output for charting/logging.
@@ -25,8 +25,9 @@ Note: CC BY-SA is specifically required due to adaptation of certain code from S
 
 ## DISCLAIMERS
 
-- MineControl is NOT guaranteed to work correctly or protect your computer in all circumstances. It is in development and subject to being shit, making mistakes, or missing *YOUR* mistakes. **USE AT YOUR OWN RISK**. Please configure MineControl carefully and watch it for a while to be sure it's doing what you intend. Your temps and power usage *CAN* go too high if you misconfigure MineControl or it makes a booboo.
-- MineControl won't do nefarious things like take your mining profits or send anything to anyone, **AS LONG AS YOU DOWNLOADED IT FROM THIS GITHUB REPO**. Feel free to inspect the code or compile yourself, but DO NOT download MineControl from anywhere or anyone else, since software can easily be compromised by attackers and redistributed in a nearly identical form.
+- While it is designed to improve your mining experience, MineControl is *not* guaranteed to work correctly, and it cannot protect your hardware or mining profits in all circumstances. It is in development and subject to being shit, making mistakes, or missing *YOUR* mistakes. **USE AT YOUR OWN RISK**. Please configure MineControl carefully. Your temps and power usage **can** go higher than intended if you misconfigure MineControl or it makes a booboo.
+- MineControl is *complex* and not for the unprepared. Please don't leave MineControl running unattended until you're confident that it's doing what you intended.
+- MineControl won't do nefarious things like take your mining profits or send *anything* outside of your PC, **AS LONG AS YOU DOWNLOADED IT FROM THIS GITHUB REPO**. Feel free to inspect or compile the code yourself, but **do not** download MineControl from anywhere or anyone else, since software can easily be compromised by attackers and redistributed in a nearly identical form.
 - As with most other software developed in free time for fun, there is no guarantee from the developer to provide support or updates of any kind.
 
 ## Key Features
