@@ -66,7 +66,7 @@ See Issues area for comprehensive list, and add to it if you find a bug.
 - A hardware monitor app, *if* MineControl should monitor hardware sensors and automate actions based on sensor readings.
 - A GPU controller app, *if* MineControl should automate GPU power stepping for temperature control.
 - A GPU and/or CPU miner app that outputs to a console window, *if* MineControl should aggregate GPU/CPU miner data and control their execution.
-- MineControl must be **both** 1) started using an administrator account, and 2) **not** running elevated (i.e. admin privileges).
+- MineControl should be **both** 1) started using an administrator account, and 2) **not** running elevated (i.e. admin privileges). Running elevated may cause big performance problems (see Tips section).
 - UAC (User Account Control) in Windows **must** be configured low enough that the logged in user is not prompted to confirm execution of applications as admin. Otherwise automated execution of miners and apps, including power stepping, will cause a bunch of UAC prompts and not work.
 - You'll probably need to exclude MineControl from virus scanning. As with most crypto mining apps, it's flagged as a false positive.
 
@@ -90,7 +90,7 @@ Note: Steps assume you have nothing already on your PC. For experienced miners, 
 - If MineControl stops running or disappears altogether, make sure it wasn't flagged as a virus.
 - Sensor data and GPU power step only update on charts when the value changes, not periodically.
 - MineControl can't get data from sensors that don't exist. Some power supplies provide wattage sensor readings and some don't, for example. Your GPU may also not report a memory junction temperature.
-- DO NOT run MineControl elevated (i.e. with Windows administrator privileges) if controlling GPU and CPU miner. In testing, there appeared to be a bug with PhoenixMiner that caused **massively** increased GPU temps after several minutes when MineControl was elevated, for no apparent reason. You might have better luck, but don't count on it.
+- It's best **not** to run MineControl elevated (i.e. with Windows administrator privileges) if controlling a GPU or CPU miner. In testing, there appeared to be a bug with PhoenixMiner that caused **massively** increased GPU temps after several minutes when MineControl was elevated, for no apparent reason. You might have better luck, but don't count on it.
 - DO run MineControl while logged in with a Windows administrator account if any of the controlled applications require admin privileges, and make sure Windows is configured so that additional admin popups are not displayed when MineControl launches miners and applications. Popular hardware monitor and GPU controller software *does* require admin rights.
 - There are detailed tooltips for most settings to explain what they do.
 - When MineControl runs a miner, the normal miner window will *not* show, because its output is being entirely redirected to MineControl and wouldn't show in its normal window. To verify the miner is running, check it in Task Manager (Windows). To see miner log entries in MineControl, enable Keep Logs for the miner, otherwise they're just gone, yo. Note: any text coloring from the miner is not kept.
