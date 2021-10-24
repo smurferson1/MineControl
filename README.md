@@ -47,13 +47,14 @@ Note: CC BY-SA is specifically required due to adaptation of certain code from S
 
 ## Key Un-features
 
-- Only supports one GPU miner and one CPU miner at a time. One of each, that's it.
-- Most temperature/power management features are GPU-only.
+- Only supports up to one GPU miner and one CPU miner at a time.
+- Most temperature/power management features are GPU-only, and only one GPU can be controlled.
 - Not internationalized, translated, or respectful of most Windows regional settings.
 - Not very user friendly.
 - Chart data and stats aren't remembered or archived, i.e. you lose them when MineControl closes.
+- Can't automatically click on popups or do other interactive tasks required when launching other apps.
 - Probably some allowed configurations that would make no sense or cause errors or crashes.
-- Engineering: badly engineered with a bunch of logic attached to the form and stuff. Sorry.
+- Engineered badly with a bunch of logic embedded in the form code, no automated tests, etc. Sorry.
 
 See Issues area for comprehensive list, and add to it if you find a bug.
 
