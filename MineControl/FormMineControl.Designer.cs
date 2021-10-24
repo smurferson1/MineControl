@@ -31,9 +31,9 @@ namespace MineControl
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMineControl));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             this.timerMain = new System.Windows.Forms.Timer(this.components);
             this.toolTipMain = new System.Windows.Forms.ToolTip(this.components);
             this.checkBoxStartUpAutomation = new System.Windows.Forms.CheckBox();
@@ -199,6 +199,9 @@ namespace MineControl
             this.tabControlAnalytics = new System.Windows.Forms.TabControl();
             this.tabPageStats = new System.Windows.Forms.TabPage();
             this.dataGridViewStats = new System.Windows.Forms.DataGridView();
+            this.ColStatsStat = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColStatsValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColStatsLastUpdate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPageAnalyticsOptions = new System.Windows.Forms.TabPage();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label32 = new System.Windows.Forms.Label();
@@ -234,9 +237,6 @@ namespace MineControl
             this.openFileDialogBackups = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialogBackups = new System.Windows.Forms.SaveFileDialog();
             this.folderBrowserDialogBackups = new System.Windows.Forms.FolderBrowserDialog();
-            this.ColStatsStat = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColStatsValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColStatsLastUpdate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempSteppingBuffer)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempMin)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarGPUPowerStep)).BeginInit();
@@ -446,7 +446,7 @@ namespace MineControl
             this.label34.TabIndex = 57;
             this.label34.Text = "Archive Interval";
             this.toolTipMain.SetToolTip(this.label34, "How often archiving and data retention rules are evaluated. \r\nIf no data is found" +
-        " to archive, nothing will happen.");
+        " to archive or clear when the interval is reached, nothing will happen.");
             // 
             // buttonScheduleMoveNodeUp
             // 
@@ -887,7 +887,8 @@ namespace MineControl
             this.numericUpDownArchivesDeleteOldFilesDays.Size = new System.Drawing.Size(52, 23);
             this.numericUpDownArchivesDeleteOldFilesDays.TabIndex = 66;
             this.toolTipMain.SetToolTip(this.numericUpDownArchivesDeleteOldFilesDays, "When enabled, archive files older than the specified number of days are deleted f" +
-        "rom the Archive Folder.");
+        "rom the Archive Folder.\r\nEvaluated on the archive interval and when closing Mine" +
+        "Control.");
             // 
             // textBoxArchivesArchiveFolder
             // 
@@ -951,9 +952,7 @@ namespace MineControl
             this.comboBoxArchivesLogManagementUnit.Name = "comboBoxArchivesLogManagementUnit";
             this.comboBoxArchivesLogManagementUnit.Size = new System.Drawing.Size(103, 23);
             this.comboBoxArchivesLogManagementUnit.TabIndex = 56;
-            this.toolTipMain.SetToolTip(this.comboBoxArchivesLogManagementUnit, "When enabled, MineControl logs older than the specified timeframe wil be cleared " +
-        "from the Log grid and \r\noptionally archived to a file (one per day). Evaluated o" +
-        "n the archive interval.");
+            this.toolTipMain.SetToolTip(this.comboBoxArchivesLogManagementUnit, resources.GetString("comboBoxArchivesLogManagementUnit.ToolTip"));
             this.comboBoxArchivesLogManagementUnit.SelectedIndexChanged += new System.EventHandler(this.SettingChanged);
             // 
             // numericUpDownArchivesLogManagementValue
@@ -963,9 +962,7 @@ namespace MineControl
             this.numericUpDownArchivesLogManagementValue.Name = "numericUpDownArchivesLogManagementValue";
             this.numericUpDownArchivesLogManagementValue.Size = new System.Drawing.Size(52, 23);
             this.numericUpDownArchivesLogManagementValue.TabIndex = 55;
-            this.toolTipMain.SetToolTip(this.numericUpDownArchivesLogManagementValue, "When enabled, MineControl logs older than the specified timeframe wil be cleared " +
-        "from the Log grid and \r\noptionally archived to a file (one per day). Evaluated o" +
-        "n the archive interval.");
+            this.toolTipMain.SetToolTip(this.numericUpDownArchivesLogManagementValue, resources.GetString("numericUpDownArchivesLogManagementValue.ToolTip"));
             this.numericUpDownArchivesLogManagementValue.ValueChanged += new System.EventHandler(this.SettingChanged);
             // 
             // label33
@@ -977,8 +974,7 @@ namespace MineControl
             this.label33.Size = new System.Drawing.Size(93, 15);
             this.label33.TabIndex = 54;
             this.label33.Text = "Logs Older Than";
-            this.toolTipMain.SetToolTip(this.label33, "When enabled, MineControl logs older than the specified timeframe wil be cleared " +
-        "from the Log grid and ");
+            this.toolTipMain.SetToolTip(this.label33, resources.GetString("label33.ToolTip"));
             // 
             // comboBoxArchivesLogManagementType
             // 
@@ -992,9 +988,7 @@ namespace MineControl
             this.comboBoxArchivesLogManagementType.Name = "comboBoxArchivesLogManagementType";
             this.comboBoxArchivesLogManagementType.Size = new System.Drawing.Size(140, 23);
             this.comboBoxArchivesLogManagementType.TabIndex = 53;
-            this.toolTipMain.SetToolTip(this.comboBoxArchivesLogManagementType, "When enabled, MineControl logs older than the specified timeframe wil be cleared " +
-        "from the Log grid and \r\noptionally archived to a file (one per day). Evaluated o" +
-        "n the archive interval.");
+            this.toolTipMain.SetToolTip(this.comboBoxArchivesLogManagementType, resources.GetString("comboBoxArchivesLogManagementType.ToolTip"));
             this.comboBoxArchivesLogManagementType.SelectedIndexChanged += new System.EventHandler(this.SettingChanged);
             // 
             // checkBoxArchivesLogManagement
@@ -1005,9 +999,7 @@ namespace MineControl
             this.checkBoxArchivesLogManagement.Name = "checkBoxArchivesLogManagement";
             this.checkBoxArchivesLogManagement.Size = new System.Drawing.Size(15, 14);
             this.checkBoxArchivesLogManagement.TabIndex = 52;
-            this.toolTipMain.SetToolTip(this.checkBoxArchivesLogManagement, "When enabled, MineControl logs older than the specified timeframe wil be cleared " +
-        "from the Log grid and \r\noptionally archived to a file (one per day). Evaluated o" +
-        "n the archive interval.");
+            this.toolTipMain.SetToolTip(this.checkBoxArchivesLogManagement, resources.GetString("checkBoxArchivesLogManagement.ToolTip"));
             this.checkBoxArchivesLogManagement.UseVisualStyleBackColor = true;
             // 
             // checkBoxArchivesArchiveConfig
@@ -1019,9 +1011,7 @@ namespace MineControl
             this.checkBoxArchivesArchiveConfig.Size = new System.Drawing.Size(154, 19);
             this.checkBoxArchivesArchiveConfig.TabIndex = 51;
             this.checkBoxArchivesArchiveConfig.Text = "Archive Config Changes";
-            this.toolTipMain.SetToolTip(this.checkBoxArchivesArchiveConfig, "When enabled, entire MineControl config will be archived on the archive interval " +
-        "when changed. \r\nFrequently changing settings like GPU power step don\'t trigger c" +
-        "onfig archiving.");
+            this.toolTipMain.SetToolTip(this.checkBoxArchivesArchiveConfig, resources.GetString("checkBoxArchivesArchiveConfig.ToolTip"));
             this.checkBoxArchivesArchiveConfig.UseVisualStyleBackColor = true;
             this.checkBoxArchivesArchiveConfig.CheckedChanged += new System.EventHandler(this.SettingChanged);
             // 
@@ -1035,7 +1025,8 @@ namespace MineControl
             this.label36.TabIndex = 68;
             this.label36.Text = "Days";
             this.toolTipMain.SetToolTip(this.label36, "When enabled, archive files older than the specified number of days are deleted f" +
-        "rom the Archive Folder.");
+        "rom the Archive Folder.\r\nEvaluated on the archive interval and when closing Mine" +
+        "Control.");
             // 
             // checkBoxArchivesDeleteOldFiles
             // 
@@ -1047,7 +1038,8 @@ namespace MineControl
             this.checkBoxArchivesDeleteOldFiles.TabIndex = 67;
             this.checkBoxArchivesDeleteOldFiles.Text = "Delete Archive Files Older Than";
             this.toolTipMain.SetToolTip(this.checkBoxArchivesDeleteOldFiles, "When enabled, archive files older than the specified number of days are deleted f" +
-        "rom the Archive Folder.");
+        "rom the Archive Folder.\r\nEvaluated on the archive interval and when closing Mine" +
+        "Control.");
             this.checkBoxArchivesDeleteOldFiles.UseVisualStyleBackColor = true;
             // 
             // checkBoxArchivesClearOldCharts
@@ -2598,6 +2590,36 @@ namespace MineControl
             this.dataGridViewStats.Size = new System.Drawing.Size(219, 594);
             this.dataGridViewStats.TabIndex = 0;
             // 
+            // ColStatsStat
+            // 
+            this.ColStatsStat.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.ColStatsStat.DefaultCellStyle = dataGridViewCellStyle10;
+            this.ColStatsStat.HeaderText = "Stat";
+            this.ColStatsStat.Name = "ColStatsStat";
+            this.ColStatsStat.ReadOnly = true;
+            this.ColStatsStat.Width = 52;
+            // 
+            // ColStatsValue
+            // 
+            this.ColStatsValue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle11.NullValue = null;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.ColStatsValue.DefaultCellStyle = dataGridViewCellStyle11;
+            this.ColStatsValue.HeaderText = "Value";
+            this.ColStatsValue.Name = "ColStatsValue";
+            this.ColStatsValue.ReadOnly = true;
+            // 
+            // ColStatsLastUpdate
+            // 
+            this.ColStatsLastUpdate.HeaderText = "Last Update";
+            this.ColStatsLastUpdate.Name = "ColStatsLastUpdate";
+            this.ColStatsLastUpdate.ReadOnly = true;
+            this.ColStatsLastUpdate.Visible = false;
+            this.ColStatsLastUpdate.Width = 94;
+            // 
             // tabPageAnalyticsOptions
             // 
             this.tabPageAnalyticsOptions.BackColor = System.Drawing.SystemColors.Control;
@@ -2694,8 +2716,8 @@ namespace MineControl
             // ColLogMessage
             // 
             this.ColLogMessage.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.ColLogMessage.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.ColLogMessage.DefaultCellStyle = dataGridViewCellStyle12;
             this.ColLogMessage.HeaderText = "Message";
             this.ColLogMessage.MinimumWidth = 30;
             this.ColLogMessage.Name = "ColLogMessage";
@@ -2950,36 +2972,6 @@ namespace MineControl
             // openFileDialogBackups
             // 
             this.openFileDialogBackups.FileName = "openFileDialogBackupPath";
-            // 
-            // ColStatsStat
-            // 
-            this.ColStatsStat.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.ColStatsStat.DefaultCellStyle = dataGridViewCellStyle1;
-            this.ColStatsStat.HeaderText = "Stat";
-            this.ColStatsStat.Name = "ColStatsStat";
-            this.ColStatsStat.ReadOnly = true;
-            this.ColStatsStat.Width = 52;
-            // 
-            // ColStatsValue
-            // 
-            this.ColStatsValue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.NullValue = null;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.ColStatsValue.DefaultCellStyle = dataGridViewCellStyle2;
-            this.ColStatsValue.HeaderText = "Value";
-            this.ColStatsValue.Name = "ColStatsValue";
-            this.ColStatsValue.ReadOnly = true;
-            // 
-            // ColStatsLastUpdate
-            // 
-            this.ColStatsLastUpdate.HeaderText = "Last Update";
-            this.ColStatsLastUpdate.Name = "ColStatsLastUpdate";
-            this.ColStatsLastUpdate.ReadOnly = true;
-            this.ColStatsLastUpdate.Visible = false;
-            this.ColStatsLastUpdate.Width = 94;
             // 
             // FormMineControl
             // 
