@@ -77,12 +77,12 @@ Note: Steps assume you have nothing already on your PC. For experienced miners, 
 2) Configure and test the miner(s) independently to make sure they run correctly and send crypto to your wallet address.
 3) Configure the hardware monitor output from *inside* of the hardware monitor application. For RidesharePimpo, this means starting up with the **sensors only** option, then enabling system tray output for the metrics you want to track (like GPU memory junction temp), since MineControl relies on systray tooltips to read data. SysTray output can be enabled from the right-click menu for the sensor row. In addition, the **systray icons must be visible on the taskbar to be read by MineControl**, not hidden in the overflow area (screensaver/screen lock doesn't break anything). To be really sure, you can enable the "Always show all icons in the notification area" option in Windows taskbar settings for notification icons.
 4) Configure the power profiles *inside* of the GPU controller application. You have full control over your power profiles, so you can set voltage curves or whatever you like. These should progress from lowest power (lowest temp) in profile 1 to highest power in profile 5. **Your temperature control and hash rates will only be as good as your power profiles.**
-5) Extract MineControl to a folder somewhere.
-6) Configure miners and applications by pointing to their executables at the top of the Config tab. Batch files are supported but you **must** set the exact application (EXE) name of the miner *without* extension in the "Process Name" cell.
-7) Configure Data Tracking metrics as needed for your miners and applications, and disable metrics you don't use. This can be tedious, but may not be necessary if you're using RidesharePimpo, WhoStoleMy ButterChurner, PhoenixMiner, and xmrig. Use the "RegEx" method for any metric you need to customize. An easy way to do this is to paste example output from the application into https://regexr.com/ for easyish learning and testing. There is a "View SysTray" button in MineControl that can be used to get a current example of that output (use Ctrl+C to copy the text out of the popup).
-8) Configure your target GPU temps and anything else you care about.
-9) Press Start!
-10) Monitor periodically for a while to make sure your config is working to your satisfaction and not doing anything bad.
+5) Extract MineControl to a folder somewhere and exclude from virus scanning if needed.
+7) Configure miners and applications by pointing to their executables at the top of the Config tab. Batch files are supported but you **must** set the exact application (EXE) name of the miner *without* extension in the "Process Name" cell.
+8) Configure Data Tracking metrics as needed for your miners and applications, and disable metrics you don't use. This can be tedious, but may not be necessary if you're using RidesharePimpo, WhoStoleMy ButterChurner, PhoenixMiner, and xmrig. Use the "RegEx" method for any metric you need to customize. An easy way to do this is to paste example output from the application into https://regexr.com/ for easyish learning and testing. There is a "View SysTray" button in MineControl that can be used to get a current example of that output (use Ctrl+C to copy the text out of the popup).
+9) Configure your target GPU temps and anything else you care about.
+10) Press Start!
+11) Monitor periodically for a while to make sure your config is working to your satisfaction and not doing anything bad.
 
 ## Tips
 
