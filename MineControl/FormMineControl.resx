@@ -69,6 +69,22 @@
   <metadata name="toolTipNotification.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>744, 17</value>
   </metadata>
+  <data name="label23.ToolTip" xml:space="preserve">
+    <value>How often MineControl automation polls for actions. 
+Most things like temperature management will ONLY evaluate once per polling cycle.
+Tread carefully when changing this. Best to keep around 5000 (5 seconds).</value>
+  </data>
+  <data name="label22.ToolTip" xml:space="preserve">
+    <value>How often MineControl automation polls for actions. 
+Most things like temperature management will ONLY evaluate once per polling cycle.
+Tread carefully when changing this. Best to keep around 5000 (5 seconds).</value>
+  </data>
+  <data name="numericUpDownTempPollingInterval.ToolTip" xml:space="preserve">
+    <value>How often MineControl automation polls for actions. 
+Most things like temperature management will ONLY evaluate once per polling cycle.
+Tread carefully when changing this. Best to keep around 5000 (5 seconds).
+</value>
+  </data>
   <metadata name="ColDataEnableTracking.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -87,6 +103,43 @@
   <metadata name="ColDataQuery.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
+  <data name="numericUpDownTempGPUShutOffThresholdSecs.ToolTip" xml:space="preserve">
+    <value>When enabled and GPU power step is at the minimum, MineControl will stop the GPU miner for the 
+specified number of seconds when max temp is exceeded for the specified number of seconds.
+This happens regardless of other settings, like post-step wait. 
+For example, if set to 60/30, GPU miner is stopped for 60 seconds when max memory junction temp is exceeded on each polling interval for 30 seconds.
+Warning: Conditions are only checked on the polling interval!</value>
+  </data>
+  <data name="label14.ToolTip" xml:space="preserve">
+    <value>When enabled and GPU power step is at the minimum, MineControl will stop the GPU miner for the 
+specified number of seconds when max temp is exceeded for the specified number of seconds.
+This happens regardless of other settings, like post-step wait. 
+For example, if set to 60/30, GPU miner is stopped for 60 seconds when max memory junction temp is exceeded on each polling interval for 30 seconds.
+Warning: Conditions are only checked on the polling interval!
+</value>
+  </data>
+  <data name="numericUpDownTempGPUShutOffSecs.ToolTip" xml:space="preserve">
+    <value>When enabled and GPU power step is at the minimum, MineControl will stop the GPU miner for the 
+specified number of seconds when max temp is exceeded for the specified number of seconds.
+This happens regardless of other settings, like post-step wait. 
+For example, if set to 60/30, GPU miner is stopped for 60 seconds when max memory junction temp is exceeded on each polling interval for 30 seconds.
+Warning: Conditions are only checked on the polling interval!</value>
+  </data>
+  <data name="label15.ToolTip" xml:space="preserve">
+    <value>When enabled and GPU power step is at the minimum, MineControl will stop the GPU miner for the 
+specified number of seconds when max temp is exceeded for the specified number of seconds.
+This happens regardless of other settings, like post-step wait. 
+For example, if set to 60/30, GPU miner is stopped for 60 seconds when max memory junction temp is exceeded on each polling interval for 30 seconds.
+Warning: Conditions are only checked on the polling interval!
+</value>
+  </data>
+  <data name="checkBoxStopWhenOverheat.ToolTip" xml:space="preserve">
+    <value>When enabled and GPU power step is at the minimum, MineControl will stop the GPU miner for the 
+specified number of seconds when max temp is exceeded for the specified number of seconds.
+This happens regardless of other settings, like post-step wait. 
+For example, if set to 60/30, GPU miner is stopped for 60 seconds when max memory junction temp is exceeded on each polling interval for 30 seconds.
+Warning: Conditions are only checked on the polling interval!</value>
+  </data>
   <metadata name="ColAppChooseButton.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -99,6 +152,16 @@
   <metadata name="ColStatsLastUpdate.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
+  <data name="numericUpDownChartMinGPUTempOnYAxisValue.ToolTip" xml:space="preserve">
+    <value>When enabled, provides a floor for the minimum GPU/memory junction temp on the Y2 axis.
+For example, a minimum of 80 means GPU/memory junction temps below this value will not show on the chart.
+Doesn't work if this would hide all visible points on the Y2 axis.</value>
+  </data>
+  <data name="checkBoxChartMinGPUTempOnYAxisEnabled.ToolTip" xml:space="preserve">
+    <value>When enabled, provides a floor for the minimum GPU/memory junction temp on the Y2 axis.
+For example, a minimum of 80 means GPU/memory junction temps below this value will not show on the chart.
+Doesn't work if this would hide all visible points on the Y2 axis.</value>
+  </data>
   <metadata name="ColLogSource.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -111,6 +174,10 @@
   <metadata name="ColLogMessage.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
+  <data name="checkBoxEnableMinerAutomation.ToolTip" xml:space="preserve">
+    <value>When checked, enabled miners will run. When unchecked, MineControl doesn't run any miners regardless of their settings.
+Note: This is for temporarily disabling miners without fiddling with indvidual settings.</value>
+  </data>
   <metadata name="notifyIconMain.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>421, 17</value>
   </metadata>

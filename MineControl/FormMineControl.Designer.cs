@@ -30,8 +30,8 @@ namespace MineControl
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMineControl));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.timerMain = new System.Windows.Forms.Timer(this.components);
             this.toolTipMain = new System.Windows.Forms.ToolTip(this.components);
             this.checkBoxStartUpAutomation = new System.Windows.Forms.CheckBox();
@@ -46,17 +46,31 @@ namespace MineControl
             this.label34 = new System.Windows.Forms.Label();
             this.buttonScheduleMoveNodeUp = new System.Windows.Forms.Button();
             this.buttonScheduleMoveNodeDown = new System.Windows.Forms.Button();
-            this.openFileDialogAppPath = new System.Windows.Forms.OpenFileDialog();
-            this.tabControlMain = new System.Windows.Forms.TabControl();
-            this.tabPageConfig = new System.Windows.Forms.TabPage();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.checkBoxMinerCPUShowLogs = new System.Windows.Forms.CheckBox();
             this.checkBoxMinerCPUUserActivityShutoff = new System.Windows.Forms.CheckBox();
-            this.comboBoxMinerCPUSchedule = new System.Windows.Forms.ComboBox();
             this.radioButtonCPUModeDontControl = new System.Windows.Forms.RadioButton();
             this.radioButtonCPUModeAlwaysOff = new System.Windows.Forms.RadioButton();
             this.radioButtonCPUModeAlwaysOn = new System.Windows.Forms.RadioButton();
             this.radioButtonCPUModeSchedule = new System.Windows.Forms.RadioButton();
+            this.checkBoxMinerGPUShowLogs = new System.Windows.Forms.CheckBox();
+            this.checkBoxMinerGPUUserActivityShutoff = new System.Windows.Forms.CheckBox();
+            this.radioButtonGPUModeDontControl = new System.Windows.Forms.RadioButton();
+            this.radioButtonGPUModeAlwaysOff = new System.Windows.Forms.RadioButton();
+            this.radioButtonGPUModeAlwaysOn = new System.Windows.Forms.RadioButton();
+            this.radioButtonGPUModeSchedule = new System.Windows.Forms.RadioButton();
+            this.numericUpDownTempMin = new System.Windows.Forms.NumericUpDown();
+            this.textBoxTempPowerStepParam1 = new System.Windows.Forms.TextBox();
+            this.textBoxTempPowerStepParam2 = new System.Windows.Forms.TextBox();
+            this.textBoxTempPowerStepParam3 = new System.Windows.Forms.TextBox();
+            this.textBoxTempPowerStepParam4 = new System.Windows.Forms.TextBox();
+            this.textBoxTempPowerStepParam5 = new System.Windows.Forms.TextBox();
+            this.trackBarGPUPowerStep = new System.Windows.Forms.TrackBar();
+            this.numericUpDownTempMax = new System.Windows.Forms.NumericUpDown();
+            this.openFileDialogAppPath = new System.Windows.Forms.OpenFileDialog();
+            this.tabControlMain = new System.Windows.Forms.TabControl();
+            this.tabPageConfig = new System.Windows.Forms.TabPage();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.comboBoxMinerCPUSchedule = new System.Windows.Forms.ComboBox();
             this.groupBoxGeneral = new System.Windows.Forms.GroupBox();
             this.buttonGeneralResetConfig = new System.Windows.Forms.Button();
             this.label30 = new System.Windows.Forms.Label();
@@ -70,13 +84,7 @@ namespace MineControl
             this.label22 = new System.Windows.Forms.Label();
             this.numericUpDownTempPollingInterval = new System.Windows.Forms.NumericUpDown();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.checkBoxMinerGPUShowLogs = new System.Windows.Forms.CheckBox();
-            this.checkBoxMinerGPUUserActivityShutoff = new System.Windows.Forms.CheckBox();
             this.comboBoxMinerGPUSchedule = new System.Windows.Forms.ComboBox();
-            this.radioButtonGPUModeDontControl = new System.Windows.Forms.RadioButton();
-            this.radioButtonGPUModeAlwaysOff = new System.Windows.Forms.RadioButton();
-            this.radioButtonGPUModeAlwaysOn = new System.Windows.Forms.RadioButton();
-            this.radioButtonGPUModeSchedule = new System.Windows.Forms.RadioButton();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.comboBoxArchivesClearOldChartsUnit = new System.Windows.Forms.ComboBox();
             this.numericUpDownArchivesClearOldChartsValue = new System.Windows.Forms.NumericUpDown();
@@ -97,18 +105,10 @@ namespace MineControl
             this.checkBoxArchivesClearOldCharts = new System.Windows.Forms.CheckBox();
             this.groupBoxDataTracking = new System.Windows.Forms.GroupBox();
             this.dataGridViewMetrics = new System.Windows.Forms.DataGridView();
-            this.ColDataEnableTracking = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.ColDataMetric = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColDataType = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.ColDataInputSource = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.ColDataMethod = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.ColDataQuery = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.buttonDataViewSysTrayTooltips = new System.Windows.Forms.Button();
             this.buttonDataRemoveUnusedQueryOptions = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.numericUpDownTempMax = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDownTempMin = new System.Windows.Forms.NumericUpDown();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
@@ -120,16 +120,10 @@ namespace MineControl
             this.checkBoxTempStopWhenTempUnknown = new System.Windows.Forms.CheckBox();
             this.numericUpDownTempTryStepUpSecs = new System.Windows.Forms.NumericUpDown();
             this.checkBoxTempTryStepUp = new System.Windows.Forms.CheckBox();
-            this.textBoxTempPowerStepParam1 = new System.Windows.Forms.TextBox();
-            this.textBoxTempPowerStepParam2 = new System.Windows.Forms.TextBox();
-            this.textBoxTempPowerStepParam3 = new System.Windows.Forms.TextBox();
-            this.textBoxTempPowerStepParam4 = new System.Windows.Forms.TextBox();
-            this.textBoxTempPowerStepParam5 = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.labelMaxSpeed = new System.Windows.Forms.Label();
             this.labelMinSpeed = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.trackBarGPUPowerStep = new System.Windows.Forms.TrackBar();
             this.label7 = new System.Windows.Forms.Label();
             this.groupBoxMinersAndApps = new System.Windows.Forms.GroupBox();
             this.dataGridViewApps = new System.Windows.Forms.DataGridView();
@@ -235,7 +229,16 @@ namespace MineControl
             this.openFileDialogBackups = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialogBackups = new System.Windows.Forms.SaveFileDialog();
             this.folderBrowserDialogBackups = new System.Windows.Forms.FolderBrowserDialog();
+            this.ColDataEnableTracking = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.ColDataMetric = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColDataType = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.ColDataInputSource = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.ColDataMethod = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.ColDataQuery = new System.Windows.Forms.DataGridViewComboBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempSteppingBuffer)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempMin)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarGPUPowerStep)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempMax)).BeginInit();
             this.tabControlMain.SuspendLayout();
             this.tabPageConfig.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -252,13 +255,10 @@ namespace MineControl
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewMetrics)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox7.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempMax)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempMin)).BeginInit();
             this.groupBox9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempGPUShutOffThresholdSecs)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempGPUShutOffSecs)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempTryStepUpSecs)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarGPUPowerStep)).BeginInit();
             this.groupBoxMinersAndApps.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewApps)).BeginInit();
             this.tabPageSchedule.SuspendLayout();
@@ -297,6 +297,12 @@ namespace MineControl
             this.timerMain.Interval = 1000;
             this.timerMain.Tick += new System.EventHandler(this.timerMain_Tick);
             // 
+            // toolTipMain
+            // 
+            this.toolTipMain.AutoPopDelay = 10000;
+            this.toolTipMain.InitialDelay = 500;
+            this.toolTipMain.ReshowDelay = 100;
+            // 
             // checkBoxStartUpAutomation
             // 
             this.checkBoxStartUpAutomation.AutoSize = true;
@@ -322,7 +328,9 @@ namespace MineControl
             this.label2.Size = new System.Drawing.Size(30, 15);
             this.label2.TabIndex = 42;
             this.label2.Text = "Secs";
-            this.toolTipMain.SetToolTip(this.label2, "Seconds after a change in power step before an automated step will be considered");
+            this.toolTipMain.SetToolTip(this.label2, "How long MineControl will wait after GPU power step change before considering ano" +
+        "ther power step change. \r\nNecessary to give GPU time to adjust to the new power " +
+        "step.");
             // 
             // numericUpDownTempSteppingBuffer
             // 
@@ -341,7 +349,9 @@ namespace MineControl
             this.numericUpDownTempSteppingBuffer.Name = "numericUpDownTempSteppingBuffer";
             this.numericUpDownTempSteppingBuffer.Size = new System.Drawing.Size(48, 23);
             this.numericUpDownTempSteppingBuffer.TabIndex = 41;
-            this.toolTipMain.SetToolTip(this.numericUpDownTempSteppingBuffer, "Seconds after a change in power step before an automated step will be considered");
+            this.toolTipMain.SetToolTip(this.numericUpDownTempSteppingBuffer, "How long MineControl will wait after GPU power step change before considering ano" +
+        "ther power step change. \r\nNecessary to give GPU time to adjust to the new power " +
+        "step.");
             this.numericUpDownTempSteppingBuffer.Value = new decimal(new int[] {
             10,
             0,
@@ -358,7 +368,9 @@ namespace MineControl
             this.label24.Size = new System.Drawing.Size(88, 15);
             this.label24.TabIndex = 40;
             this.label24.Text = "Post-Step Wait:";
-            this.toolTipMain.SetToolTip(this.label24, "Seconds after a change in power step before an automated step will be considered");
+            this.toolTipMain.SetToolTip(this.label24, "How long MineControl will wait after GPU power step change before considering ano" +
+        "ther power step change. \r\nNecessary to give GPU time to adjust to the new power " +
+        "step.");
             // 
             // label10
             // 
@@ -369,7 +381,8 @@ namespace MineControl
             this.label10.Size = new System.Drawing.Size(30, 15);
             this.label10.TabIndex = 50;
             this.label10.Text = "Secs";
-            this.toolTipMain.SetToolTip(this.label10, "Seconds after a change in power step before an automated step will be considered");
+            this.toolTipMain.SetToolTip(this.label10, "When enabled, MineControl will attempt increasing GPU Power Step if it hasn\'t cha" +
+        "nged during the specified number of seconds.");
             // 
             // buttonScheduleCreateSubNode
             // 
@@ -418,7 +431,7 @@ namespace MineControl
             this.buttonScheduleUpdateNode.Size = new System.Drawing.Size(117, 27);
             this.buttonScheduleUpdateNode.TabIndex = 24;
             this.buttonScheduleUpdateNode.Text = "Update Node";
-            this.toolTipMain.SetToolTip(this.buttonScheduleUpdateNode, "Updates the currently selected node with the specified details");
+            this.toolTipMain.SetToolTip(this.buttonScheduleUpdateNode, "Updates the currently selected node with the specified details if possible.");
             this.buttonScheduleUpdateNode.UseVisualStyleBackColor = true;
             this.buttonScheduleUpdateNode.Click += new System.EventHandler(this.buttonScheduleUpdateNode_Click);
             // 
@@ -431,7 +444,8 @@ namespace MineControl
             this.label34.Size = new System.Drawing.Size(89, 15);
             this.label34.TabIndex = 57;
             this.label34.Text = "Archive Interval";
-            this.toolTipMain.SetToolTip(this.label34, "How often archiving and data retention rules are evaluated.");
+            this.toolTipMain.SetToolTip(this.label34, "How often archiving and data retention rules are evaluated. \r\nIf no data is found" +
+        " to archive, nothing will happen.");
             // 
             // buttonScheduleMoveNodeUp
             // 
@@ -442,7 +456,7 @@ namespace MineControl
             this.buttonScheduleMoveNodeUp.Size = new System.Drawing.Size(120, 27);
             this.buttonScheduleMoveNodeUp.TabIndex = 24;
             this.buttonScheduleMoveNodeUp.Text = "Move Node Up";
-            this.toolTipMain.SetToolTip(this.buttonScheduleMoveNodeUp, "Deletes the selected node and any nodes that depend on it");
+            this.toolTipMain.SetToolTip(this.buttonScheduleMoveNodeUp, "Moves the selected node up if possible. Only moves within the same tree level.");
             this.buttonScheduleMoveNodeUp.UseVisualStyleBackColor = true;
             this.buttonScheduleMoveNodeUp.Click += new System.EventHandler(this.buttonScheduleMoveNodeUp_Click);
             // 
@@ -455,9 +469,286 @@ namespace MineControl
             this.buttonScheduleMoveNodeDown.Size = new System.Drawing.Size(120, 27);
             this.buttonScheduleMoveNodeDown.TabIndex = 25;
             this.buttonScheduleMoveNodeDown.Text = "Move Node Down";
-            this.toolTipMain.SetToolTip(this.buttonScheduleMoveNodeDown, "Deletes the selected node and any nodes that depend on it");
+            this.toolTipMain.SetToolTip(this.buttonScheduleMoveNodeDown, "Moves the selected node down if possible. Only moves within the same tree level.");
             this.buttonScheduleMoveNodeDown.UseVisualStyleBackColor = true;
             this.buttonScheduleMoveNodeDown.Click += new System.EventHandler(this.buttonScheduleMoveNodeDown_Click);
+            // 
+            // checkBoxMinerCPUShowLogs
+            // 
+            this.checkBoxMinerCPUShowLogs.AutoSize = true;
+            this.checkBoxMinerCPUShowLogs.Location = new System.Drawing.Point(348, 77);
+            this.checkBoxMinerCPUShowLogs.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.checkBoxMinerCPUShowLogs.Name = "checkBoxMinerCPUShowLogs";
+            this.checkBoxMinerCPUShowLogs.Size = new System.Drawing.Size(80, 19);
+            this.checkBoxMinerCPUShowLogs.TabIndex = 10;
+            this.checkBoxMinerCPUShowLogs.Text = "Keep Logs";
+            this.toolTipMain.SetToolTip(this.checkBoxMinerCPUShowLogs, "When checked, miner\'s logs show up in the MineControl Log (otherwise, logs are di" +
+        "scarded once scanned for input)");
+            this.checkBoxMinerCPUShowLogs.UseVisualStyleBackColor = true;
+            this.checkBoxMinerCPUShowLogs.CheckedChanged += new System.EventHandler(this.SettingChanged);
+            // 
+            // checkBoxMinerCPUUserActivityShutoff
+            // 
+            this.checkBoxMinerCPUUserActivityShutoff.AutoSize = true;
+            this.checkBoxMinerCPUUserActivityShutoff.Location = new System.Drawing.Point(10, 77);
+            this.checkBoxMinerCPUUserActivityShutoff.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.checkBoxMinerCPUUserActivityShutoff.Name = "checkBoxMinerCPUUserActivityShutoff";
+            this.checkBoxMinerCPUUserActivityShutoff.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.checkBoxMinerCPUUserActivityShutoff.Size = new System.Drawing.Size(158, 19);
+            this.checkBoxMinerCPUUserActivityShutoff.TabIndex = 9;
+            this.checkBoxMinerCPUUserActivityShutoff.Text = "Stop During User Activity";
+            this.toolTipMain.SetToolTip(this.checkBoxMinerCPUUserActivityShutoff, "Miner is stopped when recent user activity has occurred anywhere in Windows (\"rec" +
+        "ent\" is determined by the User Activity Timeout setting)");
+            this.checkBoxMinerCPUUserActivityShutoff.UseVisualStyleBackColor = true;
+            this.checkBoxMinerCPUUserActivityShutoff.CheckedChanged += new System.EventHandler(this.SettingChanged);
+            // 
+            // radioButtonCPUModeDontControl
+            // 
+            this.radioButtonCPUModeDontControl.AutoSize = true;
+            this.radioButtonCPUModeDontControl.Location = new System.Drawing.Point(332, 20);
+            this.radioButtonCPUModeDontControl.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.radioButtonCPUModeDontControl.Name = "radioButtonCPUModeDontControl";
+            this.radioButtonCPUModeDontControl.Size = new System.Drawing.Size(97, 19);
+            this.radioButtonCPUModeDontControl.TabIndex = 7;
+            this.radioButtonCPUModeDontControl.TabStop = true;
+            this.radioButtonCPUModeDontControl.Text = "Don\'t Control";
+            this.toolTipMain.SetToolTip(this.radioButtonCPUModeDontControl, "Miner is not touched at all by MineControl");
+            this.radioButtonCPUModeDontControl.UseVisualStyleBackColor = true;
+            this.radioButtonCPUModeDontControl.Click += new System.EventHandler(this.SettingChanged);
+            // 
+            // radioButtonCPUModeAlwaysOff
+            // 
+            this.radioButtonCPUModeAlwaysOff.AutoSize = true;
+            this.radioButtonCPUModeAlwaysOff.Location = new System.Drawing.Point(179, 20);
+            this.radioButtonCPUModeAlwaysOff.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.radioButtonCPUModeAlwaysOff.Name = "radioButtonCPUModeAlwaysOff";
+            this.radioButtonCPUModeAlwaysOff.Size = new System.Drawing.Size(82, 19);
+            this.radioButtonCPUModeAlwaysOff.TabIndex = 4;
+            this.radioButtonCPUModeAlwaysOff.Text = "Always Off";
+            this.toolTipMain.SetToolTip(this.radioButtonCPUModeAlwaysOff, "Miner is not executed and miner process is killed if found running");
+            this.radioButtonCPUModeAlwaysOff.UseVisualStyleBackColor = true;
+            this.radioButtonCPUModeAlwaysOff.Click += new System.EventHandler(this.SettingChanged);
+            // 
+            // radioButtonCPUModeAlwaysOn
+            // 
+            this.radioButtonCPUModeAlwaysOn.AutoSize = true;
+            this.radioButtonCPUModeAlwaysOn.Checked = true;
+            this.radioButtonCPUModeAlwaysOn.Location = new System.Drawing.Point(10, 20);
+            this.radioButtonCPUModeAlwaysOn.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.radioButtonCPUModeAlwaysOn.Name = "radioButtonCPUModeAlwaysOn";
+            this.radioButtonCPUModeAlwaysOn.Size = new System.Drawing.Size(81, 19);
+            this.radioButtonCPUModeAlwaysOn.TabIndex = 3;
+            this.radioButtonCPUModeAlwaysOn.TabStop = true;
+            this.radioButtonCPUModeAlwaysOn.Text = "Always On";
+            this.toolTipMain.SetToolTip(this.radioButtonCPUModeAlwaysOn, "Miner always runs when automation is running and \"Run Enabled Miners\" is checked");
+            this.radioButtonCPUModeAlwaysOn.UseVisualStyleBackColor = true;
+            this.radioButtonCPUModeAlwaysOn.Click += new System.EventHandler(this.SettingChanged);
+            // 
+            // radioButtonCPUModeSchedule
+            // 
+            this.radioButtonCPUModeSchedule.AutoSize = true;
+            this.radioButtonCPUModeSchedule.Location = new System.Drawing.Point(10, 47);
+            this.radioButtonCPUModeSchedule.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.radioButtonCPUModeSchedule.Name = "radioButtonCPUModeSchedule";
+            this.radioButtonCPUModeSchedule.Size = new System.Drawing.Size(106, 19);
+            this.radioButtonCPUModeSchedule.TabIndex = 2;
+            this.radioButtonCPUModeSchedule.Text = "On A Schedule:";
+            this.toolTipMain.SetToolTip(this.radioButtonCPUModeSchedule, "Miner runs using the specified schedule");
+            this.radioButtonCPUModeSchedule.UseVisualStyleBackColor = true;
+            this.radioButtonCPUModeSchedule.Click += new System.EventHandler(this.SettingChanged);
+            // 
+            // checkBoxMinerGPUShowLogs
+            // 
+            this.checkBoxMinerGPUShowLogs.AutoSize = true;
+            this.checkBoxMinerGPUShowLogs.Location = new System.Drawing.Point(348, 75);
+            this.checkBoxMinerGPUShowLogs.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.checkBoxMinerGPUShowLogs.Name = "checkBoxMinerGPUShowLogs";
+            this.checkBoxMinerGPUShowLogs.Size = new System.Drawing.Size(80, 19);
+            this.checkBoxMinerGPUShowLogs.TabIndex = 8;
+            this.checkBoxMinerGPUShowLogs.Text = "Keep Logs";
+            this.toolTipMain.SetToolTip(this.checkBoxMinerGPUShowLogs, "When checked, miner\'s logs show up in the MineControl Log (otherwise, logs are di" +
+        "scarded once scanned for input)");
+            this.checkBoxMinerGPUShowLogs.UseVisualStyleBackColor = true;
+            this.checkBoxMinerGPUShowLogs.CheckedChanged += new System.EventHandler(this.SettingChanged);
+            // 
+            // checkBoxMinerGPUUserActivityShutoff
+            // 
+            this.checkBoxMinerGPUUserActivityShutoff.AutoSize = true;
+            this.checkBoxMinerGPUUserActivityShutoff.Location = new System.Drawing.Point(10, 77);
+            this.checkBoxMinerGPUUserActivityShutoff.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.checkBoxMinerGPUUserActivityShutoff.Name = "checkBoxMinerGPUUserActivityShutoff";
+            this.checkBoxMinerGPUUserActivityShutoff.Size = new System.Drawing.Size(158, 19);
+            this.checkBoxMinerGPUUserActivityShutoff.TabIndex = 7;
+            this.checkBoxMinerGPUUserActivityShutoff.Text = "Stop During User Activity";
+            this.toolTipMain.SetToolTip(this.checkBoxMinerGPUUserActivityShutoff, "Miner is stopped when recent user activity has occurred anywhere in Windows (\"rec" +
+        "ent\" is determined by the User Activity Timeout setting)");
+            this.checkBoxMinerGPUUserActivityShutoff.UseVisualStyleBackColor = true;
+            this.checkBoxMinerGPUUserActivityShutoff.CheckedChanged += new System.EventHandler(this.SettingChanged);
+            // 
+            // radioButtonGPUModeDontControl
+            // 
+            this.radioButtonGPUModeDontControl.AutoSize = true;
+            this.radioButtonGPUModeDontControl.Location = new System.Drawing.Point(331, 20);
+            this.radioButtonGPUModeDontControl.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.radioButtonGPUModeDontControl.Name = "radioButtonGPUModeDontControl";
+            this.radioButtonGPUModeDontControl.Size = new System.Drawing.Size(97, 19);
+            this.radioButtonGPUModeDontControl.TabIndex = 5;
+            this.radioButtonGPUModeDontControl.TabStop = true;
+            this.radioButtonGPUModeDontControl.Text = "Don\'t Control";
+            this.toolTipMain.SetToolTip(this.radioButtonGPUModeDontControl, "Miner is not touched at all by MineControl");
+            this.radioButtonGPUModeDontControl.UseVisualStyleBackColor = true;
+            this.radioButtonGPUModeDontControl.Click += new System.EventHandler(this.SettingChanged);
+            // 
+            // radioButtonGPUModeAlwaysOff
+            // 
+            this.radioButtonGPUModeAlwaysOff.AutoSize = true;
+            this.radioButtonGPUModeAlwaysOff.Location = new System.Drawing.Point(173, 20);
+            this.radioButtonGPUModeAlwaysOff.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.radioButtonGPUModeAlwaysOff.Name = "radioButtonGPUModeAlwaysOff";
+            this.radioButtonGPUModeAlwaysOff.Size = new System.Drawing.Size(82, 19);
+            this.radioButtonGPUModeAlwaysOff.TabIndex = 2;
+            this.radioButtonGPUModeAlwaysOff.Text = "Always Off";
+            this.toolTipMain.SetToolTip(this.radioButtonGPUModeAlwaysOff, "Miner is not executed and miner process is killed if found running");
+            this.radioButtonGPUModeAlwaysOff.UseVisualStyleBackColor = true;
+            this.radioButtonGPUModeAlwaysOff.Click += new System.EventHandler(this.SettingChanged);
+            // 
+            // radioButtonGPUModeAlwaysOn
+            // 
+            this.radioButtonGPUModeAlwaysOn.AutoSize = true;
+            this.radioButtonGPUModeAlwaysOn.Checked = true;
+            this.radioButtonGPUModeAlwaysOn.Location = new System.Drawing.Point(10, 20);
+            this.radioButtonGPUModeAlwaysOn.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.radioButtonGPUModeAlwaysOn.Name = "radioButtonGPUModeAlwaysOn";
+            this.radioButtonGPUModeAlwaysOn.Size = new System.Drawing.Size(81, 19);
+            this.radioButtonGPUModeAlwaysOn.TabIndex = 1;
+            this.radioButtonGPUModeAlwaysOn.TabStop = true;
+            this.radioButtonGPUModeAlwaysOn.Text = "Always On";
+            this.toolTipMain.SetToolTip(this.radioButtonGPUModeAlwaysOn, "Miner always runs when automation is running and \"Run Enabled Miners\" is checked");
+            this.radioButtonGPUModeAlwaysOn.UseVisualStyleBackColor = true;
+            this.radioButtonGPUModeAlwaysOn.Click += new System.EventHandler(this.SettingChanged);
+            // 
+            // radioButtonGPUModeSchedule
+            // 
+            this.radioButtonGPUModeSchedule.AutoSize = true;
+            this.radioButtonGPUModeSchedule.Location = new System.Drawing.Point(10, 47);
+            this.radioButtonGPUModeSchedule.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.radioButtonGPUModeSchedule.Name = "radioButtonGPUModeSchedule";
+            this.radioButtonGPUModeSchedule.Size = new System.Drawing.Size(106, 19);
+            this.radioButtonGPUModeSchedule.TabIndex = 0;
+            this.radioButtonGPUModeSchedule.Text = "On A Schedule:";
+            this.toolTipMain.SetToolTip(this.radioButtonGPUModeSchedule, "Miner runs using the specified schedule");
+            this.radioButtonGPUModeSchedule.UseVisualStyleBackColor = true;
+            this.radioButtonGPUModeSchedule.Click += new System.EventHandler(this.SettingChanged);
+            // 
+            // numericUpDownTempMin
+            // 
+            this.numericUpDownTempMin.Location = new System.Drawing.Point(34, 25);
+            this.numericUpDownTempMin.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
+            this.numericUpDownTempMin.Name = "numericUpDownTempMin";
+            this.numericUpDownTempMin.Size = new System.Drawing.Size(42, 23);
+            this.numericUpDownTempMin.TabIndex = 53;
+            this.toolTipMain.SetToolTip(this.numericUpDownTempMin, "Minimum GPU/memory junction temperature. \r\nUnit (i.e. Celsius, Fahrenheit) is det" +
+        "ermined by the Hardware Monitor app. \r\nIf temp goes below this value, MineContro" +
+        "l will try to increase GPU power step.");
+            this.numericUpDownTempMin.ValueChanged += new System.EventHandler(this.numericUpDownTempMin_ValueChanged);
+            // 
+            // textBoxTempPowerStepParam1
+            // 
+            this.textBoxTempPowerStepParam1.Location = new System.Drawing.Point(103, 173);
+            this.textBoxTempPowerStepParam1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.textBoxTempPowerStepParam1.Name = "textBoxTempPowerStepParam1";
+            this.textBoxTempPowerStepParam1.Size = new System.Drawing.Size(142, 23);
+            this.textBoxTempPowerStepParam1.TabIndex = 47;
+            this.textBoxTempPowerStepParam1.Text = "-Profile1";
+            this.toolTipMain.SetToolTip(this.textBoxTempPowerStepParam1, "Command line parameter provided to the GPU Controller app to set the correspondin" +
+        "g power step.");
+            this.textBoxTempPowerStepParam1.Leave += new System.EventHandler(this.SettingChanged);
+            // 
+            // textBoxTempPowerStepParam2
+            // 
+            this.textBoxTempPowerStepParam2.Location = new System.Drawing.Point(103, 142);
+            this.textBoxTempPowerStepParam2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.textBoxTempPowerStepParam2.Name = "textBoxTempPowerStepParam2";
+            this.textBoxTempPowerStepParam2.Size = new System.Drawing.Size(142, 23);
+            this.textBoxTempPowerStepParam2.TabIndex = 46;
+            this.textBoxTempPowerStepParam2.Text = "-Profile2";
+            this.toolTipMain.SetToolTip(this.textBoxTempPowerStepParam2, "Command line parameter provided to the GPU Controller app to set the correspondin" +
+        "g power step.");
+            this.textBoxTempPowerStepParam2.Leave += new System.EventHandler(this.SettingChanged);
+            // 
+            // textBoxTempPowerStepParam3
+            // 
+            this.textBoxTempPowerStepParam3.Location = new System.Drawing.Point(103, 110);
+            this.textBoxTempPowerStepParam3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.textBoxTempPowerStepParam3.Name = "textBoxTempPowerStepParam3";
+            this.textBoxTempPowerStepParam3.Size = new System.Drawing.Size(142, 23);
+            this.textBoxTempPowerStepParam3.TabIndex = 45;
+            this.textBoxTempPowerStepParam3.Text = "-Profile3";
+            this.toolTipMain.SetToolTip(this.textBoxTempPowerStepParam3, "Command line parameter provided to the GPU Controller app to set the correspondin" +
+        "g power step.");
+            this.textBoxTempPowerStepParam3.Leave += new System.EventHandler(this.SettingChanged);
+            // 
+            // textBoxTempPowerStepParam4
+            // 
+            this.textBoxTempPowerStepParam4.Location = new System.Drawing.Point(103, 79);
+            this.textBoxTempPowerStepParam4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.textBoxTempPowerStepParam4.Name = "textBoxTempPowerStepParam4";
+            this.textBoxTempPowerStepParam4.Size = new System.Drawing.Size(142, 23);
+            this.textBoxTempPowerStepParam4.TabIndex = 44;
+            this.textBoxTempPowerStepParam4.Text = "-Profile4";
+            this.toolTipMain.SetToolTip(this.textBoxTempPowerStepParam4, "Command line parameter provided to the GPU Controller app to set the correspondin" +
+        "g power step.");
+            this.textBoxTempPowerStepParam4.Leave += new System.EventHandler(this.SettingChanged);
+            // 
+            // textBoxTempPowerStepParam5
+            // 
+            this.textBoxTempPowerStepParam5.Location = new System.Drawing.Point(103, 48);
+            this.textBoxTempPowerStepParam5.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.textBoxTempPowerStepParam5.Name = "textBoxTempPowerStepParam5";
+            this.textBoxTempPowerStepParam5.Size = new System.Drawing.Size(142, 23);
+            this.textBoxTempPowerStepParam5.TabIndex = 43;
+            this.textBoxTempPowerStepParam5.Text = "-Profile5";
+            this.toolTipMain.SetToolTip(this.textBoxTempPowerStepParam5, "Command line parameter provided to the GPU Controller app to set the correspondin" +
+        "g power step.");
+            this.textBoxTempPowerStepParam5.Leave += new System.EventHandler(this.SettingChanged);
+            // 
+            // trackBarGPUPowerStep
+            // 
+            this.trackBarGPUPowerStep.LargeChange = 1;
+            this.trackBarGPUPowerStep.Location = new System.Drawing.Point(49, 46);
+            this.trackBarGPUPowerStep.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.trackBarGPUPowerStep.Maximum = 5;
+            this.trackBarGPUPowerStep.Minimum = 1;
+            this.trackBarGPUPowerStep.Name = "trackBarGPUPowerStep";
+            this.trackBarGPUPowerStep.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.trackBarGPUPowerStep.Size = new System.Drawing.Size(45, 152);
+            this.trackBarGPUPowerStep.TabIndex = 13;
+            this.trackBarGPUPowerStep.TickStyle = System.Windows.Forms.TickStyle.Both;
+            this.toolTipMain.SetToolTip(this.trackBarGPUPowerStep, "Shows the last selected GPU power step (selection can come from the user or autom" +
+        "ated action)");
+            this.trackBarGPUPowerStep.Value = 1;
+            this.trackBarGPUPowerStep.Scroll += new System.EventHandler(this.trackBarGPUPowerStep_Scroll);
+            this.trackBarGPUPowerStep.ValueChanged += new System.EventHandler(this.SettingChanged);
+            // 
+            // numericUpDownTempMax
+            // 
+            this.numericUpDownTempMax.Location = new System.Drawing.Point(110, 25);
+            this.numericUpDownTempMax.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
+            this.numericUpDownTempMax.Name = "numericUpDownTempMax";
+            this.numericUpDownTempMax.Size = new System.Drawing.Size(42, 23);
+            this.numericUpDownTempMax.TabIndex = 54;
+            this.toolTipMain.SetToolTip(this.numericUpDownTempMax, "Maximum GPU/memory junction temperature. \r\nUnit (i.e. Celsius, Fahrenheit) is det" +
+        "ermined by the Hardware Monitor app. \r\nIf temp goes above this value, MineContro" +
+        "l will try to decrease GPU power step.");
+            this.numericUpDownTempMax.ValueChanged += new System.EventHandler(this.numericUpDownTempMax_ValueChanged);
             // 
             // openFileDialogAppPath
             // 
@@ -506,7 +797,7 @@ namespace MineControl
             this.groupBox5.Controls.Add(this.radioButtonCPUModeAlwaysOff);
             this.groupBox5.Controls.Add(this.radioButtonCPUModeAlwaysOn);
             this.groupBox5.Controls.Add(this.radioButtonCPUModeSchedule);
-            this.groupBox5.Location = new System.Drawing.Point(463, 157);
+            this.groupBox5.Location = new System.Drawing.Point(463, 151);
             this.groupBox5.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -514,31 +805,6 @@ namespace MineControl
             this.groupBox5.TabIndex = 5;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "CPU Miner";
-            // 
-            // checkBoxMinerCPUShowLogs
-            // 
-            this.checkBoxMinerCPUShowLogs.AutoSize = true;
-            this.checkBoxMinerCPUShowLogs.Location = new System.Drawing.Point(348, 77);
-            this.checkBoxMinerCPUShowLogs.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.checkBoxMinerCPUShowLogs.Name = "checkBoxMinerCPUShowLogs";
-            this.checkBoxMinerCPUShowLogs.Size = new System.Drawing.Size(80, 19);
-            this.checkBoxMinerCPUShowLogs.TabIndex = 10;
-            this.checkBoxMinerCPUShowLogs.Text = "Keep Logs";
-            this.checkBoxMinerCPUShowLogs.UseVisualStyleBackColor = true;
-            this.checkBoxMinerCPUShowLogs.CheckedChanged += new System.EventHandler(this.SettingChanged);
-            // 
-            // checkBoxMinerCPUUserActivityShutoff
-            // 
-            this.checkBoxMinerCPUUserActivityShutoff.AutoSize = true;
-            this.checkBoxMinerCPUUserActivityShutoff.Location = new System.Drawing.Point(10, 77);
-            this.checkBoxMinerCPUUserActivityShutoff.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.checkBoxMinerCPUUserActivityShutoff.Name = "checkBoxMinerCPUUserActivityShutoff";
-            this.checkBoxMinerCPUUserActivityShutoff.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.checkBoxMinerCPUUserActivityShutoff.Size = new System.Drawing.Size(158, 19);
-            this.checkBoxMinerCPUUserActivityShutoff.TabIndex = 9;
-            this.checkBoxMinerCPUUserActivityShutoff.Text = "Stop During User Activity";
-            this.checkBoxMinerCPUUserActivityShutoff.UseVisualStyleBackColor = true;
-            this.checkBoxMinerCPUUserActivityShutoff.CheckedChanged += new System.EventHandler(this.SettingChanged);
             // 
             // comboBoxMinerCPUSchedule
             // 
@@ -551,57 +817,6 @@ namespace MineControl
             this.comboBoxMinerCPUSchedule.Size = new System.Drawing.Size(315, 23);
             this.comboBoxMinerCPUSchedule.TabIndex = 8;
             this.comboBoxMinerCPUSchedule.SelectedIndexChanged += new System.EventHandler(this.SettingChanged);
-            // 
-            // radioButtonCPUModeDontControl
-            // 
-            this.radioButtonCPUModeDontControl.AutoSize = true;
-            this.radioButtonCPUModeDontControl.Location = new System.Drawing.Point(332, 20);
-            this.radioButtonCPUModeDontControl.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.radioButtonCPUModeDontControl.Name = "radioButtonCPUModeDontControl";
-            this.radioButtonCPUModeDontControl.Size = new System.Drawing.Size(97, 19);
-            this.radioButtonCPUModeDontControl.TabIndex = 7;
-            this.radioButtonCPUModeDontControl.TabStop = true;
-            this.radioButtonCPUModeDontControl.Text = "Don\'t Control";
-            this.radioButtonCPUModeDontControl.UseVisualStyleBackColor = true;
-            this.radioButtonCPUModeDontControl.Click += new System.EventHandler(this.SettingChanged);
-            // 
-            // radioButtonCPUModeAlwaysOff
-            // 
-            this.radioButtonCPUModeAlwaysOff.AutoSize = true;
-            this.radioButtonCPUModeAlwaysOff.Location = new System.Drawing.Point(179, 20);
-            this.radioButtonCPUModeAlwaysOff.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.radioButtonCPUModeAlwaysOff.Name = "radioButtonCPUModeAlwaysOff";
-            this.radioButtonCPUModeAlwaysOff.Size = new System.Drawing.Size(82, 19);
-            this.radioButtonCPUModeAlwaysOff.TabIndex = 4;
-            this.radioButtonCPUModeAlwaysOff.Text = "Always Off";
-            this.radioButtonCPUModeAlwaysOff.UseVisualStyleBackColor = true;
-            this.radioButtonCPUModeAlwaysOff.Click += new System.EventHandler(this.SettingChanged);
-            // 
-            // radioButtonCPUModeAlwaysOn
-            // 
-            this.radioButtonCPUModeAlwaysOn.AutoSize = true;
-            this.radioButtonCPUModeAlwaysOn.Checked = true;
-            this.radioButtonCPUModeAlwaysOn.Location = new System.Drawing.Point(10, 20);
-            this.radioButtonCPUModeAlwaysOn.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.radioButtonCPUModeAlwaysOn.Name = "radioButtonCPUModeAlwaysOn";
-            this.radioButtonCPUModeAlwaysOn.Size = new System.Drawing.Size(81, 19);
-            this.radioButtonCPUModeAlwaysOn.TabIndex = 3;
-            this.radioButtonCPUModeAlwaysOn.TabStop = true;
-            this.radioButtonCPUModeAlwaysOn.Text = "Always On";
-            this.radioButtonCPUModeAlwaysOn.UseVisualStyleBackColor = true;
-            this.radioButtonCPUModeAlwaysOn.Click += new System.EventHandler(this.SettingChanged);
-            // 
-            // radioButtonCPUModeSchedule
-            // 
-            this.radioButtonCPUModeSchedule.AutoSize = true;
-            this.radioButtonCPUModeSchedule.Location = new System.Drawing.Point(10, 47);
-            this.radioButtonCPUModeSchedule.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.radioButtonCPUModeSchedule.Name = "radioButtonCPUModeSchedule";
-            this.radioButtonCPUModeSchedule.Size = new System.Drawing.Size(106, 19);
-            this.radioButtonCPUModeSchedule.TabIndex = 2;
-            this.radioButtonCPUModeSchedule.Text = "On A Schedule:";
-            this.radioButtonCPUModeSchedule.UseVisualStyleBackColor = true;
-            this.radioButtonCPUModeSchedule.Click += new System.EventHandler(this.SettingChanged);
             // 
             // groupBoxGeneral
             // 
@@ -617,7 +832,7 @@ namespace MineControl
             this.groupBoxGeneral.Controls.Add(this.label23);
             this.groupBoxGeneral.Controls.Add(this.label22);
             this.groupBoxGeneral.Controls.Add(this.numericUpDownTempPollingInterval);
-            this.groupBoxGeneral.Location = new System.Drawing.Point(463, 504);
+            this.groupBoxGeneral.Location = new System.Drawing.Point(463, 498);
             this.groupBoxGeneral.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBoxGeneral.Name = "groupBoxGeneral";
             this.groupBoxGeneral.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -646,6 +861,8 @@ namespace MineControl
             this.label30.Size = new System.Drawing.Size(33, 15);
             this.label30.TabIndex = 8;
             this.label30.Text = "Mins";
+            this.toolTipMain.SetToolTip(this.label30, "How long MineControl will wait after the last user activity before considering th" +
+        "e user inactive.");
             // 
             // checkBoxMinimizeToSysTray
             // 
@@ -658,6 +875,7 @@ namespace MineControl
             this.checkBoxMinimizeToSysTray.Size = new System.Drawing.Size(131, 19);
             this.checkBoxMinimizeToSysTray.TabIndex = 6;
             this.checkBoxMinimizeToSysTray.Text = "Minimize To SysTray";
+            this.toolTipMain.SetToolTip(this.checkBoxMinimizeToSysTray, "When checked, MineControl minimizes to the system tray");
             this.checkBoxMinimizeToSysTray.UseVisualStyleBackColor = true;
             this.checkBoxMinimizeToSysTray.CheckedChanged += new System.EventHandler(this.SettingChanged);
             // 
@@ -668,6 +886,8 @@ namespace MineControl
             this.numericUpDownMinerUserActivityTimeout.Name = "numericUpDownMinerUserActivityTimeout";
             this.numericUpDownMinerUserActivityTimeout.Size = new System.Drawing.Size(47, 23);
             this.numericUpDownMinerUserActivityTimeout.TabIndex = 7;
+            this.toolTipNotification.SetToolTip(this.numericUpDownMinerUserActivityTimeout, "How long MineControl will wait after the last user activity before considering th" +
+        "e user inactive.");
             this.numericUpDownMinerUserActivityTimeout.ValueChanged += new System.EventHandler(this.SettingChanged);
             // 
             // buttonGeneralExportConfig
@@ -690,6 +910,7 @@ namespace MineControl
             this.checkBoxStartupMinimize.Size = new System.Drawing.Size(135, 19);
             this.checkBoxStartupMinimize.TabIndex = 5;
             this.checkBoxStartupMinimize.Text = "Minimize On Startup";
+            this.toolTipMain.SetToolTip(this.checkBoxStartupMinimize, "When enabled, MineControl minimizes itself when it starts");
             this.checkBoxStartupMinimize.UseVisualStyleBackColor = true;
             this.checkBoxStartupMinimize.CheckedChanged += new System.EventHandler(this.SettingChanged);
             // 
@@ -713,6 +934,8 @@ namespace MineControl
             this.label21.Size = new System.Drawing.Size(120, 15);
             this.label21.TabIndex = 6;
             this.label21.Text = "User Activity Timeout";
+            this.toolTipMain.SetToolTip(this.label21, "How long MineControl will wait after the last user activity before considering th" +
+        "e user inactive.");
             // 
             // label23
             // 
@@ -723,6 +946,7 @@ namespace MineControl
             this.label23.Size = new System.Drawing.Size(52, 15);
             this.label23.TabIndex = 39;
             this.label23.Text = "Millisecs";
+            this.toolTipMain.SetToolTip(this.label23, resources.GetString("label23.ToolTip"));
             // 
             // label22
             // 
@@ -733,6 +957,7 @@ namespace MineControl
             this.label22.Size = new System.Drawing.Size(86, 15);
             this.label22.TabIndex = 37;
             this.label22.Text = "Polling Interval";
+            this.toolTipMain.SetToolTip(this.label22, resources.GetString("label22.ToolTip"));
             // 
             // numericUpDownTempPollingInterval
             // 
@@ -756,6 +981,7 @@ namespace MineControl
             this.numericUpDownTempPollingInterval.Name = "numericUpDownTempPollingInterval";
             this.numericUpDownTempPollingInterval.Size = new System.Drawing.Size(61, 23);
             this.numericUpDownTempPollingInterval.TabIndex = 38;
+            this.toolTipMain.SetToolTip(this.numericUpDownTempPollingInterval, resources.GetString("numericUpDownTempPollingInterval.ToolTip"));
             this.numericUpDownTempPollingInterval.Value = new decimal(new int[] {
             1000,
             0,
@@ -772,7 +998,7 @@ namespace MineControl
             this.groupBox4.Controls.Add(this.radioButtonGPUModeAlwaysOff);
             this.groupBox4.Controls.Add(this.radioButtonGPUModeAlwaysOn);
             this.groupBox4.Controls.Add(this.radioButtonGPUModeSchedule);
-            this.groupBox4.Location = new System.Drawing.Point(8, 157);
+            this.groupBox4.Location = new System.Drawing.Point(8, 151);
             this.groupBox4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -780,30 +1006,6 @@ namespace MineControl
             this.groupBox4.TabIndex = 4;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "GPU Miner";
-            // 
-            // checkBoxMinerGPUShowLogs
-            // 
-            this.checkBoxMinerGPUShowLogs.AutoSize = true;
-            this.checkBoxMinerGPUShowLogs.Location = new System.Drawing.Point(348, 75);
-            this.checkBoxMinerGPUShowLogs.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.checkBoxMinerGPUShowLogs.Name = "checkBoxMinerGPUShowLogs";
-            this.checkBoxMinerGPUShowLogs.Size = new System.Drawing.Size(80, 19);
-            this.checkBoxMinerGPUShowLogs.TabIndex = 8;
-            this.checkBoxMinerGPUShowLogs.Text = "Keep Logs";
-            this.checkBoxMinerGPUShowLogs.UseVisualStyleBackColor = true;
-            this.checkBoxMinerGPUShowLogs.CheckedChanged += new System.EventHandler(this.SettingChanged);
-            // 
-            // checkBoxMinerGPUUserActivityShutoff
-            // 
-            this.checkBoxMinerGPUUserActivityShutoff.AutoSize = true;
-            this.checkBoxMinerGPUUserActivityShutoff.Location = new System.Drawing.Point(10, 77);
-            this.checkBoxMinerGPUUserActivityShutoff.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.checkBoxMinerGPUUserActivityShutoff.Name = "checkBoxMinerGPUUserActivityShutoff";
-            this.checkBoxMinerGPUUserActivityShutoff.Size = new System.Drawing.Size(158, 19);
-            this.checkBoxMinerGPUUserActivityShutoff.TabIndex = 7;
-            this.checkBoxMinerGPUUserActivityShutoff.Text = "Stop During User Activity";
-            this.checkBoxMinerGPUUserActivityShutoff.UseVisualStyleBackColor = true;
-            this.checkBoxMinerGPUUserActivityShutoff.CheckedChanged += new System.EventHandler(this.SettingChanged);
             // 
             // comboBoxMinerGPUSchedule
             // 
@@ -816,57 +1018,6 @@ namespace MineControl
             this.comboBoxMinerGPUSchedule.Size = new System.Drawing.Size(314, 23);
             this.comboBoxMinerGPUSchedule.TabIndex = 6;
             this.comboBoxMinerGPUSchedule.SelectedIndexChanged += new System.EventHandler(this.SettingChanged);
-            // 
-            // radioButtonGPUModeDontControl
-            // 
-            this.radioButtonGPUModeDontControl.AutoSize = true;
-            this.radioButtonGPUModeDontControl.Location = new System.Drawing.Point(331, 20);
-            this.radioButtonGPUModeDontControl.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.radioButtonGPUModeDontControl.Name = "radioButtonGPUModeDontControl";
-            this.radioButtonGPUModeDontControl.Size = new System.Drawing.Size(97, 19);
-            this.radioButtonGPUModeDontControl.TabIndex = 5;
-            this.radioButtonGPUModeDontControl.TabStop = true;
-            this.radioButtonGPUModeDontControl.Text = "Don\'t Control";
-            this.radioButtonGPUModeDontControl.UseVisualStyleBackColor = true;
-            this.radioButtonGPUModeDontControl.Click += new System.EventHandler(this.SettingChanged);
-            // 
-            // radioButtonGPUModeAlwaysOff
-            // 
-            this.radioButtonGPUModeAlwaysOff.AutoSize = true;
-            this.radioButtonGPUModeAlwaysOff.Location = new System.Drawing.Point(173, 20);
-            this.radioButtonGPUModeAlwaysOff.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.radioButtonGPUModeAlwaysOff.Name = "radioButtonGPUModeAlwaysOff";
-            this.radioButtonGPUModeAlwaysOff.Size = new System.Drawing.Size(82, 19);
-            this.radioButtonGPUModeAlwaysOff.TabIndex = 2;
-            this.radioButtonGPUModeAlwaysOff.Text = "Always Off";
-            this.radioButtonGPUModeAlwaysOff.UseVisualStyleBackColor = true;
-            this.radioButtonGPUModeAlwaysOff.Click += new System.EventHandler(this.SettingChanged);
-            // 
-            // radioButtonGPUModeAlwaysOn
-            // 
-            this.radioButtonGPUModeAlwaysOn.AutoSize = true;
-            this.radioButtonGPUModeAlwaysOn.Checked = true;
-            this.radioButtonGPUModeAlwaysOn.Location = new System.Drawing.Point(10, 20);
-            this.radioButtonGPUModeAlwaysOn.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.radioButtonGPUModeAlwaysOn.Name = "radioButtonGPUModeAlwaysOn";
-            this.radioButtonGPUModeAlwaysOn.Size = new System.Drawing.Size(81, 19);
-            this.radioButtonGPUModeAlwaysOn.TabIndex = 1;
-            this.radioButtonGPUModeAlwaysOn.TabStop = true;
-            this.radioButtonGPUModeAlwaysOn.Text = "Always On";
-            this.radioButtonGPUModeAlwaysOn.UseVisualStyleBackColor = true;
-            this.radioButtonGPUModeAlwaysOn.Click += new System.EventHandler(this.SettingChanged);
-            // 
-            // radioButtonGPUModeSchedule
-            // 
-            this.radioButtonGPUModeSchedule.AutoSize = true;
-            this.radioButtonGPUModeSchedule.Location = new System.Drawing.Point(10, 47);
-            this.radioButtonGPUModeSchedule.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.radioButtonGPUModeSchedule.Name = "radioButtonGPUModeSchedule";
-            this.radioButtonGPUModeSchedule.Size = new System.Drawing.Size(106, 19);
-            this.radioButtonGPUModeSchedule.TabIndex = 0;
-            this.radioButtonGPUModeSchedule.Text = "On A Schedule:";
-            this.radioButtonGPUModeSchedule.UseVisualStyleBackColor = true;
-            this.radioButtonGPUModeSchedule.Click += new System.EventHandler(this.SettingChanged);
             // 
             // groupBox6
             // 
@@ -888,7 +1039,7 @@ namespace MineControl
             this.groupBox6.Controls.Add(this.label36);
             this.groupBox6.Controls.Add(this.checkBoxArchivesDeleteOldFiles);
             this.groupBox6.Controls.Add(this.checkBoxArchivesClearOldCharts);
-            this.groupBox6.Location = new System.Drawing.Point(463, 275);
+            this.groupBox6.Location = new System.Drawing.Point(463, 269);
             this.groupBox6.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -910,6 +1061,8 @@ namespace MineControl
             this.comboBoxArchivesClearOldChartsUnit.Name = "comboBoxArchivesClearOldChartsUnit";
             this.comboBoxArchivesClearOldChartsUnit.Size = new System.Drawing.Size(68, 23);
             this.comboBoxArchivesClearOldChartsUnit.TabIndex = 71;
+            this.toolTipMain.SetToolTip(this.comboBoxArchivesClearOldChartsUnit, "When enabled, all chart data older than the specified time will be cleared. Evalu" +
+        "ated on the archive interval.");
             // 
             // numericUpDownArchivesClearOldChartsValue
             // 
@@ -918,6 +1071,8 @@ namespace MineControl
             this.numericUpDownArchivesClearOldChartsValue.Name = "numericUpDownArchivesClearOldChartsValue";
             this.numericUpDownArchivesClearOldChartsValue.Size = new System.Drawing.Size(52, 23);
             this.numericUpDownArchivesClearOldChartsValue.TabIndex = 70;
+            this.toolTipMain.SetToolTip(this.numericUpDownArchivesClearOldChartsValue, "When enabled, all chart data older than the specified time will be cleared. Evalu" +
+        "ated on the archive interval.");
             // 
             // numericUpDownArchivesDeleteOldFilesDays
             // 
@@ -926,6 +1081,8 @@ namespace MineControl
             this.numericUpDownArchivesDeleteOldFilesDays.Name = "numericUpDownArchivesDeleteOldFilesDays";
             this.numericUpDownArchivesDeleteOldFilesDays.Size = new System.Drawing.Size(52, 23);
             this.numericUpDownArchivesDeleteOldFilesDays.TabIndex = 66;
+            this.toolTipMain.SetToolTip(this.numericUpDownArchivesDeleteOldFilesDays, "When enabled, archive files older than the specified number of days are deleted f" +
+        "rom the Archive Folder.");
             // 
             // buttonBackupsBackupFolder
             // 
@@ -945,6 +1102,8 @@ namespace MineControl
             this.textBoxArchivesArchiveFolder.Name = "textBoxArchivesArchiveFolder";
             this.textBoxArchivesArchiveFolder.Size = new System.Drawing.Size(307, 23);
             this.textBoxArchivesArchiveFolder.TabIndex = 61;
+            this.toolTipMain.SetToolTip(this.textBoxArchivesArchiveFolder, "Where archive files will go. Config archives are placed in a \"ConfigArchives\" sub" +
+        "-folder.");
             this.textBoxArchivesArchiveFolder.Validated += new System.EventHandler(this.SettingChanged);
             // 
             // label35
@@ -956,6 +1115,8 @@ namespace MineControl
             this.label35.Size = new System.Drawing.Size(83, 15);
             this.label35.TabIndex = 60;
             this.label35.Text = "Archive Folder";
+            this.toolTipMain.SetToolTip(this.label35, "Where archive files will go. Config archives are placed in a \"ConfigArchives\" sub" +
+        "-folder.");
             // 
             // comboBoxArchivesArchiveIntervalUnit
             // 
@@ -970,7 +1131,7 @@ namespace MineControl
             this.comboBoxArchivesArchiveIntervalUnit.Name = "comboBoxArchivesArchiveIntervalUnit";
             this.comboBoxArchivesArchiveIntervalUnit.Size = new System.Drawing.Size(70, 23);
             this.comboBoxArchivesArchiveIntervalUnit.TabIndex = 59;
-            this.toolTipNotification.SetToolTip(this.comboBoxArchivesArchiveIntervalUnit, "How often archiving and data retention rules are evaluated.");
+            this.toolTipMain.SetToolTip(this.comboBoxArchivesArchiveIntervalUnit, "How often archiving and data retention rules are evaluated. ");
             this.comboBoxArchivesArchiveIntervalUnit.SelectedIndexChanged += new System.EventHandler(this.SettingChanged);
             // 
             // numericUpDownArchivesArchiveInterval
@@ -980,7 +1141,7 @@ namespace MineControl
             this.numericUpDownArchivesArchiveInterval.Name = "numericUpDownArchivesArchiveInterval";
             this.numericUpDownArchivesArchiveInterval.Size = new System.Drawing.Size(52, 23);
             this.numericUpDownArchivesArchiveInterval.TabIndex = 58;
-            this.toolTipNotification.SetToolTip(this.numericUpDownArchivesArchiveInterval, "How often archiving and data retention rules are evaluated.");
+            this.toolTipMain.SetToolTip(this.numericUpDownArchivesArchiveInterval, "How often archiving and data retention rules are evaluated. ");
             this.numericUpDownArchivesArchiveInterval.ValueChanged += new System.EventHandler(this.SettingChanged);
             // 
             // comboBoxArchivesLogManagementUnit
@@ -996,6 +1157,9 @@ namespace MineControl
             this.comboBoxArchivesLogManagementUnit.Name = "comboBoxArchivesLogManagementUnit";
             this.comboBoxArchivesLogManagementUnit.Size = new System.Drawing.Size(103, 23);
             this.comboBoxArchivesLogManagementUnit.TabIndex = 56;
+            this.toolTipMain.SetToolTip(this.comboBoxArchivesLogManagementUnit, "When enabled, MineControl logs older than the specified timeframe wil be cleared " +
+        "from the Log grid and \r\noptionally archived to a file (one per day). Evaluated o" +
+        "n the archive interval.");
             this.comboBoxArchivesLogManagementUnit.SelectedIndexChanged += new System.EventHandler(this.SettingChanged);
             // 
             // numericUpDownArchivesLogManagementValue
@@ -1005,6 +1169,9 @@ namespace MineControl
             this.numericUpDownArchivesLogManagementValue.Name = "numericUpDownArchivesLogManagementValue";
             this.numericUpDownArchivesLogManagementValue.Size = new System.Drawing.Size(52, 23);
             this.numericUpDownArchivesLogManagementValue.TabIndex = 55;
+            this.toolTipMain.SetToolTip(this.numericUpDownArchivesLogManagementValue, "When enabled, MineControl logs older than the specified timeframe wil be cleared " +
+        "from the Log grid and \r\noptionally archived to a file (one per day). Evaluated o" +
+        "n the archive interval.");
             this.numericUpDownArchivesLogManagementValue.ValueChanged += new System.EventHandler(this.SettingChanged);
             // 
             // label33
@@ -1016,6 +1183,8 @@ namespace MineControl
             this.label33.Size = new System.Drawing.Size(93, 15);
             this.label33.TabIndex = 54;
             this.label33.Text = "Logs Older Than";
+            this.toolTipMain.SetToolTip(this.label33, "When enabled, MineControl logs older than the specified timeframe wil be cleared " +
+        "from the Log grid and ");
             // 
             // comboBoxArchivesLogManagementType
             // 
@@ -1029,6 +1198,9 @@ namespace MineControl
             this.comboBoxArchivesLogManagementType.Name = "comboBoxArchivesLogManagementType";
             this.comboBoxArchivesLogManagementType.Size = new System.Drawing.Size(140, 23);
             this.comboBoxArchivesLogManagementType.TabIndex = 53;
+            this.toolTipMain.SetToolTip(this.comboBoxArchivesLogManagementType, "When enabled, MineControl logs older than the specified timeframe wil be cleared " +
+        "from the Log grid and \r\noptionally archived to a file (one per day). Evaluated o" +
+        "n the archive interval.");
             this.comboBoxArchivesLogManagementType.SelectedIndexChanged += new System.EventHandler(this.SettingChanged);
             // 
             // checkBoxArchivesLogManagement
@@ -1039,6 +1211,9 @@ namespace MineControl
             this.checkBoxArchivesLogManagement.Name = "checkBoxArchivesLogManagement";
             this.checkBoxArchivesLogManagement.Size = new System.Drawing.Size(15, 14);
             this.checkBoxArchivesLogManagement.TabIndex = 52;
+            this.toolTipMain.SetToolTip(this.checkBoxArchivesLogManagement, "When enabled, MineControl logs older than the specified timeframe wil be cleared " +
+        "from the Log grid and \r\noptionally archived to a file (one per day). Evaluated o" +
+        "n the archive interval.");
             this.checkBoxArchivesLogManagement.UseVisualStyleBackColor = true;
             // 
             // checkBoxArchivesArchiveConfig
@@ -1050,6 +1225,9 @@ namespace MineControl
             this.checkBoxArchivesArchiveConfig.Size = new System.Drawing.Size(154, 19);
             this.checkBoxArchivesArchiveConfig.TabIndex = 51;
             this.checkBoxArchivesArchiveConfig.Text = "Archive Config Changes";
+            this.toolTipMain.SetToolTip(this.checkBoxArchivesArchiveConfig, "When enabled, entire MineControl config will be archived on the archive interval " +
+        "when changed. \r\nFrequently changing settings like GPU power step don\'t trigger c" +
+        "onfig archiving.");
             this.checkBoxArchivesArchiveConfig.UseVisualStyleBackColor = true;
             this.checkBoxArchivesArchiveConfig.CheckedChanged += new System.EventHandler(this.SettingChanged);
             // 
@@ -1062,6 +1240,8 @@ namespace MineControl
             this.label36.Size = new System.Drawing.Size(32, 15);
             this.label36.TabIndex = 68;
             this.label36.Text = "Days";
+            this.toolTipMain.SetToolTip(this.label36, "When enabled, archive files older than the specified number of days are deleted f" +
+        "rom the Archive Folder.");
             // 
             // checkBoxArchivesDeleteOldFiles
             // 
@@ -1072,6 +1252,8 @@ namespace MineControl
             this.checkBoxArchivesDeleteOldFiles.Size = new System.Drawing.Size(189, 19);
             this.checkBoxArchivesDeleteOldFiles.TabIndex = 67;
             this.checkBoxArchivesDeleteOldFiles.Text = "Delete Archive Files Older Than";
+            this.toolTipMain.SetToolTip(this.checkBoxArchivesDeleteOldFiles, "When enabled, archive files older than the specified number of days are deleted f" +
+        "rom the Archive Folder.");
             this.checkBoxArchivesDeleteOldFiles.UseVisualStyleBackColor = true;
             // 
             // checkBoxArchivesClearOldCharts
@@ -1082,6 +1264,8 @@ namespace MineControl
             this.checkBoxArchivesClearOldCharts.Size = new System.Drawing.Size(173, 19);
             this.checkBoxArchivesClearOldCharts.TabIndex = 69;
             this.checkBoxArchivesClearOldCharts.Text = "Clear Chart Data Older Than";
+            this.toolTipMain.SetToolTip(this.checkBoxArchivesClearOldCharts, "When enabled, all chart data older than the specified time will be cleared. Evalu" +
+        "ated on the archive interval.");
             this.checkBoxArchivesClearOldCharts.UseVisualStyleBackColor = true;
             // 
             // groupBoxDataTracking
@@ -1092,11 +1276,11 @@ namespace MineControl
             this.groupBoxDataTracking.Controls.Add(this.dataGridViewMetrics);
             this.groupBoxDataTracking.Controls.Add(this.buttonDataViewSysTrayTooltips);
             this.groupBoxDataTracking.Controls.Add(this.buttonDataRemoveUnusedQueryOptions);
-            this.groupBoxDataTracking.Location = new System.Drawing.Point(8, 700);
+            this.groupBoxDataTracking.Location = new System.Drawing.Point(8, 694);
             this.groupBoxDataTracking.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBoxDataTracking.Name = "groupBoxDataTracking";
             this.groupBoxDataTracking.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBoxDataTracking.Size = new System.Drawing.Size(897, 209);
+            this.groupBoxDataTracking.Size = new System.Drawing.Size(897, 215);
             this.groupBoxDataTracking.TabIndex = 9;
             this.groupBoxDataTracking.TabStop = false;
             this.groupBoxDataTracking.Text = "Data Tracking";
@@ -1121,7 +1305,7 @@ namespace MineControl
             this.dataGridViewMetrics.Name = "dataGridViewMetrics";
             this.dataGridViewMetrics.RowHeadersVisible = false;
             this.dataGridViewMetrics.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dataGridViewMetrics.Size = new System.Drawing.Size(889, 187);
+            this.dataGridViewMetrics.Size = new System.Drawing.Size(889, 193);
             this.dataGridViewMetrics.TabIndex = 0;
             this.dataGridViewMetrics.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewMetrics_CellEnter);
             this.dataGridViewMetrics.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dataGridViewMetrics_CellValidating);
@@ -1130,56 +1314,6 @@ namespace MineControl
             this.dataGridViewMetrics.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridViewMetrics_DataError);
             this.dataGridViewMetrics.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dataGridViewMetrics_EditingControlShowing);
             this.dataGridViewMetrics.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dataGridViewMetrics_RowsAdded);
-            // 
-            // ColDataEnableTracking
-            // 
-            this.ColDataEnableTracking.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.ColDataEnableTracking.HeaderText = "Track";
-            this.ColDataEnableTracking.Name = "ColDataEnableTracking";
-            this.ColDataEnableTracking.Width = 40;
-            // 
-            // ColDataMetric
-            // 
-            this.ColDataMetric.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.ColDataMetric.HeaderText = "Metric";
-            this.ColDataMetric.Name = "ColDataMetric";
-            this.ColDataMetric.ReadOnly = true;
-            this.ColDataMetric.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.ColDataMetric.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.ColDataMetric.Width = 47;
-            // 
-            // ColDataType
-            // 
-            this.ColDataType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.ColDataType.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.Nothing;
-            this.ColDataType.HeaderText = "Type";
-            this.ColDataType.Name = "ColDataType";
-            this.ColDataType.ReadOnly = true;
-            this.ColDataType.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.ColDataType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.ColDataType.Width = 56;
-            // 
-            // ColDataInputSource
-            // 
-            this.ColDataInputSource.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.ColDataInputSource.HeaderText = "Source";
-            this.ColDataInputSource.Name = "ColDataInputSource";
-            this.ColDataInputSource.Width = 49;
-            // 
-            // ColDataMethod
-            // 
-            this.ColDataMethod.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.ColDataMethod.HeaderText = "Method";
-            this.ColDataMethod.Name = "ColDataMethod";
-            this.ColDataMethod.Width = 55;
-            // 
-            // ColDataQuery
-            // 
-            this.ColDataQuery.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.ColDataQuery.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
-            this.ColDataQuery.DropDownWidth = 500;
-            this.ColDataQuery.HeaderText = "Query/User Value";
-            this.ColDataQuery.Name = "ColDataQuery";
             // 
             // buttonDataViewSysTrayTooltips
             // 
@@ -1190,6 +1324,9 @@ namespace MineControl
             this.buttonDataViewSysTrayTooltips.Size = new System.Drawing.Size(139, 24);
             this.buttonDataViewSysTrayTooltips.TabIndex = 1;
             this.buttonDataViewSysTrayTooltips.Text = "View SysTray Tooltips";
+            this.toolTipMain.SetToolTip(this.buttonDataViewSysTrayTooltips, "Shows what MineControl can currently see on the system tray.\r\nNote: For something" +
+        " to be visible here, it must also be CURRENTLY visible on the system tray (not i" +
+        "n overflow).");
             this.buttonDataViewSysTrayTooltips.UseVisualStyleBackColor = true;
             this.buttonDataViewSysTrayTooltips.Click += new System.EventHandler(this.buttonDataViewSysTray_Click);
             // 
@@ -1202,6 +1339,8 @@ namespace MineControl
             this.buttonDataRemoveUnusedQueryOptions.Size = new System.Drawing.Size(185, 24);
             this.buttonDataRemoveUnusedQueryOptions.TabIndex = 2;
             this.buttonDataRemoveUnusedQueryOptions.Text = "Remove Unused Query Options";
+            this.toolTipMain.SetToolTip(this.buttonDataRemoveUnusedQueryOptions, "Removes options in the Query/User Value drop-down that aren\'t currently assigned " +
+        "to any data tracking metric.");
             this.buttonDataRemoveUnusedQueryOptions.UseVisualStyleBackColor = true;
             this.buttonDataRemoveUnusedQueryOptions.Click += new System.EventHandler(this.buttonDataRemoveUnusedQueryOptions_Click);
             // 
@@ -1226,7 +1365,7 @@ namespace MineControl
             this.groupBox2.Controls.Add(this.label8);
             this.groupBox2.Controls.Add(this.trackBarGPUPowerStep);
             this.groupBox2.Controls.Add(this.label7);
-            this.groupBox2.Location = new System.Drawing.Point(9, 275);
+            this.groupBox2.Location = new System.Drawing.Point(9, 269);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1247,32 +1386,6 @@ namespace MineControl
             this.groupBox7.TabIndex = 55;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Target Mem Junc Temps";
-            // 
-            // numericUpDownTempMax
-            // 
-            this.numericUpDownTempMax.Location = new System.Drawing.Point(110, 25);
-            this.numericUpDownTempMax.Maximum = new decimal(new int[] {
-            999,
-            0,
-            0,
-            0});
-            this.numericUpDownTempMax.Name = "numericUpDownTempMax";
-            this.numericUpDownTempMax.Size = new System.Drawing.Size(42, 23);
-            this.numericUpDownTempMax.TabIndex = 54;
-            this.numericUpDownTempMax.ValueChanged += new System.EventHandler(this.numericUpDownTempMax_ValueChanged);
-            // 
-            // numericUpDownTempMin
-            // 
-            this.numericUpDownTempMin.Location = new System.Drawing.Point(34, 25);
-            this.numericUpDownTempMin.Maximum = new decimal(new int[] {
-            999,
-            0,
-            0,
-            0});
-            this.numericUpDownTempMin.Name = "numericUpDownTempMin";
-            this.numericUpDownTempMin.Size = new System.Drawing.Size(42, 23);
-            this.numericUpDownTempMin.TabIndex = 53;
-            this.numericUpDownTempMin.ValueChanged += new System.EventHandler(this.numericUpDownTempMin_ValueChanged);
             // 
             // label5
             // 
@@ -1328,6 +1441,7 @@ namespace MineControl
             this.numericUpDownTempGPUShutOffThresholdSecs.Name = "numericUpDownTempGPUShutOffThresholdSecs";
             this.numericUpDownTempGPUShutOffThresholdSecs.Size = new System.Drawing.Size(41, 23);
             this.numericUpDownTempGPUShutOffThresholdSecs.TabIndex = 30;
+            this.toolTipMain.SetToolTip(this.numericUpDownTempGPUShutOffThresholdSecs, resources.GetString("numericUpDownTempGPUShutOffThresholdSecs.ToolTip"));
             this.numericUpDownTempGPUShutOffThresholdSecs.Value = new decimal(new int[] {
             10,
             0,
@@ -1344,6 +1458,7 @@ namespace MineControl
             this.label14.Size = new System.Drawing.Size(121, 15);
             this.label14.TabIndex = 31;
             this.label14.Text = "Secs At Lowest Power";
+            this.toolTipMain.SetToolTip(this.label14, resources.GetString("label14.ToolTip"));
             // 
             // numericUpDownTempGPUShutOffSecs
             // 
@@ -1362,6 +1477,7 @@ namespace MineControl
             this.numericUpDownTempGPUShutOffSecs.Name = "numericUpDownTempGPUShutOffSecs";
             this.numericUpDownTempGPUShutOffSecs.Size = new System.Drawing.Size(50, 23);
             this.numericUpDownTempGPUShutOffSecs.TabIndex = 32;
+            this.toolTipMain.SetToolTip(this.numericUpDownTempGPUShutOffSecs, resources.GetString("numericUpDownTempGPUShutOffSecs.ToolTip"));
             this.numericUpDownTempGPUShutOffSecs.Value = new decimal(new int[] {
             10,
             0,
@@ -1378,6 +1494,7 @@ namespace MineControl
             this.label15.Size = new System.Drawing.Size(163, 15);
             this.label15.TabIndex = 33;
             this.label15.Text = "Secs If Temp Exceeds Max For";
+            this.toolTipMain.SetToolTip(this.label15, resources.GetString("label15.ToolTip"));
             // 
             // checkBoxStopWhenOverheat
             // 
@@ -1390,6 +1507,7 @@ namespace MineControl
             this.checkBoxStopWhenOverheat.Size = new System.Drawing.Size(104, 19);
             this.checkBoxStopWhenOverheat.TabIndex = 29;
             this.checkBoxStopWhenOverheat.Text = "Stop Miner For";
+            this.toolTipMain.SetToolTip(this.checkBoxStopWhenOverheat, resources.GetString("checkBoxStopWhenOverheat.ToolTip"));
             this.checkBoxStopWhenOverheat.UseVisualStyleBackColor = true;
             this.checkBoxStopWhenOverheat.CheckedChanged += new System.EventHandler(this.SettingChanged);
             // 
@@ -1404,6 +1522,8 @@ namespace MineControl
             this.checkBoxTempStopWhenTempUnknown.Size = new System.Drawing.Size(214, 19);
             this.checkBoxTempStopWhenTempUnknown.TabIndex = 51;
             this.checkBoxTempStopWhenTempUnknown.Text = "Stop Miner While Temp Is Unknown";
+            this.toolTipMain.SetToolTip(this.checkBoxTempStopWhenTempUnknown, "When enabled, MineControl will stop the GPU miner when it can\'t detect GPU/memory" +
+        " junction temp.");
             this.checkBoxTempStopWhenTempUnknown.UseVisualStyleBackColor = true;
             this.checkBoxTempStopWhenTempUnknown.CheckedChanged += new System.EventHandler(this.SettingChanged);
             // 
@@ -1424,6 +1544,8 @@ namespace MineControl
             this.numericUpDownTempTryStepUpSecs.Name = "numericUpDownTempTryStepUpSecs";
             this.numericUpDownTempTryStepUpSecs.Size = new System.Drawing.Size(52, 23);
             this.numericUpDownTempTryStepUpSecs.TabIndex = 49;
+            this.toolTipMain.SetToolTip(this.numericUpDownTempTryStepUpSecs, "When enabled, MineControl will attempt increasing GPU Power Step if it hasn\'t cha" +
+        "nged during the specified number of seconds.");
             this.numericUpDownTempTryStepUpSecs.Value = new decimal(new int[] {
             60,
             0,
@@ -1440,58 +1562,10 @@ namespace MineControl
             this.checkBoxTempTryStepUp.Size = new System.Drawing.Size(206, 19);
             this.checkBoxTempTryStepUp.TabIndex = 48;
             this.checkBoxTempTryStepUp.Text = "Step Up If No Step Change In Last ";
+            this.toolTipMain.SetToolTip(this.checkBoxTempTryStepUp, "When enabled, MineControl will attempt increasing GPU Power Step if it hasn\'t cha" +
+        "nged during the specified number of seconds.");
             this.checkBoxTempTryStepUp.UseVisualStyleBackColor = true;
             this.checkBoxTempTryStepUp.CheckedChanged += new System.EventHandler(this.SettingChanged);
-            // 
-            // textBoxTempPowerStepParam1
-            // 
-            this.textBoxTempPowerStepParam1.Location = new System.Drawing.Point(103, 173);
-            this.textBoxTempPowerStepParam1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.textBoxTempPowerStepParam1.Name = "textBoxTempPowerStepParam1";
-            this.textBoxTempPowerStepParam1.Size = new System.Drawing.Size(142, 23);
-            this.textBoxTempPowerStepParam1.TabIndex = 47;
-            this.textBoxTempPowerStepParam1.Text = "-Profile1";
-            this.textBoxTempPowerStepParam1.Leave += new System.EventHandler(this.SettingChanged);
-            // 
-            // textBoxTempPowerStepParam2
-            // 
-            this.textBoxTempPowerStepParam2.Location = new System.Drawing.Point(103, 142);
-            this.textBoxTempPowerStepParam2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.textBoxTempPowerStepParam2.Name = "textBoxTempPowerStepParam2";
-            this.textBoxTempPowerStepParam2.Size = new System.Drawing.Size(142, 23);
-            this.textBoxTempPowerStepParam2.TabIndex = 46;
-            this.textBoxTempPowerStepParam2.Text = "-Profile2";
-            this.textBoxTempPowerStepParam2.Leave += new System.EventHandler(this.SettingChanged);
-            // 
-            // textBoxTempPowerStepParam3
-            // 
-            this.textBoxTempPowerStepParam3.Location = new System.Drawing.Point(103, 110);
-            this.textBoxTempPowerStepParam3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.textBoxTempPowerStepParam3.Name = "textBoxTempPowerStepParam3";
-            this.textBoxTempPowerStepParam3.Size = new System.Drawing.Size(142, 23);
-            this.textBoxTempPowerStepParam3.TabIndex = 45;
-            this.textBoxTempPowerStepParam3.Text = "-Profile3";
-            this.textBoxTempPowerStepParam3.Leave += new System.EventHandler(this.SettingChanged);
-            // 
-            // textBoxTempPowerStepParam4
-            // 
-            this.textBoxTempPowerStepParam4.Location = new System.Drawing.Point(103, 79);
-            this.textBoxTempPowerStepParam4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.textBoxTempPowerStepParam4.Name = "textBoxTempPowerStepParam4";
-            this.textBoxTempPowerStepParam4.Size = new System.Drawing.Size(142, 23);
-            this.textBoxTempPowerStepParam4.TabIndex = 44;
-            this.textBoxTempPowerStepParam4.Text = "-Profile4";
-            this.textBoxTempPowerStepParam4.Leave += new System.EventHandler(this.SettingChanged);
-            // 
-            // textBoxTempPowerStepParam5
-            // 
-            this.textBoxTempPowerStepParam5.Location = new System.Drawing.Point(103, 48);
-            this.textBoxTempPowerStepParam5.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.textBoxTempPowerStepParam5.Name = "textBoxTempPowerStepParam5";
-            this.textBoxTempPowerStepParam5.Size = new System.Drawing.Size(142, 23);
-            this.textBoxTempPowerStepParam5.TabIndex = 43;
-            this.textBoxTempPowerStepParam5.Text = "-Profile5";
-            this.textBoxTempPowerStepParam5.Leave += new System.EventHandler(this.SettingChanged);
             // 
             // label9
             // 
@@ -1533,22 +1607,6 @@ namespace MineControl
             this.label8.TabIndex = 14;
             this.label8.Text = "Power Steps";
             // 
-            // trackBarGPUPowerStep
-            // 
-            this.trackBarGPUPowerStep.LargeChange = 1;
-            this.trackBarGPUPowerStep.Location = new System.Drawing.Point(49, 46);
-            this.trackBarGPUPowerStep.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.trackBarGPUPowerStep.Maximum = 5;
-            this.trackBarGPUPowerStep.Minimum = 1;
-            this.trackBarGPUPowerStep.Name = "trackBarGPUPowerStep";
-            this.trackBarGPUPowerStep.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.trackBarGPUPowerStep.Size = new System.Drawing.Size(45, 152);
-            this.trackBarGPUPowerStep.TabIndex = 13;
-            this.trackBarGPUPowerStep.TickStyle = System.Windows.Forms.TickStyle.Both;
-            this.trackBarGPUPowerStep.Value = 1;
-            this.trackBarGPUPowerStep.Scroll += new System.EventHandler(this.trackBarGPUPowerStep_Scroll);
-            this.trackBarGPUPowerStep.ValueChanged += new System.EventHandler(this.SettingChanged);
-            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -1568,7 +1626,7 @@ namespace MineControl
             this.groupBoxMinersAndApps.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBoxMinersAndApps.Name = "groupBoxMinersAndApps";
             this.groupBoxMinersAndApps.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBoxMinersAndApps.Size = new System.Drawing.Size(897, 148);
+            this.groupBoxMinersAndApps.Size = new System.Drawing.Size(897, 142);
             this.groupBoxMinersAndApps.TabIndex = 2;
             this.groupBoxMinersAndApps.TabStop = false;
             this.groupBoxMinersAndApps.Text = "Miners And Applications";
@@ -1592,7 +1650,7 @@ namespace MineControl
             this.dataGridViewApps.Name = "dataGridViewApps";
             this.dataGridViewApps.RowHeadersVisible = false;
             this.dataGridViewApps.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dataGridViewApps.Size = new System.Drawing.Size(889, 129);
+            this.dataGridViewApps.Size = new System.Drawing.Size(889, 123);
             this.dataGridViewApps.TabIndex = 1;
             this.dataGridViewApps.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewApps_CellContentClick);
             this.dataGridViewApps.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewApps_CellDoubleClick);
@@ -1636,7 +1694,7 @@ namespace MineControl
             this.ColAppPath.Name = "ColAppPath";
             this.ColAppPath.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.ColAppPath.ToolTipText = "Complete path for launching the process, including file name and extension (can b" +
-    "e an executable script)";
+    "e a batch file)";
             // 
             // ColAppChooseButton
             // 
@@ -2067,6 +2125,7 @@ namespace MineControl
             this.buttonScheduleDeleteSchedule.Size = new System.Drawing.Size(88, 27);
             this.buttonScheduleDeleteSchedule.TabIndex = 7;
             this.buttonScheduleDeleteSchedule.Text = "Delete";
+            this.toolTipMain.SetToolTip(this.buttonScheduleDeleteSchedule, "Delete the selected schedule");
             this.buttonScheduleDeleteSchedule.UseVisualStyleBackColor = true;
             this.buttonScheduleDeleteSchedule.Click += new System.EventHandler(this.buttonScheduleDeleteSchedule_Click);
             // 
@@ -2078,6 +2137,7 @@ namespace MineControl
             this.buttonScheduleDuplicateSchedule.Size = new System.Drawing.Size(88, 27);
             this.buttonScheduleDuplicateSchedule.TabIndex = 6;
             this.buttonScheduleDuplicateSchedule.Text = "Duplicate";
+            this.toolTipMain.SetToolTip(this.buttonScheduleDuplicateSchedule, "Duplicate the selected schedule");
             this.buttonScheduleDuplicateSchedule.UseVisualStyleBackColor = true;
             this.buttonScheduleDuplicateSchedule.Click += new System.EventHandler(this.buttonScheduleDuplicateSchedule_Click);
             // 
@@ -2090,6 +2150,7 @@ namespace MineControl
             this.label12.Size = new System.Drawing.Size(50, 15);
             this.label12.TabIndex = 5;
             this.label12.Text = "Content";
+            this.toolTipMain.SetToolTip(this.label12, "Content of the selected schedule");
             // 
             // label11
             // 
@@ -2100,6 +2161,7 @@ namespace MineControl
             this.label11.Size = new System.Drawing.Size(39, 15);
             this.label11.TabIndex = 4;
             this.label11.Text = "Name";
+            this.toolTipMain.SetToolTip(this.label11, "Name of the selected schedule");
             // 
             // textBoxScheduleName
             // 
@@ -2108,6 +2170,7 @@ namespace MineControl
             this.textBoxScheduleName.Name = "textBoxScheduleName";
             this.textBoxScheduleName.Size = new System.Drawing.Size(466, 23);
             this.textBoxScheduleName.TabIndex = 3;
+            this.toolTipMain.SetToolTip(this.textBoxScheduleName, "Name of the selected schedule");
             this.textBoxScheduleName.TextChanged += new System.EventHandler(this.textBoxScheduleName_TextChanged);
             this.textBoxScheduleName.Leave += new System.EventHandler(this.textBoxScheduleName_Leave);
             // 
@@ -2122,6 +2185,7 @@ namespace MineControl
             this.treeViewSchedule.Name = "treeViewSchedule";
             this.treeViewSchedule.Size = new System.Drawing.Size(466, 346);
             this.treeViewSchedule.TabIndex = 2;
+            this.toolTipMain.SetToolTip(this.treeViewSchedule, "Content of the selected schedule");
             // 
             // buttonScheduleCreateSchedule
             // 
@@ -2131,6 +2195,7 @@ namespace MineControl
             this.buttonScheduleCreateSchedule.Size = new System.Drawing.Size(88, 27);
             this.buttonScheduleCreateSchedule.TabIndex = 1;
             this.buttonScheduleCreateSchedule.Text = "Create New";
+            this.toolTipMain.SetToolTip(this.buttonScheduleCreateSchedule, "Create a new empty schedule");
             this.buttonScheduleCreateSchedule.UseVisualStyleBackColor = true;
             this.buttonScheduleCreateSchedule.Click += new System.EventHandler(this.buttonScheduleCreateSchedule_Click);
             // 
@@ -2250,6 +2315,7 @@ namespace MineControl
             this.buttonChartClearData.Size = new System.Drawing.Size(90, 27);
             this.buttonChartClearData.TabIndex = 19;
             this.buttonChartClearData.Text = "Clear Data";
+            this.toolTipMain.SetToolTip(this.buttonChartClearData, "Clears ALL data on ALL charts.");
             this.buttonChartClearData.UseVisualStyleBackColor = true;
             this.buttonChartClearData.Click += new System.EventHandler(this.buttonChartClearData_Click);
             // 
@@ -2262,17 +2328,18 @@ namespace MineControl
             "Minutes",
             "Hours",
             "Days"});
-            this.comboBoxChartShowLastUnit.Location = new System.Drawing.Point(237, 597);
+            this.comboBoxChartShowLastUnit.Location = new System.Drawing.Point(230, 597);
             this.comboBoxChartShowLastUnit.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.comboBoxChartShowLastUnit.Name = "comboBoxChartShowLastUnit";
             this.comboBoxChartShowLastUnit.Size = new System.Drawing.Size(89, 23);
             this.comboBoxChartShowLastUnit.TabIndex = 18;
+            this.toolTipMain.SetToolTip(this.comboBoxChartShowLastUnit, "Limits visible area of all charts. Doesn\'t maintain itself over time.");
             this.comboBoxChartShowLastUnit.SelectedValueChanged += new System.EventHandler(this.ChartShowConfigChanged);
             // 
             // numericUpDownChartShowLastX
             // 
             this.numericUpDownChartShowLastX.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.numericUpDownChartShowLastX.Location = new System.Drawing.Point(176, 597);
+            this.numericUpDownChartShowLastX.Location = new System.Drawing.Point(169, 597);
             this.numericUpDownChartShowLastX.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.numericUpDownChartShowLastX.Maximum = new decimal(new int[] {
             1000,
@@ -2287,6 +2354,7 @@ namespace MineControl
             this.numericUpDownChartShowLastX.Name = "numericUpDownChartShowLastX";
             this.numericUpDownChartShowLastX.Size = new System.Drawing.Size(56, 23);
             this.numericUpDownChartShowLastX.TabIndex = 17;
+            this.toolTipMain.SetToolTip(this.numericUpDownChartShowLastX, "Limits visible area of all charts. Doesn\'t maintain itself over time.");
             this.numericUpDownChartShowLastX.Value = new decimal(new int[] {
             1,
             0,
@@ -2304,6 +2372,8 @@ namespace MineControl
             this.radioButtonChartShowLastX.Size = new System.Drawing.Size(78, 19);
             this.radioButtonChartShowLastX.TabIndex = 16;
             this.radioButtonChartShowLastX.Text = "Show Last";
+            this.toolTipMain.SetToolTip(this.radioButtonChartShowLastX, "Limits visible data of all charts by X axis (time). Doesn\'t maintain itself over " +
+        "time.");
             this.radioButtonChartShowLastX.UseVisualStyleBackColor = true;
             this.radioButtonChartShowLastX.CheckedChanged += new System.EventHandler(this.ChartShowConfigChanged);
             // 
@@ -2319,6 +2389,7 @@ namespace MineControl
             this.radioButtonChartShowAll.TabIndex = 14;
             this.radioButtonChartShowAll.TabStop = true;
             this.radioButtonChartShowAll.Text = "Show All";
+            this.toolTipMain.SetToolTip(this.radioButtonChartShowAll, "Shows all available chart data on the X (time) axis.");
             this.radioButtonChartShowAll.UseVisualStyleBackColor = true;
             this.radioButtonChartShowAll.CheckedChanged += new System.EventHandler(this.ChartShowConfigChanged);
             // 
@@ -2413,6 +2484,7 @@ namespace MineControl
             this.numericUpDownChartMinGPUTempOnYAxisValue.Name = "numericUpDownChartMinGPUTempOnYAxisValue";
             this.numericUpDownChartMinGPUTempOnYAxisValue.Size = new System.Drawing.Size(40, 23);
             this.numericUpDownChartMinGPUTempOnYAxisValue.TabIndex = 21;
+            this.toolTipMain.SetToolTip(this.numericUpDownChartMinGPUTempOnYAxisValue, resources.GetString("numericUpDownChartMinGPUTempOnYAxisValue.ToolTip"));
             this.numericUpDownChartMinGPUTempOnYAxisValue.Value = new decimal(new int[] {
             80,
             0,
@@ -2431,6 +2503,7 @@ namespace MineControl
             this.checkBoxChartMinGPUTempOnYAxisEnabled.Size = new System.Drawing.Size(140, 19);
             this.checkBoxChartMinGPUTempOnYAxisEnabled.TabIndex = 20;
             this.checkBoxChartMinGPUTempOnYAxisEnabled.Text = "Min GPU Temp On Y2";
+            this.toolTipMain.SetToolTip(this.checkBoxChartMinGPUTempOnYAxisEnabled, resources.GetString("checkBoxChartMinGPUTempOnYAxisEnabled.ToolTip"));
             this.checkBoxChartMinGPUTempOnYAxisEnabled.UseVisualStyleBackColor = true;
             this.checkBoxChartMinGPUTempOnYAxisEnabled.CheckedChanged += new System.EventHandler(this.SettingChanged);
             // 
@@ -2456,7 +2529,7 @@ namespace MineControl
             // label32
             // 
             this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(238, 20);
+            this.label32.Location = new System.Drawing.Point(245, 20);
             this.label32.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label32.Name = "label32";
             this.label32.Size = new System.Drawing.Size(33, 15);
@@ -2535,6 +2608,7 @@ namespace MineControl
             this.checkBoxLogAutoScroll.Size = new System.Drawing.Size(81, 19);
             this.checkBoxLogAutoScroll.TabIndex = 1;
             this.checkBoxLogAutoScroll.Text = "AutoScroll";
+            this.toolTipMain.SetToolTip(this.checkBoxLogAutoScroll, "When checked, grid auto-scrolls to bottom as new entries are added.");
             this.checkBoxLogAutoScroll.UseVisualStyleBackColor = true;
             // 
             // checkBoxLogColorCode
@@ -2546,6 +2620,8 @@ namespace MineControl
             this.checkBoxLogColorCode.Size = new System.Drawing.Size(86, 19);
             this.checkBoxLogColorCode.TabIndex = 6;
             this.checkBoxLogColorCode.Text = "Color Code";
+            this.toolTipMain.SetToolTip(this.checkBoxLogColorCode, "When checked, MineControl color codes log entries.\r\nNote: any original color codi" +
+        "ng from miners is always lost.");
             this.checkBoxLogColorCode.UseVisualStyleBackColor = true;
             // 
             // comboBoxLogFilter
@@ -2565,6 +2641,7 @@ namespace MineControl
             this.comboBoxLogFilter.Name = "comboBoxLogFilter";
             this.comboBoxLogFilter.Size = new System.Drawing.Size(231, 23);
             this.comboBoxLogFilter.TabIndex = 5;
+            this.toolTipMain.SetToolTip(this.comboBoxLogFilter, "Customizable filter for log entries");
             this.comboBoxLogFilter.SelectedIndexChanged += new System.EventHandler(this.comboBoxLogFilter_Changed);
             this.comboBoxLogFilter.KeyDown += new System.Windows.Forms.KeyEventHandler(this.comboBoxLogFilter_KeyDown);
             this.comboBoxLogFilter.Validated += new System.EventHandler(this.comboBoxLogFilter_Changed);
@@ -2707,12 +2784,14 @@ namespace MineControl
             // checkBoxEnableTempControl
             // 
             this.checkBoxEnableTempControl.AutoSize = true;
-            this.checkBoxEnableTempControl.Location = new System.Drawing.Point(382, 20);
+            this.checkBoxEnableTempControl.Location = new System.Drawing.Point(382, 21);
             this.checkBoxEnableTempControl.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.checkBoxEnableTempControl.Name = "checkBoxEnableTempControl";
             this.checkBoxEnableTempControl.Size = new System.Drawing.Size(132, 19);
             this.checkBoxEnableTempControl.TabIndex = 2;
             this.checkBoxEnableTempControl.Text = "Manage GPU Temps";
+            this.toolTipMain.SetToolTip(this.checkBoxEnableTempControl, "When checked, GPU temp management rules (like power stepping) are evaluated. \r\nWh" +
+        "en unchecked, no GPU temp rules or failsafes are evaluated.");
             this.checkBoxEnableTempControl.UseVisualStyleBackColor = true;
             this.checkBoxEnableTempControl.CheckedChanged += new System.EventHandler(this.SettingChanged);
             this.checkBoxEnableTempControl.Click += new System.EventHandler(this.SettingChanged);
@@ -2720,19 +2799,18 @@ namespace MineControl
             // checkBoxEnableMinerAutomation
             // 
             this.checkBoxEnableMinerAutomation.AutoSize = true;
-            this.checkBoxEnableMinerAutomation.Location = new System.Drawing.Point(201, 20);
+            this.checkBoxEnableMinerAutomation.Location = new System.Drawing.Point(201, 21);
             this.checkBoxEnableMinerAutomation.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.checkBoxEnableMinerAutomation.Name = "checkBoxEnableMinerAutomation";
             this.checkBoxEnableMinerAutomation.Size = new System.Drawing.Size(131, 19);
             this.checkBoxEnableMinerAutomation.TabIndex = 3;
             this.checkBoxEnableMinerAutomation.Text = "Run Enabled Miners";
+            this.toolTipMain.SetToolTip(this.checkBoxEnableMinerAutomation, resources.GetString("checkBoxEnableMinerAutomation.ToolTip"));
             this.checkBoxEnableMinerAutomation.UseVisualStyleBackColor = true;
             this.checkBoxEnableMinerAutomation.CheckedChanged += new System.EventHandler(this.SettingChanged);
             // 
             // groupBoxControl
             // 
-            this.groupBoxControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxControl.Controls.Add(this.linkLabelHelpDonate);
             this.groupBoxControl.Controls.Add(this.labelStatusDisplay);
             this.groupBoxControl.Controls.Add(this.label1);
@@ -2740,11 +2818,11 @@ namespace MineControl
             this.groupBoxControl.Controls.Add(this.checkBoxEnableMinerAutomation);
             this.groupBoxControl.Controls.Add(this.buttonStartAutomation);
             this.groupBoxControl.Controls.Add(this.checkBoxEnableTempControl);
-            this.groupBoxControl.Location = new System.Drawing.Point(6, 952);
+            this.groupBoxControl.Location = new System.Drawing.Point(6, 951);
             this.groupBoxControl.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBoxControl.Name = "groupBoxControl";
             this.groupBoxControl.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBoxControl.Size = new System.Drawing.Size(912, 51);
+            this.groupBoxControl.Size = new System.Drawing.Size(912, 52);
             this.groupBoxControl.TabIndex = 8;
             this.groupBoxControl.TabStop = false;
             this.groupBoxControl.Text = "Automation Control";
@@ -2752,7 +2830,7 @@ namespace MineControl
             // linkLabelHelpDonate
             // 
             this.linkLabelHelpDonate.AutoSize = true;
-            this.linkLabelHelpDonate.Location = new System.Drawing.Point(631, 20);
+            this.linkLabelHelpDonate.Location = new System.Drawing.Point(631, 21);
             this.linkLabelHelpDonate.Name = "linkLabelHelpDonate";
             this.linkLabelHelpDonate.Size = new System.Drawing.Size(81, 15);
             this.linkLabelHelpDonate.TabIndex = 5;
@@ -2765,7 +2843,7 @@ namespace MineControl
             this.labelStatusDisplay.AutoSize = true;
             this.labelStatusDisplay.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.labelStatusDisplay.ForeColor = System.Drawing.Color.Red;
-            this.labelStatusDisplay.Location = new System.Drawing.Point(69, 22);
+            this.labelStatusDisplay.Location = new System.Drawing.Point(69, 23);
             this.labelStatusDisplay.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelStatusDisplay.Name = "labelStatusDisplay";
             this.labelStatusDisplay.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -2777,7 +2855,7 @@ namespace MineControl
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(19, 22);
+            this.label1.Location = new System.Drawing.Point(19, 23);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(43, 13);
@@ -2787,7 +2865,7 @@ namespace MineControl
             // buttonStopAutomation
             // 
             this.buttonStopAutomation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonStopAutomation.Location = new System.Drawing.Point(819, 15);
+            this.buttonStopAutomation.Location = new System.Drawing.Point(817, 16);
             this.buttonStopAutomation.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.buttonStopAutomation.Name = "buttonStopAutomation";
             this.buttonStopAutomation.Size = new System.Drawing.Size(88, 27);
@@ -2799,7 +2877,7 @@ namespace MineControl
             // buttonStartAutomation
             // 
             this.buttonStartAutomation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonStartAutomation.Location = new System.Drawing.Point(723, 15);
+            this.buttonStartAutomation.Location = new System.Drawing.Point(721, 16);
             this.buttonStartAutomation.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.buttonStartAutomation.Name = "buttonStartAutomation";
             this.buttonStartAutomation.Size = new System.Drawing.Size(88, 27);
@@ -2847,13 +2925,70 @@ namespace MineControl
             // 
             this.openFileDialogBackups.FileName = "openFileDialogBackupPath";
             // 
+            // ColDataEnableTracking
+            // 
+            this.ColDataEnableTracking.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.ColDataEnableTracking.HeaderText = "Track";
+            this.ColDataEnableTracking.Name = "ColDataEnableTracking";
+            this.ColDataEnableTracking.ToolTipText = "Whether the metric will be tracked in charts and stats.";
+            this.ColDataEnableTracking.Width = 40;
+            // 
+            // ColDataMetric
+            // 
+            this.ColDataMetric.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.ColDataMetric.HeaderText = "Metric";
+            this.ColDataMetric.Name = "ColDataMetric";
+            this.ColDataMetric.ReadOnly = true;
+            this.ColDataMetric.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ColDataMetric.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ColDataMetric.ToolTipText = "Name of the metric";
+            this.ColDataMetric.Width = 47;
+            // 
+            // ColDataType
+            // 
+            this.ColDataType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.ColDataType.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.Nothing;
+            this.ColDataType.HeaderText = "Type";
+            this.ColDataType.Name = "ColDataType";
+            this.ColDataType.ReadOnly = true;
+            this.ColDataType.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ColDataType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.ColDataType.ToolTipText = "Type of the metric. Number = numeric, Selection = text/string.";
+            this.ColDataType.Width = 56;
+            // 
+            // ColDataInputSource
+            // 
+            this.ColDataInputSource.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.ColDataInputSource.HeaderText = "Source";
+            this.ColDataInputSource.Name = "ColDataInputSource";
+            this.ColDataInputSource.ToolTipText = "Source of the input, i.e. which thing the metric\'s data comes from.";
+            this.ColDataInputSource.Width = 49;
+            // 
+            // ColDataMethod
+            // 
+            this.ColDataMethod.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.ColDataMethod.HeaderText = "Method";
+            this.ColDataMethod.Name = "ColDataMethod";
+            this.ColDataMethod.ToolTipText = "How data is queried once it\'s been read from the source.";
+            this.ColDataMethod.Width = 55;
+            // 
+            // ColDataQuery
+            // 
+            this.ColDataQuery.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.ColDataQuery.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
+            this.ColDataQuery.DropDownWidth = 500;
+            this.ColDataQuery.HeaderText = "Query/User Value";
+            this.ColDataQuery.Name = "ColDataQuery";
+            this.ColDataQuery.ToolTipText = "RegEx query string for \"RegEx\" method, or the canned user value for the \"UserValu" +
+    "e\" method";
+            // 
             // FormMineControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(922, 1011);
-            this.Controls.Add(this.groupBoxControl);
             this.Controls.Add(this.tabControlMain);
+            this.Controls.Add(this.groupBoxControl);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.MinimumSize = new System.Drawing.Size(938, 1050);
@@ -2864,6 +2999,9 @@ namespace MineControl
             this.Shown += new System.EventHandler(this.FormMineControl_Shown);
             this.Resize += new System.EventHandler(this.FormMineControl_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempSteppingBuffer)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempMin)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarGPUPowerStep)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempMax)).EndInit();
             this.tabControlMain.ResumeLayout(false);
             this.tabPageConfig.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
@@ -2886,14 +3024,11 @@ namespace MineControl
             this.groupBox2.PerformLayout();
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempMax)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempMin)).EndInit();
             this.groupBox9.ResumeLayout(false);
             this.groupBox9.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempGPUShutOffThresholdSecs)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempGPUShutOffSecs)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempTryStepUpSecs)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarGPUPowerStep)).EndInit();
             this.groupBoxMinersAndApps.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewApps)).EndInit();
             this.tabPageSchedule.ResumeLayout(false);
@@ -3105,12 +3240,6 @@ namespace MineControl
         private System.Windows.Forms.DataGridViewTextBoxColumn ColStatsStat;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColStatsValue;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColStatsLastUpdate;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn ColDataEnableTracking;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColDataMetric;
-        private System.Windows.Forms.DataGridViewComboBoxColumn ColDataType;
-        private System.Windows.Forms.DataGridViewComboBoxColumn ColDataInputSource;
-        private System.Windows.Forms.DataGridViewComboBoxColumn ColDataMethod;
-        private System.Windows.Forms.DataGridViewComboBoxColumn ColDataQuery;
         private System.Windows.Forms.ComboBox comboBoxArchivesClearOldChartsUnit;
         private System.Windows.Forms.NumericUpDown numericUpDownArchivesClearOldChartsValue;
         private System.Windows.Forms.CheckBox checkBoxArchivesClearOldCharts;
@@ -3137,12 +3266,18 @@ namespace MineControl
         private System.Windows.Forms.Button buttonScheduleMoveNodeDown;
         private System.Windows.Forms.Button buttonScheduleMoveNodeUp;
         private System.Windows.Forms.Button buttonDataRemoveUnusedQueryOptions;
+        private System.Windows.Forms.LinkLabel linkLabelAboutLicense;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColAppType;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColAppName;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColAppStatus;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColAppPath;
         private System.Windows.Forms.DataGridViewButtonColumn ColAppChooseButton;
-        private System.Windows.Forms.LinkLabel linkLabelAboutLicense;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn ColDataEnableTracking;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColDataMetric;
+        private System.Windows.Forms.DataGridViewComboBoxColumn ColDataType;
+        private System.Windows.Forms.DataGridViewComboBoxColumn ColDataInputSource;
+        private System.Windows.Forms.DataGridViewComboBoxColumn ColDataMethod;
+        private System.Windows.Forms.DataGridViewComboBoxColumn ColDataQuery;
     }
 }
 

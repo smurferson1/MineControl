@@ -1945,14 +1945,21 @@ namespace MineControl
             // GPU power step
             Metric(cGPUPowerStep).UpdateFromInput(Settings.tempSpeedStep.ToString());
 
-            // all systray metrics
+            // all systray and UserValue metrics
             string sysTrayToolbarText = SysTrayTooltipReader.GetAllSysTrayToolbarText();
             foreach (Metric metric in Metrics)
             {
                 // note: GPU mem junc temp is covered elsewhere
-                if ((metric.IsEnabled || metric.IsInternal) && (metric.Source == MetricSource.SysTray) && (metric.Name != cGPUMemJuncTemp))
+                if ((metric.IsEnabled || metric.IsInternal) && (metric.Name != cGPUMemJuncTemp))
                 {
-                    metric.UpdateFromInput(sysTrayToolbarText);
+                    if (metric.Source == MetricSource.SysTray)
+                    {
+                        metric.UpdateFromInput(sysTrayToolbarText);
+                    }
+                    else if (metric.Source == MetricSource.MineControl && metric.Method == MetricMethod.UserValue)
+                    {
+                        metric.UpdateFromInput(metric.Query);
+                    }
                 }
             }          
         }

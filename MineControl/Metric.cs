@@ -349,7 +349,7 @@ namespace MineControl
                     return false;
                 }
                 
-                // TODO: simplify this code -- much redundancy
+                // TODO: simplify this code -- much redundancy and nesting
                 bool result = false;
 
                 if (Method == MetricMethod.RegEx)
