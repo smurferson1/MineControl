@@ -6,7 +6,7 @@ A **power** tool for automating temperature management, scheduling, and data agg
 - Optionally managing execution of an external GPU and/or CPU mining app and charting/logging their output centrally.
 - Finding relevant data in raw text with customizable regular expressions.
 
-Names of hardware monitor and GPU controller apps are omitted in order to avoid legal issues, but the default config is compatible with the most popular hardware monitor and GPU controller apps. These support both NVIDIA and AMD GPUs. Hint: they rhyme with **RidesharePimpo** and **PamStoleMy ButterChurner**.
+Names of hardware monitor and GPU controller apps are omitted in order to avoid legal issues, but the default config is compatible with the most popular hardware monitor and GPU controller apps. These support both NVIDIA and AMD GPUs. Hint: they rhyme with **RidesharePimpo** and **WhoStoleMy ButterChurner**.
 
 ![image](https://user-images.githubusercontent.com/91922614/138532772-a657dc16-2947-4f0b-8315-203717929fcc.png)
 
@@ -78,7 +78,7 @@ Note: Steps assume you have nothing already on your PC. For experienced miners, 
 4) Configure the power profiles *inside* of the GPU controller application. You have full control over your power profiles, so you can set voltage curves or whatever you like. These should progress from lowest power (lowest temp) in profile 1 to highest power in profile 5. **Your temperature control and hash rates will only be as good as your power profiles.**
 5) Extract MineControl to a folder somewhere.
 6) Configure miners and applications by pointing to their executables at the top of the Config tab. Batch files are supported but you **must** set the exact application (EXE) name of the miner *without* extension in the "Process Name" cell.
-7) Configure Data Tracking metrics as needed for your miners and applications, and disable metrics you don't use. This can be tedious, but may not be necessary if you're using RidesharePimpo, PamStoleMy ButterChurner, PhoenixMiner, and xmrig. Use the "RegEx" method for any metric you need to customize. An easy way to do this is to paste example output from the application into https://regexr.com/ for easyish learning and testing. There is a "View SysTray" button in MineControl that can be used to get a current example of that output (use Ctrl+C to copy the text out of the popup).
+7) Configure Data Tracking metrics as needed for your miners and applications, and disable metrics you don't use. This can be tedious, but may not be necessary if you're using RidesharePimpo, WhoStoleMy ButterChurner, PhoenixMiner, and xmrig. Use the "RegEx" method for any metric you need to customize. An easy way to do this is to paste example output from the application into https://regexr.com/ for easyish learning and testing. There is a "View SysTray" button in MineControl that can be used to get a current example of that output (use Ctrl+C to copy the text out of the popup).
 8) Configure your target GPU temps and anything else you care about.
 9) Press Start!
 10) Monitor periodically for a while to make sure your config is working to your satisfaction and not doing anything bad.
