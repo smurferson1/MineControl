@@ -3,7 +3,7 @@
 A **power tool** for automating temperature management, scheduling, and data aggregation while mining cryptocurrency. For us plebs with a single GPU and CPU running **Windows 10 x64**. It can automatically keep your miners and hardware running within your parameters and give you nice data (e.g. charts, averages, kWh). This is accomplished by:
 - Reading temperatures and other sensor data from an external hardware monitor app.
 - Setting GPU power profile via an external GPU controller app.
-- Optionally managing execution of an external GPU and/or CPU mining app and charting/logging their output centrally.
+- Optionally managing execution of an external GPU and/or CPU mining app and capturing their output for charting/logging.
 - Finding relevant data in raw text using customizable regular expressions.
 
 Names of hardware monitor and GPU controller apps are omitted in order to avoid legal issues, but the default config is compatible with the most popular hardware monitor and GPU controller apps. These support both NVIDIA and AMD GPUs. Hint: they rhyme with **RidesharePimpo** and **WhoStoleMy ButterChurner**.
@@ -32,8 +32,9 @@ Note: CC BY-SA is specifically required due to adaptation of certain code from S
 ## Key Features
 
 - Drive a GPU miner and/or a CPU miner and aggregate their data.
-- Customizable input from external apps via system tray tooltips or console using regular expressions.
-- Charting and statistics for many metrics like GPU memory junction temperature, hash rate, power usage (W and kWh), averages, etc. Hash rate data can be split by algorithm when using a miner that supports algo-switching.
+- Turn off pretty much anything you don't want. If you just want to control temps without driving miners, or the other way around, that's fine.
+- Customizable output capturing from external apps via system tray tooltips or console using regular expressions.
+- Charting and statistics for many metrics like GPU temperature or memory junction temperature, hash rate, power usage (W and kWh), averages, etc. Hash rate data can be split by algorithm when using a miner that supports algo-switching.
 - Low resource consumption. Designed to use 0% GPU and <1% CPU most of the time.
 - System tray display of GPU power level, GPU miner status, and CPU miner status.
 - Customizable GPU temperature (or memory junction temperature) range, controlled with up to 5 power profiles.
@@ -72,7 +73,7 @@ See Issues area for comprehensive list, and add to it if you find a bug.
 ## Instructions
 
 Note: Steps assume you have nothing already on your PC. For experienced miners, much of the setup will already be completed.
-1) Install the hardware monitor, GPU controller, GPU and/or CPU miner you want to use. MineControl was tested using **PhoenixMiner** for GPU and **XMRig** (MoneroOcean version) for CPU, so these should work by default. TeamRedMiner was also verified as working with some RegEx customization.
+1) Install prerequisites such as .NET 5, the hardware monitor, GPU controller, GPU and/or CPU miner you want to use. MineControl was tested using **PhoenixMiner** for GPU and **XMRig** (MoneroOcean version) for CPU, so these should work by default. TeamRedMiner was also verified as working with some RegEx customization.
 2) Configure and test the miner(s) independently to make sure they run correctly and send crypto to your wallet address.
 3) Configure the hardware monitor output from *inside* of the hardware monitor application. For RidesharePimpo, this means starting up with the **sensors only** option, then enabling system tray output for the metrics you want to track (like GPU memory junction temp), since MineControl relies on systray tooltips to read data. SysTray output can be enabled from the right-click menu for the sensor row. In addition, the **systray icons must be visible on the taskbar to be read by MineControl**, not hidden in the overflow area (screensaver/screen lock doesn't break anything). To be really sure, you can enable the "Always show all icons in the notification area" option in Windows taskbar settings for notification icons.
 4) Configure the power profiles *inside* of the GPU controller application. You have full control over your power profiles, so you can set voltage curves or whatever you like. These should progress from lowest power (lowest temp) in profile 1 to highest power in profile 5. **Your temperature control and hash rates will only be as good as your power profiles.**
