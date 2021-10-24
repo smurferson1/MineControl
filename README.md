@@ -1,12 +1,12 @@
 # MineControl 
 
-A **power tool** for automating temperature management, scheduling, and data aggregation while mining cryptocurrency. For us plebs with a single GPU and CPU running **Windows 10 x64**. It can automatically keep your miners and hardware running within your parameters and give you nice data (e.g. charts, averages, kWh). This is accomplished by:
+A **power tool** for automating temperature management, scheduling, and data aggregation while mining cryptocurrency. For us plebs with a single GPU and CPU running **Windows 10 x64**. It can automatically keep your miners and hardware running within your parameters and give you nice data (e.g. charts, averages, kWh), with more customization than you probably need. This is accomplished by:
 - Reading temperatures and other sensor data from an external hardware monitor app.
-- Setting GPU power profile via an external GPU controller app.
+- Setting GPU power profile through an external GPU controller app.
 - Optionally managing execution of an external GPU and/or CPU mining app and capturing their output for charting/logging.
-- Finding relevant data in raw text using customizable regular expressions.
+- Finding relevant data in the raw output using customizable regular expressions.
 
-Names of hardware monitor and GPU controller apps are omitted in order to avoid legal issues, but the default config is compatible with the most popular hardware monitor and GPU controller apps. These support both NVIDIA and AMD GPUs. Hint: they rhyme with **RidesharePimpo** and **WhoStoleMy ButterChurner**.
+Names of hardware monitor and GPU controller apps are omitted in order to avoid legal issues, but the default config is compatible with the most popular hardware monitor and GPU controller app. These support both NVIDIA and AMD GPUs. Hint: they rhyme with **RidesharePimpo** and **WhoStoleMy ButterChurner**.
 
 ![image](https://user-images.githubusercontent.com/91922614/138532772-a657dc16-2947-4f0b-8315-203717929fcc.png)
 
@@ -32,19 +32,18 @@ Note: CC BY-SA is specifically required due to adaptation of certain code from S
 ## Key Features
 
 - Drive a GPU miner and/or a CPU miner and aggregate their data.
+- Set GPU temperature (or memory junction temperature) min and max targets, and control with up to 5 power profiles.
+- Schedule execution of GPU and CPU miner with advanced options, for example to avoid high power consumption during peak hours of 5-8PM on weekdays during summer.
 - Turn off pretty much anything you don't want. If you just want to control temps without driving miners, or the other way around, that's fine.
-- Customizable output capturing from external apps via system tray tooltips or console using regular expressions.
-- Charting and statistics for many metrics like GPU temperature or memory junction temperature, hash rate, power usage (W and kWh), averages, etc. Hash rate data can be split by algorithm when using a miner that supports algo-switching.
-- Low resource consumption. Designed to use 0% GPU and <1% CPU most of the time.
-- System tray display of GPU power level, GPU miner status, and CPU miner status.
-- Customizable GPU temperature (or memory junction temperature) range, controlled with up to 5 power profiles.
-- GPU failsafe protections to shut off the GPU miner if max temp is exceeded at lowest power, or while the temp is unknown.
+- Charts and/or statistics for many metrics like GPU temperature or memory junction temperature, hash rate, power usage (W and kWh), averages, etc. Hash rate data can be split by algorithm when using a miner that supports algo-switching.
+- Low resource consumption. Designed to use 0% GPU and <1% CPU most of the time (run minimized for best results).
+- Capture output from external apps using regular expressions, via either system tray tooltips or console (stdout redirection).
+- System tray display of GPU power level and GPU/CPU miner statuses.
+- GPU failsafe protections to shut off the GPU miner if max temp is exceeded at lowest power, and while temperature is unknown.
 - Crash safety: if MineControl crashes, miners under its control will also close.
-- Advanced scheduling for execution of GPU and CPU miner, for example to avoid high power consumption during peak hours of 5-8PM on weekdays during summer.
 - Optional miner auto-shutoff during user activity.
-- Log aggregation from MineControl and miners.
+- Log aggregation including miner output.
 - Archiving of logs and configuration.
-- More customization than most plebs could ask for.
 
 ## Key Un-features
 
