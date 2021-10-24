@@ -93,7 +93,7 @@ Note: Steps assume you have nothing already on your PC. For experienced miners, 
 - There are detailed tooltips for most settings to explain what they do.
 - When MineControl runs a miner, the normal miner window will *not* show, because its output is being entirely redirected to MineControl and wouldn't show in its normal window. To verify the miner is running, check it in Task Manager (Windows). To see miner log entries in MineControl, enable Keep Logs for the miner, otherwise they're just gone, yo. Note: any text coloring from the miner is not kept.
 - When MineControl recognizes a log entry from a miner as input for a metric (like when a RegEx match is found), it categorizes the log entry as "Input" and appends what it found. This can be used to debug your data tracking customizations if needed. This only shows up if Keep Logs for the miner is enabled.
-- Understanding the MineControl system tray icon: 
+- Understanding the MineControl system tray icon (![SysTray](https://user-images.githubusercontent.com/91922614/138613630-875d578a-4d48-4b32-8d4f-acfb1e9fed93.png)): 
   - GPU miner is the left bar, GPU power step is the number in the middle, and CPU miner is the right bar. 
   - Miner bar colors: black = disabled by user, green = running, yellow = stopped due to user activity, gray = stopped due to schedule, orange = stopped due to unknown temp or overheating, red = stopped due to other error.
 - Maintaining performance and low resource consumption:
@@ -103,4 +103,5 @@ Note: Steps assume you have nothing already on your PC. For experienced miners, 
   - Disable GPU and CPU miner Keep Logs option. 
   - Data tracking: disable metrics you don't need. 
   - Data Tracking: use the UserValue method for units and algos that don't change. Reduces processing a tiny bit.
+  - If resource consumption goes up after several days, restart MineControl (it may have a resource leak or accumulation issue).
 - To prevent MineControl from using a GPU power profile, change the parameter for the profile (under "Command Line Params" in GPU Temperature Management) to blank or something invalid.
