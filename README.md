@@ -72,6 +72,7 @@ See Issues area for comprehensive list, and add to it if you find a bug.
 ## Instructions
 
 Note: Steps assume you have nothing already on your PC. For experienced miners, much of the setup will already be completed.
+0) Please review the disclaimer and requirements.
 1) Install prerequisites such as .NET 5, the hardware monitor, GPU controller, GPU and/or CPU miner you want to use. MineControl was tested using **PhoenixMiner** for GPU and **XMRig** (MoneroOcean version) for CPU, so these should work by default. TeamRedMiner was also verified as working with some RegEx customization.
 2) Configure and test the miner(s) independently to make sure they run correctly and send crypto to your wallet address.
 3) Configure the hardware monitor output from *inside* of the hardware monitor application. For RidesharePimpo, this means starting up with the **sensors only** option, then enabling system tray output for the metrics you want to track (like GPU memory junction temp), since MineControl relies on systray tooltips to read data. SysTray output can be enabled from the right-click menu for the sensor row. In addition, the **systray icons must be visible on the taskbar to be read by MineControl**, not hidden in the overflow area (screensaver/screen lock doesn't break anything). To be really sure, you can enable the "Always show all icons in the notification area" option in Windows taskbar settings for notification icons.
