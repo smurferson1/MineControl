@@ -133,7 +133,7 @@ namespace MineControl.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
         public int minerGPUMode {
             get {
                 return ((int)(this["minerGPUMode"]));
@@ -145,7 +145,7 @@ namespace MineControl.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
         public int minerCPUMode {
             get {
                 return ((int)(this["minerCPUMode"]));
@@ -241,7 +241,7 @@ namespace MineControl.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        [global::System.Configuration.DefaultSettingValueAttribute("60")]
         public int tempStopWhenOverheatSecs {
             get {
                 return ((int)(this["tempStopWhenOverheatSecs"]));
@@ -253,7 +253,7 @@ namespace MineControl.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        [global::System.Configuration.DefaultSettingValueAttribute("14")]
         public int tempStopWhenOverheatThresholdSecs {
             get {
                 return ((int)(this["tempStopWhenOverheatThresholdSecs"]));
@@ -277,7 +277,7 @@ namespace MineControl.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("92")]
+        [global::System.Configuration.DefaultSettingValueAttribute("90")]
         public int tempMax {
             get {
                 return ((int)(this["tempMax"]));
@@ -289,7 +289,7 @@ namespace MineControl.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1000")]
+        [global::System.Configuration.DefaultSettingValueAttribute("5000")]
         public int tempPollingIntervalMillisecs {
             get {
                 return ((int)(this["tempPollingIntervalMillisecs"]));
@@ -301,7 +301,7 @@ namespace MineControl.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool controlStartupMinimize {
             get {
                 return ((bool)(this["controlStartupMinimize"]));
@@ -361,7 +361,7 @@ namespace MineControl.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("60")]
+        [global::System.Configuration.DefaultSettingValueAttribute("900")]
         public int tempTryStepUpSecs {
             get {
                 return ((int)(this["tempTryStepUpSecs"]));
@@ -397,7 +397,7 @@ namespace MineControl.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool chartMinTempOnYAxisEnabled {
             get {
                 return ((bool)(this["chartMinTempOnYAxisEnabled"]));
@@ -421,7 +421,120 @@ namespace MineControl.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("[\r\n  {\r\n    \"Nodes\": [\r\n      {\r\n        \"TypeDiscriminator\": 2,\r\n        \"TypeVa" +
+            "lue\": {\r\n          \"StartDay\": 1,\r\n          \"EndDay\": 32,\r\n          \"ValidMont" +
+            "hs\": [\r\n            6,\r\n            7,\r\n            8,\r\n            9\r\n         " +
+            " ],\r\n          \"Id\": \"d0e8fec9-84b1-4a80-a699-6f988426f4b8\"\r\n        },\r\n       " +
+            " \"Children\": [\r\n          {\r\n            \"TypeDiscriminator\": 3,\r\n            \"T" +
+            "ypeValue\": {\r\n              \"SelectedDays\": [\r\n                1,\r\n             " +
+            "   2,\r\n                3,\r\n                4,\r\n                5\r\n              " +
+            "],\r\n              \"Id\": \"9ea6f764-ed59-4d8e-ae1a-bc01f9cc802b\"\r\n            },\r\n" +
+            "            \"Children\": [\r\n              {\r\n                \"TypeDiscriminator\":" +
+            " 4,\r\n                \"TypeValue\": {\r\n                  \"StartTime\": \"2021-09-04T" +
+            "17:00:00\",\r\n                  \"EndTime\": \"2021-09-08T20:00:00\",\r\n               " +
+            "   \"Id\": \"3a2dc03e-f37e-4db6-8a22-b2f92cd7f214\"\r\n                },\r\n           " +
+            "     \"Children\": [\r\n                  {\r\n                    \"TypeDiscriminator\"" +
+            ": 6,\r\n                    \"TypeValue\": {\r\n                      \"SelectedAction\"" +
+            ": 1,\r\n                      \"Id\": \"57f5e0c1-1533-4342-9a5c-aafeee10bc70\"\r\n      " +
+            "              }\r\n                  }\r\n                ]\r\n              },\r\n     " +
+            "         {\r\n                \"TypeDiscriminator\": 5,\r\n                \"TypeValue\"" +
+            ": {\r\n                  \"Id\": \"2e208e5f-a57f-44cd-8903-3fa9b200d3b1\"\r\n           " +
+            "     },\r\n                \"Children\": [\r\n                  {\r\n                   " +
+            " \"TypeDiscriminator\": 6,\r\n                    \"TypeValue\": {\r\n                  " +
+            "    \"SelectedAction\": 0,\r\n                      \"Id\": \"d44d03e7-15de-4941-8f8d-9" +
+            "c77917f91e5\"\r\n                    }\r\n                  }\r\n                ]\r\n   " +
+            "           }\r\n            ]\r\n          },\r\n          {\r\n            \"TypeDiscrim" +
+            "inator\": 5,\r\n            \"TypeValue\": {\r\n              \"Id\": \"040c5270-d680-4b6e" +
+            "-94e5-0ee669cbf023\"\r\n            },\r\n            \"Children\": [\r\n              {\r" +
+            "\n                \"TypeDiscriminator\": 6,\r\n                \"TypeValue\": {\r\n      " +
+            "            \"SelectedAction\": 0,\r\n                  \"Id\": \"e52ceef1-48c2-46c3-ae" +
+            "09-3862a7819c56\"\r\n                }\r\n              }\r\n            ]\r\n          }" +
+            "\r\n        ]\r\n      },\r\n      {\r\n        \"TypeDiscriminator\": 5,\r\n        \"TypeVa" +
+            "lue\": {\r\n          \"Id\": \"de483e84-be61-4b9e-a449-4f5d3a4e5efa\"\r\n        },\r\n   " +
+            "     \"Children\": [\r\n          {\r\n            \"TypeDiscriminator\": 6,\r\n          " +
+            "  \"TypeValue\": {\r\n              \"SelectedAction\": 0,\r\n              \"Id\": \"e135b" +
+            "14f-ad7f-4462-bd7b-1535f7b1c80a\"\r\n            }\r\n          }\r\n        ]\r\n      }" +
+            "\r\n    ],\r\n    \"Name\": \"All Hours Except Weekday Peak Hours (5-8PM) During Summer" +
+            "\",\r\n    \"Id\": \"790f9738-e9c3-4b40-ab0f-399d5fdc2bd8\"\r\n  },\r\n  {\r\n    \"Nodes\": [\r" +
+            "\n      {\r\n        \"TypeDiscriminator\": 3,\r\n        \"TypeValue\": {\r\n          \"Se" +
+            "lectedDays\": [\r\n            1,\r\n            2,\r\n            3,\r\n            4,\r\n" +
+            "            5\r\n          ],\r\n          \"Id\": \"19e35ccd-c40d-4198-84d3-a9e6e77b5e" +
+            "cc\"\r\n        },\r\n        \"Children\": [\r\n          {\r\n            \"TypeDiscrimina" +
+            "tor\": 4,\r\n            \"TypeValue\": {\r\n              \"StartTime\": \"2021-09-04T00:" +
+            "00:00\",\r\n              \"EndTime\": \"2021-09-08T06:00:00\",\r\n              \"Id\": \"d" +
+            "42e2e01-6d7e-45c7-b68c-7dd1c9055d40\"\r\n            },\r\n            \"Children\": [\r" +
+            "\n              {\r\n                \"TypeDiscriminator\": 6,\r\n                \"Type" +
+            "Value\": {\r\n                  \"SelectedAction\": 0,\r\n                  \"Id\": \"31b6" +
+            "115f-9201-460a-9bbb-00673672042a\"\r\n                }\r\n              }\r\n         " +
+            "   ]\r\n          },\r\n          {\r\n            \"TypeDiscriminator\": 5,\r\n          " +
+            "  \"TypeValue\": {\r\n              \"Id\": \"634069b0-7ff7-4217-83c5-9cc5c8afc24a\"\r\n  " +
+            "          },\r\n            \"Children\": [\r\n              {\r\n                \"TypeD" +
+            "iscriminator\": 6,\r\n                \"TypeValue\": {\r\n                  \"SelectedAc" +
+            "tion\": 1,\r\n                  \"Id\": \"f262dca5-4acd-4537-9260-34d80b6cdeb1\"\r\n     " +
+            "           }\r\n              }\r\n            ]\r\n          }\r\n        ]\r\n      },\r\n" +
+            "      {\r\n        \"TypeDiscriminator\": 5,\r\n        \"TypeValue\": {\r\n          \"Id\"" +
+            ": \"27cbcce3-864c-438d-aa8b-515d2cdc137d\"\r\n        },\r\n        \"Children\": [\r\n   " +
+            "       {\r\n            \"TypeDiscriminator\": 6,\r\n            \"TypeValue\": {\r\n     " +
+            "         \"SelectedAction\": 0,\r\n              \"Id\": \"ee247d45-650d-4fa9-8427-85cf" +
+            "e5b3b553\"\r\n            }\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"Name\": \"" +
+            "Weekends \\u0026 Weekdays From Midnight-6AM\",\r\n    \"Id\": \"53f7512f-38b5-47b7-abdb" +
+            "-8d3e2bab70e3\"\r\n  },\r\n  {\r\n    \"Nodes\": [\r\n      {\r\n        \"TypeDiscriminator\":" +
+            " 2,\r\n        \"TypeValue\": {\r\n          \"StartDay\": 1,\r\n          \"EndDay\": 32,\r\n" +
+            "          \"ValidMonths\": [\r\n            6,\r\n            7,\r\n            8,\r\n    " +
+            "        9\r\n          ],\r\n          \"Id\": \"8a074ec2-030f-403b-b977-b28587f3d0b9\"\r" +
+            "\n        },\r\n        \"Children\": [\r\n          {\r\n            \"TypeDiscriminator\"" +
+            ": 3,\r\n            \"TypeValue\": {\r\n              \"SelectedDays\": [\r\n             " +
+            "   1,\r\n                2,\r\n                3,\r\n                4,\r\n             " +
+            "   5\r\n              ],\r\n              \"Id\": \"e4e66928-2097-4a50-b049-005f654ef60" +
+            "a\"\r\n            },\r\n            \"Children\": [\r\n              {\r\n                " +
+            "\"TypeDiscriminator\": 4,\r\n                \"TypeValue\": {\r\n                  \"Star" +
+            "tTime\": \"2021-09-04T00:00:00\",\r\n                  \"EndTime\": \"2021-10-02T06:00:0" +
+            "0\",\r\n                  \"Id\": \"1d44c1a9-7afa-4851-825d-6653faa46c6c\"\r\n           " +
+            "     },\r\n                \"Children\": [\r\n                  {\r\n                   " +
+            " \"TypeDiscriminator\": 6,\r\n                    \"TypeValue\": {\r\n                  " +
+            "    \"SelectedAction\": 0,\r\n                      \"Id\": \"3c61d04f-073c-4c95-a8c9-2" +
+            "864fa9eed2d\"\r\n                    }\r\n                  }\r\n                ]\r\n   " +
+            "           },\r\n              {\r\n                \"TypeDiscriminator\": 5,\r\n       " +
+            "         \"TypeValue\": {\r\n                  \"Id\": \"6859ebb7-afd0-44ec-86ac-c4b187" +
+            "8880b2\"\r\n                },\r\n                \"Children\": [\r\n                  {\r" +
+            "\n                    \"TypeDiscriminator\": 6,\r\n                    \"TypeValue\": {" +
+            "\r\n                      \"SelectedAction\": 1,\r\n                      \"Id\": \"c5da2" +
+            "acb-e155-4921-93ee-10b0a7ac1807\"\r\n                    }\r\n                  }\r\n  " +
+            "              ]\r\n              }\r\n            ]\r\n          },\r\n          {\r\n    " +
+            "        \"TypeDiscriminator\": 5,\r\n            \"TypeValue\": {\r\n              \"Id\":" +
+            " \"d833e7b7-2035-4187-860a-f5765880d58a\"\r\n            },\r\n            \"Children\":" +
+            " [\r\n              {\r\n                \"TypeDiscriminator\": 6,\r\n                \"T" +
+            "ypeValue\": {\r\n                  \"SelectedAction\": 0,\r\n                  \"Id\": \"a" +
+            "290f696-af2e-41ce-9fb4-26b6699a1151\"\r\n                }\r\n              }\r\n      " +
+            "      ]\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"TypeDiscriminator\":" +
+            " 5,\r\n        \"TypeValue\": {\r\n          \"Id\": \"d5396894-6456-45c4-bae6-db8812ac49" +
+            "f2\"\r\n        },\r\n        \"Children\": [\r\n          {\r\n            \"TypeDiscrimina" +
+            "tor\": 3,\r\n            \"TypeValue\": {\r\n              \"SelectedDays\": [\r\n         " +
+            "       1,\r\n                2,\r\n                3,\r\n                4,\r\n         " +
+            "       5\r\n              ],\r\n              \"Id\": \"5ff8daed-e4ac-4472-ab85-7f6008c" +
+            "3d578\"\r\n            },\r\n            \"Children\": [\r\n              {\r\n            " +
+            "    \"TypeDiscriminator\": 4,\r\n                \"TypeValue\": {\r\n                  \"" +
+            "StartTime\": \"2021-09-04T17:00:00\",\r\n                  \"EndTime\": \"2021-10-02T20:" +
+            "00:00\",\r\n                  \"Id\": \"f16e5cb3-f56a-48b8-ae6d-833a2a4cb3d8\"\r\n       " +
+            "         },\r\n                \"Children\": [\r\n                  {\r\n               " +
+            "     \"TypeDiscriminator\": 6,\r\n                    \"TypeValue\": {\r\n              " +
+            "        \"SelectedAction\": 1,\r\n                      \"Id\": \"08e4403e-8b21-4ac4-b1" +
+            "83-e729d93992c8\"\r\n                    }\r\n                  }\r\n                ]\r" +
+            "\n              },\r\n              {\r\n                \"TypeDiscriminator\": 5,\r\n   " +
+            "             \"TypeValue\": {\r\n                  \"Id\": \"9255429a-a316-4b2e-b3fd-83" +
+            "5a03deed50\"\r\n                },\r\n                \"Children\": [\r\n                " +
+            "  {\r\n                    \"TypeDiscriminator\": 6,\r\n                    \"TypeValue" +
+            "\": {\r\n                      \"SelectedAction\": 0,\r\n                      \"Id\": \"8" +
+            "7df0261-d718-4374-9d48-b39aee58278a\"\r\n                    }\r\n                  }" +
+            "\r\n                ]\r\n              }\r\n            ]\r\n          },\r\n          {\r\n" +
+            "            \"TypeDiscriminator\": 5,\r\n            \"TypeValue\": {\r\n              \"" +
+            "Id\": \"cd489393-f5de-4a2b-9e34-5c9bb0c201b6\"\r\n            },\r\n            \"Childr" +
+            "en\": [\r\n              {\r\n                \"TypeDiscriminator\": 6,\r\n              " +
+            "  \"TypeValue\": {\r\n                  \"SelectedAction\": 0,\r\n                  \"Id\"" +
+            ": \"e1ed1b74-90e6-4ff5-a0d1-b47173e7dda2\"\r\n                }\r\n              }\r\n  " +
+            "          ]\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"Name\": \"Weekends 100%" +
+            ", Weekdays: Midnight-6AM (Summer), All But 5-8PM Otherwise\",\r\n    \"Id\": \"a40d3de" +
+            "8-9fb8-435c-85d9-83bd3d4a8e79\"\r\n  }\r\n]")]
         public string scheduleSerializedSchedules {
             get {
                 return ((string)(this["scheduleSerializedSchedules"]));
@@ -469,7 +582,7 @@ namespace MineControl.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool minerCPUUserActivityShutoff {
             get {
                 return ((bool)(this["minerCPUUserActivityShutoff"]));
@@ -481,7 +594,7 @@ namespace MineControl.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool tempStopWhenTempUnknown {
             get {
                 return ((bool)(this["tempStopWhenTempUnknown"]));
@@ -493,7 +606,7 @@ namespace MineControl.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool tempStopWhenOverheat {
             get {
                 return ((bool)(this["tempStopWhenOverheat"]));
@@ -505,7 +618,7 @@ namespace MineControl.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
         public int minerUserActivityTimeoutMins {
             get {
                 return ((int)(this["minerUserActivityTimeoutMins"]));
@@ -517,7 +630,7 @@ namespace MineControl.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool minerGPUShowLogs {
             get {
                 return ((bool)(this["minerGPUShowLogs"]));
@@ -529,7 +642,7 @@ namespace MineControl.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool minerCPUShowLogs {
             get {
                 return ((bool)(this["minerCPUShowLogs"]));
@@ -541,7 +654,7 @@ namespace MineControl.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool archivesArchiveConfig {
             get {
                 return ((bool)(this["archivesArchiveConfig"]));
@@ -553,7 +666,7 @@ namespace MineControl.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
         public int archivesArchiveInterval {
             get {
                 return ((int)(this["archivesArchiveInterval"]));
@@ -565,7 +678,7 @@ namespace MineControl.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Hours")]
         public string archivesArchiveIntervalUnit {
             get {
                 return ((string)(this["archivesArchiveIntervalUnit"]));
@@ -577,7 +690,7 @@ namespace MineControl.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool archivesLogManagement {
             get {
                 return ((bool)(this["archivesLogManagement"]));
@@ -589,7 +702,7 @@ namespace MineControl.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Archive &amp; Clear")]
         public string archivesLogManagementType {
             get {
                 return ((string)(this["archivesLogManagementType"]));
@@ -601,7 +714,7 @@ namespace MineControl.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
         public int archivesLogManagementValue {
             get {
                 return ((int)(this["archivesLogManagementValue"]));
@@ -613,7 +726,7 @@ namespace MineControl.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Hours")]
         public string archivesLogManagementUnit {
             get {
                 return ((string)(this["archivesLogManagementUnit"]));
@@ -637,7 +750,7 @@ namespace MineControl.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool archivesDeleteOldFiles {
             get {
                 return ((bool)(this["archivesDeleteOldFiles"]));
@@ -649,7 +762,7 @@ namespace MineControl.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("30")]
         public int archivesDeleteOldFilesDays {
             get {
                 return ((int)(this["archivesDeleteOldFilesDays"]));
@@ -661,7 +774,43 @@ namespace MineControl.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("{\r\n  \"$id\": \"1\",\r\n  \"$values\": [\r\n    {\r\n      \"$id\": \"2\",\r\n      \"IsEnabled\": tr" +
+            "ue,\r\n      \"Name\": \"GPU Power Step\",\r\n      \"Type\": 0,\r\n      \"Source\": 2,\r\n    " +
+            "  \"Method\": 2,\r\n      \"Query\": \"\"\r\n    },\r\n    {\r\n      \"$id\": \"3\",\r\n      \"IsEn" +
+            "abled\": true,\r\n      \"Name\": \"GPU Hash Rate\",\r\n      \"Type\": 0,\r\n      \"Source\":" +
+            " 0,\r\n      \"Method\": 0,\r\n      \"Query\": \"(?\\u003C=Eth speed: )\\\\d\\u002B[.]\\\\d\\u0" +
+            "02B\"\r\n    },\r\n    {\r\n      \"$id\": \"4\",\r\n      \"IsEnabled\": true,\r\n      \"Name\": " +
+            "\"GPU Hash Rate Unit\",\r\n      \"Type\": 1,\r\n      \"Source\": 2,\r\n      \"Method\": 1,\r" +
+            "\n      \"Query\": \"MH/s\"\r\n    },\r\n    {\r\n      \"$id\": \"5\",\r\n      \"IsEnabled\": tru" +
+            "e,\r\n      \"Name\": \"GPU Hash Algo\",\r\n      \"Type\": 1,\r\n      \"Source\": 2,\r\n      " +
+            "\"Method\": 1,\r\n      \"Query\": \"Ethash\"\r\n    },\r\n    {\r\n      \"$id\": \"6\",\r\n      \"" +
+            "IsEnabled\": true,\r\n      \"Name\": \"GPU/Mem Junc Temp\",\r\n      \"Type\": 0,\r\n      \"" +
+            "Source\": 3,\r\n      \"Method\": 0,\r\n      \"Query\": \"(?\\u003C=GPU Memory Junction Te" +
+            "mperature\\u002B[\\\\r\\\\n])\\\\w\\u002B[.]?\\\\w\\u002B\"\r\n    },\r\n    {\r\n      \"$id\": \"7\"" +
+            ",\r\n      \"IsEnabled\": true,\r\n      \"Name\": \"GPU/Mem Junc Temp Unit\",\r\n      \"Typ" +
+            "e\": 1,\r\n      \"Source\": 2,\r\n      \"Method\": 1,\r\n      \"Query\": \"C\"\r\n    },\r\n    " +
+            "{\r\n      \"$id\": \"8\",\r\n      \"IsEnabled\": true,\r\n      \"Name\": \"CPU Hash Rate\",\r\n" +
+            "      \"Type\": 0,\r\n      \"Source\": 1,\r\n      \"Method\": 0,\r\n      \"Query\": \"(?\\u00" +
+            "3C=miner[ ]\\u002Bspeed [0-9ms/]\\u002B[ ][0-9\\\\.]\\u002B[ ])\\\\d\\u002B[.]*\\\\d\\u002B" +
+            "\"\r\n    },\r\n    {\r\n      \"$id\": \"9\",\r\n      \"IsEnabled\": true,\r\n      \"Name\": \"CP" +
+            "U Hash Rate Unit\",\r\n      \"Type\": 1,\r\n      \"Source\": 2,\r\n      \"Method\": 1,\r\n  " +
+            "    \"Query\": \"H/s\"\r\n    },\r\n    {\r\n      \"$id\": \"10\",\r\n      \"IsEnabled\": true,\r" +
+            "\n      \"Name\": \"CPU Hash Algo\",\r\n      \"Type\": 1,\r\n      \"Source\": 1,\r\n      \"Me" +
+            "thod\": 0,\r\n      \"Query\": \"(?\\u003C=[0-9ms/. ]\\u002Buse[ ]\\u002Bprofile[ ]\\u002B" +
+            ")\\\\w\\u002B\"\r\n    },\r\n    {\r\n      \"$id\": \"11\",\r\n      \"IsEnabled\": true,\r\n      " +
+            "\"Name\": \"CPU Temp\",\r\n      \"Type\": 0,\r\n      \"Source\": 3,\r\n      \"Method\": 0,\r\n " +
+            "     \"Query\": \"(?\\u003C=Core Max\\u002B[\\\\r\\\\n])\\\\w\\u002B[.]?\\\\w\\u002B\"\r\n    },\r\n" +
+            "    {\r\n      \"$id\": \"12\",\r\n      \"IsEnabled\": true,\r\n      \"Name\": \"CPU Temp Uni" +
+            "t\",\r\n      \"Type\": 1,\r\n      \"Source\": 2,\r\n      \"Method\": 1,\r\n      \"Query\": \"C" +
+            "\"\r\n    },\r\n    {\r\n      \"$id\": \"13\",\r\n      \"IsEnabled\": true,\r\n      \"Name\": \"T" +
+            "otal Power (W)\",\r\n      \"Type\": 0,\r\n      \"Source\": 3,\r\n      \"Method\": 0,\r\n    " +
+            "  \"Query\": \"(?\\u003C=PSU Power \\\\(sum\\\\)\\u002B[\\\\r\\\\n])\\\\w\\u002B[.]?\\\\w\\u002B\"\r\n" +
+            "    },\r\n    {\r\n      \"$id\": \"14\",\r\n      \"IsEnabled\": true,\r\n      \"Name\": \"GPU " +
+            "Power (W)\",\r\n      \"Type\": 0,\r\n      \"Source\": 3,\r\n      \"Method\": 0,\r\n      \"Qu" +
+            "ery\": \"(?\\u003C=GPU Power[\\\\r\\\\n])\\\\w\\u002B[.]?\\\\w\\u002B\"\r\n    },\r\n    {\r\n      " +
+            "\"$id\": \"15\",\r\n      \"IsEnabled\": true,\r\n      \"Name\": \"CPU Power (W)\",\r\n      \"T" +
+            "ype\": 0,\r\n      \"Source\": 3,\r\n      \"Method\": 0,\r\n      \"Query\": \"(?\\u003C=CPU P" +
+            "ackage Power[\\\\r\\\\n])\\\\w\\u002B[.]?\\\\w\\u002B\"\r\n    }\r\n  ]\r\n}")]
         public string metricsSerializedMetrics {
             get {
                 return ((string)(this["metricsSerializedMetrics"]));

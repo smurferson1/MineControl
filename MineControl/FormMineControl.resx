@@ -79,6 +79,36 @@ Most things like temperature management will ONLY evaluate once per polling cycl
 Tread carefully when changing this. Best to keep around 5000 (5 seconds).
 </value>
   </data>
+  <data name="comboBoxArchivesLogManagementUnit.ToolTip" xml:space="preserve">
+    <value>When enabled, MineControl logs older than the specified timeframe wil be cleared from the Log grid and 
+optionally archived to a file. Evaluated on the archive interval and when closing MineControl.
+</value>
+  </data>
+  <data name="numericUpDownArchivesLogManagementValue.ToolTip" xml:space="preserve">
+    <value>When enabled, MineControl logs older than the specified timeframe wil be cleared from the Log grid and 
+optionally archived to a file. Evaluated on the archive interval and when closing MineControl.
+</value>
+  </data>
+  <data name="label33.ToolTip" xml:space="preserve">
+    <value>When enabled, MineControl logs older than the specified timeframe wil be cleared from the Log grid and 
+optionally archived to a file. Evaluated on the archive interval and when closing MineControl.
+</value>
+  </data>
+  <data name="comboBoxArchivesLogManagementType.ToolTip" xml:space="preserve">
+    <value>When enabled, MineControl logs older than the specified timeframe wil be cleared from the Log grid and 
+optionally archived to a file. Evaluated on the archive interval and when closing MineControl.
+</value>
+  </data>
+  <data name="checkBoxArchivesLogManagement.ToolTip" xml:space="preserve">
+    <value>When enabled, MineControl logs older than the specified timeframe wil be cleared from the Log grid and 
+optionally archived to a file. Evaluated on the archive interval and when closing MineControl.
+</value>
+  </data>
+  <data name="checkBoxArchivesArchiveConfig.ToolTip" xml:space="preserve">
+    <value>When enabled, entire MineControl config will be archived when changed. 
+Evaluated on the archive interval and when closing MineControl.
+Note: Fluctuating settings like GPU power step don't trigger config archiving.</value>
+  </data>
   <data name="numericUpDownTempGPUShutOffThresholdSecs.ToolTip" xml:space="preserve">
     <value>When enabled and GPU power step is at the minimum, MineControl will stop the GPU miner for the 
 specified number of seconds when max temp is exceeded for the specified number of seconds.
@@ -154,6 +184,27 @@ Note: This is for temporarily disabling miners without fiddling with indvidual s
   <metadata name="ColDataQuery.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
+  <metadata name="ColDataEnableTracking.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="ColDataMetric.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="ColDataType.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="ColDataInputSource.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="ColDataMethod.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="ColDataQuery.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="ColAppChooseButton.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
   <metadata name="ColAppChooseButton.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -164,6 +215,27 @@ Note: This is for temporarily disabling miners without fiddling with indvidual s
     <value>True</value>
   </metadata>
   <metadata name="ColStatsLastUpdate.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="ColStatsStat.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="ColStatsValue.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="ColStatsLastUpdate.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="ColLogSource.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="ColLogType.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="ColLogTime.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="ColLogMessage.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <metadata name="ColLogSource.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
@@ -259,6 +331,9 @@ Note: This is for temporarily disabling miners without fiddling with indvidual s
         AAAAAAAAAAAAAA==
 </value>
   </data>
+  <metadata name="toolTipNotification.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>744, 17</value>
+  </metadata>
   <metadata name="openFileDialogBackups.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>898, 17</value>
   </metadata>
