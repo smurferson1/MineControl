@@ -56,7 +56,7 @@ Note: CC BY-SA is specifically required due to adaptation of certain code from S
 - Chart data and stats aren't remembered or archived, i.e. you lose them when MineControl closes.
 - Can't automatically click on popups or do other interactive tasks required when launching other apps.
 - Probably some allowed configurations that would make no sense or cause errors or crashes.
-- Engineered badly with a bunch of logic embedded in the form code, no automated tests, etc. Sorry.
+- Engineered badly in some ways, with a bunch of logic embedded in the form code, no automated tests, etc. Sorry.
 
 See Issues area for comprehensive list, and add to it if you find a bug.
 
