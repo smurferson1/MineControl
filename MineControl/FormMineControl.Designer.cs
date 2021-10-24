@@ -31,7 +31,9 @@ namespace MineControl
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMineControl));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.timerMain = new System.Windows.Forms.Timer(this.components);
             this.toolTipMain = new System.Windows.Forms.ToolTip(this.components);
             this.checkBoxStartUpAutomation = new System.Windows.Forms.CheckBox();
@@ -197,9 +199,6 @@ namespace MineControl
             this.tabControlAnalytics = new System.Windows.Forms.TabControl();
             this.tabPageStats = new System.Windows.Forms.TabPage();
             this.dataGridViewStats = new System.Windows.Forms.DataGridView();
-            this.ColStatsStat = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColStatsValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColStatsLastUpdate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPageAnalyticsOptions = new System.Windows.Forms.TabPage();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label32 = new System.Windows.Forms.Label();
@@ -235,6 +234,9 @@ namespace MineControl
             this.openFileDialogBackups = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialogBackups = new System.Windows.Forms.SaveFileDialog();
             this.folderBrowserDialogBackups = new System.Windows.Forms.FolderBrowserDialog();
+            this.ColStatsStat = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColStatsValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColStatsLastUpdate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempSteppingBuffer)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempMin)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarGPUPowerStep)).BeginInit();
@@ -399,7 +401,6 @@ namespace MineControl
             // 
             // buttonScheduleDeleteNode
             // 
-            this.buttonScheduleDeleteNode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonScheduleDeleteNode.Location = new System.Drawing.Point(12, 499);
             this.buttonScheduleDeleteNode.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.buttonScheduleDeleteNode.Name = "buttonScheduleDeleteNode";
@@ -449,7 +450,6 @@ namespace MineControl
             // 
             // buttonScheduleMoveNodeUp
             // 
-            this.buttonScheduleMoveNodeUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonScheduleMoveNodeUp.Location = new System.Drawing.Point(185, 499);
             this.buttonScheduleMoveNodeUp.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.buttonScheduleMoveNodeUp.Name = "buttonScheduleMoveNodeUp";
@@ -462,7 +462,6 @@ namespace MineControl
             // 
             // buttonScheduleMoveNodeDown
             // 
-            this.buttonScheduleMoveNodeDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonScheduleMoveNodeDown.Location = new System.Drawing.Point(358, 499);
             this.buttonScheduleMoveNodeDown.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.buttonScheduleMoveNodeDown.Name = "buttonScheduleMoveNodeDown";
@@ -1294,9 +1293,6 @@ namespace MineControl
             // 
             // treeViewSchedule
             // 
-            this.treeViewSchedule.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.treeViewSchedule.HideSelection = false;
             this.treeViewSchedule.Location = new System.Drawing.Point(12, 142);
             this.treeViewSchedule.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1320,7 +1316,7 @@ namespace MineControl
             // buttonChartClearData
             // 
             this.buttonChartClearData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonChartClearData.Location = new System.Drawing.Point(573, 592);
+            this.buttonChartClearData.Location = new System.Drawing.Point(564, 592);
             this.buttonChartClearData.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.buttonChartClearData.Name = "buttonChartClearData";
             this.buttonChartClearData.Size = new System.Drawing.Size(90, 27);
@@ -1718,9 +1714,8 @@ namespace MineControl
             // 
             // groupBoxDataTracking
             // 
-            this.groupBoxDataTracking.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBoxDataTracking.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBoxDataTracking.Controls.Add(this.dataGridViewMetrics);
             this.groupBoxDataTracking.Controls.Add(this.buttonDataViewSysTrayTooltips);
             this.groupBoxDataTracking.Controls.Add(this.buttonDataRemoveUnusedQueryOptions);
@@ -1951,8 +1946,6 @@ namespace MineControl
             // 
             // groupBoxMinersAndApps
             // 
-            this.groupBoxMinersAndApps.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxMinersAndApps.Controls.Add(this.dataGridViewApps);
             this.groupBoxMinersAndApps.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.groupBoxMinersAndApps.Location = new System.Drawing.Point(8, 3);
@@ -2064,7 +2057,6 @@ namespace MineControl
             // 
             // groupBoxScheduleNodeDetails
             // 
-            this.groupBoxScheduleNodeDetails.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxScheduleNodeDetails.AutoSize = true;
             this.groupBoxScheduleNodeDetails.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.groupBoxScheduleNodeDetails.Controls.Add(this.panelScheduleNodeButtons);
@@ -2522,7 +2514,7 @@ namespace MineControl
             this.splitContainer1.Panel2.Cursor = System.Windows.Forms.Cursors.Default;
             this.splitContainer1.Panel2MinSize = 100;
             this.splitContainer1.Size = new System.Drawing.Size(898, 628);
-            this.splitContainer1.SplitterDistance = 671;
+            this.splitContainer1.SplitterDistance = 662;
             this.splitContainer1.TabIndex = 16;
             // 
             // groupBoxCharts
@@ -2540,7 +2532,7 @@ namespace MineControl
             this.groupBoxCharts.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBoxCharts.Name = "groupBoxCharts";
             this.groupBoxCharts.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBoxCharts.Size = new System.Drawing.Size(671, 628);
+            this.groupBoxCharts.Size = new System.Drawing.Size(662, 628);
             this.groupBoxCharts.TabIndex = 13;
             this.groupBoxCharts.TabStop = false;
             this.groupBoxCharts.Text = "Charts";
@@ -2554,7 +2546,7 @@ namespace MineControl
             this.tabControlCharts.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tabControlCharts.Name = "tabControlCharts";
             this.tabControlCharts.SelectedIndex = 0;
-            this.tabControlCharts.Size = new System.Drawing.Size(657, 568);
+            this.tabControlCharts.Size = new System.Drawing.Size(648, 568);
             this.tabControlCharts.TabIndex = 16;
             // 
             // tabControlAnalytics
@@ -2568,7 +2560,7 @@ namespace MineControl
             this.tabControlAnalytics.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tabControlAnalytics.Name = "tabControlAnalytics";
             this.tabControlAnalytics.SelectedIndex = 0;
-            this.tabControlAnalytics.Size = new System.Drawing.Size(226, 628);
+            this.tabControlAnalytics.Size = new System.Drawing.Size(235, 628);
             this.tabControlAnalytics.TabIndex = 15;
             // 
             // tabPageStats
@@ -2579,7 +2571,7 @@ namespace MineControl
             this.tabPageStats.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tabPageStats.Name = "tabPageStats";
             this.tabPageStats.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tabPageStats.Size = new System.Drawing.Size(218, 600);
+            this.tabPageStats.Size = new System.Drawing.Size(227, 600);
             this.tabPageStats.TabIndex = 0;
             this.tabPageStats.Text = "Stats";
             // 
@@ -2589,6 +2581,7 @@ namespace MineControl
             this.dataGridViewStats.AllowUserToDeleteRows = false;
             this.dataGridViewStats.AllowUserToResizeRows = false;
             this.dataGridViewStats.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dataGridViewStats.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dataGridViewStats.BackgroundColor = System.Drawing.SystemColors.Window;
             this.dataGridViewStats.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewStats.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -2602,31 +2595,8 @@ namespace MineControl
             this.dataGridViewStats.ReadOnly = true;
             this.dataGridViewStats.RowHeadersVisible = false;
             this.dataGridViewStats.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dataGridViewStats.Size = new System.Drawing.Size(210, 594);
+            this.dataGridViewStats.Size = new System.Drawing.Size(219, 594);
             this.dataGridViewStats.TabIndex = 0;
-            // 
-            // ColStatsStat
-            // 
-            this.ColStatsStat.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.ColStatsStat.HeaderText = "Stat";
-            this.ColStatsStat.Name = "ColStatsStat";
-            this.ColStatsStat.ReadOnly = true;
-            this.ColStatsStat.Width = 52;
-            // 
-            // ColStatsValue
-            // 
-            this.ColStatsValue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.ColStatsValue.HeaderText = "Value";
-            this.ColStatsValue.Name = "ColStatsValue";
-            this.ColStatsValue.ReadOnly = true;
-            // 
-            // ColStatsLastUpdate
-            // 
-            this.ColStatsLastUpdate.HeaderText = "Last Update";
-            this.ColStatsLastUpdate.Name = "ColStatsLastUpdate";
-            this.ColStatsLastUpdate.ReadOnly = true;
-            this.ColStatsLastUpdate.Visible = false;
-            this.ColStatsLastUpdate.Width = 94;
             // 
             // tabPageAnalyticsOptions
             // 
@@ -2637,7 +2607,7 @@ namespace MineControl
             this.tabPageAnalyticsOptions.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tabPageAnalyticsOptions.Name = "tabPageAnalyticsOptions";
             this.tabPageAnalyticsOptions.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tabPageAnalyticsOptions.Size = new System.Drawing.Size(218, 600);
+            this.tabPageAnalyticsOptions.Size = new System.Drawing.Size(227, 600);
             this.tabPageAnalyticsOptions.TabIndex = 1;
             this.tabPageAnalyticsOptions.Text = "Options";
             // 
@@ -2724,8 +2694,8 @@ namespace MineControl
             // ColLogMessage
             // 
             this.ColLogMessage.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.ColLogMessage.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.ColLogMessage.DefaultCellStyle = dataGridViewCellStyle3;
             this.ColLogMessage.HeaderText = "Message";
             this.ColLogMessage.MinimumWidth = 30;
             this.ColLogMessage.Name = "ColLogMessage";
@@ -2868,6 +2838,7 @@ namespace MineControl
             // 
             // groupBoxControl
             // 
+            this.groupBoxControl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBoxControl.Controls.Add(this.linkLabelHelpDonate);
             this.groupBoxControl.Controls.Add(this.labelStatusDisplay);
             this.groupBoxControl.Controls.Add(this.label1);
@@ -2921,7 +2892,6 @@ namespace MineControl
             // 
             // buttonStopAutomation
             // 
-            this.buttonStopAutomation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonStopAutomation.Location = new System.Drawing.Point(817, 16);
             this.buttonStopAutomation.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.buttonStopAutomation.Name = "buttonStopAutomation";
@@ -2933,7 +2903,6 @@ namespace MineControl
             // 
             // buttonStartAutomation
             // 
-            this.buttonStartAutomation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonStartAutomation.Location = new System.Drawing.Point(721, 16);
             this.buttonStartAutomation.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.buttonStartAutomation.Name = "buttonStartAutomation";
@@ -2981,6 +2950,36 @@ namespace MineControl
             // openFileDialogBackups
             // 
             this.openFileDialogBackups.FileName = "openFileDialogBackupPath";
+            // 
+            // ColStatsStat
+            // 
+            this.ColStatsStat.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.ColStatsStat.DefaultCellStyle = dataGridViewCellStyle1;
+            this.ColStatsStat.HeaderText = "Stat";
+            this.ColStatsStat.Name = "ColStatsStat";
+            this.ColStatsStat.ReadOnly = true;
+            this.ColStatsStat.Width = 52;
+            // 
+            // ColStatsValue
+            // 
+            this.ColStatsValue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.NullValue = null;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.ColStatsValue.DefaultCellStyle = dataGridViewCellStyle2;
+            this.ColStatsValue.HeaderText = "Value";
+            this.ColStatsValue.Name = "ColStatsValue";
+            this.ColStatsValue.ReadOnly = true;
+            // 
+            // ColStatsLastUpdate
+            // 
+            this.ColStatsLastUpdate.HeaderText = "Last Update";
+            this.ColStatsLastUpdate.Name = "ColStatsLastUpdate";
+            this.ColStatsLastUpdate.ReadOnly = true;
+            this.ColStatsLastUpdate.Visible = false;
+            this.ColStatsLastUpdate.Width = 94;
             // 
             // FormMineControl
             // 
@@ -3238,9 +3237,6 @@ namespace MineControl
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.GroupBox groupBox7;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColStatsStat;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColStatsValue;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColStatsLastUpdate;
         private System.Windows.Forms.ComboBox comboBoxArchivesClearOldChartsUnit;
         private System.Windows.Forms.NumericUpDown numericUpDownArchivesClearOldChartsValue;
         private System.Windows.Forms.CheckBox checkBoxArchivesClearOldCharts;
@@ -3279,6 +3275,9 @@ namespace MineControl
         private System.Windows.Forms.DataGridViewComboBoxColumn ColDataInputSource;
         private System.Windows.Forms.DataGridViewComboBoxColumn ColDataMethod;
         private System.Windows.Forms.DataGridViewComboBoxColumn ColDataQuery;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColStatsStat;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColStatsValue;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColStatsLastUpdate;
     }
 }
 
