@@ -52,6 +52,7 @@ Note: CC BY-SA is specifically required due to adaptation of certain code from S
 - Most temperature/power management features are GPU-only, and only one GPU can be controlled.
 - Not internationalized, translated, or respectful of most Windows regional settings.
 - Not very user friendly.
+- Kind of ugly. We'll just say this is for performance reasons.
 - Chart data and stats aren't remembered or archived, i.e. you lose them when MineControl closes.
 - Can't automatically click on popups or do other interactive tasks required when launching other apps.
 - Probably some allowed configurations that would make no sense or cause errors or crashes.
