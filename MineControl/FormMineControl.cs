@@ -134,9 +134,25 @@ namespace MineControl
         public FormMineControl()
         {
             InitializeComponent();            
-            InitializeUI();
-            LoadSettingsToUI(true);            
-            IsInitializing = false;            
+            InitializeUI();            
+        }
+
+        /// <summary>
+        /// Ensures current settings file is loaded if one exists, upgrading (migrating) from previous versions as needed.
+        /// </summary>
+        private void LoadSettingsFile()
+        {
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal);
+            if (!config.HasFile)
+            {
+                Settings.Upgrade();
+                AddLogEntry($"Settings were migrated from the previous version of MineControl and loaded from \"{config.FilePath}\"");
+            }
+            else
+            {
+                // note: we don't need to actually load anything here, as .NET has done this already
+                AddLogEntry($"Existing MineControl settings were loaded from \"{config.FilePath}\"");
+            }
         }
 
         private void InitializeInternals()
@@ -1421,6 +1437,7 @@ namespace MineControl
 
         private void ArchiveChangedConfig(bool forceArchive = false)
         {
+            // TODO: fix issue where identical/near identical config is saved a bunch of times, perhaps after app is restarted
             if (Settings.archivesArchiveConfig && (configNeedsArchiving || forceArchive))
             {
                 configNeedsArchiving = false;
@@ -2423,6 +2440,23 @@ namespace MineControl
             }
         }
 
+        private void FormMineControl_Load(object sender, EventArgs e)
+        {
+            LoadSettingsFile();
+            LoadSettingsToUI(true);
+            IsInitializing = false;
+        }
+
+        private void FormMineControl_Shown(object sender, EventArgs e)
+        {
+            InitializeAutomationFromSavedState();
+            if (Settings.controlStartupMinimize)
+            {
+                Hide();
+            }
+            InitializeInternals();
+        }
+
         private void timerMain_Tick(object sender, EventArgs e)
         {
             DoPollingCycle();            
@@ -2455,16 +2489,7 @@ namespace MineControl
         {
             StopAutomation();
         }
-
-        private void FormMineControl_Shown(object sender, EventArgs e)
-        {            
-            InitializeAutomationFromSavedState();
-            if (Settings.controlStartupMinimize)
-            {
-                Hide();
-            }
-            InitializeInternals();
-        }
+        
 
         private void trackBarGPUPowerStep_Scroll(object sender, EventArgs e)
         {

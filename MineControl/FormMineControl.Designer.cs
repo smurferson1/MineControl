@@ -66,30 +66,16 @@ namespace MineControl
             this.textBoxTempPowerStepParam5 = new System.Windows.Forms.TextBox();
             this.trackBarGPUPowerStep = new System.Windows.Forms.TrackBar();
             this.numericUpDownTempMax = new System.Windows.Forms.NumericUpDown();
-            this.openFileDialogAppPath = new System.Windows.Forms.OpenFileDialog();
-            this.tabControlMain = new System.Windows.Forms.TabControl();
-            this.tabPageConfig = new System.Windows.Forms.TabPage();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.comboBoxMinerCPUSchedule = new System.Windows.Forms.ComboBox();
-            this.groupBoxGeneral = new System.Windows.Forms.GroupBox();
-            this.buttonGeneralResetConfig = new System.Windows.Forms.Button();
             this.label30 = new System.Windows.Forms.Label();
             this.checkBoxMinimizeToSysTray = new System.Windows.Forms.CheckBox();
-            this.numericUpDownMinerUserActivityTimeout = new System.Windows.Forms.NumericUpDown();
-            this.buttonGeneralExportConfig = new System.Windows.Forms.Button();
             this.checkBoxStartupMinimize = new System.Windows.Forms.CheckBox();
-            this.buttonGeneralImportConfig = new System.Windows.Forms.Button();
             this.label21 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
             this.numericUpDownTempPollingInterval = new System.Windows.Forms.NumericUpDown();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.comboBoxMinerGPUSchedule = new System.Windows.Forms.ComboBox();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.comboBoxArchivesClearOldChartsUnit = new System.Windows.Forms.ComboBox();
             this.numericUpDownArchivesClearOldChartsValue = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownArchivesDeleteOldFilesDays = new System.Windows.Forms.NumericUpDown();
-            this.buttonBackupsBackupFolder = new System.Windows.Forms.Button();
             this.textBoxArchivesArchiveFolder = new System.Windows.Forms.TextBox();
             this.label35 = new System.Windows.Forms.Label();
             this.comboBoxArchivesArchiveIntervalUnit = new System.Windows.Forms.ComboBox();
@@ -103,15 +89,8 @@ namespace MineControl
             this.label36 = new System.Windows.Forms.Label();
             this.checkBoxArchivesDeleteOldFiles = new System.Windows.Forms.CheckBox();
             this.checkBoxArchivesClearOldCharts = new System.Windows.Forms.CheckBox();
-            this.groupBoxDataTracking = new System.Windows.Forms.GroupBox();
-            this.dataGridViewMetrics = new System.Windows.Forms.DataGridView();
             this.buttonDataViewSysTrayTooltips = new System.Windows.Forms.Button();
             this.buttonDataRemoveUnusedQueryOptions = new System.Windows.Forms.Button();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.numericUpDownTempGPUShutOffThresholdSecs = new System.Windows.Forms.NumericUpDown();
             this.label14 = new System.Windows.Forms.Label();
             this.numericUpDownTempGPUShutOffSecs = new System.Windows.Forms.NumericUpDown();
@@ -120,6 +99,52 @@ namespace MineControl
             this.checkBoxTempStopWhenTempUnknown = new System.Windows.Forms.CheckBox();
             this.numericUpDownTempTryStepUpSecs = new System.Windows.Forms.NumericUpDown();
             this.checkBoxTempTryStepUp = new System.Windows.Forms.CheckBox();
+            this.buttonScheduleDeleteSchedule = new System.Windows.Forms.Button();
+            this.buttonScheduleDuplicateSchedule = new System.Windows.Forms.Button();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.textBoxScheduleName = new System.Windows.Forms.TextBox();
+            this.treeViewSchedule = new System.Windows.Forms.TreeView();
+            this.buttonScheduleCreateSchedule = new System.Windows.Forms.Button();
+            this.buttonChartClearData = new System.Windows.Forms.Button();
+            this.comboBoxChartShowLastUnit = new System.Windows.Forms.ComboBox();
+            this.numericUpDownChartShowLastX = new System.Windows.Forms.NumericUpDown();
+            this.radioButtonChartShowLastX = new System.Windows.Forms.RadioButton();
+            this.radioButtonChartShowAll = new System.Windows.Forms.RadioButton();
+            this.numericUpDownChartMinGPUTempOnYAxisValue = new System.Windows.Forms.NumericUpDown();
+            this.checkBoxChartMinGPUTempOnYAxisEnabled = new System.Windows.Forms.CheckBox();
+            this.checkBoxLogAutoScroll = new System.Windows.Forms.CheckBox();
+            this.checkBoxLogColorCode = new System.Windows.Forms.CheckBox();
+            this.comboBoxLogFilter = new System.Windows.Forms.ComboBox();
+            this.checkBoxEnableTempControl = new System.Windows.Forms.CheckBox();
+            this.checkBoxEnableMinerAutomation = new System.Windows.Forms.CheckBox();
+            this.openFileDialogAppPath = new System.Windows.Forms.OpenFileDialog();
+            this.tabControlMain = new System.Windows.Forms.TabControl();
+            this.tabPageConfig = new System.Windows.Forms.TabPage();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.comboBoxMinerCPUSchedule = new System.Windows.Forms.ComboBox();
+            this.groupBoxGeneral = new System.Windows.Forms.GroupBox();
+            this.buttonGeneralResetConfig = new System.Windows.Forms.Button();
+            this.numericUpDownMinerUserActivityTimeout = new System.Windows.Forms.NumericUpDown();
+            this.buttonGeneralExportConfig = new System.Windows.Forms.Button();
+            this.buttonGeneralImportConfig = new System.Windows.Forms.Button();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.comboBoxMinerGPUSchedule = new System.Windows.Forms.ComboBox();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.buttonBackupsBackupFolder = new System.Windows.Forms.Button();
+            this.groupBoxDataTracking = new System.Windows.Forms.GroupBox();
+            this.dataGridViewMetrics = new System.Windows.Forms.DataGridView();
+            this.ColDataEnableTracking = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.ColDataMetric = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColDataType = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.ColDataInputSource = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.ColDataMethod = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.ColDataQuery = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.label9 = new System.Windows.Forms.Label();
             this.labelMaxSpeed = new System.Windows.Forms.Label();
             this.labelMinSpeed = new System.Windows.Forms.Label();
@@ -163,24 +188,12 @@ namespace MineControl
             this.dateTimePickerScheduleStartTime = new System.Windows.Forms.DateTimePicker();
             this.radioButtonScheduleTime = new System.Windows.Forms.RadioButton();
             this.radioButtonScheduleDaysOfWeek = new System.Windows.Forms.RadioButton();
-            this.buttonScheduleDeleteSchedule = new System.Windows.Forms.Button();
-            this.buttonScheduleDuplicateSchedule = new System.Windows.Forms.Button();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.textBoxScheduleName = new System.Windows.Forms.TextBox();
-            this.treeViewSchedule = new System.Windows.Forms.TreeView();
-            this.buttonScheduleCreateSchedule = new System.Windows.Forms.Button();
             this.comboBoxScheduleSchedules = new System.Windows.Forms.ComboBox();
             this.tabPageAnalytics = new System.Windows.Forms.TabPage();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBoxCharts = new System.Windows.Forms.GroupBox();
             this.tabControlCharts = new System.Windows.Forms.TabControl();
-            this.buttonChartClearData = new System.Windows.Forms.Button();
-            this.comboBoxChartShowLastUnit = new System.Windows.Forms.ComboBox();
-            this.numericUpDownChartShowLastX = new System.Windows.Forms.NumericUpDown();
-            this.radioButtonChartShowLastX = new System.Windows.Forms.RadioButton();
-            this.radioButtonChartShowAll = new System.Windows.Forms.RadioButton();
             this.tabControlAnalytics = new System.Windows.Forms.TabControl();
             this.tabPageStats = new System.Windows.Forms.TabPage();
             this.dataGridViewStats = new System.Windows.Forms.DataGridView();
@@ -188,8 +201,6 @@ namespace MineControl
             this.ColStatsValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColStatsLastUpdate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPageAnalyticsOptions = new System.Windows.Forms.TabPage();
-            this.numericUpDownChartMinGPUTempOnYAxisValue = new System.Windows.Forms.NumericUpDown();
-            this.checkBoxChartMinGPUTempOnYAxisEnabled = new System.Windows.Forms.CheckBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label32 = new System.Windows.Forms.Label();
             this.dataGridViewLog = new System.Windows.Forms.DataGridView();
@@ -197,9 +208,6 @@ namespace MineControl
             this.ColLogType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColLogTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColLogMessage = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.checkBoxLogAutoScroll = new System.Windows.Forms.CheckBox();
-            this.checkBoxLogColorCode = new System.Windows.Forms.CheckBox();
-            this.comboBoxLogFilter = new System.Windows.Forms.ComboBox();
             this.tabPageAbout = new System.Windows.Forms.TabPage();
             this.linkLabelAboutLicense = new System.Windows.Forms.LinkLabel();
             this.linkLabelAboutLink = new System.Windows.Forms.LinkLabel();
@@ -213,8 +221,6 @@ namespace MineControl
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.checkBoxEnableTempControl = new System.Windows.Forms.CheckBox();
-            this.checkBoxEnableMinerAutomation = new System.Windows.Forms.CheckBox();
             this.groupBoxControl = new System.Windows.Forms.GroupBox();
             this.linkLabelHelpDonate = new System.Windows.Forms.LinkLabel();
             this.labelStatusDisplay = new System.Windows.Forms.Label();
@@ -229,36 +235,32 @@ namespace MineControl
             this.openFileDialogBackups = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialogBackups = new System.Windows.Forms.SaveFileDialog();
             this.folderBrowserDialogBackups = new System.Windows.Forms.FolderBrowserDialog();
-            this.ColDataEnableTracking = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.ColDataMetric = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColDataType = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.ColDataInputSource = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.ColDataMethod = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.ColDataQuery = new System.Windows.Forms.DataGridViewComboBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempSteppingBuffer)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempMin)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarGPUPowerStep)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempMax)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempPollingInterval)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownArchivesClearOldChartsValue)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownArchivesDeleteOldFilesDays)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownArchivesArchiveInterval)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownArchivesLogManagementValue)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempGPUShutOffThresholdSecs)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempGPUShutOffSecs)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempTryStepUpSecs)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownChartShowLastX)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownChartMinGPUTempOnYAxisValue)).BeginInit();
             this.tabControlMain.SuspendLayout();
             this.tabPageConfig.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBoxGeneral.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinerUserActivityTimeout)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempPollingInterval)).BeginInit();
             this.groupBox4.SuspendLayout();
             this.groupBox6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownArchivesClearOldChartsValue)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownArchivesDeleteOldFilesDays)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownArchivesArchiveInterval)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownArchivesLogManagementValue)).BeginInit();
             this.groupBoxDataTracking.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewMetrics)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.groupBox9.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempGPUShutOffThresholdSecs)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempGPUShutOffSecs)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempTryStepUpSecs)).BeginInit();
             this.groupBoxMinersAndApps.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewApps)).BeginInit();
             this.tabPageSchedule.SuspendLayout();
@@ -278,12 +280,10 @@ namespace MineControl
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.groupBoxCharts.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownChartShowLastX)).BeginInit();
             this.tabControlAnalytics.SuspendLayout();
             this.tabPageStats.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewStats)).BeginInit();
             this.tabPageAnalyticsOptions.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownChartMinGPUTempOnYAxisValue)).BeginInit();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLog)).BeginInit();
             this.tabPageAbout.SuspendLayout();
@@ -750,108 +750,6 @@ namespace MineControl
         "l will try to decrease GPU power step.");
             this.numericUpDownTempMax.ValueChanged += new System.EventHandler(this.numericUpDownTempMax_ValueChanged);
             // 
-            // openFileDialogAppPath
-            // 
-            this.openFileDialogAppPath.FileName = "openFileDialogAppPath";
-            // 
-            // tabControlMain
-            // 
-            this.tabControlMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabControlMain.Controls.Add(this.tabPageConfig);
-            this.tabControlMain.Controls.Add(this.tabPageSchedule);
-            this.tabControlMain.Controls.Add(this.tabPageAnalytics);
-            this.tabControlMain.Controls.Add(this.tabPageAbout);
-            this.tabControlMain.Location = new System.Drawing.Point(1, 2);
-            this.tabControlMain.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tabControlMain.Name = "tabControlMain";
-            this.tabControlMain.SelectedIndex = 0;
-            this.tabControlMain.Size = new System.Drawing.Size(922, 943);
-            this.tabControlMain.TabIndex = 7;
-            this.tabControlMain.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControlMain_Selected);
-            // 
-            // tabPageConfig
-            // 
-            this.tabPageConfig.Controls.Add(this.groupBox5);
-            this.tabPageConfig.Controls.Add(this.groupBoxGeneral);
-            this.tabPageConfig.Controls.Add(this.groupBox4);
-            this.tabPageConfig.Controls.Add(this.groupBox6);
-            this.tabPageConfig.Controls.Add(this.groupBoxDataTracking);
-            this.tabPageConfig.Controls.Add(this.groupBox2);
-            this.tabPageConfig.Controls.Add(this.groupBoxMinersAndApps);
-            this.tabPageConfig.Location = new System.Drawing.Point(4, 24);
-            this.tabPageConfig.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tabPageConfig.Name = "tabPageConfig";
-            this.tabPageConfig.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tabPageConfig.Size = new System.Drawing.Size(914, 915);
-            this.tabPageConfig.TabIndex = 0;
-            this.tabPageConfig.Text = "Config";
-            // 
-            // groupBox5
-            // 
-            this.groupBox5.Controls.Add(this.checkBoxMinerCPUShowLogs);
-            this.groupBox5.Controls.Add(this.checkBoxMinerCPUUserActivityShutoff);
-            this.groupBox5.Controls.Add(this.comboBoxMinerCPUSchedule);
-            this.groupBox5.Controls.Add(this.radioButtonCPUModeDontControl);
-            this.groupBox5.Controls.Add(this.radioButtonCPUModeAlwaysOff);
-            this.groupBox5.Controls.Add(this.radioButtonCPUModeAlwaysOn);
-            this.groupBox5.Controls.Add(this.radioButtonCPUModeSchedule);
-            this.groupBox5.Location = new System.Drawing.Point(463, 151);
-            this.groupBox5.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox5.Size = new System.Drawing.Size(443, 109);
-            this.groupBox5.TabIndex = 5;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "CPU Miner";
-            // 
-            // comboBoxMinerCPUSchedule
-            // 
-            this.comboBoxMinerCPUSchedule.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxMinerCPUSchedule.DropDownWidth = 600;
-            this.comboBoxMinerCPUSchedule.FormattingEnabled = true;
-            this.comboBoxMinerCPUSchedule.Location = new System.Drawing.Point(114, 46);
-            this.comboBoxMinerCPUSchedule.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.comboBoxMinerCPUSchedule.Name = "comboBoxMinerCPUSchedule";
-            this.comboBoxMinerCPUSchedule.Size = new System.Drawing.Size(315, 23);
-            this.comboBoxMinerCPUSchedule.TabIndex = 8;
-            this.comboBoxMinerCPUSchedule.SelectedIndexChanged += new System.EventHandler(this.SettingChanged);
-            // 
-            // groupBoxGeneral
-            // 
-            this.groupBoxGeneral.Controls.Add(this.buttonGeneralResetConfig);
-            this.groupBoxGeneral.Controls.Add(this.label30);
-            this.groupBoxGeneral.Controls.Add(this.checkBoxMinimizeToSysTray);
-            this.groupBoxGeneral.Controls.Add(this.numericUpDownMinerUserActivityTimeout);
-            this.groupBoxGeneral.Controls.Add(this.buttonGeneralExportConfig);
-            this.groupBoxGeneral.Controls.Add(this.checkBoxStartupMinimize);
-            this.groupBoxGeneral.Controls.Add(this.buttonGeneralImportConfig);
-            this.groupBoxGeneral.Controls.Add(this.label21);
-            this.groupBoxGeneral.Controls.Add(this.checkBoxStartUpAutomation);
-            this.groupBoxGeneral.Controls.Add(this.label23);
-            this.groupBoxGeneral.Controls.Add(this.label22);
-            this.groupBoxGeneral.Controls.Add(this.numericUpDownTempPollingInterval);
-            this.groupBoxGeneral.Location = new System.Drawing.Point(463, 498);
-            this.groupBoxGeneral.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBoxGeneral.Name = "groupBoxGeneral";
-            this.groupBoxGeneral.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBoxGeneral.Size = new System.Drawing.Size(443, 190);
-            this.groupBoxGeneral.TabIndex = 6;
-            this.groupBoxGeneral.TabStop = false;
-            this.groupBoxGeneral.Text = "General";
-            // 
-            // buttonGeneralResetConfig
-            // 
-            this.buttonGeneralResetConfig.Location = new System.Drawing.Point(327, 81);
-            this.buttonGeneralResetConfig.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.buttonGeneralResetConfig.Name = "buttonGeneralResetConfig";
-            this.buttonGeneralResetConfig.Size = new System.Drawing.Size(105, 27);
-            this.buttonGeneralResetConfig.TabIndex = 65;
-            this.buttonGeneralResetConfig.Text = "Reset Config...";
-            this.buttonGeneralResetConfig.UseVisualStyleBackColor = true;
-            this.buttonGeneralResetConfig.Click += new System.EventHandler(this.buttonGeneralResetConfig_Click);
-            // 
             // label30
             // 
             this.label30.AutoSize = true;
@@ -879,28 +777,6 @@ namespace MineControl
             this.checkBoxMinimizeToSysTray.UseVisualStyleBackColor = true;
             this.checkBoxMinimizeToSysTray.CheckedChanged += new System.EventHandler(this.SettingChanged);
             // 
-            // numericUpDownMinerUserActivityTimeout
-            // 
-            this.numericUpDownMinerUserActivityTimeout.Location = new System.Drawing.Point(131, 151);
-            this.numericUpDownMinerUserActivityTimeout.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.numericUpDownMinerUserActivityTimeout.Name = "numericUpDownMinerUserActivityTimeout";
-            this.numericUpDownMinerUserActivityTimeout.Size = new System.Drawing.Size(47, 23);
-            this.numericUpDownMinerUserActivityTimeout.TabIndex = 7;
-            this.toolTipNotification.SetToolTip(this.numericUpDownMinerUserActivityTimeout, "How long MineControl will wait after the last user activity before considering th" +
-        "e user inactive.");
-            this.numericUpDownMinerUserActivityTimeout.ValueChanged += new System.EventHandler(this.SettingChanged);
-            // 
-            // buttonGeneralExportConfig
-            // 
-            this.buttonGeneralExportConfig.Location = new System.Drawing.Point(327, 49);
-            this.buttonGeneralExportConfig.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.buttonGeneralExportConfig.Name = "buttonGeneralExportConfig";
-            this.buttonGeneralExportConfig.Size = new System.Drawing.Size(105, 27);
-            this.buttonGeneralExportConfig.TabIndex = 64;
-            this.buttonGeneralExportConfig.Text = "Export Config...";
-            this.buttonGeneralExportConfig.UseVisualStyleBackColor = true;
-            this.buttonGeneralExportConfig.Click += new System.EventHandler(this.buttonBackupsExportConfig_Click);
-            // 
             // checkBoxStartupMinimize
             // 
             this.checkBoxStartupMinimize.AutoSize = true;
@@ -913,17 +789,6 @@ namespace MineControl
             this.toolTipMain.SetToolTip(this.checkBoxStartupMinimize, "When enabled, MineControl minimizes itself when it starts");
             this.checkBoxStartupMinimize.UseVisualStyleBackColor = true;
             this.checkBoxStartupMinimize.CheckedChanged += new System.EventHandler(this.SettingChanged);
-            // 
-            // buttonGeneralImportConfig
-            // 
-            this.buttonGeneralImportConfig.Location = new System.Drawing.Point(327, 17);
-            this.buttonGeneralImportConfig.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.buttonGeneralImportConfig.Name = "buttonGeneralImportConfig";
-            this.buttonGeneralImportConfig.Size = new System.Drawing.Size(105, 27);
-            this.buttonGeneralImportConfig.TabIndex = 63;
-            this.buttonGeneralImportConfig.Text = "Import Config...";
-            this.buttonGeneralImportConfig.UseVisualStyleBackColor = true;
-            this.buttonGeneralImportConfig.Click += new System.EventHandler(this.buttonBackupsImportConfig_Click);
             // 
             // label21
             // 
@@ -989,65 +854,6 @@ namespace MineControl
             0});
             this.numericUpDownTempPollingInterval.ValueChanged += new System.EventHandler(this.SettingChanged);
             // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.checkBoxMinerGPUShowLogs);
-            this.groupBox4.Controls.Add(this.checkBoxMinerGPUUserActivityShutoff);
-            this.groupBox4.Controls.Add(this.comboBoxMinerGPUSchedule);
-            this.groupBox4.Controls.Add(this.radioButtonGPUModeDontControl);
-            this.groupBox4.Controls.Add(this.radioButtonGPUModeAlwaysOff);
-            this.groupBox4.Controls.Add(this.radioButtonGPUModeAlwaysOn);
-            this.groupBox4.Controls.Add(this.radioButtonGPUModeSchedule);
-            this.groupBox4.Location = new System.Drawing.Point(8, 151);
-            this.groupBox4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox4.Size = new System.Drawing.Size(442, 109);
-            this.groupBox4.TabIndex = 4;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "GPU Miner";
-            // 
-            // comboBoxMinerGPUSchedule
-            // 
-            this.comboBoxMinerGPUSchedule.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxMinerGPUSchedule.DropDownWidth = 600;
-            this.comboBoxMinerGPUSchedule.FormattingEnabled = true;
-            this.comboBoxMinerGPUSchedule.Location = new System.Drawing.Point(114, 46);
-            this.comboBoxMinerGPUSchedule.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.comboBoxMinerGPUSchedule.Name = "comboBoxMinerGPUSchedule";
-            this.comboBoxMinerGPUSchedule.Size = new System.Drawing.Size(314, 23);
-            this.comboBoxMinerGPUSchedule.TabIndex = 6;
-            this.comboBoxMinerGPUSchedule.SelectedIndexChanged += new System.EventHandler(this.SettingChanged);
-            // 
-            // groupBox6
-            // 
-            this.groupBox6.Controls.Add(this.comboBoxArchivesClearOldChartsUnit);
-            this.groupBox6.Controls.Add(this.numericUpDownArchivesClearOldChartsValue);
-            this.groupBox6.Controls.Add(this.numericUpDownArchivesDeleteOldFilesDays);
-            this.groupBox6.Controls.Add(this.buttonBackupsBackupFolder);
-            this.groupBox6.Controls.Add(this.textBoxArchivesArchiveFolder);
-            this.groupBox6.Controls.Add(this.label35);
-            this.groupBox6.Controls.Add(this.comboBoxArchivesArchiveIntervalUnit);
-            this.groupBox6.Controls.Add(this.numericUpDownArchivesArchiveInterval);
-            this.groupBox6.Controls.Add(this.label34);
-            this.groupBox6.Controls.Add(this.comboBoxArchivesLogManagementUnit);
-            this.groupBox6.Controls.Add(this.numericUpDownArchivesLogManagementValue);
-            this.groupBox6.Controls.Add(this.label33);
-            this.groupBox6.Controls.Add(this.comboBoxArchivesLogManagementType);
-            this.groupBox6.Controls.Add(this.checkBoxArchivesLogManagement);
-            this.groupBox6.Controls.Add(this.checkBoxArchivesArchiveConfig);
-            this.groupBox6.Controls.Add(this.label36);
-            this.groupBox6.Controls.Add(this.checkBoxArchivesDeleteOldFiles);
-            this.groupBox6.Controls.Add(this.checkBoxArchivesClearOldCharts);
-            this.groupBox6.Location = new System.Drawing.Point(463, 269);
-            this.groupBox6.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox6.Size = new System.Drawing.Size(443, 221);
-            this.groupBox6.TabIndex = 7;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Archives And Data Retention";
-            // 
             // comboBoxArchivesClearOldChartsUnit
             // 
             this.comboBoxArchivesClearOldChartsUnit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -1083,17 +889,6 @@ namespace MineControl
             this.numericUpDownArchivesDeleteOldFilesDays.TabIndex = 66;
             this.toolTipMain.SetToolTip(this.numericUpDownArchivesDeleteOldFilesDays, "When enabled, archive files older than the specified number of days are deleted f" +
         "rom the Archive Folder.");
-            // 
-            // buttonBackupsBackupFolder
-            // 
-            this.buttonBackupsBackupFolder.Location = new System.Drawing.Point(401, 20);
-            this.buttonBackupsBackupFolder.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.buttonBackupsBackupFolder.Name = "buttonBackupsBackupFolder";
-            this.buttonBackupsBackupFolder.Size = new System.Drawing.Size(28, 25);
-            this.buttonBackupsBackupFolder.TabIndex = 62;
-            this.buttonBackupsBackupFolder.Text = "...";
-            this.buttonBackupsBackupFolder.UseVisualStyleBackColor = true;
-            this.buttonBackupsBackupFolder.Click += new System.EventHandler(this.buttonBackupsBackupFolder_Click);
             // 
             // textBoxArchivesArchiveFolder
             // 
@@ -1268,53 +1063,6 @@ namespace MineControl
         "ated on the archive interval.");
             this.checkBoxArchivesClearOldCharts.UseVisualStyleBackColor = true;
             // 
-            // groupBoxDataTracking
-            // 
-            this.groupBoxDataTracking.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBoxDataTracking.Controls.Add(this.dataGridViewMetrics);
-            this.groupBoxDataTracking.Controls.Add(this.buttonDataViewSysTrayTooltips);
-            this.groupBoxDataTracking.Controls.Add(this.buttonDataRemoveUnusedQueryOptions);
-            this.groupBoxDataTracking.Location = new System.Drawing.Point(8, 694);
-            this.groupBoxDataTracking.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBoxDataTracking.Name = "groupBoxDataTracking";
-            this.groupBoxDataTracking.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBoxDataTracking.Size = new System.Drawing.Size(897, 215);
-            this.groupBoxDataTracking.TabIndex = 9;
-            this.groupBoxDataTracking.TabStop = false;
-            this.groupBoxDataTracking.Text = "Data Tracking";
-            // 
-            // dataGridViewMetrics
-            // 
-            this.dataGridViewMetrics.AllowUserToAddRows = false;
-            this.dataGridViewMetrics.AllowUserToDeleteRows = false;
-            this.dataGridViewMetrics.AllowUserToResizeRows = false;
-            this.dataGridViewMetrics.BackgroundColor = System.Drawing.SystemColors.Window;
-            this.dataGridViewMetrics.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewMetrics.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ColDataEnableTracking,
-            this.ColDataMetric,
-            this.ColDataType,
-            this.ColDataInputSource,
-            this.ColDataMethod,
-            this.ColDataQuery});
-            this.dataGridViewMetrics.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridViewMetrics.Location = new System.Drawing.Point(4, 19);
-            this.dataGridViewMetrics.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.dataGridViewMetrics.Name = "dataGridViewMetrics";
-            this.dataGridViewMetrics.RowHeadersVisible = false;
-            this.dataGridViewMetrics.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dataGridViewMetrics.Size = new System.Drawing.Size(889, 193);
-            this.dataGridViewMetrics.TabIndex = 0;
-            this.dataGridViewMetrics.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewMetrics_CellEnter);
-            this.dataGridViewMetrics.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dataGridViewMetrics_CellValidating);
-            this.dataGridViewMetrics.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_CellValueChanged);
-            this.dataGridViewMetrics.CurrentCellDirtyStateChanged += new System.EventHandler(this.dataGridViewMetrics_CurrentCellDirtyStateChanged);
-            this.dataGridViewMetrics.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridViewMetrics_DataError);
-            this.dataGridViewMetrics.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dataGridViewMetrics_EditingControlShowing);
-            this.dataGridViewMetrics.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dataGridViewMetrics_RowsAdded);
-            // 
             // buttonDataViewSysTrayTooltips
             // 
             this.buttonDataViewSysTrayTooltips.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -1343,86 +1091,6 @@ namespace MineControl
         "to any data tracking metric.");
             this.buttonDataRemoveUnusedQueryOptions.UseVisualStyleBackColor = true;
             this.buttonDataRemoveUnusedQueryOptions.Click += new System.EventHandler(this.buttonDataRemoveUnusedQueryOptions_Click);
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.groupBox7);
-            this.groupBox2.Controls.Add(this.groupBox9);
-            this.groupBox2.Controls.Add(this.label10);
-            this.groupBox2.Controls.Add(this.numericUpDownTempTryStepUpSecs);
-            this.groupBox2.Controls.Add(this.checkBoxTempTryStepUp);
-            this.groupBox2.Controls.Add(this.textBoxTempPowerStepParam1);
-            this.groupBox2.Controls.Add(this.textBoxTempPowerStepParam2);
-            this.groupBox2.Controls.Add(this.textBoxTempPowerStepParam3);
-            this.groupBox2.Controls.Add(this.textBoxTempPowerStepParam4);
-            this.groupBox2.Controls.Add(this.textBoxTempPowerStepParam5);
-            this.groupBox2.Controls.Add(this.label2);
-            this.groupBox2.Controls.Add(this.numericUpDownTempSteppingBuffer);
-            this.groupBox2.Controls.Add(this.label24);
-            this.groupBox2.Controls.Add(this.label9);
-            this.groupBox2.Controls.Add(this.labelMaxSpeed);
-            this.groupBox2.Controls.Add(this.labelMinSpeed);
-            this.groupBox2.Controls.Add(this.label8);
-            this.groupBox2.Controls.Add(this.trackBarGPUPowerStep);
-            this.groupBox2.Controls.Add(this.label7);
-            this.groupBox2.Location = new System.Drawing.Point(9, 269);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox2.Size = new System.Drawing.Size(441, 419);
-            this.groupBox2.TabIndex = 5;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "GPU Temperature Management";
-            // 
-            // groupBox7
-            // 
-            this.groupBox7.Controls.Add(this.numericUpDownTempMax);
-            this.groupBox7.Controls.Add(this.numericUpDownTempMin);
-            this.groupBox7.Controls.Add(this.label5);
-            this.groupBox7.Controls.Add(this.label6);
-            this.groupBox7.Location = new System.Drawing.Point(264, 24);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(163, 60);
-            this.groupBox7.TabIndex = 55;
-            this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "Target Mem Junc Temps";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(7, 27);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(28, 15);
-            this.label5.TabIndex = 6;
-            this.label5.Text = "Min";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(83, 27);
-            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(30, 15);
-            this.label6.TabIndex = 7;
-            this.label6.Text = "Max";
-            // 
-            // groupBox9
-            // 
-            this.groupBox9.Controls.Add(this.numericUpDownTempGPUShutOffThresholdSecs);
-            this.groupBox9.Controls.Add(this.label14);
-            this.groupBox9.Controls.Add(this.numericUpDownTempGPUShutOffSecs);
-            this.groupBox9.Controls.Add(this.label15);
-            this.groupBox9.Controls.Add(this.checkBoxStopWhenOverheat);
-            this.groupBox9.Controls.Add(this.checkBoxTempStopWhenTempUnknown);
-            this.groupBox9.Location = new System.Drawing.Point(14, 256);
-            this.groupBox9.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox9.Size = new System.Drawing.Size(413, 147);
-            this.groupBox9.TabIndex = 52;
-            this.groupBox9.TabStop = false;
-            this.groupBox9.Text = "GPU Failsafe Protections";
             // 
             // numericUpDownTempGPUShutOffThresholdSecs
             // 
@@ -1566,6 +1234,671 @@ namespace MineControl
         "nged during the specified number of seconds.");
             this.checkBoxTempTryStepUp.UseVisualStyleBackColor = true;
             this.checkBoxTempTryStepUp.CheckedChanged += new System.EventHandler(this.SettingChanged);
+            // 
+            // buttonScheduleDeleteSchedule
+            // 
+            this.buttonScheduleDeleteSchedule.Location = new System.Drawing.Point(686, 6);
+            this.buttonScheduleDeleteSchedule.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.buttonScheduleDeleteSchedule.Name = "buttonScheduleDeleteSchedule";
+            this.buttonScheduleDeleteSchedule.Size = new System.Drawing.Size(88, 27);
+            this.buttonScheduleDeleteSchedule.TabIndex = 7;
+            this.buttonScheduleDeleteSchedule.Text = "Delete";
+            this.toolTipMain.SetToolTip(this.buttonScheduleDeleteSchedule, "Delete the selected schedule");
+            this.buttonScheduleDeleteSchedule.UseVisualStyleBackColor = true;
+            this.buttonScheduleDeleteSchedule.Click += new System.EventHandler(this.buttonScheduleDeleteSchedule_Click);
+            // 
+            // buttonScheduleDuplicateSchedule
+            // 
+            this.buttonScheduleDuplicateSchedule.Location = new System.Drawing.Point(592, 6);
+            this.buttonScheduleDuplicateSchedule.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.buttonScheduleDuplicateSchedule.Name = "buttonScheduleDuplicateSchedule";
+            this.buttonScheduleDuplicateSchedule.Size = new System.Drawing.Size(88, 27);
+            this.buttonScheduleDuplicateSchedule.TabIndex = 6;
+            this.buttonScheduleDuplicateSchedule.Text = "Duplicate";
+            this.toolTipMain.SetToolTip(this.buttonScheduleDuplicateSchedule, "Duplicate the selected schedule");
+            this.buttonScheduleDuplicateSchedule.UseVisualStyleBackColor = true;
+            this.buttonScheduleDuplicateSchedule.Click += new System.EventHandler(this.buttonScheduleDuplicateSchedule_Click);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(8, 123);
+            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(50, 15);
+            this.label12.TabIndex = 5;
+            this.label12.Text = "Content";
+            this.toolTipMain.SetToolTip(this.label12, "Content of the selected schedule");
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(8, 53);
+            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(39, 15);
+            this.label11.TabIndex = 4;
+            this.label11.Text = "Name";
+            this.toolTipMain.SetToolTip(this.label11, "Name of the selected schedule");
+            // 
+            // textBoxScheduleName
+            // 
+            this.textBoxScheduleName.Location = new System.Drawing.Point(12, 72);
+            this.textBoxScheduleName.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.textBoxScheduleName.Name = "textBoxScheduleName";
+            this.textBoxScheduleName.Size = new System.Drawing.Size(466, 23);
+            this.textBoxScheduleName.TabIndex = 3;
+            this.toolTipMain.SetToolTip(this.textBoxScheduleName, "Name of the selected schedule");
+            this.textBoxScheduleName.TextChanged += new System.EventHandler(this.textBoxScheduleName_TextChanged);
+            this.textBoxScheduleName.Leave += new System.EventHandler(this.textBoxScheduleName_Leave);
+            // 
+            // treeViewSchedule
+            // 
+            this.treeViewSchedule.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.treeViewSchedule.HideSelection = false;
+            this.treeViewSchedule.Location = new System.Drawing.Point(12, 142);
+            this.treeViewSchedule.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.treeViewSchedule.Name = "treeViewSchedule";
+            this.treeViewSchedule.Size = new System.Drawing.Size(466, 346);
+            this.treeViewSchedule.TabIndex = 2;
+            this.toolTipMain.SetToolTip(this.treeViewSchedule, "Content of the selected schedule");
+            // 
+            // buttonScheduleCreateSchedule
+            // 
+            this.buttonScheduleCreateSchedule.Location = new System.Drawing.Point(497, 6);
+            this.buttonScheduleCreateSchedule.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.buttonScheduleCreateSchedule.Name = "buttonScheduleCreateSchedule";
+            this.buttonScheduleCreateSchedule.Size = new System.Drawing.Size(88, 27);
+            this.buttonScheduleCreateSchedule.TabIndex = 1;
+            this.buttonScheduleCreateSchedule.Text = "Create New";
+            this.toolTipMain.SetToolTip(this.buttonScheduleCreateSchedule, "Create a new empty schedule");
+            this.buttonScheduleCreateSchedule.UseVisualStyleBackColor = true;
+            this.buttonScheduleCreateSchedule.Click += new System.EventHandler(this.buttonScheduleCreateSchedule_Click);
+            // 
+            // buttonChartClearData
+            // 
+            this.buttonChartClearData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonChartClearData.Location = new System.Drawing.Point(573, 592);
+            this.buttonChartClearData.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.buttonChartClearData.Name = "buttonChartClearData";
+            this.buttonChartClearData.Size = new System.Drawing.Size(90, 27);
+            this.buttonChartClearData.TabIndex = 19;
+            this.buttonChartClearData.Text = "Clear Data";
+            this.toolTipMain.SetToolTip(this.buttonChartClearData, "Clears ALL data on ALL charts.");
+            this.buttonChartClearData.UseVisualStyleBackColor = true;
+            this.buttonChartClearData.Click += new System.EventHandler(this.buttonChartClearData_Click);
+            // 
+            // comboBoxChartShowLastUnit
+            // 
+            this.comboBoxChartShowLastUnit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.comboBoxChartShowLastUnit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxChartShowLastUnit.FormattingEnabled = true;
+            this.comboBoxChartShowLastUnit.Items.AddRange(new object[] {
+            "Minutes",
+            "Hours",
+            "Days"});
+            this.comboBoxChartShowLastUnit.Location = new System.Drawing.Point(230, 597);
+            this.comboBoxChartShowLastUnit.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.comboBoxChartShowLastUnit.Name = "comboBoxChartShowLastUnit";
+            this.comboBoxChartShowLastUnit.Size = new System.Drawing.Size(89, 23);
+            this.comboBoxChartShowLastUnit.TabIndex = 18;
+            this.toolTipMain.SetToolTip(this.comboBoxChartShowLastUnit, "Limits visible area of all charts. Doesn\'t maintain itself over time.");
+            this.comboBoxChartShowLastUnit.SelectedValueChanged += new System.EventHandler(this.ChartShowConfigChanged);
+            // 
+            // numericUpDownChartShowLastX
+            // 
+            this.numericUpDownChartShowLastX.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.numericUpDownChartShowLastX.Location = new System.Drawing.Point(169, 597);
+            this.numericUpDownChartShowLastX.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.numericUpDownChartShowLastX.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numericUpDownChartShowLastX.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownChartShowLastX.Name = "numericUpDownChartShowLastX";
+            this.numericUpDownChartShowLastX.Size = new System.Drawing.Size(56, 23);
+            this.numericUpDownChartShowLastX.TabIndex = 17;
+            this.toolTipMain.SetToolTip(this.numericUpDownChartShowLastX, "Limits visible area of all charts. Doesn\'t maintain itself over time.");
+            this.numericUpDownChartShowLastX.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownChartShowLastX.ValueChanged += new System.EventHandler(this.ChartShowConfigChanged);
+            // 
+            // radioButtonChartShowLastX
+            // 
+            this.radioButtonChartShowLastX.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.radioButtonChartShowLastX.AutoSize = true;
+            this.radioButtonChartShowLastX.Location = new System.Drawing.Point(93, 597);
+            this.radioButtonChartShowLastX.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.radioButtonChartShowLastX.Name = "radioButtonChartShowLastX";
+            this.radioButtonChartShowLastX.Size = new System.Drawing.Size(78, 19);
+            this.radioButtonChartShowLastX.TabIndex = 16;
+            this.radioButtonChartShowLastX.Text = "Show Last";
+            this.toolTipMain.SetToolTip(this.radioButtonChartShowLastX, "Limits visible data of all charts by X axis (time). Doesn\'t maintain itself over " +
+        "time.");
+            this.radioButtonChartShowLastX.UseVisualStyleBackColor = true;
+            this.radioButtonChartShowLastX.CheckedChanged += new System.EventHandler(this.ChartShowConfigChanged);
+            // 
+            // radioButtonChartShowAll
+            // 
+            this.radioButtonChartShowAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.radioButtonChartShowAll.AutoSize = true;
+            this.radioButtonChartShowAll.Checked = true;
+            this.radioButtonChartShowAll.Location = new System.Drawing.Point(9, 597);
+            this.radioButtonChartShowAll.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.radioButtonChartShowAll.Name = "radioButtonChartShowAll";
+            this.radioButtonChartShowAll.Size = new System.Drawing.Size(71, 19);
+            this.radioButtonChartShowAll.TabIndex = 14;
+            this.radioButtonChartShowAll.TabStop = true;
+            this.radioButtonChartShowAll.Text = "Show All";
+            this.toolTipMain.SetToolTip(this.radioButtonChartShowAll, "Shows all available chart data on the X (time) axis.");
+            this.radioButtonChartShowAll.UseVisualStyleBackColor = true;
+            this.radioButtonChartShowAll.CheckedChanged += new System.EventHandler(this.ChartShowConfigChanged);
+            // 
+            // numericUpDownChartMinGPUTempOnYAxisValue
+            // 
+            this.numericUpDownChartMinGPUTempOnYAxisValue.Location = new System.Drawing.Point(162, 18);
+            this.numericUpDownChartMinGPUTempOnYAxisValue.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.numericUpDownChartMinGPUTempOnYAxisValue.Name = "numericUpDownChartMinGPUTempOnYAxisValue";
+            this.numericUpDownChartMinGPUTempOnYAxisValue.Size = new System.Drawing.Size(40, 23);
+            this.numericUpDownChartMinGPUTempOnYAxisValue.TabIndex = 21;
+            this.toolTipMain.SetToolTip(this.numericUpDownChartMinGPUTempOnYAxisValue, resources.GetString("numericUpDownChartMinGPUTempOnYAxisValue.ToolTip"));
+            this.numericUpDownChartMinGPUTempOnYAxisValue.Value = new decimal(new int[] {
+            80,
+            0,
+            0,
+            0});
+            this.numericUpDownChartMinGPUTempOnYAxisValue.ValueChanged += new System.EventHandler(this.SettingChanged);
+            // 
+            // checkBoxChartMinGPUTempOnYAxisEnabled
+            // 
+            this.checkBoxChartMinGPUTempOnYAxisEnabled.AutoSize = true;
+            this.checkBoxChartMinGPUTempOnYAxisEnabled.Checked = true;
+            this.checkBoxChartMinGPUTempOnYAxisEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxChartMinGPUTempOnYAxisEnabled.Location = new System.Drawing.Point(12, 18);
+            this.checkBoxChartMinGPUTempOnYAxisEnabled.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.checkBoxChartMinGPUTempOnYAxisEnabled.Name = "checkBoxChartMinGPUTempOnYAxisEnabled";
+            this.checkBoxChartMinGPUTempOnYAxisEnabled.Size = new System.Drawing.Size(140, 19);
+            this.checkBoxChartMinGPUTempOnYAxisEnabled.TabIndex = 20;
+            this.checkBoxChartMinGPUTempOnYAxisEnabled.Text = "Min GPU Temp On Y2";
+            this.toolTipMain.SetToolTip(this.checkBoxChartMinGPUTempOnYAxisEnabled, resources.GetString("checkBoxChartMinGPUTempOnYAxisEnabled.ToolTip"));
+            this.checkBoxChartMinGPUTempOnYAxisEnabled.UseVisualStyleBackColor = true;
+            this.checkBoxChartMinGPUTempOnYAxisEnabled.CheckedChanged += new System.EventHandler(this.SettingChanged);
+            // 
+            // checkBoxLogAutoScroll
+            // 
+            this.checkBoxLogAutoScroll.AutoSize = true;
+            this.checkBoxLogAutoScroll.Checked = true;
+            this.checkBoxLogAutoScroll.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxLogAutoScroll.Location = new System.Drawing.Point(7, 18);
+            this.checkBoxLogAutoScroll.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.checkBoxLogAutoScroll.Name = "checkBoxLogAutoScroll";
+            this.checkBoxLogAutoScroll.Size = new System.Drawing.Size(81, 19);
+            this.checkBoxLogAutoScroll.TabIndex = 1;
+            this.checkBoxLogAutoScroll.Text = "AutoScroll";
+            this.toolTipMain.SetToolTip(this.checkBoxLogAutoScroll, "When checked, grid auto-scrolls to bottom as new entries are added.");
+            this.checkBoxLogAutoScroll.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxLogColorCode
+            // 
+            this.checkBoxLogColorCode.AutoSize = true;
+            this.checkBoxLogColorCode.Location = new System.Drawing.Point(126, 18);
+            this.checkBoxLogColorCode.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.checkBoxLogColorCode.Name = "checkBoxLogColorCode";
+            this.checkBoxLogColorCode.Size = new System.Drawing.Size(86, 19);
+            this.checkBoxLogColorCode.TabIndex = 6;
+            this.checkBoxLogColorCode.Text = "Color Code";
+            this.toolTipMain.SetToolTip(this.checkBoxLogColorCode, "When checked, MineControl color codes log entries.\r\nNote: any original color codi" +
+        "ng from miners is always lost.");
+            this.checkBoxLogColorCode.UseVisualStyleBackColor = true;
+            // 
+            // comboBoxLogFilter
+            // 
+            this.comboBoxLogFilter.FormattingEnabled = true;
+            this.comboBoxLogFilter.Items.AddRange(new object[] {
+            "None",
+            "Source = \'MineControl\'",
+            "Source = \'GPU Miner\'",
+            "Source = \'CPU Miner\'",
+            "Type = \'Info\'",
+            "Type = \'Warning\'",
+            "Type = \'Error\'",
+            "Type = \'Input\'"});
+            this.comboBoxLogFilter.Location = new System.Drawing.Point(279, 16);
+            this.comboBoxLogFilter.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.comboBoxLogFilter.Name = "comboBoxLogFilter";
+            this.comboBoxLogFilter.Size = new System.Drawing.Size(231, 23);
+            this.comboBoxLogFilter.TabIndex = 5;
+            this.toolTipMain.SetToolTip(this.comboBoxLogFilter, "Customizable filter for log entries");
+            this.comboBoxLogFilter.SelectedIndexChanged += new System.EventHandler(this.comboBoxLogFilter_Changed);
+            this.comboBoxLogFilter.KeyDown += new System.Windows.Forms.KeyEventHandler(this.comboBoxLogFilter_KeyDown);
+            this.comboBoxLogFilter.Validated += new System.EventHandler(this.comboBoxLogFilter_Changed);
+            // 
+            // checkBoxEnableTempControl
+            // 
+            this.checkBoxEnableTempControl.AutoSize = true;
+            this.checkBoxEnableTempControl.Location = new System.Drawing.Point(382, 21);
+            this.checkBoxEnableTempControl.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.checkBoxEnableTempControl.Name = "checkBoxEnableTempControl";
+            this.checkBoxEnableTempControl.Size = new System.Drawing.Size(132, 19);
+            this.checkBoxEnableTempControl.TabIndex = 2;
+            this.checkBoxEnableTempControl.Text = "Manage GPU Temps";
+            this.toolTipMain.SetToolTip(this.checkBoxEnableTempControl, "When checked, GPU temp management rules (like power stepping) are evaluated. \r\nWh" +
+        "en unchecked, no GPU temp rules or failsafes are evaluated.");
+            this.checkBoxEnableTempControl.UseVisualStyleBackColor = true;
+            this.checkBoxEnableTempControl.CheckedChanged += new System.EventHandler(this.SettingChanged);
+            this.checkBoxEnableTempControl.Click += new System.EventHandler(this.SettingChanged);
+            // 
+            // checkBoxEnableMinerAutomation
+            // 
+            this.checkBoxEnableMinerAutomation.AutoSize = true;
+            this.checkBoxEnableMinerAutomation.Location = new System.Drawing.Point(201, 21);
+            this.checkBoxEnableMinerAutomation.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.checkBoxEnableMinerAutomation.Name = "checkBoxEnableMinerAutomation";
+            this.checkBoxEnableMinerAutomation.Size = new System.Drawing.Size(131, 19);
+            this.checkBoxEnableMinerAutomation.TabIndex = 3;
+            this.checkBoxEnableMinerAutomation.Text = "Run Enabled Miners";
+            this.toolTipMain.SetToolTip(this.checkBoxEnableMinerAutomation, resources.GetString("checkBoxEnableMinerAutomation.ToolTip"));
+            this.checkBoxEnableMinerAutomation.UseVisualStyleBackColor = true;
+            this.checkBoxEnableMinerAutomation.CheckedChanged += new System.EventHandler(this.SettingChanged);
+            // 
+            // openFileDialogAppPath
+            // 
+            this.openFileDialogAppPath.FileName = "openFileDialogAppPath";
+            // 
+            // tabControlMain
+            // 
+            this.tabControlMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControlMain.Controls.Add(this.tabPageConfig);
+            this.tabControlMain.Controls.Add(this.tabPageSchedule);
+            this.tabControlMain.Controls.Add(this.tabPageAnalytics);
+            this.tabControlMain.Controls.Add(this.tabPageAbout);
+            this.tabControlMain.Location = new System.Drawing.Point(1, 2);
+            this.tabControlMain.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tabControlMain.Name = "tabControlMain";
+            this.tabControlMain.SelectedIndex = 0;
+            this.tabControlMain.Size = new System.Drawing.Size(922, 943);
+            this.tabControlMain.TabIndex = 7;
+            this.tabControlMain.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControlMain_Selected);
+            // 
+            // tabPageConfig
+            // 
+            this.tabPageConfig.Controls.Add(this.groupBox5);
+            this.tabPageConfig.Controls.Add(this.groupBoxGeneral);
+            this.tabPageConfig.Controls.Add(this.groupBox4);
+            this.tabPageConfig.Controls.Add(this.groupBox6);
+            this.tabPageConfig.Controls.Add(this.groupBoxDataTracking);
+            this.tabPageConfig.Controls.Add(this.groupBox2);
+            this.tabPageConfig.Controls.Add(this.groupBoxMinersAndApps);
+            this.tabPageConfig.Location = new System.Drawing.Point(4, 24);
+            this.tabPageConfig.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tabPageConfig.Name = "tabPageConfig";
+            this.tabPageConfig.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tabPageConfig.Size = new System.Drawing.Size(914, 915);
+            this.tabPageConfig.TabIndex = 0;
+            this.tabPageConfig.Text = "Config";
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.checkBoxMinerCPUShowLogs);
+            this.groupBox5.Controls.Add(this.checkBoxMinerCPUUserActivityShutoff);
+            this.groupBox5.Controls.Add(this.comboBoxMinerCPUSchedule);
+            this.groupBox5.Controls.Add(this.radioButtonCPUModeDontControl);
+            this.groupBox5.Controls.Add(this.radioButtonCPUModeAlwaysOff);
+            this.groupBox5.Controls.Add(this.radioButtonCPUModeAlwaysOn);
+            this.groupBox5.Controls.Add(this.radioButtonCPUModeSchedule);
+            this.groupBox5.Location = new System.Drawing.Point(463, 151);
+            this.groupBox5.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox5.Size = new System.Drawing.Size(443, 109);
+            this.groupBox5.TabIndex = 5;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "CPU Miner";
+            // 
+            // comboBoxMinerCPUSchedule
+            // 
+            this.comboBoxMinerCPUSchedule.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxMinerCPUSchedule.DropDownWidth = 600;
+            this.comboBoxMinerCPUSchedule.FormattingEnabled = true;
+            this.comboBoxMinerCPUSchedule.Location = new System.Drawing.Point(114, 46);
+            this.comboBoxMinerCPUSchedule.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.comboBoxMinerCPUSchedule.Name = "comboBoxMinerCPUSchedule";
+            this.comboBoxMinerCPUSchedule.Size = new System.Drawing.Size(315, 23);
+            this.comboBoxMinerCPUSchedule.TabIndex = 8;
+            this.comboBoxMinerCPUSchedule.SelectedIndexChanged += new System.EventHandler(this.SettingChanged);
+            // 
+            // groupBoxGeneral
+            // 
+            this.groupBoxGeneral.Controls.Add(this.buttonGeneralResetConfig);
+            this.groupBoxGeneral.Controls.Add(this.label30);
+            this.groupBoxGeneral.Controls.Add(this.checkBoxMinimizeToSysTray);
+            this.groupBoxGeneral.Controls.Add(this.numericUpDownMinerUserActivityTimeout);
+            this.groupBoxGeneral.Controls.Add(this.buttonGeneralExportConfig);
+            this.groupBoxGeneral.Controls.Add(this.checkBoxStartupMinimize);
+            this.groupBoxGeneral.Controls.Add(this.buttonGeneralImportConfig);
+            this.groupBoxGeneral.Controls.Add(this.label21);
+            this.groupBoxGeneral.Controls.Add(this.checkBoxStartUpAutomation);
+            this.groupBoxGeneral.Controls.Add(this.label23);
+            this.groupBoxGeneral.Controls.Add(this.label22);
+            this.groupBoxGeneral.Controls.Add(this.numericUpDownTempPollingInterval);
+            this.groupBoxGeneral.Location = new System.Drawing.Point(463, 498);
+            this.groupBoxGeneral.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBoxGeneral.Name = "groupBoxGeneral";
+            this.groupBoxGeneral.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBoxGeneral.Size = new System.Drawing.Size(443, 190);
+            this.groupBoxGeneral.TabIndex = 6;
+            this.groupBoxGeneral.TabStop = false;
+            this.groupBoxGeneral.Text = "General";
+            // 
+            // buttonGeneralResetConfig
+            // 
+            this.buttonGeneralResetConfig.Location = new System.Drawing.Point(327, 81);
+            this.buttonGeneralResetConfig.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.buttonGeneralResetConfig.Name = "buttonGeneralResetConfig";
+            this.buttonGeneralResetConfig.Size = new System.Drawing.Size(105, 27);
+            this.buttonGeneralResetConfig.TabIndex = 65;
+            this.buttonGeneralResetConfig.Text = "Reset Config...";
+            this.buttonGeneralResetConfig.UseVisualStyleBackColor = true;
+            this.buttonGeneralResetConfig.Click += new System.EventHandler(this.buttonGeneralResetConfig_Click);
+            // 
+            // numericUpDownMinerUserActivityTimeout
+            // 
+            this.numericUpDownMinerUserActivityTimeout.Location = new System.Drawing.Point(131, 151);
+            this.numericUpDownMinerUserActivityTimeout.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.numericUpDownMinerUserActivityTimeout.Name = "numericUpDownMinerUserActivityTimeout";
+            this.numericUpDownMinerUserActivityTimeout.Size = new System.Drawing.Size(47, 23);
+            this.numericUpDownMinerUserActivityTimeout.TabIndex = 7;
+            this.toolTipNotification.SetToolTip(this.numericUpDownMinerUserActivityTimeout, "How long MineControl will wait after the last user activity before considering th" +
+        "e user inactive.");
+            this.numericUpDownMinerUserActivityTimeout.ValueChanged += new System.EventHandler(this.SettingChanged);
+            // 
+            // buttonGeneralExportConfig
+            // 
+            this.buttonGeneralExportConfig.Location = new System.Drawing.Point(327, 49);
+            this.buttonGeneralExportConfig.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.buttonGeneralExportConfig.Name = "buttonGeneralExportConfig";
+            this.buttonGeneralExportConfig.Size = new System.Drawing.Size(105, 27);
+            this.buttonGeneralExportConfig.TabIndex = 64;
+            this.buttonGeneralExportConfig.Text = "Export Config...";
+            this.buttonGeneralExportConfig.UseVisualStyleBackColor = true;
+            this.buttonGeneralExportConfig.Click += new System.EventHandler(this.buttonBackupsExportConfig_Click);
+            // 
+            // buttonGeneralImportConfig
+            // 
+            this.buttonGeneralImportConfig.Location = new System.Drawing.Point(327, 17);
+            this.buttonGeneralImportConfig.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.buttonGeneralImportConfig.Name = "buttonGeneralImportConfig";
+            this.buttonGeneralImportConfig.Size = new System.Drawing.Size(105, 27);
+            this.buttonGeneralImportConfig.TabIndex = 63;
+            this.buttonGeneralImportConfig.Text = "Import Config...";
+            this.buttonGeneralImportConfig.UseVisualStyleBackColor = true;
+            this.buttonGeneralImportConfig.Click += new System.EventHandler(this.buttonBackupsImportConfig_Click);
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.checkBoxMinerGPUShowLogs);
+            this.groupBox4.Controls.Add(this.checkBoxMinerGPUUserActivityShutoff);
+            this.groupBox4.Controls.Add(this.comboBoxMinerGPUSchedule);
+            this.groupBox4.Controls.Add(this.radioButtonGPUModeDontControl);
+            this.groupBox4.Controls.Add(this.radioButtonGPUModeAlwaysOff);
+            this.groupBox4.Controls.Add(this.radioButtonGPUModeAlwaysOn);
+            this.groupBox4.Controls.Add(this.radioButtonGPUModeSchedule);
+            this.groupBox4.Location = new System.Drawing.Point(8, 151);
+            this.groupBox4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox4.Size = new System.Drawing.Size(442, 109);
+            this.groupBox4.TabIndex = 4;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "GPU Miner";
+            // 
+            // comboBoxMinerGPUSchedule
+            // 
+            this.comboBoxMinerGPUSchedule.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxMinerGPUSchedule.DropDownWidth = 600;
+            this.comboBoxMinerGPUSchedule.FormattingEnabled = true;
+            this.comboBoxMinerGPUSchedule.Location = new System.Drawing.Point(114, 46);
+            this.comboBoxMinerGPUSchedule.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.comboBoxMinerGPUSchedule.Name = "comboBoxMinerGPUSchedule";
+            this.comboBoxMinerGPUSchedule.Size = new System.Drawing.Size(314, 23);
+            this.comboBoxMinerGPUSchedule.TabIndex = 6;
+            this.comboBoxMinerGPUSchedule.SelectedIndexChanged += new System.EventHandler(this.SettingChanged);
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.comboBoxArchivesClearOldChartsUnit);
+            this.groupBox6.Controls.Add(this.numericUpDownArchivesClearOldChartsValue);
+            this.groupBox6.Controls.Add(this.numericUpDownArchivesDeleteOldFilesDays);
+            this.groupBox6.Controls.Add(this.buttonBackupsBackupFolder);
+            this.groupBox6.Controls.Add(this.textBoxArchivesArchiveFolder);
+            this.groupBox6.Controls.Add(this.label35);
+            this.groupBox6.Controls.Add(this.comboBoxArchivesArchiveIntervalUnit);
+            this.groupBox6.Controls.Add(this.numericUpDownArchivesArchiveInterval);
+            this.groupBox6.Controls.Add(this.label34);
+            this.groupBox6.Controls.Add(this.comboBoxArchivesLogManagementUnit);
+            this.groupBox6.Controls.Add(this.numericUpDownArchivesLogManagementValue);
+            this.groupBox6.Controls.Add(this.label33);
+            this.groupBox6.Controls.Add(this.comboBoxArchivesLogManagementType);
+            this.groupBox6.Controls.Add(this.checkBoxArchivesLogManagement);
+            this.groupBox6.Controls.Add(this.checkBoxArchivesArchiveConfig);
+            this.groupBox6.Controls.Add(this.label36);
+            this.groupBox6.Controls.Add(this.checkBoxArchivesDeleteOldFiles);
+            this.groupBox6.Controls.Add(this.checkBoxArchivesClearOldCharts);
+            this.groupBox6.Location = new System.Drawing.Point(463, 269);
+            this.groupBox6.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox6.Size = new System.Drawing.Size(443, 221);
+            this.groupBox6.TabIndex = 7;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Archives And Data Retention";
+            // 
+            // buttonBackupsBackupFolder
+            // 
+            this.buttonBackupsBackupFolder.Location = new System.Drawing.Point(401, 20);
+            this.buttonBackupsBackupFolder.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.buttonBackupsBackupFolder.Name = "buttonBackupsBackupFolder";
+            this.buttonBackupsBackupFolder.Size = new System.Drawing.Size(28, 25);
+            this.buttonBackupsBackupFolder.TabIndex = 62;
+            this.buttonBackupsBackupFolder.Text = "...";
+            this.buttonBackupsBackupFolder.UseVisualStyleBackColor = true;
+            this.buttonBackupsBackupFolder.Click += new System.EventHandler(this.buttonBackupsBackupFolder_Click);
+            // 
+            // groupBoxDataTracking
+            // 
+            this.groupBoxDataTracking.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBoxDataTracking.Controls.Add(this.dataGridViewMetrics);
+            this.groupBoxDataTracking.Controls.Add(this.buttonDataViewSysTrayTooltips);
+            this.groupBoxDataTracking.Controls.Add(this.buttonDataRemoveUnusedQueryOptions);
+            this.groupBoxDataTracking.Location = new System.Drawing.Point(8, 694);
+            this.groupBoxDataTracking.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBoxDataTracking.Name = "groupBoxDataTracking";
+            this.groupBoxDataTracking.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBoxDataTracking.Size = new System.Drawing.Size(897, 215);
+            this.groupBoxDataTracking.TabIndex = 9;
+            this.groupBoxDataTracking.TabStop = false;
+            this.groupBoxDataTracking.Text = "Data Tracking";
+            // 
+            // dataGridViewMetrics
+            // 
+            this.dataGridViewMetrics.AllowUserToAddRows = false;
+            this.dataGridViewMetrics.AllowUserToDeleteRows = false;
+            this.dataGridViewMetrics.AllowUserToResizeRows = false;
+            this.dataGridViewMetrics.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.dataGridViewMetrics.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewMetrics.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ColDataEnableTracking,
+            this.ColDataMetric,
+            this.ColDataType,
+            this.ColDataInputSource,
+            this.ColDataMethod,
+            this.ColDataQuery});
+            this.dataGridViewMetrics.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridViewMetrics.Location = new System.Drawing.Point(4, 19);
+            this.dataGridViewMetrics.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.dataGridViewMetrics.Name = "dataGridViewMetrics";
+            this.dataGridViewMetrics.RowHeadersVisible = false;
+            this.dataGridViewMetrics.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.dataGridViewMetrics.Size = new System.Drawing.Size(889, 193);
+            this.dataGridViewMetrics.TabIndex = 0;
+            this.dataGridViewMetrics.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewMetrics_CellEnter);
+            this.dataGridViewMetrics.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dataGridViewMetrics_CellValidating);
+            this.dataGridViewMetrics.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_CellValueChanged);
+            this.dataGridViewMetrics.CurrentCellDirtyStateChanged += new System.EventHandler(this.dataGridViewMetrics_CurrentCellDirtyStateChanged);
+            this.dataGridViewMetrics.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridViewMetrics_DataError);
+            this.dataGridViewMetrics.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dataGridViewMetrics_EditingControlShowing);
+            this.dataGridViewMetrics.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dataGridViewMetrics_RowsAdded);
+            // 
+            // ColDataEnableTracking
+            // 
+            this.ColDataEnableTracking.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.ColDataEnableTracking.HeaderText = "Track";
+            this.ColDataEnableTracking.Name = "ColDataEnableTracking";
+            this.ColDataEnableTracking.ToolTipText = "Whether the metric will be tracked in charts and stats.";
+            this.ColDataEnableTracking.Width = 40;
+            // 
+            // ColDataMetric
+            // 
+            this.ColDataMetric.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.ColDataMetric.HeaderText = "Metric";
+            this.ColDataMetric.Name = "ColDataMetric";
+            this.ColDataMetric.ReadOnly = true;
+            this.ColDataMetric.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ColDataMetric.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ColDataMetric.ToolTipText = "Name of the metric";
+            this.ColDataMetric.Width = 47;
+            // 
+            // ColDataType
+            // 
+            this.ColDataType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.ColDataType.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.Nothing;
+            this.ColDataType.HeaderText = "Type";
+            this.ColDataType.Name = "ColDataType";
+            this.ColDataType.ReadOnly = true;
+            this.ColDataType.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ColDataType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.ColDataType.ToolTipText = "Type of the metric. Number = numeric, Selection = text/string.";
+            this.ColDataType.Width = 56;
+            // 
+            // ColDataInputSource
+            // 
+            this.ColDataInputSource.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.ColDataInputSource.HeaderText = "Source";
+            this.ColDataInputSource.Name = "ColDataInputSource";
+            this.ColDataInputSource.ToolTipText = "Source of the input, i.e. which thing the metric\'s data comes from.";
+            this.ColDataInputSource.Width = 49;
+            // 
+            // ColDataMethod
+            // 
+            this.ColDataMethod.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.ColDataMethod.HeaderText = "Method";
+            this.ColDataMethod.Name = "ColDataMethod";
+            this.ColDataMethod.ToolTipText = "How data is queried once it\'s been read from the source.";
+            this.ColDataMethod.Width = 55;
+            // 
+            // ColDataQuery
+            // 
+            this.ColDataQuery.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.ColDataQuery.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
+            this.ColDataQuery.DropDownWidth = 500;
+            this.ColDataQuery.HeaderText = "Query/User Value";
+            this.ColDataQuery.Name = "ColDataQuery";
+            this.ColDataQuery.ToolTipText = "RegEx query string for \"RegEx\" method, or the canned user value for the \"UserValu" +
+    "e\" method";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.groupBox7);
+            this.groupBox2.Controls.Add(this.groupBox9);
+            this.groupBox2.Controls.Add(this.label10);
+            this.groupBox2.Controls.Add(this.numericUpDownTempTryStepUpSecs);
+            this.groupBox2.Controls.Add(this.checkBoxTempTryStepUp);
+            this.groupBox2.Controls.Add(this.textBoxTempPowerStepParam1);
+            this.groupBox2.Controls.Add(this.textBoxTempPowerStepParam2);
+            this.groupBox2.Controls.Add(this.textBoxTempPowerStepParam3);
+            this.groupBox2.Controls.Add(this.textBoxTempPowerStepParam4);
+            this.groupBox2.Controls.Add(this.textBoxTempPowerStepParam5);
+            this.groupBox2.Controls.Add(this.label2);
+            this.groupBox2.Controls.Add(this.numericUpDownTempSteppingBuffer);
+            this.groupBox2.Controls.Add(this.label24);
+            this.groupBox2.Controls.Add(this.label9);
+            this.groupBox2.Controls.Add(this.labelMaxSpeed);
+            this.groupBox2.Controls.Add(this.labelMinSpeed);
+            this.groupBox2.Controls.Add(this.label8);
+            this.groupBox2.Controls.Add(this.trackBarGPUPowerStep);
+            this.groupBox2.Controls.Add(this.label7);
+            this.groupBox2.Location = new System.Drawing.Point(9, 269);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox2.Size = new System.Drawing.Size(441, 419);
+            this.groupBox2.TabIndex = 5;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "GPU Temperature Management";
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.numericUpDownTempMax);
+            this.groupBox7.Controls.Add(this.numericUpDownTempMin);
+            this.groupBox7.Controls.Add(this.label5);
+            this.groupBox7.Controls.Add(this.label6);
+            this.groupBox7.Location = new System.Drawing.Point(264, 24);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(163, 60);
+            this.groupBox7.TabIndex = 55;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Target Mem Junc Temps";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(7, 27);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(28, 15);
+            this.label5.TabIndex = 6;
+            this.label5.Text = "Min";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(83, 27);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(30, 15);
+            this.label6.TabIndex = 7;
+            this.label6.Text = "Max";
+            // 
+            // groupBox9
+            // 
+            this.groupBox9.Controls.Add(this.numericUpDownTempGPUShutOffThresholdSecs);
+            this.groupBox9.Controls.Add(this.label14);
+            this.groupBox9.Controls.Add(this.numericUpDownTempGPUShutOffSecs);
+            this.groupBox9.Controls.Add(this.label15);
+            this.groupBox9.Controls.Add(this.checkBoxStopWhenOverheat);
+            this.groupBox9.Controls.Add(this.checkBoxTempStopWhenTempUnknown);
+            this.groupBox9.Location = new System.Drawing.Point(14, 256);
+            this.groupBox9.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox9.Name = "groupBox9";
+            this.groupBox9.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox9.Size = new System.Drawing.Size(413, 147);
+            this.groupBox9.TabIndex = 52;
+            this.groupBox9.TabStop = false;
+            this.groupBox9.Text = "GPU Failsafe Protections";
             // 
             // label9
             // 
@@ -2117,88 +2450,6 @@ namespace MineControl
             this.radioButtonScheduleDaysOfWeek.UseVisualStyleBackColor = true;
             this.radioButtonScheduleDaysOfWeek.CheckedChanged += new System.EventHandler(this.radioButtonScheduleType_CheckedChanged);
             // 
-            // buttonScheduleDeleteSchedule
-            // 
-            this.buttonScheduleDeleteSchedule.Location = new System.Drawing.Point(686, 6);
-            this.buttonScheduleDeleteSchedule.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.buttonScheduleDeleteSchedule.Name = "buttonScheduleDeleteSchedule";
-            this.buttonScheduleDeleteSchedule.Size = new System.Drawing.Size(88, 27);
-            this.buttonScheduleDeleteSchedule.TabIndex = 7;
-            this.buttonScheduleDeleteSchedule.Text = "Delete";
-            this.toolTipMain.SetToolTip(this.buttonScheduleDeleteSchedule, "Delete the selected schedule");
-            this.buttonScheduleDeleteSchedule.UseVisualStyleBackColor = true;
-            this.buttonScheduleDeleteSchedule.Click += new System.EventHandler(this.buttonScheduleDeleteSchedule_Click);
-            // 
-            // buttonScheduleDuplicateSchedule
-            // 
-            this.buttonScheduleDuplicateSchedule.Location = new System.Drawing.Point(592, 6);
-            this.buttonScheduleDuplicateSchedule.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.buttonScheduleDuplicateSchedule.Name = "buttonScheduleDuplicateSchedule";
-            this.buttonScheduleDuplicateSchedule.Size = new System.Drawing.Size(88, 27);
-            this.buttonScheduleDuplicateSchedule.TabIndex = 6;
-            this.buttonScheduleDuplicateSchedule.Text = "Duplicate";
-            this.toolTipMain.SetToolTip(this.buttonScheduleDuplicateSchedule, "Duplicate the selected schedule");
-            this.buttonScheduleDuplicateSchedule.UseVisualStyleBackColor = true;
-            this.buttonScheduleDuplicateSchedule.Click += new System.EventHandler(this.buttonScheduleDuplicateSchedule_Click);
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(8, 123);
-            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(50, 15);
-            this.label12.TabIndex = 5;
-            this.label12.Text = "Content";
-            this.toolTipMain.SetToolTip(this.label12, "Content of the selected schedule");
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(8, 53);
-            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(39, 15);
-            this.label11.TabIndex = 4;
-            this.label11.Text = "Name";
-            this.toolTipMain.SetToolTip(this.label11, "Name of the selected schedule");
-            // 
-            // textBoxScheduleName
-            // 
-            this.textBoxScheduleName.Location = new System.Drawing.Point(12, 72);
-            this.textBoxScheduleName.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.textBoxScheduleName.Name = "textBoxScheduleName";
-            this.textBoxScheduleName.Size = new System.Drawing.Size(466, 23);
-            this.textBoxScheduleName.TabIndex = 3;
-            this.toolTipMain.SetToolTip(this.textBoxScheduleName, "Name of the selected schedule");
-            this.textBoxScheduleName.TextChanged += new System.EventHandler(this.textBoxScheduleName_TextChanged);
-            this.textBoxScheduleName.Leave += new System.EventHandler(this.textBoxScheduleName_Leave);
-            // 
-            // treeViewSchedule
-            // 
-            this.treeViewSchedule.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.treeViewSchedule.HideSelection = false;
-            this.treeViewSchedule.Location = new System.Drawing.Point(12, 142);
-            this.treeViewSchedule.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.treeViewSchedule.Name = "treeViewSchedule";
-            this.treeViewSchedule.Size = new System.Drawing.Size(466, 346);
-            this.treeViewSchedule.TabIndex = 2;
-            this.toolTipMain.SetToolTip(this.treeViewSchedule, "Content of the selected schedule");
-            // 
-            // buttonScheduleCreateSchedule
-            // 
-            this.buttonScheduleCreateSchedule.Location = new System.Drawing.Point(497, 6);
-            this.buttonScheduleCreateSchedule.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.buttonScheduleCreateSchedule.Name = "buttonScheduleCreateSchedule";
-            this.buttonScheduleCreateSchedule.Size = new System.Drawing.Size(88, 27);
-            this.buttonScheduleCreateSchedule.TabIndex = 1;
-            this.buttonScheduleCreateSchedule.Text = "Create New";
-            this.toolTipMain.SetToolTip(this.buttonScheduleCreateSchedule, "Create a new empty schedule");
-            this.buttonScheduleCreateSchedule.UseVisualStyleBackColor = true;
-            this.buttonScheduleCreateSchedule.Click += new System.EventHandler(this.buttonScheduleCreateSchedule_Click);
-            // 
             // comboBoxScheduleSchedules
             // 
             this.comboBoxScheduleSchedules.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -2306,93 +2557,6 @@ namespace MineControl
             this.tabControlCharts.Size = new System.Drawing.Size(657, 568);
             this.tabControlCharts.TabIndex = 16;
             // 
-            // buttonChartClearData
-            // 
-            this.buttonChartClearData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonChartClearData.Location = new System.Drawing.Point(573, 592);
-            this.buttonChartClearData.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.buttonChartClearData.Name = "buttonChartClearData";
-            this.buttonChartClearData.Size = new System.Drawing.Size(90, 27);
-            this.buttonChartClearData.TabIndex = 19;
-            this.buttonChartClearData.Text = "Clear Data";
-            this.toolTipMain.SetToolTip(this.buttonChartClearData, "Clears ALL data on ALL charts.");
-            this.buttonChartClearData.UseVisualStyleBackColor = true;
-            this.buttonChartClearData.Click += new System.EventHandler(this.buttonChartClearData_Click);
-            // 
-            // comboBoxChartShowLastUnit
-            // 
-            this.comboBoxChartShowLastUnit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.comboBoxChartShowLastUnit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxChartShowLastUnit.FormattingEnabled = true;
-            this.comboBoxChartShowLastUnit.Items.AddRange(new object[] {
-            "Minutes",
-            "Hours",
-            "Days"});
-            this.comboBoxChartShowLastUnit.Location = new System.Drawing.Point(230, 597);
-            this.comboBoxChartShowLastUnit.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.comboBoxChartShowLastUnit.Name = "comboBoxChartShowLastUnit";
-            this.comboBoxChartShowLastUnit.Size = new System.Drawing.Size(89, 23);
-            this.comboBoxChartShowLastUnit.TabIndex = 18;
-            this.toolTipMain.SetToolTip(this.comboBoxChartShowLastUnit, "Limits visible area of all charts. Doesn\'t maintain itself over time.");
-            this.comboBoxChartShowLastUnit.SelectedValueChanged += new System.EventHandler(this.ChartShowConfigChanged);
-            // 
-            // numericUpDownChartShowLastX
-            // 
-            this.numericUpDownChartShowLastX.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.numericUpDownChartShowLastX.Location = new System.Drawing.Point(169, 597);
-            this.numericUpDownChartShowLastX.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.numericUpDownChartShowLastX.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.numericUpDownChartShowLastX.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDownChartShowLastX.Name = "numericUpDownChartShowLastX";
-            this.numericUpDownChartShowLastX.Size = new System.Drawing.Size(56, 23);
-            this.numericUpDownChartShowLastX.TabIndex = 17;
-            this.toolTipMain.SetToolTip(this.numericUpDownChartShowLastX, "Limits visible area of all charts. Doesn\'t maintain itself over time.");
-            this.numericUpDownChartShowLastX.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDownChartShowLastX.ValueChanged += new System.EventHandler(this.ChartShowConfigChanged);
-            // 
-            // radioButtonChartShowLastX
-            // 
-            this.radioButtonChartShowLastX.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.radioButtonChartShowLastX.AutoSize = true;
-            this.radioButtonChartShowLastX.Location = new System.Drawing.Point(93, 597);
-            this.radioButtonChartShowLastX.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.radioButtonChartShowLastX.Name = "radioButtonChartShowLastX";
-            this.radioButtonChartShowLastX.Size = new System.Drawing.Size(78, 19);
-            this.radioButtonChartShowLastX.TabIndex = 16;
-            this.radioButtonChartShowLastX.Text = "Show Last";
-            this.toolTipMain.SetToolTip(this.radioButtonChartShowLastX, "Limits visible data of all charts by X axis (time). Doesn\'t maintain itself over " +
-        "time.");
-            this.radioButtonChartShowLastX.UseVisualStyleBackColor = true;
-            this.radioButtonChartShowLastX.CheckedChanged += new System.EventHandler(this.ChartShowConfigChanged);
-            // 
-            // radioButtonChartShowAll
-            // 
-            this.radioButtonChartShowAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.radioButtonChartShowAll.AutoSize = true;
-            this.radioButtonChartShowAll.Checked = true;
-            this.radioButtonChartShowAll.Location = new System.Drawing.Point(9, 597);
-            this.radioButtonChartShowAll.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.radioButtonChartShowAll.Name = "radioButtonChartShowAll";
-            this.radioButtonChartShowAll.Size = new System.Drawing.Size(71, 19);
-            this.radioButtonChartShowAll.TabIndex = 14;
-            this.radioButtonChartShowAll.TabStop = true;
-            this.radioButtonChartShowAll.Text = "Show All";
-            this.toolTipMain.SetToolTip(this.radioButtonChartShowAll, "Shows all available chart data on the X (time) axis.");
-            this.radioButtonChartShowAll.UseVisualStyleBackColor = true;
-            this.radioButtonChartShowAll.CheckedChanged += new System.EventHandler(this.ChartShowConfigChanged);
-            // 
             // tabControlAnalytics
             // 
             this.tabControlAnalytics.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -2476,36 +2640,6 @@ namespace MineControl
             this.tabPageAnalyticsOptions.Size = new System.Drawing.Size(218, 600);
             this.tabPageAnalyticsOptions.TabIndex = 1;
             this.tabPageAnalyticsOptions.Text = "Options";
-            // 
-            // numericUpDownChartMinGPUTempOnYAxisValue
-            // 
-            this.numericUpDownChartMinGPUTempOnYAxisValue.Location = new System.Drawing.Point(162, 18);
-            this.numericUpDownChartMinGPUTempOnYAxisValue.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.numericUpDownChartMinGPUTempOnYAxisValue.Name = "numericUpDownChartMinGPUTempOnYAxisValue";
-            this.numericUpDownChartMinGPUTempOnYAxisValue.Size = new System.Drawing.Size(40, 23);
-            this.numericUpDownChartMinGPUTempOnYAxisValue.TabIndex = 21;
-            this.toolTipMain.SetToolTip(this.numericUpDownChartMinGPUTempOnYAxisValue, resources.GetString("numericUpDownChartMinGPUTempOnYAxisValue.ToolTip"));
-            this.numericUpDownChartMinGPUTempOnYAxisValue.Value = new decimal(new int[] {
-            80,
-            0,
-            0,
-            0});
-            this.numericUpDownChartMinGPUTempOnYAxisValue.ValueChanged += new System.EventHandler(this.SettingChanged);
-            // 
-            // checkBoxChartMinGPUTempOnYAxisEnabled
-            // 
-            this.checkBoxChartMinGPUTempOnYAxisEnabled.AutoSize = true;
-            this.checkBoxChartMinGPUTempOnYAxisEnabled.Checked = true;
-            this.checkBoxChartMinGPUTempOnYAxisEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxChartMinGPUTempOnYAxisEnabled.Location = new System.Drawing.Point(12, 18);
-            this.checkBoxChartMinGPUTempOnYAxisEnabled.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.checkBoxChartMinGPUTempOnYAxisEnabled.Name = "checkBoxChartMinGPUTempOnYAxisEnabled";
-            this.checkBoxChartMinGPUTempOnYAxisEnabled.Size = new System.Drawing.Size(140, 19);
-            this.checkBoxChartMinGPUTempOnYAxisEnabled.TabIndex = 20;
-            this.checkBoxChartMinGPUTempOnYAxisEnabled.Text = "Min GPU Temp On Y2";
-            this.toolTipMain.SetToolTip(this.checkBoxChartMinGPUTempOnYAxisEnabled, resources.GetString("checkBoxChartMinGPUTempOnYAxisEnabled.ToolTip"));
-            this.checkBoxChartMinGPUTempOnYAxisEnabled.UseVisualStyleBackColor = true;
-            this.checkBoxChartMinGPUTempOnYAxisEnabled.CheckedChanged += new System.EventHandler(this.SettingChanged);
             // 
             // groupBox3
             // 
@@ -2596,55 +2730,6 @@ namespace MineControl
             this.ColLogMessage.MinimumWidth = 30;
             this.ColLogMessage.Name = "ColLogMessage";
             this.ColLogMessage.ReadOnly = true;
-            // 
-            // checkBoxLogAutoScroll
-            // 
-            this.checkBoxLogAutoScroll.AutoSize = true;
-            this.checkBoxLogAutoScroll.Checked = true;
-            this.checkBoxLogAutoScroll.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxLogAutoScroll.Location = new System.Drawing.Point(7, 18);
-            this.checkBoxLogAutoScroll.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.checkBoxLogAutoScroll.Name = "checkBoxLogAutoScroll";
-            this.checkBoxLogAutoScroll.Size = new System.Drawing.Size(81, 19);
-            this.checkBoxLogAutoScroll.TabIndex = 1;
-            this.checkBoxLogAutoScroll.Text = "AutoScroll";
-            this.toolTipMain.SetToolTip(this.checkBoxLogAutoScroll, "When checked, grid auto-scrolls to bottom as new entries are added.");
-            this.checkBoxLogAutoScroll.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxLogColorCode
-            // 
-            this.checkBoxLogColorCode.AutoSize = true;
-            this.checkBoxLogColorCode.Location = new System.Drawing.Point(126, 18);
-            this.checkBoxLogColorCode.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.checkBoxLogColorCode.Name = "checkBoxLogColorCode";
-            this.checkBoxLogColorCode.Size = new System.Drawing.Size(86, 19);
-            this.checkBoxLogColorCode.TabIndex = 6;
-            this.checkBoxLogColorCode.Text = "Color Code";
-            this.toolTipMain.SetToolTip(this.checkBoxLogColorCode, "When checked, MineControl color codes log entries.\r\nNote: any original color codi" +
-        "ng from miners is always lost.");
-            this.checkBoxLogColorCode.UseVisualStyleBackColor = true;
-            // 
-            // comboBoxLogFilter
-            // 
-            this.comboBoxLogFilter.FormattingEnabled = true;
-            this.comboBoxLogFilter.Items.AddRange(new object[] {
-            "None",
-            "Source = \'MineControl\'",
-            "Source = \'GPU Miner\'",
-            "Source = \'CPU Miner\'",
-            "Type = \'Info\'",
-            "Type = \'Warning\'",
-            "Type = \'Error\'",
-            "Type = \'Input\'"});
-            this.comboBoxLogFilter.Location = new System.Drawing.Point(279, 16);
-            this.comboBoxLogFilter.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.comboBoxLogFilter.Name = "comboBoxLogFilter";
-            this.comboBoxLogFilter.Size = new System.Drawing.Size(231, 23);
-            this.comboBoxLogFilter.TabIndex = 5;
-            this.toolTipMain.SetToolTip(this.comboBoxLogFilter, "Customizable filter for log entries");
-            this.comboBoxLogFilter.SelectedIndexChanged += new System.EventHandler(this.comboBoxLogFilter_Changed);
-            this.comboBoxLogFilter.KeyDown += new System.Windows.Forms.KeyEventHandler(this.comboBoxLogFilter_KeyDown);
-            this.comboBoxLogFilter.Validated += new System.EventHandler(this.comboBoxLogFilter_Changed);
             // 
             // tabPageAbout
             // 
@@ -2781,34 +2866,6 @@ namespace MineControl
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
-            // checkBoxEnableTempControl
-            // 
-            this.checkBoxEnableTempControl.AutoSize = true;
-            this.checkBoxEnableTempControl.Location = new System.Drawing.Point(382, 21);
-            this.checkBoxEnableTempControl.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.checkBoxEnableTempControl.Name = "checkBoxEnableTempControl";
-            this.checkBoxEnableTempControl.Size = new System.Drawing.Size(132, 19);
-            this.checkBoxEnableTempControl.TabIndex = 2;
-            this.checkBoxEnableTempControl.Text = "Manage GPU Temps";
-            this.toolTipMain.SetToolTip(this.checkBoxEnableTempControl, "When checked, GPU temp management rules (like power stepping) are evaluated. \r\nWh" +
-        "en unchecked, no GPU temp rules or failsafes are evaluated.");
-            this.checkBoxEnableTempControl.UseVisualStyleBackColor = true;
-            this.checkBoxEnableTempControl.CheckedChanged += new System.EventHandler(this.SettingChanged);
-            this.checkBoxEnableTempControl.Click += new System.EventHandler(this.SettingChanged);
-            // 
-            // checkBoxEnableMinerAutomation
-            // 
-            this.checkBoxEnableMinerAutomation.AutoSize = true;
-            this.checkBoxEnableMinerAutomation.Location = new System.Drawing.Point(201, 21);
-            this.checkBoxEnableMinerAutomation.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.checkBoxEnableMinerAutomation.Name = "checkBoxEnableMinerAutomation";
-            this.checkBoxEnableMinerAutomation.Size = new System.Drawing.Size(131, 19);
-            this.checkBoxEnableMinerAutomation.TabIndex = 3;
-            this.checkBoxEnableMinerAutomation.Text = "Run Enabled Miners";
-            this.toolTipMain.SetToolTip(this.checkBoxEnableMinerAutomation, resources.GetString("checkBoxEnableMinerAutomation.ToolTip"));
-            this.checkBoxEnableMinerAutomation.UseVisualStyleBackColor = true;
-            this.checkBoxEnableMinerAutomation.CheckedChanged += new System.EventHandler(this.SettingChanged);
-            // 
             // groupBoxControl
             // 
             this.groupBoxControl.Controls.Add(this.linkLabelHelpDonate);
@@ -2925,63 +2982,6 @@ namespace MineControl
             // 
             this.openFileDialogBackups.FileName = "openFileDialogBackupPath";
             // 
-            // ColDataEnableTracking
-            // 
-            this.ColDataEnableTracking.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.ColDataEnableTracking.HeaderText = "Track";
-            this.ColDataEnableTracking.Name = "ColDataEnableTracking";
-            this.ColDataEnableTracking.ToolTipText = "Whether the metric will be tracked in charts and stats.";
-            this.ColDataEnableTracking.Width = 40;
-            // 
-            // ColDataMetric
-            // 
-            this.ColDataMetric.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.ColDataMetric.HeaderText = "Metric";
-            this.ColDataMetric.Name = "ColDataMetric";
-            this.ColDataMetric.ReadOnly = true;
-            this.ColDataMetric.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.ColDataMetric.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.ColDataMetric.ToolTipText = "Name of the metric";
-            this.ColDataMetric.Width = 47;
-            // 
-            // ColDataType
-            // 
-            this.ColDataType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.ColDataType.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.Nothing;
-            this.ColDataType.HeaderText = "Type";
-            this.ColDataType.Name = "ColDataType";
-            this.ColDataType.ReadOnly = true;
-            this.ColDataType.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.ColDataType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.ColDataType.ToolTipText = "Type of the metric. Number = numeric, Selection = text/string.";
-            this.ColDataType.Width = 56;
-            // 
-            // ColDataInputSource
-            // 
-            this.ColDataInputSource.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.ColDataInputSource.HeaderText = "Source";
-            this.ColDataInputSource.Name = "ColDataInputSource";
-            this.ColDataInputSource.ToolTipText = "Source of the input, i.e. which thing the metric\'s data comes from.";
-            this.ColDataInputSource.Width = 49;
-            // 
-            // ColDataMethod
-            // 
-            this.ColDataMethod.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.ColDataMethod.HeaderText = "Method";
-            this.ColDataMethod.Name = "ColDataMethod";
-            this.ColDataMethod.ToolTipText = "How data is queried once it\'s been read from the source.";
-            this.ColDataMethod.Width = 55;
-            // 
-            // ColDataQuery
-            // 
-            this.ColDataQuery.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.ColDataQuery.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
-            this.ColDataQuery.DropDownWidth = 500;
-            this.ColDataQuery.HeaderText = "Query/User Value";
-            this.ColDataQuery.Name = "ColDataQuery";
-            this.ColDataQuery.ToolTipText = "RegEx query string for \"RegEx\" method, or the canned user value for the \"UserValu" +
-    "e\" method";
-            // 
             // FormMineControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -2996,12 +2996,23 @@ namespace MineControl
             this.Text = "MineControl";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMineControl_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormMineControl_FormClosed);
+            this.Load += new System.EventHandler(this.FormMineControl_Load);
             this.Shown += new System.EventHandler(this.FormMineControl_Shown);
             this.Resize += new System.EventHandler(this.FormMineControl_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempSteppingBuffer)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempMin)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarGPUPowerStep)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempMax)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempPollingInterval)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownArchivesClearOldChartsValue)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownArchivesDeleteOldFilesDays)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownArchivesArchiveInterval)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownArchivesLogManagementValue)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempGPUShutOffThresholdSecs)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempGPUShutOffSecs)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempTryStepUpSecs)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownChartShowLastX)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownChartMinGPUTempOnYAxisValue)).EndInit();
             this.tabControlMain.ResumeLayout(false);
             this.tabPageConfig.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
@@ -3009,15 +3020,10 @@ namespace MineControl
             this.groupBoxGeneral.ResumeLayout(false);
             this.groupBoxGeneral.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinerUserActivityTimeout)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempPollingInterval)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownArchivesClearOldChartsValue)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownArchivesDeleteOldFilesDays)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownArchivesArchiveInterval)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownArchivesLogManagementValue)).EndInit();
             this.groupBoxDataTracking.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewMetrics)).EndInit();
             this.groupBox2.ResumeLayout(false);
@@ -3026,9 +3032,6 @@ namespace MineControl
             this.groupBox7.PerformLayout();
             this.groupBox9.ResumeLayout(false);
             this.groupBox9.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempGPUShutOffThresholdSecs)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempGPUShutOffSecs)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempTryStepUpSecs)).EndInit();
             this.groupBoxMinersAndApps.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewApps)).EndInit();
             this.tabPageSchedule.ResumeLayout(false);
@@ -3054,13 +3057,11 @@ namespace MineControl
             this.splitContainer1.ResumeLayout(false);
             this.groupBoxCharts.ResumeLayout(false);
             this.groupBoxCharts.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownChartShowLastX)).EndInit();
             this.tabControlAnalytics.ResumeLayout(false);
             this.tabPageStats.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewStats)).EndInit();
             this.tabPageAnalyticsOptions.ResumeLayout(false);
             this.tabPageAnalyticsOptions.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownChartMinGPUTempOnYAxisValue)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLog)).EndInit();

@@ -23,8 +23,11 @@
     <PackageTags></PackageTags>
     <PackageIcon>MineControlLogo.ico</PackageIcon>
     <PackageIconUrl />
-    <RepositoryUrl>TODO</RepositoryUrl>
-    <PackageProjectUrl>TODO</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/smurferson1/MineControl.git</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/smurferson1/MineControl</PackageProjectUrl>
+    <RepositoryType>Git</RepositoryType>
+    <PackageLicenseExpression>CC BY-SA 4.0</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>x64</PlatformTarget>
