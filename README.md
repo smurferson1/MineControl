@@ -4,7 +4,7 @@ A **power tool** for automating temperature management, scheduling, and data agg
 - Reading temperatures and other sensor data from an external hardware monitor app.
 - Setting GPU power profile via an external GPU controller app.
 - Optionally managing execution of an external GPU and/or CPU mining app and charting/logging their output centrally.
-- Finding relevant data in raw text with customizable regular expressions.
+- Finding relevant data in raw text using customizable regular expressions.
 
 Names of hardware monitor and GPU controller apps are omitted in order to avoid legal issues, but the default config is compatible with the most popular hardware monitor and GPU controller apps. These support both NVIDIA and AMD GPUs. Hint: they rhyme with **RidesharePimpo** and **WhoStoleMy ButterChurner**.
 
