@@ -51,12 +51,8 @@
     <Content Include="Resources\MineControlLogo.ico" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Include="System.Text.Json" Version="6.0.0-rc.1.21451.13" />
-    <PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers" Version="0.3.246501">
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Windows.Compatibility" Version="5.0.2" />
+    <PackageReference Include="System.Text.Json" Version="6.0.0-rc.2.21480.5" />
+    <PackageReference Include="Microsoft.Windows.Compatibility" Version="6.0.0-rc.2.21480.5" />
     <PackageReference Include="System.Windows.Forms.DataVisualization" Version="1.0.0-prerelease.20110.1" />
   </ItemGroup>
   <ItemGroup>
