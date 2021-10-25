@@ -48,7 +48,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="MineControlLogo.ico" />
+    <Content Include="Resources\MineControlLogo.ico" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
@@ -76,7 +76,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Update="MineControlLogo.ico">
+    <None Update="Resources\MineControlLogo.ico">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
@@ -91,6 +91,5 @@
     <Folder Include="Lib\Schedule\" />
     <Folder Include="Lib\Utils\" />
     <Folder Include="Lib\WinAPI\" />
-    <Folder Include="Resources\" />
   </ItemGroup>
 </Project>
