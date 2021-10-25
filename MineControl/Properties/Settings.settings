@@ -72,7 +72,7 @@
       <Value Profile="(Default)">5000</Value>
     </Setting>
     <Setting Name="controlStartupMinimize" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="controlStartupRememberAutomation" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -618,8 +618,8 @@
     </Setting>
     <Setting Name="metricsSerializedMetricQueryOptions" Type="System.String" Scope="User">
       <Value Profile="(Default)">[
-  "Ethash",
-  "",
+  "",  
+  "Ethash",  
   "(?\u003C=Core Max\u002B[\\r\\n])\\w\u002B[.]?\\w\u002B",
   "(?\u003C=Core Max\u002B[\\r\\n][\\d\\.]\u002B[ ]).*",
   "(?\u003C=PSU Power \\(sum\\)\u002B[\\r\\n])\\w\u002B[.]?\\w\u002B",
@@ -631,7 +631,10 @@
   "(?\u003C=Eth speed: \\d\u002B[.]\\d\u002B[ ])[A-Za-z/]\u002B",
   "(?\u003C=miner[ ]\u002Bspeed [0-9ms/]\u002B[ ][0-9\\.]\u002B[ ])\\d\u002B[.]*\\d\u002B",
   "(?\u003C=miner[ ]\u002Bspeed [0-9msna/. ]\u002B)\\w\u002B[/][s](?=[ ])",
-  "(?\u003C=[0-9ms/. ]\u002Buse[ ]\u002Bprofile[ ]\u002B)\\w\u002B"
+  "(?\u003C=[0-9ms/. ]\u002Buse[ ]\u002Bprofile[ ]\u002B)\\w\u002B",
+  "C",
+  "H/s",
+  "MH/s"
 ]</Value>
     </Setting>
     <Setting Name="archivesClearOldCharts" Type="System.Boolean" Scope="User">
