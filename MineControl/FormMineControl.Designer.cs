@@ -1518,8 +1518,8 @@ namespace MineControl
             this.buttonDataLoadPreset.Size = new System.Drawing.Size(80, 24);
             this.buttonDataLoadPreset.TabIndex = 3;
             this.buttonDataLoadPreset.Text = "Load Preset";
-            this.toolTipMain.SetToolTip(this.buttonDataLoadPreset, "Loads metric preset values from a preset file. This will only update metric optio" +
-        "ns for metrics in the preset file.");
+            this.toolTipMain.SetToolTip(this.buttonDataLoadPreset, "Loads metric settings from a preset file. This will only update metric options fo" +
+        "r metrics in the preset file.");
             this.buttonDataLoadPreset.UseVisualStyleBackColor = true;
             this.buttonDataLoadPreset.Click += new System.EventHandler(this.buttonDataLoadPreset_Click);
             // 
@@ -3004,12 +3004,12 @@ namespace MineControl
             // 
             // openFileDialogPresets
             // 
-            this.openFileDialogPresets.Filter = "Presets|*.preset|All Files|*.*";
+            this.openFileDialogPresets.Filter = "Metric Presets|*.MetricPreset|All Files|*.*";
             // 
             // saveFileDialogPresets
             // 
-            this.saveFileDialogPresets.DefaultExt = "preset";
-            this.saveFileDialogPresets.Filter = "Presets|*.preset";
+            this.saveFileDialogPresets.DefaultExt = "MetricPreset";
+            this.saveFileDialogPresets.Filter = "Metric Presets|*.MetricPreset";
             // 
             // FormMineControl
             // 
