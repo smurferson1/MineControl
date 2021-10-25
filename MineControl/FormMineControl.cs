@@ -145,8 +145,16 @@ namespace MineControl
             Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal);
             if (!config.HasFile)
             {
-                Settings.Upgrade();
-                AddLogEntry($"Settings were migrated from the previous version of MineControl and loaded from \"{config.FilePath}\"");
+                try
+                {
+                    Settings.Upgrade();
+                    AddLogEntry($"MineControl settings for this version were either created from defaults or migrated from a previous version, then loaded from \"{config.FilePath}\"");
+                }
+                catch
+                {
+                    // note: doesn't seem to trigger, even when Upgrade finds nothing to migrate
+                    AddLogEntry("No existing MineControl settings found, so defaults were set and loaded from \"{config.FilePath}\"");
+                }
             }
             else
             {
