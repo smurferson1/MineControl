@@ -2377,6 +2377,11 @@ namespace MineControl
         {
             try
             {
+                if (Settings.controlRunning)
+                {
+                    MessageBox.Show("Automation will be stopped. It can be restarted once the config is imported.");
+                    StopAutomation();
+                }                
                 IsLoading = true;
                 string destFilePath = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
                 if (!File.Exists(destFilePath))
@@ -2994,11 +2999,17 @@ namespace MineControl
         {
             if (MessageBox.Show("This will reset ALL settings to defaults! Continue?", Text, MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
+                if (Settings.controlRunning)
+                {
+                    MessageBox.Show("Automation will be stopped. It can be restarted once the config is reset.");
+                    StopAutomation();
+                }
                 IsLoading = true;
                 try
                 {
                     Settings.Reset();
                     LoadSettingsToUI();
+                    ShowTooltipNotification("Config reset successful.");
                 }
                 finally
                 {
