@@ -69,5 +69,14 @@ namespace MineControl.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Note: named individuals are not affiliated with MineControl in any way.
+        /// </summary>
+        internal static string txtAttribution {
+            get {
+                return ResourceManager.GetString("txtAttribution", resourceCulture);
+            }
+        }
     }
 }

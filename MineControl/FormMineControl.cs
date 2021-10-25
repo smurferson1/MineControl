@@ -135,8 +135,7 @@ namespace MineControl
 
         public FormMineControl()
         {
-            InitializeComponent();            
-            InitializeUI();            
+            InitializeComponent();
         }
 
         /// <summary>
@@ -177,6 +176,9 @@ namespace MineControl
             this.Text += $" v{Assembly.GetEntryAssembly().GetName().Version}";
             labelAboutVersion.Text = Assembly.GetEntryAssembly().GetName().Version.ToString();
 
+            // display attribution   
+            richTextBoxAboutAttribution.Text = Properties.Resources.txtAttribution;
+            
             // set up grids and their data sources
             dataGridViewApps.Rows.Add("GPU Miner", "", "Unknown", "");
             dataGridViewApps.Rows.Add("CPU Miner", "", "Unknown", "");
@@ -2518,8 +2520,10 @@ namespace MineControl
 
         private void FormMineControl_Load(object sender, EventArgs e)
         {
+            InitializeUI();
             LoadSettingsFile();
             LoadSettingsToUI(true);
+            InitializeInternals();
             IsLoading = false;
         }
 
@@ -2530,7 +2534,6 @@ namespace MineControl
             {
                 Hide();
             }
-            InitializeInternals();
         }
 
         private void timerMain_Tick(object sender, EventArgs e)
@@ -3169,6 +3172,11 @@ namespace MineControl
                 }
                 MessageBox.Show($"Preset saved to file \"{saveFileDialogPresets.FileName}\".\n\nMetric settings included in the preset: \n{savedMetrics}");
             }
+        }
+
+        private void richTextBoxAboutAttribution_LinkClicked(object sender, LinkClickedEventArgs e)
+        {
+            OpenLink(e.LinkText);
         }
     }
 }

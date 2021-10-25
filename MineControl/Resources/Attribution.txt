@@ -1,0 +1,22 @@
+Note: Code snippets were simply grabbed from public websites. The named authors had no involvement in the creation of MineControl. 
+
+Code For: Job objects
+Usage: Adapted from original
+Link: https://stackoverflow.com/questions/6266820/working-example-of-createjobobject-setinformationjobobject-pinvoke-in-net/9164742#9164742
+Author(s): Alexander Yezutov (https://stackoverflow.com/users/607959), based on content from Matt Howells (https://stackoverflow.com/users/16881)
+
+_____________________________________________________________
+
+
+Code For: System tray tooltip reading
+Usage: Adapted from original
+Link: https://stackoverflow.com/questions/51887744/trouble-implementing-code-example-using-pinvoke-declarations/51892012?noredirect=1#comment90762185_51892012
+Author(s): Simon Mourier (https://stackoverflow.com/users/403671), based on content from michalczerwinski (https://stackoverflow.com/users/306146)
+
+_____________________________________________________________
+
+
+Code For: WinAPI LastInputInfo
+Usage: Unmodified from original
+Link: https://www.pinvoke.net/default.aspx/user32.GetLastInputInfo
+Author(s): John Refling

@@ -213,13 +213,12 @@ namespace MineControl
             this.ColLogTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColLogMessage = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPageAbout = new System.Windows.Forms.TabPage();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.richTextBoxAboutAttribution = new System.Windows.Forms.RichTextBox();
             this.linkLabelAboutLicense = new System.Windows.Forms.LinkLabel();
             this.linkLabelAboutLink = new System.Windows.Forms.LinkLabel();
             this.label28 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
-            this.listBoxAboutAttribution = new System.Windows.Forms.ListBox();
-            this.label26 = new System.Windows.Forms.Label();
-            this.listBoxAboutLibraries = new System.Windows.Forms.ListBox();
             this.label25 = new System.Windows.Forms.Label();
             this.labelAboutVersion = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -293,6 +292,7 @@ namespace MineControl
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLog)).BeginInit();
             this.tabPageAbout.SuspendLayout();
+            this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBoxControl.SuspendLayout();
             this.contextMenuStripSysTray.SuspendLayout();
@@ -2755,13 +2755,11 @@ namespace MineControl
             // tabPageAbout
             // 
             this.tabPageAbout.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPageAbout.Controls.Add(this.panel1);
             this.tabPageAbout.Controls.Add(this.linkLabelAboutLicense);
             this.tabPageAbout.Controls.Add(this.linkLabelAboutLink);
             this.tabPageAbout.Controls.Add(this.label28);
             this.tabPageAbout.Controls.Add(this.label27);
-            this.tabPageAbout.Controls.Add(this.listBoxAboutAttribution);
-            this.tabPageAbout.Controls.Add(this.label26);
-            this.tabPageAbout.Controls.Add(this.listBoxAboutLibraries);
             this.tabPageAbout.Controls.Add(this.label25);
             this.tabPageAbout.Controls.Add(this.labelAboutVersion);
             this.tabPageAbout.Controls.Add(this.label4);
@@ -2773,6 +2771,28 @@ namespace MineControl
             this.tabPageAbout.Size = new System.Drawing.Size(914, 915);
             this.tabPageAbout.TabIndex = 3;
             this.tabPageAbout.Text = "About";
+            // 
+            // panel1
+            // 
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.richTextBoxAboutAttribution);
+            this.panel1.Location = new System.Drawing.Point(20, 153);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(869, 368);
+            this.panel1.TabIndex = 14;
+            // 
+            // richTextBoxAboutAttribution
+            // 
+            this.richTextBoxAboutAttribution.BackColor = System.Drawing.SystemColors.Window;
+            this.richTextBoxAboutAttribution.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.richTextBoxAboutAttribution.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richTextBoxAboutAttribution.Location = new System.Drawing.Point(0, 0);
+            this.richTextBoxAboutAttribution.Name = "richTextBoxAboutAttribution";
+            this.richTextBoxAboutAttribution.ReadOnly = true;
+            this.richTextBoxAboutAttribution.Size = new System.Drawing.Size(867, 366);
+            this.richTextBoxAboutAttribution.TabIndex = 13;
+            this.richTextBoxAboutAttribution.Text = "";
+            this.richTextBoxAboutAttribution.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.richTextBoxAboutAttribution_LinkClicked);
             // 
             // linkLabelAboutLicense
             // 
@@ -2808,38 +2828,11 @@ namespace MineControl
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(20, 267);
+            this.label27.Location = new System.Drawing.Point(20, 135);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(65, 15);
             this.label27.TabIndex = 9;
             this.label27.Text = "Attribution";
-            // 
-            // listBoxAboutAttribution
-            // 
-            this.listBoxAboutAttribution.FormattingEnabled = true;
-            this.listBoxAboutAttribution.ItemHeight = 15;
-            this.listBoxAboutAttribution.Location = new System.Drawing.Point(20, 285);
-            this.listBoxAboutAttribution.Name = "listBoxAboutAttribution";
-            this.listBoxAboutAttribution.Size = new System.Drawing.Size(568, 94);
-            this.listBoxAboutAttribution.TabIndex = 8;
-            // 
-            // label26
-            // 
-            this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(20, 132);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(122, 15);
-            this.label26.TabIndex = 7;
-            this.label26.Text = "Open Source Libraries";
-            // 
-            // listBoxAboutLibraries
-            // 
-            this.listBoxAboutLibraries.FormattingEnabled = true;
-            this.listBoxAboutLibraries.ItemHeight = 15;
-            this.listBoxAboutLibraries.Location = new System.Drawing.Point(20, 150);
-            this.listBoxAboutLibraries.Name = "listBoxAboutLibraries";
-            this.listBoxAboutLibraries.Size = new System.Drawing.Size(568, 94);
-            this.listBoxAboutLibraries.TabIndex = 6;
             // 
             // label25
             // 
@@ -3096,6 +3089,7 @@ namespace MineControl
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLog)).EndInit();
             this.tabPageAbout.ResumeLayout(false);
             this.tabPageAbout.PerformLayout();
+            this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBoxControl.ResumeLayout(false);
             this.groupBoxControl.PerformLayout();
@@ -3284,10 +3278,7 @@ namespace MineControl
         private System.Windows.Forms.Label labelAboutVersion;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.Label label26;
-        private System.Windows.Forms.ListBox listBoxAboutLibraries;
         private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.ListBox listBoxAboutAttribution;
         private System.Windows.Forms.LinkLabel linkLabelAboutLink;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.Button buttonScheduleMoveNodeDown;
@@ -3312,6 +3303,8 @@ namespace MineControl
         private System.Windows.Forms.OpenFileDialog openFileDialogPresets;
         private System.Windows.Forms.Button buttonDataSavePreset;
         private System.Windows.Forms.SaveFileDialog saveFileDialogPresets;
+        private System.Windows.Forms.RichTextBox richTextBoxAboutAttribution;
+        private System.Windows.Forms.Panel panel1;
     }
 }
 
