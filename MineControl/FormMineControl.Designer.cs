@@ -31,9 +31,9 @@ namespace MineControl
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMineControl));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.timerMain = new System.Windows.Forms.Timer(this.components);
             this.toolTipMain = new System.Windows.Forms.ToolTip(this.components);
             this.checkBoxStartUpAutomation = new System.Windows.Forms.CheckBox();
@@ -120,6 +120,9 @@ namespace MineControl
             this.comboBoxLogFilter = new System.Windows.Forms.ComboBox();
             this.checkBoxEnableTempControl = new System.Windows.Forms.CheckBox();
             this.checkBoxEnableMinerAutomation = new System.Windows.Forms.CheckBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.buttonDataLoadPreset = new System.Windows.Forms.Button();
+            this.buttonDataSavePreset = new System.Windows.Forms.Button();
             this.openFileDialogAppPath = new System.Windows.Forms.OpenFileDialog();
             this.tabControlMain = new System.Windows.Forms.TabControl();
             this.tabPageConfig = new System.Windows.Forms.TabPage();
@@ -144,7 +147,6 @@ namespace MineControl
             this.ColDataQuery = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.label9 = new System.Windows.Forms.Label();
@@ -237,6 +239,8 @@ namespace MineControl
             this.openFileDialogBackups = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialogBackups = new System.Windows.Forms.SaveFileDialog();
             this.folderBrowserDialogBackups = new System.Windows.Forms.FolderBrowserDialog();
+            this.openFileDialogPresets = new System.Windows.Forms.OpenFileDialog();
+            this.saveFileDialogPresets = new System.Windows.Forms.SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempSteppingBuffer)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempMin)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarGPUPowerStep)).BeginInit();
@@ -650,9 +654,7 @@ namespace MineControl
             this.numericUpDownTempMin.Name = "numericUpDownTempMin";
             this.numericUpDownTempMin.Size = new System.Drawing.Size(42, 23);
             this.numericUpDownTempMin.TabIndex = 53;
-            this.toolTipMain.SetToolTip(this.numericUpDownTempMin, "Minimum GPU/memory junction temperature. \r\nUnit (i.e. Celsius, Fahrenheit) is det" +
-        "ermined by the Hardware Monitor app. \r\nIf temp goes below this value, MineContro" +
-        "l will try to increase GPU power step.");
+            this.toolTipMain.SetToolTip(this.numericUpDownTempMin, resources.GetString("numericUpDownTempMin.ToolTip"));
             this.numericUpDownTempMin.ValueChanged += new System.EventHandler(this.numericUpDownTempMin_ValueChanged);
             // 
             // textBoxTempPowerStepParam1
@@ -744,9 +746,7 @@ namespace MineControl
             this.numericUpDownTempMax.Name = "numericUpDownTempMax";
             this.numericUpDownTempMax.Size = new System.Drawing.Size(42, 23);
             this.numericUpDownTempMax.TabIndex = 54;
-            this.toolTipMain.SetToolTip(this.numericUpDownTempMax, "Maximum GPU/memory junction temperature. \r\nUnit (i.e. Celsius, Fahrenheit) is det" +
-        "ermined by the Hardware Monitor app. \r\nIf temp goes above this value, MineContro" +
-        "l will try to decrease GPU power step.");
+            this.toolTipMain.SetToolTip(this.numericUpDownTempMax, resources.GetString("numericUpDownTempMax.ToolTip"));
             this.numericUpDownTempMax.ValueChanged += new System.EventHandler(this.numericUpDownTempMax_ValueChanged);
             // 
             // label30
@@ -1499,6 +1499,43 @@ namespace MineControl
             this.checkBoxEnableMinerAutomation.UseVisualStyleBackColor = true;
             this.checkBoxEnableMinerAutomation.CheckedChanged += new System.EventHandler(this.SettingChanged);
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(7, 27);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(28, 15);
+            this.label5.TabIndex = 6;
+            this.label5.Text = "Min";
+            this.toolTipMain.SetToolTip(this.label5, resources.GetString("label5.ToolTip"));
+            // 
+            // buttonDataLoadPreset
+            // 
+            this.buttonDataLoadPreset.Location = new System.Drawing.Point(88, 0);
+            this.buttonDataLoadPreset.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.buttonDataLoadPreset.Name = "buttonDataLoadPreset";
+            this.buttonDataLoadPreset.Size = new System.Drawing.Size(80, 24);
+            this.buttonDataLoadPreset.TabIndex = 3;
+            this.buttonDataLoadPreset.Text = "Load Preset";
+            this.toolTipMain.SetToolTip(this.buttonDataLoadPreset, "Loads metric preset values from a preset file. This will only update metric optio" +
+        "ns for metrics in the preset file.");
+            this.buttonDataLoadPreset.UseVisualStyleBackColor = true;
+            this.buttonDataLoadPreset.Click += new System.EventHandler(this.buttonDataLoadPreset_Click);
+            // 
+            // buttonDataSavePreset
+            // 
+            this.buttonDataSavePreset.Location = new System.Drawing.Point(173, 0);
+            this.buttonDataSavePreset.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.buttonDataSavePreset.Name = "buttonDataSavePreset";
+            this.buttonDataSavePreset.Size = new System.Drawing.Size(80, 24);
+            this.buttonDataSavePreset.TabIndex = 4;
+            this.buttonDataSavePreset.Text = "Save Preset";
+            this.toolTipMain.SetToolTip(this.buttonDataSavePreset, "Saves current metric options to a preset file, optionally excluding internal and " +
+        "untracked metrics from the output.");
+            this.buttonDataSavePreset.UseVisualStyleBackColor = true;
+            this.buttonDataSavePreset.Click += new System.EventHandler(this.buttonDataSavePreset_Click);
+            // 
             // openFileDialogAppPath
             // 
             this.openFileDialogAppPath.FileName = "openFileDialogAppPath";
@@ -1711,6 +1748,8 @@ namespace MineControl
             this.groupBoxDataTracking.Controls.Add(this.dataGridViewMetrics);
             this.groupBoxDataTracking.Controls.Add(this.buttonDataViewSysTrayTooltips);
             this.groupBoxDataTracking.Controls.Add(this.buttonDataRemoveUnusedQueryOptions);
+            this.groupBoxDataTracking.Controls.Add(this.buttonDataLoadPreset);
+            this.groupBoxDataTracking.Controls.Add(this.buttonDataSavePreset);
             this.groupBoxDataTracking.Location = new System.Drawing.Point(8, 694);
             this.groupBoxDataTracking.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBoxDataTracking.Name = "groupBoxDataTracking";
@@ -1848,17 +1887,7 @@ namespace MineControl
             this.groupBox7.Size = new System.Drawing.Size(163, 60);
             this.groupBox7.TabIndex = 55;
             this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "Target Mem Junc Temps";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(7, 27);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(28, 15);
-            this.label5.TabIndex = 6;
-            this.label5.Text = "Min";
+            this.groupBox7.Text = "Target Temps";
             // 
             // label6
             // 
@@ -2593,9 +2622,9 @@ namespace MineControl
             // ColStatsStat
             // 
             this.ColStatsStat.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.ColStatsStat.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.ColStatsStat.DefaultCellStyle = dataGridViewCellStyle1;
             this.ColStatsStat.HeaderText = "Stat";
             this.ColStatsStat.Name = "ColStatsStat";
             this.ColStatsStat.ReadOnly = true;
@@ -2604,10 +2633,10 @@ namespace MineControl
             // ColStatsValue
             // 
             this.ColStatsValue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle11.NullValue = null;
-            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.ColStatsValue.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.NullValue = null;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.ColStatsValue.DefaultCellStyle = dataGridViewCellStyle2;
             this.ColStatsValue.HeaderText = "Value";
             this.ColStatsValue.Name = "ColStatsValue";
             this.ColStatsValue.ReadOnly = true;
@@ -2716,8 +2745,8 @@ namespace MineControl
             // ColLogMessage
             // 
             this.ColLogMessage.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.ColLogMessage.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.ColLogMessage.DefaultCellStyle = dataGridViewCellStyle3;
             this.ColLogMessage.HeaderText = "Message";
             this.ColLogMessage.MinimumWidth = 30;
             this.ColLogMessage.Name = "ColLogMessage";
@@ -2972,6 +3001,15 @@ namespace MineControl
             // openFileDialogBackups
             // 
             this.openFileDialogBackups.FileName = "openFileDialogBackupPath";
+            // 
+            // openFileDialogPresets
+            // 
+            this.openFileDialogPresets.Filter = "Presets|*.preset|All Files|*.*";
+            // 
+            // saveFileDialogPresets
+            // 
+            this.saveFileDialogPresets.DefaultExt = "preset";
+            this.saveFileDialogPresets.Filter = "Presets|*.preset";
             // 
             // FormMineControl
             // 
@@ -3270,6 +3308,10 @@ namespace MineControl
         private System.Windows.Forms.DataGridViewTextBoxColumn ColStatsStat;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColStatsValue;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColStatsLastUpdate;
+        private System.Windows.Forms.Button buttonDataLoadPreset;
+        private System.Windows.Forms.OpenFileDialog openFileDialogPresets;
+        private System.Windows.Forms.Button buttonDataSavePreset;
+        private System.Windows.Forms.SaveFileDialog saveFileDialogPresets;
     }
 }
 

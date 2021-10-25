@@ -63,6 +63,20 @@
   <metadata name="toolTipMain.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>124, 17</value>
   </metadata>
+  <data name="numericUpDownTempMin.ToolTip" xml:space="preserve">
+    <value>Minimum GPU temperature or memory junction temperature. 
+The temperature measured depends on the respective metric query you've selected in the Data Tracking grid.
+Unit (i.e. Celsius, Fahrenheit) is determined by the Hardware Monitor app. 
+If temp goes below this value, MineControl will try to increase GPU power step.
+</value>
+  </data>
+  <data name="numericUpDownTempMax.ToolTip" xml:space="preserve">
+    <value>Maximum GPU temperature or memory junction temperature. 
+The temperature measured depends on the respective metric query you've selected in the Data Tracking grid.
+Unit (i.e. Celsius, Fahrenheit) is determined by the Hardware Monitor app. 
+If temp goes above this value, MineControl will try to decrease GPU power step.
+</value>
+  </data>
   <data name="label23.ToolTip" xml:space="preserve">
     <value>How often MineControl automation polls for actions. 
 Most things like temperature management will ONLY evaluate once per polling cycle.
@@ -160,6 +174,13 @@ Doesn't work if this would hide all visible points on the Y2 axis.</value>
     <value>When checked, enabled miners will run. When unchecked, MineControl doesn't run any miners regardless of their settings.
 Note: This is for temporarily disabling miners without fiddling with indvidual settings.</value>
   </data>
+  <data name="label5.ToolTip" xml:space="preserve">
+    <value>Minimum GPU temperature or memory junction temperature. 
+The temperature measured depends on the respective metric query you've selected in the Data Tracking grid.
+Unit (i.e. Celsius, Fahrenheit) is determined by the Hardware Monitor app. 
+If temp goes below this value, MineControl will try to increase GPU power step.
+</value>
+  </data>
   <metadata name="openFileDialogAppPath.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>241, 17</value>
   </metadata>
@@ -184,27 +205,6 @@ Note: This is for temporarily disabling miners without fiddling with indvidual s
   <metadata name="ColDataQuery.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="ColDataEnableTracking.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="ColDataMetric.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="ColDataType.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="ColDataInputSource.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="ColDataMethod.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="ColDataQuery.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="ColAppChooseButton.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
   <metadata name="ColAppChooseButton.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -215,27 +215,6 @@ Note: This is for temporarily disabling miners without fiddling with indvidual s
     <value>True</value>
   </metadata>
   <metadata name="ColStatsLastUpdate.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="ColStatsStat.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="ColStatsValue.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="ColStatsLastUpdate.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="ColLogSource.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="ColLogType.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="ColLogTime.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="ColLogMessage.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <metadata name="ColLogSource.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
@@ -331,9 +310,6 @@ Note: This is for temporarily disabling miners without fiddling with indvidual s
         AAAAAAAAAAAAAA==
 </value>
   </data>
-  <metadata name="toolTipNotification.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>744, 17</value>
-  </metadata>
   <metadata name="openFileDialogBackups.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>898, 17</value>
   </metadata>
@@ -342,6 +318,12 @@ Note: This is for temporarily disabling miners without fiddling with indvidual s
   </metadata>
   <metadata name="folderBrowserDialogBackups.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>1250, 17</value>
+  </metadata>
+  <metadata name="openFileDialogPresets.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>1457, 17</value>
+  </metadata>
+  <metadata name="saveFileDialogPresets.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>1629, 17</value>
   </metadata>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

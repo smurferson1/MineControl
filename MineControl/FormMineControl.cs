@@ -16,8 +16,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
 namespace MineControl
-{    
-    // TODO: provide a way to remember settings across versions, since right now it starts over each time version number changes    
+{          
     public partial class FormMineControl : Form, IChartManager, ILog
     {
         #region Local Consts
@@ -63,7 +62,10 @@ namespace MineControl
 
         #region Local Vars And Props
         // application
-        private bool IsInitializing { get; set; } = true;
+        /// <summary>
+        /// IsLoading: true when application or its settings are being loaded
+        /// </summary>
+        private bool IsLoading { get; set; } = true;
         private bool CanQuit { get; set; } = false;
         private DateTime StartupTimestamp { get; } = DateTime.Now;
                 
@@ -565,26 +567,57 @@ namespace MineControl
             }
             if (Settings.metricsSerializedMetrics.Trim().Length > 0)
             {
-                BindingList<Metric> loadedMetrics = JsonSerializer.Deserialize<BindingList<Metric>>(Settings.metricsSerializedMetrics, jsonOptionsMetrics);
-                
-                foreach (Metric metric in loadedMetrics)
-                {   
-                    if (!Metrics.Any(x => x.Name == metric.Name))
+                LoadMetricsViaMerge(Settings.metricsSerializedMetrics);
+            }
+        }
+
+        /// <summary>
+        /// Deserializes the given metrics and merges them with current metrics. 
+        /// This means: current metrics are not removed, but are updated with the new values if needed. New metrics in serializedMetrics are added.
+        /// </summary>
+        /// <param name="serializedMetrics"></param>
+        /// <param name="previewOnly">When true, change list is generated but changes are not committed.</param>
+        /// <returns>A text description of the changes made, one per line</returns>
+        private string LoadMetricsViaMerge(string serializedMetrics, bool previewOnly = false)
+        {
+            List<string> changes = new List<string>();
+
+            List<Metric> loadedMetrics = JsonSerializer.Deserialize<List<Metric>>(serializedMetrics, jsonOptionsMetrics);
+            foreach (Metric metric in loadedMetrics)
+            {
+                if (!Metrics.Any(x => x.Name == metric.Name))
+                {
+                    if (!previewOnly)
                     {
                         Metrics.Add(metric);
                     }
-                    else if (Metric(metric.Name).IsInternal)
+                    changes.Add($"Add metric '{metric.Name}'");
+                }
+                else if (Metric(metric.Name).IsInternal)
+                {
+                    // just get enabled status for internal metrics
+                    if (Metric(metric.Name).IsEnabled != metric.IsEnabled)
                     {
-                        // just get enabled status for internal metrics
-                        Metric(metric.Name).IsEnabled = metric.IsEnabled;
-                    }
-                    else
-                    {
-                        // pull in external metrics fully
-                        Metric(metric.Name).Assign(metric);
+                        if (!previewOnly)
+                        {
+                            Metric(metric.Name).IsEnabled = metric.IsEnabled;
+                        }
+                        changes.Add($"Change enabled status for internal metric '{metric.Name}'");
                     }
                 }
-            }            
+                else
+                {
+                    // pull in external metrics fully
+                    if (!previewOnly)
+                    {
+                        Metric(metric.Name).Assign(metric);
+                    }
+                    changes.Add($"Update values for metric '{metric.Name}'");
+                }
+            }
+            dataGridViewMetrics.Refresh();
+
+            return string.Join("\n", changes);
         }
 
         /// <summary>
@@ -628,7 +661,7 @@ namespace MineControl
         private void SaveSettingsFromUI(bool includeSchedules = false)
         {
             // don't save anything while we're initializing
-            if (IsInitializing)
+            if (IsLoading)
             {
                 return;
             }
@@ -1187,42 +1220,49 @@ namespace MineControl
         /// Processes all rules affecting or affected by GPU temp
         /// </summary>
         private void DoGPUTempRules()
-        {            
-            int temp;
-            int step;
-
-            // adjust power step based on GPU temp
-            if (Int32.TryParse(GetStat(cGPUMemJuncTemp), out temp) && LastGPUStepChange.AddSeconds((double)Settings.tempSpeedStepBuffer) < DateTime.Now)
+        {
+            try
             {
-                if ((temp < Settings.tempMin))
+                int temp;
+                int step;
+
+                // adjust power step based on GPU temp
+                if (Int32.TryParse(GetStat(cGPUMemJuncTemp), out temp) && LastGPUStepChange.AddSeconds((double)Settings.tempSpeedStepBuffer) < DateTime.Now)
                 {
-                    if (Settings.tempSpeedStep < trackBarGPUPowerStep.Maximum)
+                    if ((temp < Settings.tempMin))
+                    {
+                        if (Settings.tempSpeedStep < trackBarGPUPowerStep.Maximum)
+                        {
+                            step = Settings.tempSpeedStep + 1;
+                            AddLogEntry(string.Format("GPU temp below minimum, stepping up to {0}", step.ToString()));
+                            StepGPUPower(step);
+                        }
+                    }
+                    else if (temp > Settings.tempMax)
+                    {
+                        if (Settings.tempSpeedStep > trackBarGPUPowerStep.Minimum)
+                        {
+                            step = Settings.tempSpeedStep - 1;
+                            AddLogEntry(string.Format("GPU temp above maximum, stepping down to {0}", step.ToString()));
+                            StepGPUPower(step);
+                        }
+                    }
+
+                    // try stepping power up based on user settings
+                    if (Settings.tempTryStepUp &&
+                        (LastGPUStepChange.AddSeconds((double)Settings.tempTryStepUpSecs) < DateTime.Now) &&
+                        (Settings.tempSpeedStep < trackBarGPUPowerStep.Maximum))
                     {
                         step = Settings.tempSpeedStep + 1;
-                        AddLogEntry(string.Format("GPU temp below minimum, stepping up to {0}", step.ToString()));                        
+                        AddLogEntry(string.Format("GPU power step unchanged for {0} seconds, stepping up to {1}", Settings.tempTryStepUpSecs, step.ToString()));
                         StepGPUPower(step);
                     }
                 }
-                else if (temp > Settings.tempMax)
-                {
-                    if (Settings.tempSpeedStep > trackBarGPUPowerStep.Minimum)
-                    {
-                        step = Settings.tempSpeedStep - 1;
-                        AddLogEntry(string.Format("GPU temp above maximum, stepping down to {0}", step.ToString()));                        
-                        StepGPUPower(step);
-                    }
-                }
-
-                // try stepping power up based on user settings
-                if (Settings.tempTryStepUp && 
-                    (LastGPUStepChange.AddSeconds((double)Settings.tempTryStepUpSecs) < DateTime.Now) && 
-                    (Settings.tempSpeedStep < trackBarGPUPowerStep.Maximum))
-                {
-                    step = Settings.tempSpeedStep + 1;
-                    AddLogEntry(string.Format("GPU power step unchanged for {0} seconds, stepping up to {1}", Settings.tempTryStepUpSecs, step.ToString()));
-                    StepGPUPower(step);
-                }
-            }            
+            }
+            catch (Exception ex)
+            {
+                AddLogEntry($"EXCEPTION PROCESSING GPU TEMP CONTROL RULES (make sure apps are configured correctly): {ex.GetType()} - {ex.Message}", LogType.Error);
+            }
         }
 
         public void Append(string entry, LogType logType = LogType.Info, LogSource logSource = LogSource.Internal)
@@ -1275,39 +1315,47 @@ namespace MineControl
 
         private void StepGPUPower(int step)
         {
-            // get user's customized profile number
-            string processParams = string.Empty;
-            if (step == 1)
+            try
             {
-                processParams = Settings.tempPowerStepParam1;
-            }
-            else if (step == 2)
-            {
-                processParams = Settings.tempPowerStepParam2;
-            }
-            else if (step == 3)
-            {
-                processParams = Settings.tempPowerStepParam3;
-            }
-            else if (step == 4)
-            {
-                processParams = Settings.tempPowerStepParam4;
-            }
-            else if (step == 5)
-            {
-                processParams = Settings.tempPowerStepParam5;
-            }
-            
-            using (Process p = new Process())
-            {
-                p.StartInfo.FileName = Settings.appGPUControllerPath;
-                p.StartInfo.Arguments = processParams;
-                p.StartInfo.UseShellExecute = true;
-                p.Start();
-            }
+                // get user's customized profile number
+                string processParams = string.Empty;
+                if (step == 1)
+                {
+                    processParams = Settings.tempPowerStepParam1;
+                }
+                else if (step == 2)
+                {
+                    processParams = Settings.tempPowerStepParam2;
+                }
+                else if (step == 3)
+                {
+                    processParams = Settings.tempPowerStepParam3;
+                }
+                else if (step == 4)
+                {
+                    processParams = Settings.tempPowerStepParam4;
+                }
+                else if (step == 5)
+                {
+                    processParams = Settings.tempPowerStepParam5;
+                }
 
-            LastGPUStepChange = DateTime.Now;
-            trackBarGPUPowerStep.Value = step;            
+            
+                using (Process p = new Process())
+                {
+                    p.StartInfo.FileName = Settings.appGPUControllerPath;
+                    p.StartInfo.Arguments = processParams;
+                    p.StartInfo.UseShellExecute = true;
+                    p.Start();
+                }
+
+                LastGPUStepChange = DateTime.Now;
+                trackBarGPUPowerStep.Value = step;
+            }
+            catch (Exception ex)
+            {
+                AddLogEntry($"EXCEPTION TRYING TO CHANGE GPU POWER STEP (make sure apps are configured correctly): {ex.GetType()} - {ex.Message}", LogType.Error);
+            }                        
         }
 
         /// <summary>
@@ -1315,34 +1363,42 @@ namespace MineControl
         /// </summary>
         private void DoPollingCycle()
         {
-            if (UpdateGPUTemp() && Settings.controlRunning && Settings.tempEnableAutomation)
-            {
-                DoGPUTempRules();
-            }
-
-            // update miner run states based on current conditions
-            UpdateMinerState(true);
-            UpdateMinerState(false);
-
-            // other UI updates
-            UpdatePolledMetrics();
-            UpdateChartScales(false);            
-            UpdatePolledStats();
-            UpdateStatColors();            
-
             try
             {
-                if (StartArchiveAndClear(out DateTime evalStartTime))
+                if (UpdateGPUTemp() && Settings.controlRunning && Settings.tempEnableAutomation)
                 {
-                    ArchiveAndClearOldLogs(evalStartTime);
-                    ArchiveChangedConfig();
-                    ClearOldChartData(evalStartTime);
-                    DeleteOldArchives(evalStartTime);
+                    DoGPUTempRules();
+                }
+
+                // update miner run states based on current conditions
+                UpdateMinerState(true);
+                UpdateMinerState(false);
+
+                // other UI updates
+                UpdatePolledMetrics();
+                UpdateChartScales(false);
+                UpdatePolledStats();
+                UpdateStatColors();
+
+                try
+                {
+                    if (StartArchiveAndClear(out DateTime evalStartTime))
+                    {
+                        ArchiveAndClearOldLogs(evalStartTime);
+                        ArchiveChangedConfig();
+                        ClearOldChartData(evalStartTime);
+                        DeleteOldArchives(evalStartTime);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    AddLogEntry($"Exception archiving/clearing data: {ex.GetType()} - {ex.Message}", LogType.Warning);
                 }
             }
             catch (Exception ex)
             {
-                AddLogEntry($"Exception archiving/clearing data: {ex.GetType()} - {ex.Message}");
+                AddLogEntry($"Exception executing a polling cycle: {ex.GetType()} - {ex.Message}", LogType.Error);
+                throw;
             }
         }
 
@@ -1600,11 +1656,11 @@ namespace MineControl
 
         private void UpdateMinerState(bool isGPU)
         {
+            MinerMode minerMode = isGPU ? (MinerMode)Settings.minerGPUMode : (MinerMode)Settings.minerCPUMode;
             if (Settings.controlRunning && Settings.minerEnableAutomation)
             {
                 // find state based on the miner mode
-                // Note: just gathering the state info and not applying it yet. we need to account for it in the conditions after before deciding our final state.
-                MinerMode minerMode = isGPU ? (MinerMode)Settings.minerGPUMode : (MinerMode)Settings.minerCPUMode;
+                // Note: just gathering the state info and not applying it yet. we need to account for it in the conditions after before deciding our final state.                
                 MinerState minerState = MinerState.Uninitialized;
                 string reasonToLog = "";
                 switch (minerMode)
@@ -1738,7 +1794,10 @@ namespace MineControl
             }
             else
             {
-                SyncMinerState(isGPU, MinerState.DisabledByUser, "");
+                if (minerMode != MinerMode.DontControl)
+                {
+                    SyncMinerState(isGPU, MinerState.DisabledByUser, "");
+                }
             }
         }
 
@@ -1949,19 +2008,19 @@ namespace MineControl
                 return;
             }
 
-            ChartUtils.UpdateChartAxisScale(Chart(cGPU), AxisType.Secondary,
+            ChartUtils.UpdateChartYAxisScale(Chart(cGPU), AxisType.Secondary,
                 Settings.chartMinTempOnYAxisEnabled ? new(Series, int)[] {(Series(cGPUMemJuncTemp), Settings.chartMinTempOnYAxisValue)} : null);
 
             if (includeGPUPowerStep)
             {
                 // always set GPU power step axis to the available power steps
-                ChartUtils.SetChartAxisScale(Chart(cGPU).ChartAreas[0].AxisY, trackBarGPUPowerStep.Minimum, trackBarGPUPowerStep.Maximum, Chart(cGPU).Height);                
+                ChartUtils.SetChartYAxisScale(Chart(cGPU).ChartAreas[0].AxisY, trackBarGPUPowerStep.Minimum, trackBarGPUPowerStep.Maximum, Chart(cGPU).Height);                
             }
 
             // update CPU axes to fit current data            
-            ChartUtils.UpdateChartAxisScale(Chart(cCPU));
+            ChartUtils.UpdateChartYAxisScale(Chart(cCPU));
 
-            ChartUtils.UpdateChartAxisScale(Chart(cResources));
+            ChartUtils.UpdateChartYAxisScale(Chart(cResources));
         }
 
         private void UpdatePolledMetrics()
@@ -2318,6 +2377,7 @@ namespace MineControl
         {
             try
             {
+                IsLoading = true;
                 string destFilePath = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
                 if (!File.Exists(destFilePath))
                 {
@@ -2337,6 +2397,10 @@ namespace MineControl
             catch (Exception ex)
             {
                 MessageBox.Show($"Error importing config: {ex.GetType()} - {ex.Message}");
+            }
+            finally
+            {
+                IsLoading = false;
             }
         }
 
@@ -2451,7 +2515,7 @@ namespace MineControl
         {
             LoadSettingsFile();
             LoadSettingsToUI(true);
-            IsInitializing = false;
+            IsLoading = false;
         }
 
         private void FormMineControl_Shown(object sender, EventArgs e)
@@ -2930,8 +2994,16 @@ namespace MineControl
         {
             if (MessageBox.Show("This will reset ALL settings to defaults! Continue?", Text, MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                Settings.Reset();
-                LoadSettingsToUI();
+                IsLoading = true;
+                try
+                {
+                    Settings.Reset();
+                    LoadSettingsToUI();
+                }
+                finally
+                {
+                    IsLoading = false;
+                }
             }
         }
 
@@ -3042,6 +3114,50 @@ namespace MineControl
         private void linkLabelAboutLicense_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             OpenLink("https://creativecommons.org/licenses/by-sa/4.0/");
+        }
+
+        private void buttonDataLoadPreset_Click(object sender, EventArgs e)
+        {
+            if (openFileDialogPresets.ShowDialog() == DialogResult.OK)
+            {
+                IsLoading = true;
+                try
+                {
+                    var changeList = LoadMetricsViaMerge(File.ReadAllText(openFileDialogPresets.FileName), true);
+                    if (MessageBox.Show(this, $"The following changes will be made to metric settings. Continue?\n\nChanges:\n{changeList}",
+                        this.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        LoadMetricsViaMerge(File.ReadAllText(openFileDialogPresets.FileName), false);
+                        ShowTooltipNotification("Preset loaded.");
+                    }
+                }                
+                finally
+                {
+                    IsLoading = false;
+                    SaveSettingsFromUI();
+                }
+            }
+        }
+
+        private void buttonDataSavePreset_Click(object sender, EventArgs e)
+        {
+            if (saveFileDialogPresets.ShowDialog() == DialogResult.OK)
+            {
+                string savedMetrics;
+                if (MessageBox.Show(this, "Press Yes to save all metric settings.\nPress No to EXCLUDE untracked and internal metrics.",
+                    this.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    File.WriteAllText(saveFileDialogPresets.FileName, JsonSerializer.Serialize(Metrics, jsonOptionsMetrics));
+                    savedMetrics = string.Join("\n", Metrics.Select(x => x.Name));
+                    
+                }
+                else
+                {
+                    File.WriteAllText(saveFileDialogPresets.FileName, JsonSerializer.Serialize(Metrics.Where(x => x.IsEnabled && !x.IsInternal), jsonOptionsMetrics));
+                    savedMetrics = string.Join("\n", Metrics.Where(x => x.IsEnabled && !x.IsInternal).Select(x => x.Name));                    
+                }
+                MessageBox.Show($"Preset saved to file \"{saveFileDialogPresets.FileName}\".\n\nMetric settings included in the preset: \n{savedMetrics}");
+            }
         }
     }
 }
