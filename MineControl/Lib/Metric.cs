@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
-namespace MineControl
+namespace MineControl.Lib
 {
     /// <summary>
     /// Represents a single data metric including its configuration and most recent retrieved result
@@ -18,17 +18,17 @@ namespace MineControl
     public class Metric
     {
         public Metric() : this(false, "", MetricType.Number, MetricSource.SysTray, MetricMethod.RegEx, "") { }
-                
+
         public Metric(bool isEnabled, string name, MetricType type, MetricSource source, MetricMethod method, string query)
-        { 
-            IsEnabled = isEnabled; 
-            Name = name; 
-            Type = type; 
-            Source = source; 
-            Method = method;             
-            Query = query;            
+        {
+            IsEnabled = isEnabled;
+            Name = name;
+            Type = type;
+            Source = source;
+            Method = method;
+            Query = query;
         }
-                
+
         public Metric(bool isEnabled, string name, MetricType type, MetricSource source, MetricMethod method, string query,
             ILog log, IChartManager chartManager = null)
         {
@@ -37,7 +37,7 @@ namespace MineControl
             Type = type;
             Source = source;
             Method = method;
-            Query = query;            
+            Query = query;
             Log = log;
             ChartManager = chartManager;
         }
@@ -46,7 +46,7 @@ namespace MineControl
         /// Whether this metric is being tracked
         /// </summary>
         private bool isEnabled;
-        public bool IsEnabled 
+        public bool IsEnabled
         {
             get { return isEnabled; }
             set
@@ -56,7 +56,7 @@ namespace MineControl
                 {
                     Series.Enabled = isEnabled;
                 }
-            } 
+            }
         }
 
         /// <summary>
@@ -73,8 +73,8 @@ namespace MineControl
         /// Where the metric is read from
         /// </summary>
         private MetricSource source;
-        public MetricSource Source 
-        { 
+        public MetricSource Source
+        {
             get { return source; }
             set
             {
@@ -82,13 +82,13 @@ namespace MineControl
                 if (source == MetricSource.MineControl && Method == MetricMethod.RegEx)
                 {
                     // regex is invalid if we're the source, so we update the method based on the metric state
-                    Method = IsInternal ? MetricMethod.InternalValue : MetricMethod.UserValue;                    
+                    Method = IsInternal ? MetricMethod.InternalValue : MetricMethod.UserValue;
                 }
                 else if (source != MetricSource.MineControl && Method != MetricMethod.RegEx)
                 {
                     // the only valid method for an external source
                     Method = MetricMethod.RegEx;
-                }               
+                }
             }
         }
 
@@ -96,8 +96,8 @@ namespace MineControl
         /// How the value is queried (i.e. search approach)
         /// </summary>
         private MetricMethod method;
-        public MetricMethod Method 
-        { 
+        public MetricMethod Method
+        {
             get { return method; }
             set
             {
@@ -111,9 +111,9 @@ namespace MineControl
                 {
                     Source = MetricSource.SysTray;
                 }
-            } 
+            }
         }
-                
+
         /// <summary>
         /// The query string that is applied using the Method, for example a regex
         /// </summary>
@@ -147,22 +147,22 @@ namespace MineControl
         /// </summary>        
         private Metric unit = null;
         [JsonIgnore]
-        public Metric Unit 
+        public Metric Unit
         {
             get { return unit; }
-            set 
-            { 
+            set
+            {
                 if (unit != null)
                 {
                     unit.ResultChanged -= ChildResultChanged;
                 }
-                unit = value; 
+                unit = value;
                 if (unit != null)
                 {
                     UpdateSeries();
                     unit.ResultChanged += ChildResultChanged;
                 }
-            } 
+            }
         }
 
         /// <summary>
@@ -192,17 +192,17 @@ namespace MineControl
         /// </summary>
         private Series series = null;
         [JsonIgnore]
-        public Series Series 
+        public Series Series
         {
             get { return series; }
             set
-            { 
+            {
                 if (series != value)
                 {
                     series = value;
                     UpdateSeries();
                 }
-            } 
+            }
         }
 
         /// <summary>
@@ -211,10 +211,10 @@ namespace MineControl
         /// </summary>        
         private string selectionResult = "";
         [JsonIgnore]
-        public string SelectionResult 
-        { 
-            get { return Method == MetricMethod.UserValue ? Query : selectionResult; }            
-            private set 
+        public string SelectionResult
+        {
+            get { return Method == MetricMethod.UserValue ? Query : selectionResult; }
+            private set
             {
                 if (selectionResult != value)
                 {
@@ -262,7 +262,7 @@ namespace MineControl
             Name = metric.Name;
             Type = metric.Type;
             Source = metric.Source;
-            Method = metric.Method;            
+            Method = metric.Method;
             Query = metric.Query;
             if (includeJsonIgnores)
             {
@@ -301,7 +301,7 @@ namespace MineControl
 #if DEBUG
                     Log?.Append($"Found grouping change from '{Series.Name}' to '{this.Name}{localUnit}{grouping}'", LogType.Debug);
 # endif
-                    bool found = false; 
+                    bool found = false;
 
                     // first look for another series on the same chart that fits this metric and grouping
                     foreach (Series s in Chart.Series)
@@ -323,11 +323,11 @@ namespace MineControl
                         Log?.Append($"Creating {Chart.Name} chart series '{this.Name}{localUnit}{grouping}' from change in grouping", LogType.Debug);
 # endif
                         // note: will set the new series for us
-                        ChartManager.CreateChartSeriesForMetric(Chart.Name, this, Series.ChartType, Series.YAxisType);                             
+                        ChartManager.CreateChartSeriesForMetric(Chart.Name, this, Series.ChartType, Series.YAxisType);
                     }
-                }                
+                }
             }
-            
+
             // set info
             Series.Name = $"{this.Name}{localUnit}{grouping}";
             Series.Enabled = IsEnabled && Series.Points.Count > 0;       
@@ -348,7 +348,7 @@ namespace MineControl
                 {
                     return false;
                 }
-                
+
                 // TODO: simplify this code -- much redundancy and nesting
                 bool result = false;
 
@@ -378,7 +378,7 @@ namespace MineControl
                                     DateTime now = DateTime.Now;
                                     LastResultTime = now;
                                     NumericResult = matchResult;
-                                    
+
                                     if (Series != null && IsEnabled)
                                     {                                        
                                         if (!chartChangesOnly || (Series.Points.Count == 0) || (Series.Points.Last().YValues[0] != matchResult))
@@ -443,7 +443,7 @@ namespace MineControl
                 // chart missing values as an X
                 if (!result && Series != null && IsEnabled && chartMissingValues)
                 {
-                    if ((Series.Points.Count == 0) || (!Series.Points.Last().IsEmpty))
+                    if (Series.Points.Count == 0 || !Series.Points.Last().IsEmpty)
                     {
                         Series.Points.AddXY(DateTime.Now, double.NaN);
                         Series.Points[Series.Points.Count - 1].IsEmpty = true;
@@ -452,14 +452,14 @@ namespace MineControl
                         Series.Enabled = IsEnabled && Series.Points.Count > 0;
                     }
                 }
-                
+
                 return result;
             }
             catch (Exception ex)
             {
                 Log?.Append($"Exception occurred while trying to update input for metric '{Name}': {ex.GetType()} - {ex.Message}", LogType.Error);
-                return false;                
+                return false;
             }
         }
-    }    
+    }
 }

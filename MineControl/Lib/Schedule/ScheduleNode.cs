@@ -3,23 +3,23 @@ using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace MineControl
+namespace MineControl.Lib.Schedule
 {
     /// <summary>
     /// Top level of abstraction for schedule nodes
     /// </summary>
     public abstract class ScheduleNode
-    {        
+    {
         public Guid Id { get; set; }
 
-        protected ScheduleNode() 
+        protected ScheduleNode()
         {
             GenerateId();
         }
 
         [JsonConstructor]
         protected ScheduleNode(Guid id)
-        {            
+        {
             Id = id;
             if (Id == Guid.Empty)
             {

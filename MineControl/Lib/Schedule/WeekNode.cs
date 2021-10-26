@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json.Serialization;
 
-namespace MineControl
+namespace MineControl.Lib.Schedule
 {
     public class WeekNode : BranchingNode
     {
@@ -11,13 +11,13 @@ namespace MineControl
 
         public WeekNode() : base() { }
 
-        public WeekNode(Guid id, bool isSunday, bool isMonday, bool isTuesday, bool isWednesday, bool isThursday, bool isFriday, bool isSaturday): base(id)
+        public WeekNode(Guid id, bool isSunday, bool isMonday, bool isTuesday, bool isWednesday, bool isThursday, bool isFriday, bool isSaturday) : base(id)
         {
             UpdateSelectedDays(isSunday, isMonday, isTuesday, isWednesday, isThursday, isFriday, isSaturday);
         }
 
         [JsonConstructor]
-        public WeekNode(Guid id, List<DayOfWeek> selectedDays): base(id)
+        public WeekNode(Guid id, List<DayOfWeek> selectedDays) : base(id)
         {
             SelectedDays = selectedDays;
         }
@@ -77,7 +77,7 @@ namespace MineControl
             }
             return result;
         }
-        
+
         public override string GetDescription()
         {
             if (SelectedDays.Count > 0)

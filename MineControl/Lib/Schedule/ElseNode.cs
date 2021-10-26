@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace MineControl
+namespace MineControl.Lib.Schedule
 {
     public class ElseNode : BranchingNode
     {
@@ -12,10 +12,10 @@ namespace MineControl
         public ElseNode(Guid id) : base(id) { }
 
         public override bool Evaluate(List<ScheduleAction> actions)
-        {            
+        {
             // always evaluate children
             EvaluateChildren(actions);
-            
+
             // always true
             return true;
         }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace MineControl
+namespace MineControl.Lib.Schedule
 {
     /// <summary>
     /// Json converter for serializing and deserializing ScheduleNodes polymorphically    
@@ -16,7 +16,7 @@ namespace MineControl
             BranchingNode = 1,
             CalendarNode = 2,
             WeekNode = 3,
-            TimeNode = 4,            
+            TimeNode = 4,
             ElseNode = 5,
             ActionNode = 6
         }
@@ -115,7 +115,7 @@ namespace MineControl
             if (scheduleNode is BranchingNode branchingNode)
             {
                 if (!reader.Read())
-                {                    
+                {
                     throw new JsonException();
                 }
                 branchingNode.Children = (List<ScheduleNode>)JsonSerializer.Deserialize(ref reader, typeof(List<ScheduleNode>), options);
@@ -157,9 +157,9 @@ namespace MineControl
             else if (value is ElseNode elseNode)
             {
                 writer.WriteNumber("TypeDiscriminator", (int)TypeDiscriminator.ElseNode);
-                writer.WritePropertyName("TypeValue");                    
+                writer.WritePropertyName("TypeValue");
                 JsonSerializer.Serialize(writer, elseNode);
-            }            
+            }
             else if (value is ActionNode actionNode)
             {
                 writer.WriteNumber("TypeDiscriminator", (int)TypeDiscriminator.ActionNode);

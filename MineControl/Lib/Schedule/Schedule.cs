@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace MineControl
+namespace MineControl.Lib.Schedule
 {
     public class Schedule
     {
@@ -18,12 +18,12 @@ namespace MineControl
         [JsonIgnore]
         public List<ScheduleAction> LastEvaluatedActions { get; private set; } = new List<ScheduleAction>();
 
-        public Schedule(): this(Guid.Empty) { }
+        public Schedule() : this(Guid.Empty) { }
 
         [JsonConstructor]
         public Schedule(Guid id)
         {
-            this.Id = id;
+            Id = id;
             if (Id == Guid.Empty)
             {
                 Id = Guid.NewGuid();
@@ -74,8 +74,8 @@ namespace MineControl
                     nodes.Add(elseNode);
                 }
                 return true;
-            }    
-            return false;            
+            }
+            return false;
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace MineControl
             }
             else
             {
-                foreach(ScheduleNode node in Nodes)
+                foreach (ScheduleNode node in Nodes)
                 {
                     List<ScheduleNode> nodes = node.GetNodesById(id);
                     if (nodes != null)
@@ -136,7 +136,7 @@ namespace MineControl
             ScheduleNode node = GetNodeById(id);
             if (node != null)
             {
-                string result = node.GetDescription();                
+                string result = node.GetDescription();
 
                 if ((node is BranchingNode) && !(node is ElseNode))
                 {
@@ -156,7 +156,7 @@ namespace MineControl
 
             return "";
         }
-        
+
         /// <summary>
         /// Returns the parent of the node with the given ID if present, null if it's a top level node, and an exception if node with that ID doesn't exist.
         /// </summary>
@@ -191,7 +191,7 @@ namespace MineControl
         public List<ScheduleNode> GetNodeParentNodes(Guid? id)
         {
             ScheduleNode parent = GetNodeParent(id);
-            return parent == null ? Nodes : ((BranchingNode)parent).Children;            
+            return parent == null ? Nodes : ((BranchingNode)parent).Children;
         }
 
         /// <summary>
@@ -227,14 +227,14 @@ namespace MineControl
             try
             {
                 ScheduleNode node = GetNodeById(id);
-                List<ScheduleNode> parentNodes = GetNodeParentNodes(id);                
+                List<ScheduleNode> parentNodes = GetNodeParentNodes(id);
                 int nodeIndex = parentNodes.IndexOf(node);
 
                 if (nodeIndex > 0 && CanMoveNode(id) && CanMoveNode(parentNodes[nodeIndex - 1].Id))
                 {
                     result = true;
                     parentNodes.Remove(node);
-                    parentNodes.Insert(nodeIndex - 1, node);                    
+                    parentNodes.Insert(nodeIndex - 1, node);
                 }
             }
             catch
@@ -324,7 +324,7 @@ namespace MineControl
                 {
                     // for elsenodes, we must delete everything in the collection (ifs cannot exist without an else)
                     sisterNodes.Clear();
-                    return true;                    
+                    return true;
                 }
                 else if (nodeToDelete is BranchingNode)
                 {
@@ -332,7 +332,7 @@ namespace MineControl
                     if (sisterNodes.Count(x => x is BranchingNode) > 2)
                     {
                         // two will remain, so we can just delete this node
-                        return sisterNodes.Remove(nodeToDelete);                        
+                        return sisterNodes.Remove(nodeToDelete);
                     }
                     else
                     {
@@ -344,7 +344,7 @@ namespace MineControl
                 else
                 {
                     // for non-branching nodes, it's safe to just delete it
-                    return sisterNodes.Remove(nodeToDelete);                    
+                    return sisterNodes.Remove(nodeToDelete);
                 }
             }
         }
@@ -354,11 +354,11 @@ namespace MineControl
         /// </summary>
         /// <returns>True if replacement was successful. False if incompatible.</returns>
         internal bool ReplaceNode(Guid nodeId, ScheduleNode newNode)
-        {            
-            List<ScheduleNode> parentNodes = this.GetNodeParentNodes(nodeId);
-            ScheduleNode oldNode = this.GetNodeById(nodeId);
+        {
+            List<ScheduleNode> parentNodes = GetNodeParentNodes(nodeId);
+            ScheduleNode oldNode = GetNodeById(nodeId);
             int nodeIndex = parentNodes.IndexOf(oldNode);
-                        
+
             if (oldNode != null && newNode != null && CanReplaceNode(oldNode, newNode))
             {
                 if (oldNode is BranchingNode && newNode is BranchingNode)

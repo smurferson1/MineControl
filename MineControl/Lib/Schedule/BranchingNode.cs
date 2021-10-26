@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace MineControl
+namespace MineControl.Lib.Schedule
 {
     /// <summary>
     /// A schedule node with branching capability (i.e. 0 or more children)
@@ -63,14 +63,14 @@ namespace MineControl
                 {
                     return nodeAnswer;
                 }
-            }            
+            }
 
             return base.GetNodeById(id);
         }
-        
+
         public override ScheduleNode GetNodeParent(Guid? id)
         {
-            if (this.Children.Count == 0)
+            if (Children.Count == 0)
             {
                 return null;
             }
@@ -106,7 +106,7 @@ namespace MineControl
                 {
                     return;
                 }
-            }            
+            }
         }
 
         public override string GetDescription()

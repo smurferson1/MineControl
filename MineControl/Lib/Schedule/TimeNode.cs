@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace MineControl
+namespace MineControl.Lib.Schedule
 {
     public class TimeNode : BranchingNode
     {
@@ -12,7 +12,7 @@ namespace MineControl
         public TimeNode() : base() { }
 
         [JsonConstructor]
-        public TimeNode(Guid id, DateTime startTime, DateTime endTime): base(id)
+        public TimeNode(Guid id, DateTime startTime, DateTime endTime) : base(id)
         {
             UpdateTimes(startTime, endTime);
         }
@@ -20,12 +20,12 @@ namespace MineControl
         public void UpdateTimes(DateTime startTime, DateTime endTime)
         {
             StartTime = startTime;
-            EndTime = endTime;            
+            EndTime = endTime;
         }
 
         public override bool Evaluate(List<ScheduleAction> actions)
-        {  
-            bool result = false;  
+        {
+            bool result = false;
 
             // represent times independently from dates, as timespans
             TimeSpan startSpan = StartTime.TimeOfDay;
@@ -48,7 +48,7 @@ namespace MineControl
                     result = true;
                 }
             }
-                       
+
             // evaluate children only if our condition is true
             if (result)
             {

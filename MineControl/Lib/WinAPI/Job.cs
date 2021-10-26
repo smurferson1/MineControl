@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MineControl
+namespace MineControl.Lib.WinAPI
 {
     /// <summary>
     /// Job class implements WinAPI job objects.
@@ -153,5 +153,5 @@ namespace MineControl
     }
 
     #endregion
-    
+
 }

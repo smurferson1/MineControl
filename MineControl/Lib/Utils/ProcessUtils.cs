@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MineControl
+namespace MineControl.Lib.Utils
 {
     public static class ProcessUtils
     {
@@ -40,8 +40,8 @@ namespace MineControl
         /// <returns> True if at least 1 instance of _processName is running on the system </returns>
         public static bool IsProcessRunningByName(string _processName)
         {
-            Process[] procname = Process.GetProcessesByName(_processName);            
-            return procname.Length > 0;            
+            Process[] procname = Process.GetProcessesByName(_processName);
+            return procname.Length > 0;
         }
 
         /// <summary>

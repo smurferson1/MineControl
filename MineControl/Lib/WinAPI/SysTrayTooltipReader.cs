@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace MineControl
+namespace MineControl.Lib.WinAPI
 {
     public static class SysTrayTooltipReader
     {
@@ -11,7 +11,7 @@ namespace MineControl
         public static string GetAllSysTrayToolbarText()
         {
             StringBuilder sb = new StringBuilder();
-            
+
             var handle = GetSystemTrayHandle();
             if (handle == IntPtr.Zero)
                 return "";
@@ -43,7 +43,7 @@ namespace MineControl
                     // we want the identifier
                     var res = SendMessage(handle, TB_GETBUTTONINFOW, (IntPtr)i, buffer);
                     if (res.ToInt32() >= 0 && ReadProcessMemory(hProcess, buffer, ref btn, size, out var read))
-                    {                        
+                    {
                         // now get display text using the identifier
                         // first pass we ask for size
                         var textSize = SendMessage(handle, TB_GETBUTTONTEXTW, (IntPtr)btn.idCommand, IntPtr.Zero);
@@ -61,16 +61,16 @@ namespace MineControl
                                     if (ReadProcessMemory(hProcess, textBuffer, localBuffer, utextSize, out read))
                                     {
                                         var text = Marshal.PtrToStringUni(localBuffer);
-                                        sb.AppendLine(text);                                            
+                                        sb.AppendLine(text);
                                     }
                                     Marshal.FreeHGlobal(localBuffer);
                                 }
                                 VirtualFreeEx(hProcess, textBuffer, IntPtr.Zero, MEM_RELEASE);
                             }
-                        }                        
+                        }
                     }
                 }
-            }            
+            }
 
             VirtualFreeEx(hProcess, buffer, IntPtr.Zero, MEM_RELEASE);
             CloseHandle(hProcess);

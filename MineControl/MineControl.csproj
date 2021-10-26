@@ -85,7 +85,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Lib\Schedule\" />
-    <Folder Include="Lib\Utils\" />
     <Folder Include="Lib\WinAPI\" />
   </ItemGroup>
 </Project>

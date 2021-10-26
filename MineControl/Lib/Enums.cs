@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MineControl
+namespace MineControl.Lib
 {
     public enum MinerMode
     {
@@ -55,7 +55,7 @@ namespace MineControl
         MinerOn,
         MinerOff
     }
-    
+
     public enum MetricType
     {
         Number,
@@ -92,13 +92,13 @@ namespace MineControl
         /// Lookahead: Counts time to the right of a data point at the Y value of the data point.
         /// Includes time between last data point and now in calculation.        
         /// </summary>
-        Lookahead,  
+        Lookahead,
         /// <summary>
         /// Lookbehind: Counts time to the left of a data point at the Y value of the data point
         /// Does not include time between last data point and now in calculation.        
         /// </summary>
         Lookbehind
-        
+
     }
-        
+
 }

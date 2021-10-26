@@ -1,4 +1,8 @@
-﻿using System;
+﻿using MineControl.Lib;
+using MineControl.Lib.Schedule;
+using MineControl.Lib.Utils;
+using MineControl.Lib.WinAPI;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
@@ -133,32 +137,6 @@ namespace MineControl
         public FormMineControl()
         {
             InitializeComponent();
-        }
-
-        /// <summary>
-        /// Ensures current settings file is loaded if one exists, upgrading (migrating) from previous versions as needed.
-        /// </summary>
-        private void LoadSettingsFile()
-        {
-            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal);
-            if (!config.HasFile)
-            {
-                try
-                {
-                    Settings.Upgrade();
-                    AddLogEntry($"MineControl settings for this version were either created from defaults or migrated from a previous version, then loaded from \"{config.FilePath}\"");
-                }
-                catch
-                {
-                    // note: doesn't seem to trigger, even when Upgrade finds nothing to migrate
-                    AddLogEntry($"No existing MineControl settings found, so defaults were set and loaded from \"{config.FilePath}\"");
-                }
-            }
-            else
-            {
-                // note: we don't need to actually load anything here, as .NET has done this already
-                AddLogEntry($"Existing MineControl settings were loaded from \"{config.FilePath}\"");
-            }
         }
 
         private void InitializeInternals()
@@ -2519,7 +2497,7 @@ namespace MineControl
         private void FormMineControl_Load(object sender, EventArgs e)
         {
             InitializeUI();
-            LoadSettingsFile();
+            ConfigUtils.LoadSettingsFile(Settings, this);
             LoadSettingsToUI(true);
             InitializeInternals();
             CanSave = true;

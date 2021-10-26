@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
 
-namespace MineControl
+namespace MineControl.Lib.Schedule
 {
     public class CalendarNode : BranchingNode
     {
@@ -15,8 +15,8 @@ namespace MineControl
 
         public CalendarNode() : base() { }
 
-        public CalendarNode(Guid id, int startMonth, int endMonth, int startDay, int endDay): base(id)
-        {       
+        public CalendarNode(Guid id, int startMonth, int endMonth, int startDay, int endDay) : base(id)
+        {
             StartDay = startDay;
             EndDay = endDay;
 
@@ -24,9 +24,9 @@ namespace MineControl
         }
 
         [JsonConstructor]
-        public CalendarNode(Guid id, List<int> validMonths, int startDay, int endDay) : base(id) => 
+        public CalendarNode(Guid id, List<int> validMonths, int startDay, int endDay) : base(id) =>
             (ValidMonths, StartDay, EndDay) = (validMonths, startDay, endDay);
-        
+
         public void UpdateValidMonths(int startMonth, int endMonth)
         {
             ValidMonths.Clear();
@@ -45,7 +45,7 @@ namespace MineControl
                     {
                         ValidMonths.Add(i);
                         i++;
-                        if ((i > 12))
+                        if (i > 12)
                         {
                             i = 1;
                         }
@@ -63,15 +63,15 @@ namespace MineControl
             DateTime today = DateTime.Today;
             bool result = true;
 
-            if ((ValidMonths.Count > 0) && ValidMonths.Contains(today.Month))
+            if (ValidMonths.Count > 0 && ValidMonths.Contains(today.Month))
             {
                 if (today.Month == ValidMonths[0] && today.Day < StartDay)
-                {                    
-                    result = false;                    
+                {
+                    result = false;
                 }
                 if (today.Month == ValidMonths[ValidMonths.Count] && today.Day > EndDay)
-                {                    
-                    result = false;                    
+                {
+                    result = false;
                 }
             }
             else
@@ -83,18 +83,18 @@ namespace MineControl
             if (result)
             {
                 // note: result of children don't matter at this level, so is ignored
-                EvaluateChildren(actions);                
-            }            
-            return result;            
+                EvaluateChildren(actions);
+            }
+            return result;
         }
 
         public override string GetDescription()
         {
             if ((StartDay > 0) && (EndDay > 0) && (ValidMonths.Count > 0))
             {
-                DateTime temp = new DateTime(DateTime.Now.Year, this.ValidMonths[0], 1);
+                DateTime temp = new DateTime(DateTime.Now.Year, ValidMonths[0], 1);
                 string startMonth = temp.ToString("MMMM");
-                temp = new DateTime(DateTime.Now.Year, this.ValidMonths.Last(), 1);
+                temp = new DateTime(DateTime.Now.Year, ValidMonths.Last(), 1);
                 string endMonth = temp.ToString("MMMM");
                 string startDay = StartDay == 32 ? "[Last Day]" : StartDay.ToString();
                 string endDay = EndDay == 32 ? "[Last Day]" : EndDay.ToString();

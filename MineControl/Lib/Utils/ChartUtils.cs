@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms.DataVisualization.Charting;
 
-namespace MineControl
+namespace MineControl.Lib.Utils
 {
     public static class ChartUtils
     {
@@ -32,8 +32,8 @@ namespace MineControl
                     {
                         seriesMinFloor = 0;
                     }
-                    min = min.Equals(double.NaN) ? 
-                        Math.Max(GetMinYValue(series, chart.ChartAreas[0].AxisX.Minimum) - padding, seriesMinFloor) : 
+                    min = min.Equals(double.NaN) ?
+                        Math.Max(GetMinYValue(series, chart.ChartAreas[0].AxisX.Minimum) - padding, seriesMinFloor) :
                         Math.Min(min, Math.Max(GetMinYValue(series, chart.ChartAreas[0].AxisX.Minimum) - padding, seriesMinFloor));
                     max = max.Equals(double.NaN) ? GetMaxYValue(series) + padding : Math.Max(max, GetMaxYValue(series) + padding);
                 }
@@ -65,13 +65,13 @@ namespace MineControl
             DataPoint point;
             try
             {
-                point = series.Points.FindMinByValue("Y1", series.Points.IndexOf(series.Points.First(x => x.XValue >= minXValue)));                
+                point = series.Points.FindMinByValue("Y1", series.Points.IndexOf(series.Points.First(x => x.XValue >= minXValue)));
             }
             catch
             {
                 point = null;
             }
-                      
+
             return point == null ? double.NaN : point.YValues[0];
         }
 
@@ -86,7 +86,7 @@ namespace MineControl
             {
                 point = null;
             }
-            
+
             return point == null ? double.NaN : point.YValues[0];
         }
 
@@ -110,7 +110,7 @@ namespace MineControl
                 SetChartYAxisScale(chart.ChartAreas[0].AxisY2, min, max, chart.Height);
             }
         }
-        
+
         public static void SetChartYAxisScale(Axis chartAxis, double min, double max, double height)
         {
             if (!min.Equals(double.NaN) && !max.Equals(double.NaN))

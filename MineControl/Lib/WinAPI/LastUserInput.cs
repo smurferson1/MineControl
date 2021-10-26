@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace MineControl
+namespace MineControl.Lib.WinAPI
 {
     public static class LastUserInput
     {
@@ -35,7 +35,7 @@ namespace MineControl
                 idleTime = envTicks - lastInputTick;
             }
 
-            return ((idleTime > 0) ? (idleTime / 1000) : 0);
+            return (idleTime > 0) ? (idleTime / 1000) : 0;
         }
     }
 }

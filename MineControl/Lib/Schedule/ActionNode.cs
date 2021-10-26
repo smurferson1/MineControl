@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace MineControl
+namespace MineControl.Lib.Schedule
 {
-    public class ActionNode: ScheduleNode
+    public class ActionNode : ScheduleNode
     {
         public ScheduleAction SelectedAction { get; set; }
 
@@ -15,11 +15,11 @@ namespace MineControl
         {
             SelectedAction = selectedAction;
         }
-                
+
         public override bool Evaluate(List<ScheduleAction> actions)
         {
             actions.Add(SelectedAction);
-            
+
             // never stop due to an action, since it's not conditional
             return false;
         }
@@ -34,7 +34,7 @@ namespace MineControl
                     break;
                 case ScheduleAction.MinerOn:
                     actionText = "Miner ON";
-                    break;                
+                    break;
             }
 
             return $"Result is '{actionText}'";

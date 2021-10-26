@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms.DataVisualization.Charting;
 
-namespace MineControl
+namespace MineControl.Lib
 {
     public interface IChartManager
     {
