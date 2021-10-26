@@ -16,7 +16,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
 namespace MineControl
-{          
+{
     public partial class FormMineControl : Form, IChartManager, ILog
     {
         #region Local Consts
@@ -62,10 +62,7 @@ namespace MineControl
 
         #region Local Vars And Props
         // application
-        /// <summary>
-        /// IsLoading: true when application or its settings are being loaded
-        /// </summary>
-        private bool IsLoading { get; set; } = true;
+        private bool CanSave { get; set; } = false;
         private bool CanQuit { get; set; } = false;
         private DateTime StartupTimestamp { get; } = DateTime.Now;
                 
@@ -154,7 +151,7 @@ namespace MineControl
                 catch
                 {
                     // note: doesn't seem to trigger, even when Upgrade finds nothing to migrate
-                    AddLogEntry("No existing MineControl settings found, so defaults were set and loaded from \"{config.FilePath}\"");
+                    AddLogEntry($"No existing MineControl settings found, so defaults were set and loaded from \"{config.FilePath}\"");
                 }
             }
             else
@@ -662,8 +659,8 @@ namespace MineControl
         /// </summary>
         private void SaveSettingsFromUI(bool includeSchedules = false)
         {
-            // don't save anything while we're initializing
-            if (IsLoading)
+            // don't save anything while we're loading things in or disposing things
+            if (!CanSave)
             {
                 return;
             }
@@ -2377,14 +2374,15 @@ namespace MineControl
 
         private void ImportConfig(string sourceFilePath)
         {
-            try
+            if (Settings.controlRunning)
             {
-                if (Settings.controlRunning)
-                {
-                    MessageBox.Show("Automation will be stopped. It can be restarted once the config is imported.");
-                    StopAutomation();
-                }                
-                IsLoading = true;
+                MessageBox.Show("Automation will be stopped. It can be restarted once the config is imported.");
+                StopAutomation();
+            }
+
+            CanSave = false;
+            try
+            {   
                 string destFilePath = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
                 if (!File.Exists(destFilePath))
                 {
@@ -2407,7 +2405,7 @@ namespace MineControl
             }
             finally
             {
-                IsLoading = false;
+                CanSave = true;
             }
         }
 
@@ -2524,7 +2522,7 @@ namespace MineControl
             LoadSettingsFile();
             LoadSettingsToUI(true);
             InitializeInternals();
-            IsLoading = false;
+            CanSave = true;
         }
 
         private void FormMineControl_Shown(object sender, EventArgs e)
@@ -2612,7 +2610,10 @@ namespace MineControl
             ArchiveAndClearOldLogs(now, true);
             ArchiveChangedConfig();
 
-            // dispose global IDisposables
+            //  avoid unintended saves while disposing binding sources
+            CanSave = false;
+
+            // dispose all class IDisposables
             ProcessGPUMiner.Dispose();
             ProcessCPUMiner.Dispose();
             ProcessHardwareMonitor.Dispose();
@@ -3007,7 +3008,7 @@ namespace MineControl
                     MessageBox.Show("Automation will be stopped. It can be restarted once the config is reset.");
                     StopAutomation();
                 }
-                IsLoading = true;
+                CanSave = false;
                 try
                 {
                     Settings.Reset();
@@ -3016,7 +3017,7 @@ namespace MineControl
                 }
                 finally
                 {
-                    IsLoading = false;
+                    CanSave = true;
                 }
             }
         }
@@ -3134,7 +3135,7 @@ namespace MineControl
         {
             if (openFileDialogPresets.ShowDialog() == DialogResult.OK)
             {
-                IsLoading = true;
+                CanSave = false;
                 try
                 {
                     var changeList = LoadMetricsViaMerge(File.ReadAllText(openFileDialogPresets.FileName), true);
@@ -3147,7 +3148,7 @@ namespace MineControl
                 }                
                 finally
                 {
-                    IsLoading = false;
+                    CanSave = true;
                     SaveSettingsFromUI();
                 }
             }

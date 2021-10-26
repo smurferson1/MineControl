@@ -5,7 +5,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Minor Code Smell", "S3604:Member initializer values should not be redundant", Justification = "<Pending>", Scope = "member", Target = "~P:MineControl.FormMineControl.IsLoading")]
+[assembly: SuppressMessage("Minor Code Smell", "S3604:Member initializer values should not be redundant", Justification = "<Pending>", Scope = "member", Target = "~P:MineControl.FormMineControl.CanSave")]
 [assembly: SuppressMessage("Minor Code Smell", "S3247:Duplicate casts should not be made", Justification = "<Pending>", Scope = "member", Target = "~M:MineControl.FormMineControl.LoadNodesToTreeView(System.Windows.Forms.TreeNodeCollection,System.Collections.Generic.List{MineControl.ScheduleNode},MineControl.Schedule)")]
 [assembly: SuppressMessage("Major Code Smell", "S3358:Ternary operators should not be nested", Justification = "<Pending>", Scope = "member", Target = "~M:MineControl.FormMineControl.SaveSettingsFromUI(System.Boolean)")]
 [assembly: SuppressMessage("Major Code Smell", "S1066:Collapsible \"if\" statements should be merged", Justification = "<Pending>", Scope = "member", Target = "~M:MineControl.FormMineControl.DoGPUTempRules")]
