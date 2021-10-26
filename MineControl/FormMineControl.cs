@@ -21,21 +21,25 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace MineControl
 {
-    public partial class FormMineControl : Form, IChartManager, ILog
+    public partial class FormMineControl : Form, IChartManager, ILog, ISettingsFile
     {
         #region Local Consts
-        // consts for app grid rows
-        private const int cGPUMinerIndex = 0;
-        private const int cCPUMinerIndex = 1;
-        private const int cHWMonitorIndex = 2;
-        private const int cGPUControllerIndex = 3;
+        // apps
+        private const string cAppGPUMiner = "GPU Miner";
+        private const int cAppGPUMinerIndex = 0;
+        private const string cAppCPUMiner = "CPU Miner";
+        private const int cAppCPUMinerIndex = 1;
+        private const string cAppHWMonitor = "Hardware Monitor";
+        private const int cAppHWMonitorIndex = 2;
+        private const string cAppGPUController = "GPU Controller";
+        private const int cAppGPUControllerIndex = 3;
 
-        // consts for charts
+        // charts
         private const string cGPU = "GPU";
         private const string cCPU = "CPU";
         private const string cResources = "Resources";
 
-        // consts for metrics and stats
+        // metrics and stats
         private const string cGPUPowerStep = "GPU Power Step";
         private const string cAvgGPUPowerStep = "Avg GPU Power Step";
         private const string cGPUHashRate = "GPU Hash Rate";
@@ -88,7 +92,6 @@ namespace MineControl
         private BindingSource bindingSourceCPUSchedule;
 
         // processes
-        Job job = new Job();
         private Process ProcessGPUMiner { get; } = new Process();
         private bool isGPUMinerRunning= false;
         private Process ProcessCPUMiner { get; } = new Process();
@@ -105,13 +108,12 @@ namespace MineControl
         // settings
         private Properties.Settings Settings { get; } = Properties.Settings.Default;
         private List<string> ChangedSettings { get; } = new List<string>();
-        private bool ConfigNeedsArchiving { get; set; } = false;
-
+        
         // logs
-        private DataTable dataTableLog;
+        private DataTable DataTableLog { get; } = new DataTable();
 
-        // archives
-        private DateTime LastArchiveEval { get; set; } = DateTime.Now;
+        // archival
+        private Archiver Archiver { get; set; }
 
         // serialization
         JsonSerializerOptions jsonOptionsScheduleNodes = new JsonSerializerOptions
@@ -139,10 +141,18 @@ namespace MineControl
             InitializeComponent();
         }
 
-        private void InitializeInternals()
+        private void UpdateSettingsEvents(bool assign = true)
         {
-            Settings.SettingChanging += Settings_SettingChanging;
-            Settings.PropertyChanged += Settings_PropertyChanged;
+            if (assign)
+            {
+                Settings.SettingChanging += Settings_SettingChanging;
+                Settings.PropertyChanged += Settings_PropertyChanged;
+            }
+            else
+            {
+                Settings.SettingChanging -= Settings_SettingChanging;
+                Settings.PropertyChanged -= Settings_PropertyChanged;
+            }
         }        
 
         private void InitializeUI()
@@ -155,18 +165,17 @@ namespace MineControl
             richTextBoxAboutAttribution.Text = Properties.Resources.txtAttribution;
             
             // set up grids and their data sources
-            dataGridViewApps.Rows.Add("GPU Miner", "", "Unknown", "");
-            dataGridViewApps.Rows.Add("CPU Miner", "", "Unknown", "");
-            dataGridViewApps.Rows.Add("Hardware Monitor", "", "Unknown", "");
-            dataGridViewApps.Rows.Add("GPU Controller", "", "Unknown", "");
-            dataTableLog = new DataTable();
-            dataTableLog.Columns.Add("Source");
-            dataTableLog.Columns.Add("Type");
-            dataTableLog.Columns.Add("Time");
-            dataTableLog.Columns["Time"].DataType = typeof(DateTime);
-            dataTableLog.Columns.Add("Message");
+            dataGridViewApps.Rows.Add(cAppGPUMiner, "", "Unknown", "");
+            dataGridViewApps.Rows.Add(cAppCPUMiner, "", "Unknown", "");
+            dataGridViewApps.Rows.Add(cAppHWMonitor, "", "Unknown", "");
+            dataGridViewApps.Rows.Add(cAppGPUController, "", "Unknown", "");            
+            DataTableLog.Columns.Add("Source");
+            DataTableLog.Columns.Add("Type");
+            DataTableLog.Columns.Add("Time");
+            DataTableLog.Columns["Time"].DataType = typeof(DateTime);
+            DataTableLog.Columns.Add("Message");
             dataGridViewLog.AutoGenerateColumns = false;
-            dataGridViewLog.DataSource = dataTableLog;
+            dataGridViewLog.DataSource = DataTableLog;
             dataGridViewLog.Columns[0].DataPropertyName = "Source";
             dataGridViewLog.Columns[1].DataPropertyName = "Type";
             dataGridViewLog.Columns[2].DataPropertyName = "Time";
@@ -432,14 +441,14 @@ namespace MineControl
             }
 
             // apps grid
-            dataGridViewApps.Rows[cGPUMinerIndex].Cells[ColAppName.Index].Value = Settings.appGPUMinerName;
-            dataGridViewApps.Rows[cGPUMinerIndex].Cells[ColAppPath.Index].Value = Settings.appGPUMinerPath;
-            dataGridViewApps.Rows[cCPUMinerIndex].Cells[ColAppName.Index].Value = Settings.appCPUMinerName;
-            dataGridViewApps.Rows[cCPUMinerIndex].Cells[ColAppPath.Index].Value = Settings.appCPUMinerPath;
-            dataGridViewApps.Rows[cHWMonitorIndex].Cells[ColAppName.Index].Value = Settings.appHardwareMonitorName;            
-            dataGridViewApps.Rows[cHWMonitorIndex].Cells[ColAppPath.Index].Value = Settings.appHardwareMonitorPath;
-            dataGridViewApps.Rows[cGPUControllerIndex].Cells[ColAppName.Index].Value = Settings.appGPUControllerName;
-            dataGridViewApps.Rows[cGPUControllerIndex].Cells[ColAppPath.Index].Value = Settings.appGPUControllerPath;
+            dataGridViewApps.Rows[cAppGPUMinerIndex].Cells[ColAppName.Index].Value = Settings.appGPUMinerName;
+            dataGridViewApps.Rows[cAppGPUMinerIndex].Cells[ColAppPath.Index].Value = Settings.appGPUMinerPath;
+            dataGridViewApps.Rows[cAppCPUMinerIndex].Cells[ColAppName.Index].Value = Settings.appCPUMinerName;
+            dataGridViewApps.Rows[cAppCPUMinerIndex].Cells[ColAppPath.Index].Value = Settings.appCPUMinerPath;
+            dataGridViewApps.Rows[cAppHWMonitorIndex].Cells[ColAppName.Index].Value = Settings.appHardwareMonitorName;            
+            dataGridViewApps.Rows[cAppHWMonitorIndex].Cells[ColAppPath.Index].Value = Settings.appHardwareMonitorPath;
+            dataGridViewApps.Rows[cAppGPUControllerIndex].Cells[ColAppName.Index].Value = Settings.appGPUControllerName;
+            dataGridViewApps.Rows[cAppGPUControllerIndex].Cells[ColAppPath.Index].Value = Settings.appGPUControllerPath;
 
             // miner management
             checkBoxEnableMinerAutomation.Checked = Settings.minerEnableAutomation;
@@ -523,7 +532,7 @@ namespace MineControl
             comboBoxArchivesLogManagementType.Text = Settings.archivesLogManagementType;
             numericUpDownArchivesLogManagementValue.Value = Settings.archivesLogManagementValue;
             comboBoxArchivesLogManagementUnit.Text = Settings.archivesLogManagementUnit;
-            textBoxArchivesArchiveFolder.Text = GetArchiveFolder();
+            textBoxArchivesArchiveFolder.Text = Archiver.GetArchiveFolder();
             checkBoxArchivesDeleteOldFiles.Checked = Settings.archivesDeleteOldFiles;
             numericUpDownArchivesDeleteOldFilesDays.Value = Settings.archivesDeleteOldFilesDays;
             checkBoxArchivesClearOldCharts.Checked = Settings.archivesClearOldCharts;
@@ -648,14 +657,14 @@ namespace MineControl
                 SaveSchedulesFromList();
 
             // apps grid
-            Settings.appGPUMinerName = dataGridViewApps.Rows[cGPUMinerIndex].Cells[ColAppName.Index].Value?.ToString() ?? string.Empty;
-            Settings.appGPUMinerPath = dataGridViewApps.Rows[cGPUMinerIndex].Cells[ColAppPath.Index].Value?.ToString() ?? string.Empty;
-            Settings.appCPUMinerName = dataGridViewApps.Rows[cCPUMinerIndex].Cells[ColAppName.Index].Value?.ToString() ?? string.Empty;
-            Settings.appCPUMinerPath = dataGridViewApps.Rows[cCPUMinerIndex].Cells[ColAppPath.Index].Value?.ToString() ?? string.Empty;
-            Settings.appHardwareMonitorName = dataGridViewApps.Rows[cHWMonitorIndex].Cells[ColAppName.Index].Value?.ToString() ?? string.Empty;
-            Settings.appHardwareMonitorPath = dataGridViewApps.Rows[cHWMonitorIndex].Cells[ColAppPath.Index].Value?.ToString() ?? string.Empty;
-            Settings.appGPUControllerName = dataGridViewApps.Rows[cGPUControllerIndex].Cells[ColAppName.Index].Value?.ToString() ?? string.Empty;
-            Settings.appGPUControllerPath = dataGridViewApps.Rows[cGPUControllerIndex].Cells[ColAppPath.Index].Value?.ToString() ?? string.Empty;
+            Settings.appGPUMinerName = dataGridViewApps.Rows[cAppGPUMinerIndex].Cells[ColAppName.Index].Value?.ToString() ?? string.Empty;
+            Settings.appGPUMinerPath = dataGridViewApps.Rows[cAppGPUMinerIndex].Cells[ColAppPath.Index].Value?.ToString() ?? string.Empty;
+            Settings.appCPUMinerName = dataGridViewApps.Rows[cAppCPUMinerIndex].Cells[ColAppName.Index].Value?.ToString() ?? string.Empty;
+            Settings.appCPUMinerPath = dataGridViewApps.Rows[cAppCPUMinerIndex].Cells[ColAppPath.Index].Value?.ToString() ?? string.Empty;
+            Settings.appHardwareMonitorName = dataGridViewApps.Rows[cAppHWMonitorIndex].Cells[ColAppName.Index].Value?.ToString() ?? string.Empty;
+            Settings.appHardwareMonitorPath = dataGridViewApps.Rows[cAppHWMonitorIndex].Cells[ColAppPath.Index].Value?.ToString() ?? string.Empty;
+            Settings.appGPUControllerName = dataGridViewApps.Rows[cAppGPUControllerIndex].Cells[ColAppName.Index].Value?.ToString() ?? string.Empty;
+            Settings.appGPUControllerPath = dataGridViewApps.Rows[cAppGPUControllerIndex].Cells[ColAppPath.Index].Value?.ToString() ?? string.Empty;
 
             // miner management            
             Settings.minerEnableAutomation = checkBoxEnableMinerAutomation.Checked;
@@ -723,17 +732,7 @@ namespace MineControl
             // commit the changes
             Settings.Save();    
 
-            try
-            {
-                if (Settings.archivesArchiveConfig && !Directory.GetFiles(GetConfigArchiveFolder()).Any())
-                {
-                    ArchiveChangedConfig(true);
-                }
-            }
-            catch (Exception ex)
-            {
-                AddLogEntry($"Exception archiving config: {ex.GetType()} - {ex.Message}");
-            }
+            Archiver.ArchiveConfigIfNeeded();
         }
         
         /// <summary>
@@ -803,7 +802,7 @@ namespace MineControl
                     case nameof(Settings.chartMinTempOnYAxisEnabled):
                     case nameof(Settings.chartMinTempOnYAxisValue):
                         UpdateChartScales(false);
-                        ConfigNeedsArchiving = true;
+                        Archiver.IsConfigArchiveNeeded = true;
                         break;
 
                     // applied automatically but needs archiving
@@ -848,7 +847,7 @@ namespace MineControl
                     case nameof(Settings.archivesClearOldCharts):
                     case nameof(Settings.archivesClearOldChartsValue):
                     case nameof(Settings.archivesClearOldChartsUnit):
-                        ConfigNeedsArchiving = true;
+                        Archiver.IsConfigArchiveNeeded = true;
                         break;
 
                     // nothing required
@@ -858,11 +857,11 @@ namespace MineControl
                     // miner changes that can be applied immediately
                     case nameof(Settings.minerCPUMode):
                         UpdateMinerState(false);
-                        ConfigNeedsArchiving = true;
+                        Archiver.IsConfigArchiveNeeded = true;
                         break;
                     case nameof(Settings.minerGPUMode):
                         UpdateMinerState(true);
-                        ConfigNeedsArchiving = true;
+                        Archiver.IsConfigArchiveNeeded = true;
                         break;
                     case nameof(Settings.minerEnableAutomation):
                     case nameof(Settings.tempEnableAutomation):
@@ -877,12 +876,12 @@ namespace MineControl
                     // other changes that can be applied immediately
                     case nameof(Settings.tempPollingIntervalMillisecs):
                         timerMain.Interval = Settings.tempPollingIntervalMillisecs;
-                        ConfigNeedsArchiving = true;
+                        Archiver.IsConfigArchiveNeeded = true;
                         break;
 
                     default:
                         settingApplied = false;
-                        ConfigNeedsArchiving = true;
+                        Archiver.IsConfigArchiveNeeded = true;
                         break;
                 }
 
@@ -963,209 +962,81 @@ namespace MineControl
         }
 
         private void LaunchHardwareManagementApps()
-        {   
+        {
             // hardware monitor
-            LaunchProcess(ProcessHardwareMonitor, Settings.appHardwareMonitorPath, Settings.appHardwareMonitorName, 
-                "Hardware Monitor", ref isHardwareMonitorRunning, cHWMonitorIndex, false);
+            string status = (string)dataGridViewApps.Rows[cAppHWMonitorIndex].Cells[ColAppStatus.Index].Value;
+            ProcessUtils.LaunchProcess(ProcessHardwareMonitor, Settings.appHardwareMonitorPath, Settings.appHardwareMonitorName,
+                cAppHWMonitor, ref isHardwareMonitorRunning, false, ref status, ProcessOutputReceived, this);
+            dataGridViewApps.Rows[cAppHWMonitorIndex].Cells[ColAppStatus.Index].Value = status;
 
             // gpu controller
-            LaunchProcess(ProcessGPUController, Settings.appGPUControllerPath, Settings.appGPUControllerName,
-                "GPU Controller", ref isGPUControllerRunning, cGPUControllerIndex, false);           
-        }
-
-        private void LaunchProcess(Process process, string path, string name, string logName, ref bool isRunning, int gridRow, bool fullControl)
-        { 
-            if (File.Exists(path) && (name.Trim() != string.Empty))
-            {
-                if (fullControl)
-                {
-                    // only mess with it if we're not already running it as a sub-process
-                    if (!ProcessUtils.IsProcessRunningFromObject(process))
-                    {
-                        try
-                        {
-                            // kill any external instances (not ours)
-                            if (ProcessUtils.KillProcessInstancesByName(name))
-                            {
-                                AddLogEntry($"{logName} app \"{name}\" external instance(s) killed");
-                            }
-
-                            // this avoids exceptions if an output read was erroneously left in place
-                            try
-                            {
-                                process.CancelOutputRead();
-                            }
-                            catch
-                            {
-                                // will raise exceptions in most cases that should be ignored
-                            }
-
-                            // start our instance                            
-                            process.StartInfo.FileName = path;
-                            process.StartInfo.WorkingDirectory = Path.GetDirectoryName(path);
-                            process.StartInfo.RedirectStandardOutput = true;
-                            process.StartInfo.UseShellExecute = false;
-                            process.StartInfo.CreateNoWindow = true;
-                            process.StartInfo.Verb = "runas";
-                            process.OutputDataReceived += ProcessOutputReceived;
-                            process.Start();
-                            isRunning = true;
-                            dataGridViewApps.Rows[gridRow].Cells[ColAppStatus.Index].Value = "Running";
-                            process.BeginOutputReadLine();
-
-                            // add to job so it will close if MC crashes
-                            bool isCrashSafe = false;
-                            try
-                            {
-                                isCrashSafe = job.AddProcess(process.Id);                                
-                            }
-                            catch
-                            { 
-                                // eat any failures here
-                            }                                              
-                            
-                            AddLogEntry(
-                                $"{logName} app \"{name}\" started at path \"{path}\" under full control {(isCrashSafe ? "with" : "WITHOUT")} crash safety", 
-                                isCrashSafe ? LogType.Info : LogType.Warning);                      
-                        }
-                        catch (Exception ex)
-                        {
-                            dataGridViewApps.Rows[gridRow].Cells[ColAppStatus.Index].Value = "Unknown (Error)";
-                            AddLogEntry($"{logName} app \"{name}\" kill/start failed with the following exception: ({ex.GetType()}) {ex.Message}", LogType.Error);
-                        }
-                    }
-                    else
-                    {
-                        dataGridViewApps.Rows[gridRow].Cells[ColAppStatus.Index].Value = "Running";
-                    }
-                }
-                else
-                {
-                    if (!ProcessUtils.IsProcessRunningByName(name))
-                    {
-                        process.StartInfo.FileName = path;
-                        process.StartInfo.UseShellExecute = true;
-                        process.Start();
-                        isRunning = true;
-                        dataGridViewApps.Rows[gridRow].Cells[ColAppStatus.Index].Value = "Running";
-                        AddLogEntry($"{logName} app \"{name}\" started at path \"{path}\"");
-                    }
-                    else if ((string)dataGridViewApps.Rows[gridRow].Cells[ColAppStatus.Index].Value != "Running (ext)")
-                    {
-                        dataGridViewApps.Rows[gridRow].Cells[ColAppStatus.Index].Value = "Running (ext)";
-                        AddLogEntry($"{logName} app \"{name}\" was already running");
-                    }
-                }
-            }
-            else
-            {
-                AddLogEntry($"{logName} app info is invalid, so it wasn't executed or verified", LogType.Error);
-            }
-        }        
-
-        private void CloseProcess(Process process, string path, string name, string logName, int gridRow, ref bool isRunning)
-        {
-            if (ProcessUtils.IsProcessRunningFromObject(process))
-            {
-                try
-                {
-                    if (process.StartInfo.RedirectStandardOutput)
-                    {
-                        process.CancelOutputRead();
-                        process.OutputDataReceived -= ProcessOutputReceived;
-                    }
-                    process.Kill();                    
-                    AddLogEntry($"{logName} app \"{Path.GetFileNameWithoutExtension(path)}\" killed");
-                }
-                catch (Exception ex)
-                {
-                    AddLogEntry($"{logName} app \"{name}\" kill may have failed due to exception: {ex.GetType()} - {ex.Message}");
-                }
-            }
-
-            try
-            {
-                // in case process was a batch file, kill the process by name as well
-                if (ProcessUtils.KillProcessInstancesByName(name))
-                {
-                    AddLogEntry($"{logName} app \"{name}\" extra instance(s) killed");
-                }
-            }
-            catch (Exception ex)
-            {
-                AddLogEntry($"{logName} app \"{name}\" extra instance kill may have failed due to exception: {ex.GetType()} - {ex.Message}");
-            }
-
-            isRunning = false;
-            dataGridViewApps.Rows[gridRow].Cells[ColAppStatus.Index].Value = "Stopped";            
+            status = (string)dataGridViewApps.Rows[cAppGPUControllerIndex].Cells[ColAppStatus.Index].Value;
+            ProcessUtils.LaunchProcess(ProcessGPUController, Settings.appGPUControllerPath, Settings.appGPUControllerName,
+                cAppGPUController, ref isGPUControllerRunning, false, ref status, ProcessOutputReceived, this);
+            dataGridViewApps.Rows[cAppGPUControllerIndex].Cells[ColAppStatus.Index].Value = status;
         }
 
         private void ProcessOutputReceived(object sender, DataReceivedEventArgs e)
-        {   
-            // requires main thread execution since it affects the UI
-            Invoke(new Action(() =>
-                {
-                // send non-blank data from non-null objects to the log
-                if ((e != null) && (e.Data != null) && (e.Data.Trim().Length > 0))
-                {
-                    MetricSource applicableSource;
-                    string logName;
+        {
+            // send non-blank data from non-null objects to the log
+            if ((e != null) && (e.Data != null) && (e.Data.Trim().Length > 0))
+            {
+                MetricSource applicableSource;
+                string logName;
 
-                    if (sender == ProcessGPUMiner)
-                    {
-                        applicableSource = MetricSource.GPUMiner;
-                        logName = cGPU;
-                    }
-                    else if (sender == ProcessCPUMiner)
-                    {
-                        applicableSource = MetricSource.CPUMiner;
-                        logName = cCPU;
-                    }
-                    else
-                    {
-                        // don't know what to do with unknown sources
-                        AddLogEntry($"Output received from Unknown source '{sender}'", LogType.Warning);
-                        return;
-                    }
+                if (sender == ProcessGPUMiner)
+                {
+                    applicableSource = MetricSource.GPUMiner;
+                    logName = cGPU;
+                }
+                else if (sender == ProcessCPUMiner)
+                {
+                    applicableSource = MetricSource.CPUMiner;
+                    logName = cCPU;
+                }
+                else
+                {
+                    // don't know what to do with unknown sources
+                    AddLogEntry($"Output received from Unknown source '{sender}'", LogType.Warning);
+                    return;
+                }
 
-                    // process the input
-                    bool inputFound = false;
-                    string inputValue;
-                    StringBuilder inputLogValues = new StringBuilder();
-                    try
+                // process the input
+                bool inputFound = false;
+                string inputValue;
+                StringBuilder inputLogValues = new StringBuilder();
+                try
+                {
+                    foreach (Metric metric in Metrics)
                     {
-                        foreach (Metric metric in Metrics)
+                        if (metric.Source == applicableSource && metric.IsEnabled && metric.UpdateFromInput(e.Data, false, false))
                         {
-                            if (metric.Source == applicableSource && metric.IsEnabled && metric.UpdateFromInput(e.Data, false, false))
+                            inputFound = true;
+                            inputValue = metric.Type == MetricType.Number ? metric.NumericResult.ToString() : metric.SelectionResult;
+                            inputLogValues.Append($"({metric.Name}={inputValue})");
+                            if (!(metric.Name.Contains("Unit") || metric.Name.Contains("Algo")))
                             {
-                                inputFound = true;
-                                inputValue = metric.Type == MetricType.Number ? metric.NumericResult.ToString() : metric.SelectionResult;
-                                inputLogValues.Append($"({metric.Name}={inputValue})");
-                                if (!(metric.Name.Contains("Unit") || metric.Name.Contains("Algo")))
-                                {
-                                    SetStat(metric.Name, inputValue);
-                                }
+                                SetStat(metric.Name, inputValue);
                             }
                         }
                     }
-                    catch (Exception ex)
-                    {
-                        AddLogEntry($"Exception reading {logName} hash rate (this may negatively affect {logName} hash rate calculations): {ex.GetType()} - {ex.Message}", LogType.Error);
-                    }
-                    finally
-                    {
-                        string logMsg = inputLogValues.ToString() == string.Empty ? e.Data : $"{e.Data} <MineControl inputs: {inputLogValues}>";
-
-                        if (applicableSource == MetricSource.GPUMiner && Settings.minerGPUShowLogs)
-                            AddLogEntry(logMsg, inputFound ? LogType.Input : LogType.Info, LogSource.GPUMiner);
-                        else if (applicableSource == MetricSource.CPUMiner && Settings.minerCPUShowLogs)
-                            AddLogEntry(logMsg, inputFound ? LogType.Input : LogType.Info, LogSource.CPUMiner);
-                    }
                 }
-            }));
+                catch (Exception ex)
+                {
+                    AddLogEntry($"Exception reading {logName} hash rate (this may negatively affect {logName} hash rate calculations): {ex.GetType()} - {ex.Message}", LogType.Error);
+                }
+                finally
+                {
+                    string logMsg = inputLogValues.ToString() == string.Empty ? e.Data : $"{e.Data} <MineControl inputs: {inputLogValues}>";
+
+                    if (applicableSource == MetricSource.GPUMiner && Settings.minerGPUShowLogs)
+                        AddLogEntry(logMsg, inputFound ? LogType.Input : LogType.Info, LogSource.GPUMiner);
+                    else if (applicableSource == MetricSource.CPUMiner && Settings.minerCPUShowLogs)
+                        AddLogEntry(logMsg, inputFound ? LogType.Input : LogType.Info, LogSource.CPUMiner);
+                }
+            }
         }
 
-       
         private void StartAutomation()
         {
             AddLogEntry("Automation started");           
@@ -1242,54 +1113,6 @@ namespace MineControl
             }
         }
 
-        public void Append(string entry, LogType logType = LogType.Info, LogSource logSource = LogSource.Internal)
-        {
-            AddLogEntry(entry, logType, logSource);
-        }
-
-        private void AddLogEntry(string entry, LogType logType = LogType.Info, LogSource logSource = LogSource.Internal)
-        {
-            // can't invoke until control has been created, so entries at this stage are lost
-            if (!this.Created)
-            {
-                return;
-            }
-            
-            Invoke(new Action(() =>
-            {
-                string logSourceText;
-                switch (logSource)
-                {
-                    case LogSource.Internal:
-                        logSourceText = "MineControl";
-                        break;
-                    case LogSource.GPUMiner:
-                        logSourceText = "GPU Miner";
-                        break;
-                    case LogSource.CPUMiner:
-                        logSourceText = "CPU Miner";
-                        break;
-                    default:
-                        logSourceText = "MineControl";
-                        break;
-                }
-
-                // add the row                
-                dataTableLog.Rows.Add(logSourceText, Enum.GetName(typeof(LogType), logType), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"), entry);
-
-                // scroll if needed
-                ScrollLogToEnd();
-            }));
-        }
-
-        private void ScrollLogToEnd()
-        {
-            if (checkBoxLogAutoScroll.Checked && (dataGridViewLog.Rows.GetLastRow(DataGridViewElementStates.Visible) >= 0))
-            {
-                dataGridViewLog.FirstDisplayedScrollingRowIndex = dataGridViewLog.Rows.GetLastRow(DataGridViewElementStates.Visible);
-            }
-        }
-
         private void StepGPUPower(int step)
         {
             try
@@ -1317,7 +1140,7 @@ namespace MineControl
                     processParams = Settings.tempPowerStepParam5;
                 }
 
-            
+
                 using (Process p = new Process())
                 {
                     p.StartInfo.FileName = Settings.appGPUControllerPath;
@@ -1332,7 +1155,51 @@ namespace MineControl
             catch (Exception ex)
             {
                 AddLogEntry($"EXCEPTION TRYING TO CHANGE GPU POWER STEP (make sure apps are configured correctly): {ex.GetType()} - {ex.Message}", LogType.Error);
-            }                        
+            }
+        }
+
+        void ILog.Append(string entry, LogType logType = LogType.Info, LogSource logSource = LogSource.Internal) => AddLogEntry(entry, logType, logSource);
+        private void AddLogEntry(string entry, LogType logType = LogType.Info, LogSource logSource = LogSource.Internal)
+        {
+            // can't invoke until control has been created, so entries at this stage are lost
+            if (!this.Created)
+            {
+                return;
+            }
+            
+            Invoke(new Action(() =>
+            {
+                string logSourceText;
+                switch (logSource)
+                {
+                    case LogSource.Internal:
+                        logSourceText = "MineControl";
+                        break;
+                    case LogSource.GPUMiner:
+                        logSourceText = cAppGPUMiner;
+                        break;
+                    case LogSource.CPUMiner:
+                        logSourceText = cAppCPUMiner;
+                        break;
+                    default:
+                        logSourceText = "MineControl";
+                        break;
+                }
+
+                // add the row                
+                DataTableLog.Rows.Add(logSourceText, Enum.GetName(typeof(LogType), logType), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"), entry);
+
+                // scroll if needed
+                ScrollLogToEnd();
+            }));
+        }
+
+        private void ScrollLogToEnd()
+        {
+            if (checkBoxLogAutoScroll.Checked && (dataGridViewLog.Rows.GetLastRow(DataGridViewElementStates.Visible) >= 0))
+            {
+                dataGridViewLog.FirstDisplayedScrollingRowIndex = dataGridViewLog.Rows.GetLastRow(DataGridViewElementStates.Visible);
+            }
         }
 
         /// <summary>
@@ -1357,20 +1224,7 @@ namespace MineControl
                 UpdatePolledStats();
                 UpdateStatColors();
 
-                try
-                {
-                    if (StartArchiveAndClear(out DateTime evalStartTime))
-                    {
-                        ArchiveAndClearOldLogs(evalStartTime);
-                        ArchiveChangedConfig();
-                        ClearOldChartData(evalStartTime);
-                        DeleteOldArchives(evalStartTime);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    AddLogEntry($"Exception archiving/clearing data: {ex.GetType()} - {ex.Message}", LogType.Warning);
-                }
+                Archiver.RunArchiveAndClearIfNeeded();
             }
             catch (Exception ex)
             {
@@ -1378,236 +1232,6 @@ namespace MineControl
                 throw;
             }
         }
-
-        private void DeleteOldArchives(DateTime evalStartTime)
-        {
-            if (Settings.archivesDeleteOldFiles)
-            {
-                DateTime archiveAgeCutoff = evalStartTime.AddDays(-Settings.archivesDeleteOldFilesDays);
-                int deletedLogCount = 0;
-                int deletedConfigCount = 0;
-
-                // delete old log archives
-                DirectoryInfo directory = new DirectoryInfo(GetArchiveFolder());
-                var files = directory.GetFiles("*.*").Where(f => f.LastWriteTime < archiveAgeCutoff && Path.GetExtension(f.Name) == ".txt");
-                foreach (var file in files)
-                {
-                    file.Delete();
-                    ++deletedLogCount;
-                }
-
-                // delete old config archives
-                directory = new DirectoryInfo(GetConfigArchiveFolder());
-                files = directory.GetFiles("*.*").Where(f => f.LastWriteTime < archiveAgeCutoff && Path.GetExtension(f.Name) == ".config");
-                foreach (var file in files)
-                {
-                    file.Delete();
-                    ++deletedConfigCount;
-                }
-
-                if (deletedLogCount + deletedConfigCount > 0)
-                {
-                    AddLogEntry($"Deleted {deletedLogCount} log archive files and {deletedConfigCount} config archive files older than {Settings.archivesDeleteOldFilesDays} days");
-                }
-            }
-        }
-
-        private bool StartArchiveAndClear(out DateTime evalStartTime)
-        {
-            // first make sure an archive or clear option is enabled
-            if (!(Settings.archivesArchiveConfig || Settings.archivesDeleteOldFiles || Settings.archivesLogManagement || Settings.archivesClearOldCharts))
-            {
-                evalStartTime = DateTime.MaxValue;
-                return false;
-            }
-            
-            // find next archive time
-            DateTime now = DateTime.Now;
-            DateTime nextArchiveEval;            
-            switch (Settings.archivesArchiveIntervalUnit)
-            {
-                case "Days":
-                    nextArchiveEval = LastArchiveEval.AddDays(Settings.archivesArchiveInterval);
-                    break;
-                case "Hours":
-                    nextArchiveEval = LastArchiveEval.AddHours(Settings.archivesArchiveInterval);
-                    break;
-                case "Minutes":
-                    nextArchiveEval = LastArchiveEval.AddMinutes(Settings.archivesArchiveInterval);
-                    break;
-                default:
-                    throw new Exception("Unknown archive interval unit");
-            }
-
-            if (now >= nextArchiveEval)
-            {
-                evalStartTime = now;
-                LastArchiveEval = now;
-                return true;
-            }
-            else
-            {
-                evalStartTime = nextArchiveEval;
-                return false;
-            }            
-        }
-
-        private void ClearOldChartData(DateTime evalStartTime)
-        {
-            DateTime timeCutoff = GetTimeCutoff(evalStartTime, Settings.archivesClearOldChartsUnit, Settings.archivesClearOldChartsValue);
-            bool logged = false;
-            List<DataPoint> points;
-            foreach (Chart chart in Charts)
-            {
-                foreach (Series series in chart.Series)
-                {
-                    points = series.Points.Where(p => DateTime.FromOADate(p.XValue) <= timeCutoff).ToList();
-                    for (int i = points.Count - 1; i >= 0; i--)
-                    {
-                        if (!logged)
-                        {
-                            // only log the clearing if we actually found something to clear
-                            AddLogEntry($"Clearing chart data older than {timeCutoff}");
-                            logged = true;
-                        }
-                        series.Points.Remove(points[i]);                        
-                    }
-                }
-            }
-        }
-
-        private void ArchiveChangedConfig(bool forceArchive = false)
-        {            
-            if (Settings.archivesArchiveConfig && (ConfigNeedsArchiving || forceArchive))
-            {
-                ConfigNeedsArchiving = false;
-                ExportConfig(GetNextConfigArchiveFilePath());
-            }
-        }
-
-        private string GetNextConfigArchiveFilePath()
-        {
-            string configArchivePath;
-            int i = 1;
-            do
-            {
-                configArchivePath = Path.Combine(GetConfigArchiveFolder(), $"userArchive{i:000}.config");
-                ++i;
-            }
-            while (File.Exists(configArchivePath));
-            return configArchivePath;
-        }
-
-        private void ArchiveAndClearOldLogs(DateTime evalStartTime, bool archiveAll = false)
-        {
-            if (Settings.archivesLogManagement && dataGridViewLog.RowCount > 0)
-            {
-                // find date/time cutoff          
-                DateTime timeCutoff = archiveAll ? DateTime.MaxValue : GetTimeCutoff(evalStartTime, Settings.archivesLogManagementUnit, Settings.archivesLogManagementValue);
-                
-                // find any log entries in scope                
-                DataRow[] rowsToActOn = dataTableLog.Select($"Time <= #{timeCutoff}#");
-
-                if (rowsToActOn.Any())
-                {
-                    StreamWriter writer = null;
-                    bool archiveEnabled = Settings.archivesLogManagementType.Contains("Archive");
-                    bool clearEnabled = Settings.archivesLogManagementType.Contains("Clear");
-                    if (archiveEnabled)
-                    {
-                        // one archive file per day
-                        string archiveFile = Path.Combine(GetArchiveFolder(), $"LogArchive{evalStartTime.ToString("yyyy-MM-dd")}.txt");
-
-                        if (File.Exists(archiveFile))
-                        {
-                            writer = File.AppendText(archiveFile);
-                        }
-                        else
-                        {
-                            writer = File.CreateText(archiveFile);
-                        }
-                        AddLogEntry($"Archiving and clearing logs older than {timeCutoff}");
-                    }
-                    else if (clearEnabled)
-                    {
-                        AddLogEntry($"Clearing logs older than {timeCutoff}");
-                    }
-
-                    try
-                    {
-                        foreach (DataRow row in rowsToActOn)
-                        {
-                            if (archiveEnabled)
-                            {
-                                writer.WriteLine($"\"{row[0]}\",\"{row[1]}\",\"{row[2]}\",\"{row[3]}\"");
-                            }
-                            if (clearEnabled)
-                            {
-                                row.Delete();
-                            }
-                        }
-                    }
-                    finally
-                    {
-                        writer?.Close();
-                        writer?.Dispose();
-                    }
-                }
-            }
-        }
-
-        private DateTime GetTimeCutoff(DateTime evalStartTime, string unit, int value)
-        {
-            switch (unit)
-            {
-                case "Days":
-                    return evalStartTime.AddDays(-value);                    
-                case "Hours":
-                    return evalStartTime.AddHours(-value);                    
-                case "Minutes":
-                    return evalStartTime.AddMinutes(-value);                    
-                default:
-                    throw new Exception("Unknown unit");
-            }
-        }
-
-        private string GetArchiveFolder()
-        {
-            string folder = Settings.archivesArchiveFolder;
-            if (!Directory.Exists(folder))            
-            {
-                try
-                {
-                    if (folder.Length > 0)
-                    {
-                        Directory.CreateDirectory(folder);
-                    }
-                    else
-                    {
-                        folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), typeof(Program).Assembly.GetName().Name);
-                        if (!Directory.Exists(folder))
-                        {
-                            Directory.CreateDirectory(folder);
-                        }                        
-                    }
-                    if (!Directory.Exists(folder))
-                    {
-                        throw new Exception("Couldn't create a valid archive folder");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    AddLogEntry($"Exception getting archive folder. Archives may be negatively impacted. Exception: {ex.GetType()} - {ex.Message}", LogType.Error);                    
-                }
-            }
-            return folder;
-        }
-
-        private string GetConfigArchiveFolder()
-        {
-            return Path.Combine(GetArchiveFolder(), "ConfigArchives");
-        }
-
 
         /// <summary>
         /// Color-codes outdated statistics so user is aware of this
@@ -1792,18 +1416,27 @@ namespace MineControl
                 GPUState = newMinerState;                
                 if (runMiner && !ProcessUtils.IsProcessRunningFromObject(ProcessGPUMiner))
                 {
-                    if (reasonToLog.Length > 0)                    
+                    if (reasonToLog.Length > 0)
+                    {
                         AddLogEntry($"GPU Miner launching {reasonToLog}");
-                                        
-                    LaunchProcess(ProcessGPUMiner, Settings.appGPUMinerPath, Settings.appGPUMinerName, 
-                        "GPU Miner", ref isGPUMinerRunning, cGPUMinerIndex, true);
+                    }
+
+                    string status = (string)dataGridViewApps.Rows[cAppGPUMinerIndex].Cells[ColAppStatus.Index].Value;
+                    ProcessUtils.LaunchProcess(ProcessGPUMiner, Settings.appGPUMinerPath, Settings.appGPUMinerName,
+                        cAppGPUMiner, ref isGPUMinerRunning, true, ref status, ProcessOutputReceived, this);
+                    dataGridViewApps.Rows[cAppGPUMinerIndex].Cells[ColAppStatus.Index].Value = status;
                 }
                 else if (!runMiner && ProcessUtils.IsProcessRunningByName(Settings.appGPUMinerName))
                 {
                     if (reasonToLog.Length > 0)
+                    {
                         AddLogEntry($"GPU Miner closing {reasonToLog}");
-                                        
-                    CloseProcess(ProcessGPUMiner, Settings.appGPUMinerPath, Settings.appGPUMinerName, "GPU Miner", cGPUMinerIndex, ref isGPUMinerRunning);
+                    }
+
+                    string status = (string)dataGridViewApps.Rows[cAppGPUMinerIndex].Cells[ColAppStatus.Index].Value;
+                    ProcessUtils.CloseProcess(ProcessGPUMiner, Settings.appGPUMinerPath, Settings.appGPUMinerName, cAppGPUMiner, ref isGPUMinerRunning,
+                        ref status, ProcessOutputReceived, this);
+                    dataGridViewApps.Rows[cAppGPUMinerIndex].Cells[ColAppStatus.Index].Value = status;
                 }
             }
             else
@@ -1812,17 +1445,26 @@ namespace MineControl
                 if (runMiner && !ProcessUtils.IsProcessRunningFromObject(ProcessCPUMiner))
                 {
                     if (reasonToLog.Length > 0)
+                    {
                         AddLogEntry($"CPU Miner launching {reasonToLog}");
-                                        
-                    LaunchProcess(ProcessCPUMiner, Settings.appCPUMinerPath, Settings.appCPUMinerName,
-                        "CPU Miner", ref isCPUMinerRunning, cCPUMinerIndex, true);
+                    }
+
+                    string status = (string)dataGridViewApps.Rows[cAppCPUMinerIndex].Cells[ColAppStatus.Index].Value;
+                    ProcessUtils.LaunchProcess(ProcessCPUMiner, Settings.appCPUMinerPath, Settings.appCPUMinerName,
+                        cAppCPUMiner, ref isCPUMinerRunning, true, ref status, ProcessOutputReceived, this);
+                    dataGridViewApps.Rows[cAppCPUMinerIndex].Cells[ColAppStatus.Index].Value = status;
                 }
                 else if (!runMiner && ProcessUtils.IsProcessRunningByName(Settings.appCPUMinerName))
                 {
                     if (reasonToLog.Length > 0)
+                    {
                         AddLogEntry($"CPU Miner closing {reasonToLog}");
-                                        
-                    CloseProcess(ProcessCPUMiner, Settings.appCPUMinerPath, Settings.appCPUMinerName, "CPU Miner", cCPUMinerIndex, ref isCPUMinerRunning);
+                    }
+
+                    string status = (string)dataGridViewApps.Rows[cAppCPUMinerIndex].Cells[ColAppStatus.Index].Value;
+                    ProcessUtils.CloseProcess(ProcessCPUMiner, Settings.appCPUMinerPath, Settings.appCPUMinerName, cAppCPUMiner, ref isCPUMinerRunning,
+                        ref status, ProcessOutputReceived, this);
+                    dataGridViewApps.Rows[cAppCPUMinerIndex].Cells[ColAppStatus.Index].Value = status;
                 }
             }
             SysTrayIcon.UpdateTextIcon(notifyIconMain, false, GPUState, CPUState, Settings.tempSpeedStep, (SysTrayIconTextMode)Settings.generalSysTrayDisplayMode);
@@ -2387,6 +2029,7 @@ namespace MineControl
             }
         }
 
+        void ISettingsFile.Export(string destFilePath) => ExportConfig(destFilePath);
         private void ExportConfig(string destFilePath)
         {
             try
@@ -2496,10 +2139,11 @@ namespace MineControl
 
         private void FormMineControl_Load(object sender, EventArgs e)
         {
+            Archiver = new Archiver(DataTableLog, Charts, this, this);
             InitializeUI();
             ConfigUtils.LoadSettingsFile(Settings, this);
             LoadSettingsToUI(true);
-            InitializeInternals();
+            UpdateSettingsEvents();
             CanSave = true;
         }
 
@@ -2510,6 +2154,41 @@ namespace MineControl
             {
                 Hide();
             }
+        }
+
+        private void FormMineControl_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (Settings.controlMinimizeToSysTray && !CanQuit)
+            {
+                e.Cancel = true;
+                Hide();
+            }
+        }
+
+        private void FormMineControl_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            // just clean up timed tasks and apps, since stopping automation fully would change the config
+            timerMain.Enabled = false;
+            SyncMinerState(true, MinerState.DisabledClosing, "due to application shutdown");
+            SyncMinerState(false, MinerState.DisabledClosing, "due to application shutdown");
+
+            // archive everything remaining on exit
+            DateTime now = DateTime.Now;
+            Archiver.ArchiveAndClearOldLogs(now, true);
+            Archiver.ArchiveConfigIfNeeded();
+
+            //  avoid unintended saves while disposing binding sources
+            CanSave = false;
+
+            // dispose all class IDisposables
+            ProcessGPUMiner.Dispose();
+            ProcessCPUMiner.Dispose();
+            ProcessHardwareMonitor.Dispose();
+            ProcessGPUController.Dispose();
+            bindingSourceSchedules.Dispose();
+            bindingSourceGPUSchedule.Dispose();
+            bindingSourceCPUSchedule.Dispose();
+            ProcessUtils.Job.Dispose();
         }
 
         private void timerMain_Tick(object sender, EventArgs e)
@@ -2545,7 +2224,6 @@ namespace MineControl
             StopAutomation();
         }
         
-
         private void trackBarGPUPowerStep_Scroll(object sender, EventArgs e)
         {
             AddLogEntry(string.Format("User stepping GPU power to {0}", trackBarGPUPowerStep.Value));
@@ -2553,14 +2231,6 @@ namespace MineControl
             StepGPUPower(trackBarGPUPowerStep.Value);            
         }
 
-        private void FormMineControl_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (Settings.controlMinimizeToSysTray && !CanQuit)
-            {
-                e.Cancel = true;
-                Hide();
-            }
-        }
 
         private void toolStripMenuItemSysTrayExit_Click(object sender, EventArgs e)
         {
@@ -2574,32 +2244,6 @@ namespace MineControl
             {
                 Hide();                
             }
-        }
-
-        private void FormMineControl_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            // just clean up timed tasks and apps, since stopping automation fully would change the config
-            timerMain.Enabled = false;
-            SyncMinerState(true, MinerState.DisabledClosing, "due to application shutdown");
-            SyncMinerState(false, MinerState.DisabledClosing, "due to application shutdown");
-
-            // archive everything remaining on exit
-            DateTime now = DateTime.Now;
-            ArchiveAndClearOldLogs(now, true);
-            ArchiveChangedConfig();
-
-            //  avoid unintended saves while disposing binding sources
-            CanSave = false;
-
-            // dispose all class IDisposables
-            ProcessGPUMiner.Dispose();
-            ProcessCPUMiner.Dispose();
-            ProcessHardwareMonitor.Dispose();
-            ProcessGPUController.Dispose();
-            bindingSourceSchedules.Dispose();
-            bindingSourceGPUSchedule.Dispose();
-            bindingSourceCPUSchedule.Dispose();
-            job.Dispose();
         }
 
         private void notifyIconMain_Open(object sender, EventArgs e)
@@ -2814,10 +2458,10 @@ namespace MineControl
                             case "MineControl":
                                 color = Color.Black;
                                 break;
-                            case "GPU Miner":
+                            case cAppGPUMiner:
                                 color = Color.DarkGray;
                                 break;
-                            case "CPU Miner":
+                            case cAppCPUMiner:
                                 color = Color.Gray;
                                 break;
                             default:
