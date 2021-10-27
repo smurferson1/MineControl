@@ -978,63 +978,67 @@ namespace MineControl
 
         private void ProcessOutputReceived(object sender, DataReceivedEventArgs e)
         {
-            // send non-blank data from non-null objects to the log
-            if ((e != null) && (e.Data != null) && (e.Data.Trim().Length > 0))
+            // requires main thread execution since it affects the UI
+            Invoke(new Action(() =>
             {
-                MetricSource applicableSource;
-                string logName;
+                // send non-blank data from non-null objects to the log
+                if ((e != null) && (e.Data != null) && (e.Data.Trim().Length > 0))
+                {
+                    MetricSource applicableSource;
+                    string logName;
 
-                if (sender == ProcessGPUMiner)
-                {
-                    applicableSource = MetricSource.GPUMiner;
-                    logName = cGPU;
-                }
-                else if (sender == ProcessCPUMiner)
-                {
-                    applicableSource = MetricSource.CPUMiner;
-                    logName = cCPU;
-                }
-                else
-                {
-                    // don't know what to do with unknown sources
-                    AddLogEntry($"Output received from Unknown source '{sender}'", LogType.Warning);
-                    return;
-                }
-
-                // process the input
-                bool inputFound = false;
-                string inputValue;
-                StringBuilder inputLogValues = new StringBuilder();
-                try
-                {
-                    foreach (Metric metric in Metrics)
+                    if (sender == ProcessGPUMiner)
                     {
-                        if (metric.Source == applicableSource && metric.IsEnabled && metric.UpdateFromInput(e.Data, false, false))
+                        applicableSource = MetricSource.GPUMiner;
+                        logName = cGPU;
+                    }
+                    else if (sender == ProcessCPUMiner)
+                    {
+                        applicableSource = MetricSource.CPUMiner;
+                        logName = cCPU;
+                    }
+                    else
+                    {
+                        // don't know what to do with unknown sources
+                        AddLogEntry($"Output received from Unknown source '{sender}'", LogType.Warning);
+                        return;
+                    }
+
+                    // process the input
+                    bool inputFound = false;
+                    string inputValue;
+                    StringBuilder inputLogValues = new StringBuilder();
+                    try
+                    {
+                        foreach (Metric metric in Metrics)
                         {
-                            inputFound = true;
-                            inputValue = metric.Type == MetricType.Number ? metric.NumericResult.ToString() : metric.SelectionResult;
-                            inputLogValues.Append($"({metric.Name}={inputValue})");
-                            if (!(metric.Name.Contains("Unit") || metric.Name.Contains("Algo")))
+                            if (metric.Source == applicableSource && metric.IsEnabled && metric.UpdateFromInput(e.Data, false, false))
                             {
-                                SetStat(metric.Name, inputValue);
+                                inputFound = true;
+                                inputValue = metric.Type == MetricType.Number ? metric.NumericResult.ToString() : metric.SelectionResult;
+                                inputLogValues.Append($"({metric.Name}={inputValue})");
+                                if (!(metric.Name.Contains("Unit") || metric.Name.Contains("Algo")))
+                                {
+                                    SetStat(metric.Name, inputValue);
+                                }
                             }
                         }
                     }
-                }
-                catch (Exception ex)
-                {
-                    AddLogEntry($"Exception reading {logName} hash rate (this may negatively affect {logName} hash rate calculations): {ex.GetType()} - {ex.Message}", LogType.Error);
-                }
-                finally
-                {
-                    string logMsg = inputLogValues.ToString() == string.Empty ? e.Data : $"{e.Data} <MineControl inputs: {inputLogValues}>";
+                    catch (Exception ex)
+                    {
+                        AddLogEntry($"Exception reading {logName} hash rate (this may negatively affect {logName} hash rate calculations): {ex.GetType()} - {ex.Message}", LogType.Error);
+                    }
+                    finally
+                    {
+                        string logMsg = inputLogValues.ToString() == string.Empty ? e.Data : $"{e.Data} <MineControl inputs: {inputLogValues}>";
 
-                    if (applicableSource == MetricSource.GPUMiner && Settings.minerGPUShowLogs)
-                        AddLogEntry(logMsg, inputFound ? LogType.Input : LogType.Info, LogSource.GPUMiner);
-                    else if (applicableSource == MetricSource.CPUMiner && Settings.minerCPUShowLogs)
-                        AddLogEntry(logMsg, inputFound ? LogType.Input : LogType.Info, LogSource.CPUMiner);
+                        if (applicableSource == MetricSource.GPUMiner && Settings.minerGPUShowLogs)
+                            AddLogEntry(logMsg, inputFound ? LogType.Input : LogType.Info, LogSource.GPUMiner);
+                        else if (applicableSource == MetricSource.CPUMiner && Settings.minerCPUShowLogs)
+                            AddLogEntry(logMsg, inputFound ? LogType.Input : LogType.Info, LogSource.CPUMiner);
+                    }
                 }
-            }
+            }));
         }
 
         private void StartAutomation()
