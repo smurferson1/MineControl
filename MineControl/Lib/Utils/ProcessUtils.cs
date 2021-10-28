@@ -189,6 +189,16 @@ namespace MineControl.Lib.Utils
             isRunning = false;
             status = "Stopped";
         }
+        
+        public static void OpenLinkInDefaultBrowser(string link)
+        {
+            using (Process p = new Process())
+            {
+                p.StartInfo.UseShellExecute = true;
+                p.StartInfo.FileName = link;
+                p.Start();
+            }
+        }
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
         private static extern bool TerminateProcess(IntPtr hProcess, uint uExitCode);

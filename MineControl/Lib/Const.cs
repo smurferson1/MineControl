@@ -12,5 +12,8 @@ namespace MineControl.Lib
         // general
         public const string UnknownTemp = "Unknown";
         public const string BlankInfo = "--";
+
+        public const string GPUMiner = "GPU Miner";
+        public const string CPUMiner = "CPU Miner";
     }
 }

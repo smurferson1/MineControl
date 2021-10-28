@@ -21,13 +21,14 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace MineControl
 {
-    public partial class FormMineControl : Form, IChartManager, ILog, ISettingsFile
+    public partial class FormMineControl : Form, IChartManager, ILog, ISettingsFile, IStats, IActiveSchedules
     {
         #region Local Consts
-        // apps
-        private const string cAppGPUMiner = "GPU Miner";
+        // apps        
+        private const string cAppMC = "MineControl";
+        private const string cAppGPUMiner = Const.GPUMiner;
         private const int cAppGPUMinerIndex = 0;
-        private const string cAppCPUMiner = "CPU Miner";
+        private const string cAppCPUMiner = Const.CPUMiner;
         private const int cAppCPUMinerIndex = 1;
         private const string cAppHWMonitor = "Hardware Monitor";
         private const int cAppHWMonitorIndex = 2;
@@ -73,16 +74,12 @@ namespace MineControl
         private bool CanSave { get; set; } = false;
         private bool CanQuit { get; set; } = false;
         private DateTime StartupTimestamp { get; } = DateTime.Now;
-                
-        // temp management                
-        private DateTime GPUOverheatStartTime { get; set; } = DateTime.MinValue;
-        private DateTime GPUOverheatShutoffTime { get; set; } = DateTime.MinValue;
-        private DateTime LastGPUStepChange { get; set; } = DateTime.Now;
 
-        // miner management        
-        private MinerState GPUState { get; set; } = MinerState.Uninitialized;
-        private MinerState CPUState { get; set; } = MinerState.Uninitialized;
+        // temp management
+        private DateTime LastGPUStepChange { get; set; } = DateTime.Now;
         
+        // miner management        
+                
         // schedules        
         private BindingList<Schedule> Schedules { get; set; } = new BindingList<Schedule>();
         private string[] StartMonthDays { get; set; }
@@ -91,11 +88,7 @@ namespace MineControl
         private BindingSource bindingSourceGPUSchedule;
         private BindingSource bindingSourceCPUSchedule;
 
-        // processes
-        private Process ProcessGPUMiner { get; } = new Process();
-        private bool isGPUMinerRunning= false;
-        private Process ProcessCPUMiner { get; } = new Process();
-        private bool isCPUMinerRunning = false;
+        // processes        
         private Process ProcessHardwareMonitor { get; } = new Process();
         private bool isHardwareMonitorRunning  = false;
         private Process ProcessGPUController { get; } = new Process();
@@ -153,8 +146,26 @@ namespace MineControl
                 Settings.SettingChanging -= Settings_SettingChanging;
                 Settings.PropertyChanged -= Settings_PropertyChanged;
             }
-        }        
+        }
 
+        /// <summary>
+        /// Initializes internal objects and statics
+        /// </summary>
+        private void InitializeInternals()
+        {
+            MinerUtils.Initialize(
+                this,
+                this,
+                notifyIconMain,
+                dataGridViewApps.Rows[cAppGPUMinerIndex].Cells[ColAppStatus.Index],
+                dataGridViewApps.Rows[cAppCPUMinerIndex].Cells[ColAppStatus.Index],
+                ProcessOutputReceived);
+            Archiver = new Archiver(DataTableLog, Charts, this, this);
+        }
+
+        /// <summary>
+        /// Sets up very particular UI pieces needed to show info, mainly grids and charts. Things would break without this.
+        /// </summary>
         private void InitializeUI()
         {   
             // display version
@@ -190,8 +201,9 @@ namespace MineControl
             dataGridViewMetrics.Columns[5].DataPropertyName = "Query";
             ColDataMethod.DataSource = Enum.GetValues(typeof(MetricMethod));
             ColDataInputSource.DataSource = Enum.GetValues(typeof(MetricSource));
-            ColDataType.DataSource = Enum.GetValues(typeof(MetricType));            
-            // system-defined metrics (always present)
+            ColDataType.DataSource = Enum.GetValues(typeof(MetricType));           
+            
+            // system-defined metrics
             Metrics.Add(new Metric(true, cGPUPowerStep, MetricType.Number, MetricSource.MineControl, MetricMethod.InternalValue, "", this));
             Metric(cGPUPowerStep).IsInternal = true;  
             Metrics.Add(new Metric(false, cGPUHashRate, MetricType.Number, MetricSource.GPUMiner, MetricMethod.RegEx, "", this, this));
@@ -213,6 +225,7 @@ namespace MineControl
             Metrics.Add(new Metric(false, cTotalPower, MetricType.Number, MetricSource.SysTray, MetricMethod.RegEx, "", this));
             Metrics.Add(new Metric(false, cGPUPower, MetricType.Number, MetricSource.SysTray, MetricMethod.RegEx, "", this));
             Metrics.Add(new Metric(false, cCPUPower, MetricType.Number, MetricSource.SysTray, MetricMethod.RegEx, "", this));
+
             // create chart series for metrics that need one
             CreateChartSeriesForMetric(cGPU, Metric(cGPUPowerStep), SeriesChartType.StepLine, AxisType.Primary);
             CreateChartSeriesForMetric(cGPU, Metric(cGPUMemJuncTemp), SeriesChartType.Line, AxisType.Secondary);
@@ -276,7 +289,6 @@ namespace MineControl
             groupBoxScheduleWeek.Location = groupBoxScheduleCalendar.Location;
             groupBoxScheduleTime.Location = groupBoxScheduleCalendar.Location;
             groupBoxScheduleResult.Location = groupBoxScheduleCalendar.Location;
-            // resize groupbox
             // initial radioButton
             radioButtonScheduleCalendar.Checked = true;
             // calendar            
@@ -856,21 +868,22 @@ namespace MineControl
 
                     // miner changes that can be applied immediately
                     case nameof(Settings.minerCPUMode):
-                        UpdateMinerState(false);
+                        MinerUtils.UpdateMinerState(false);
                         Archiver.IsConfigArchiveNeeded = true;
                         break;
                     case nameof(Settings.minerGPUMode):
-                        UpdateMinerState(true);
+                        MinerUtils.UpdateMinerState(true, GetStat(cGPUMemJuncTemp));
                         Archiver.IsConfigArchiveNeeded = true;
                         break;
                     case nameof(Settings.minerEnableAutomation):
                     case nameof(Settings.tempEnableAutomation):
-                        UpdateMinerState(true);
-                        UpdateMinerState(false);        
+                        MinerUtils.UpdateMinerState(true, GetStat(cGPUMemJuncTemp));
+                        MinerUtils.UpdateMinerState(false);        
                         // note: basic control setting that does not trigger archiving
                         break;
                     case nameof(Settings.tempSpeedStep):  // Note: applying this setting is handled elsewhere                    
-                        SysTrayIcon.UpdateTextIcon(notifyIconMain, false, GPUState, CPUState, Settings.tempSpeedStep, (SysTrayIconTextMode)Settings.generalSysTrayDisplayMode);
+                        SysTrayIcon.UpdateTextIcon(notifyIconMain, false, MinerUtils.GPUState, MinerUtils.CPUState, 
+                            Settings.tempSpeedStep, (SysTrayIconTextMode)Settings.generalSysTrayDisplayMode);
                         break;
 
                     // other changes that can be applied immediately
@@ -901,6 +914,7 @@ namespace MineControl
             toolTipNotification.Show(message, groupBoxControl, 0, 0, 5000);
         }
 
+        string IStats.Get(string rowText) => GetStat(rowText);
         private string GetStat(string rowText)
         {
             foreach (DataGridViewRow row in dataGridViewStats.Rows)
@@ -914,6 +928,7 @@ namespace MineControl
             return string.Empty;
         }
 
+        void IStats.Set(string statName, string value) => SetStat(statName, value);
         /// <summary>
         /// Sets the stat with the given name, creating it if it doesn't exist. Blanks are replaced with cBlankStat. 
         /// </summary>
@@ -987,12 +1002,12 @@ namespace MineControl
                     MetricSource applicableSource;
                     string logName;
 
-                    if (sender == ProcessGPUMiner)
+                    if (sender == MinerUtils.ProcessGPUMiner)
                     {
                         applicableSource = MetricSource.GPUMiner;
                         logName = cGPU;
                     }
-                    else if (sender == ProcessCPUMiner)
+                    else if (sender == MinerUtils.ProcessCPUMiner)
                     {
                         applicableSource = MetricSource.CPUMiner;
                         logName = cCPU;
@@ -1048,8 +1063,8 @@ namespace MineControl
             labelStatusDisplay.Text = "Running";
             labelStatusDisplay.ForeColor = Color.Green;
             LaunchHardwareManagementApps();
-            UpdateMinerState(true);
-            UpdateMinerState(false);
+            MinerUtils.UpdateMinerState(true, GetStat(cGPUMemJuncTemp));
+            MinerUtils.UpdateMinerState(false);
             timerMain.Interval = Settings.tempPollingIntervalMillisecs;
             timerMain.Enabled = true;
             SaveSettingsFromUI();
@@ -1062,9 +1077,9 @@ namespace MineControl
             labelStatusDisplay.Text = "Stopped";
             labelStatusDisplay.ForeColor = Color.Red;
             timerMain.Enabled = false;
-            SetStat(cGPUMemJuncTemp, Const.UnknownTemp);            
-            UpdateMinerState(true);
-            UpdateMinerState(false);
+            SetStat(cGPUMemJuncTemp, Const.UnknownTemp);
+            MinerUtils.UpdateMinerState(true, GetStat(cGPUMemJuncTemp));
+            MinerUtils.UpdateMinerState(false);
             SaveSettingsFromUI();
         }
 
@@ -1079,9 +1094,9 @@ namespace MineControl
                 int step;
 
                 // adjust power step based on GPU temp
-                if (Int32.TryParse(GetStat(cGPUMemJuncTemp), out temp) && LastGPUStepChange.AddSeconds((double)Settings.tempSpeedStepBuffer) < DateTime.Now)
+                if (Int32.TryParse(GetStat(cGPUMemJuncTemp), out temp) && LastGPUStepChange.AddSeconds(Settings.tempSpeedStepBuffer) < DateTime.Now)
                 {
-                    if ((temp < Settings.tempMin))
+                    if (temp < Settings.tempMin)
                     {
                         if (Settings.tempSpeedStep < trackBarGPUPowerStep.Maximum)
                         {
@@ -1144,7 +1159,6 @@ namespace MineControl
                     processParams = Settings.tempPowerStepParam5;
                 }
 
-
                 using (Process p = new Process())
                 {
                     p.StartInfo.FileName = Settings.appGPUControllerPath;
@@ -1177,7 +1191,7 @@ namespace MineControl
                 switch (logSource)
                 {
                     case LogSource.Internal:
-                        logSourceText = "MineControl";
+                        logSourceText = cAppMC;
                         break;
                     case LogSource.GPUMiner:
                         logSourceText = cAppGPUMiner;
@@ -1186,7 +1200,7 @@ namespace MineControl
                         logSourceText = cAppCPUMiner;
                         break;
                     default:
-                        logSourceText = "MineControl";
+                        logSourceText = cAppMC;
                         break;
                 }
 
@@ -1219,8 +1233,8 @@ namespace MineControl
                 }
 
                 // update miner run states based on current conditions
-                UpdateMinerState(true);
-                UpdateMinerState(false);
+                MinerUtils.UpdateMinerState(true, GetStat(cGPUMemJuncTemp));
+                MinerUtils.UpdateMinerState(false);
 
                 // other UI updates
                 UpdatePolledMetrics();
@@ -1251,227 +1265,12 @@ namespace MineControl
                     // MORE than a minute old
                     row.DefaultCellStyle.ForeColor = Color.LightGray;
                 }
-                else if (lastUpdate <= (DateTime.Now.AddMilliseconds(-(Settings.tempPollingIntervalMillisecs * 2))))
+                else if (lastUpdate <= DateTime.Now.AddMilliseconds(-(Settings.tempPollingIntervalMillisecs * 2)))
                 {                    
                     // 2 polling cycles old
                     row.DefaultCellStyle.ForeColor = Color.Gray;
                 }
             }
-        }
-
-        private void UpdateMinerState(bool isGPU)
-        {
-            MinerMode minerMode = isGPU ? (MinerMode)Settings.minerGPUMode : (MinerMode)Settings.minerCPUMode;
-            if (Settings.controlRunning && Settings.minerEnableAutomation)
-            {
-                // find state based on the miner mode
-                // Note: just gathering the state info and not applying it yet. we need to account for it in the conditions after before deciding our final state.                
-                MinerState minerState = MinerState.Uninitialized;
-                string reasonToLog = "";
-                switch (minerMode)
-                {
-                    case MinerMode.AlwaysOff:
-                        minerState = MinerState.DisabledByUser;
-                        break;
-                    case MinerMode.AlwaysOn:
-                        minerState = MinerState.Running;
-                        break;
-                    case MinerMode.DontControl:
-                        // do nothing                       
-                        break;
-                    case MinerMode.Schedule:
-                        if (isGPU)
-                        {
-                            if ((ScheduleGPU != null) && ScheduleGPU.Evaluate().Count > 0)
-                            {
-                                minerState = ScheduleGPU.LastEvaluatedActions.Last() == ScheduleAction.MinerOn ? MinerState.Running : MinerState.DisabledBySchedule;
-                                reasonToLog = "as per its schedule";
-                            }
-                            else
-                            {
-                                minerState = MinerState.DisabledUnknownError;
-                                reasonToLog = "due to missing or incomplete schedule";
-                            }
-                        }
-                        else
-                        {
-                            if ((ScheduleCPU != null) && ScheduleCPU.Evaluate().Count > 0)
-                            {
-                                minerState = ScheduleCPU.LastEvaluatedActions.Last() == ScheduleAction.MinerOn ? MinerState.Running : MinerState.DisabledBySchedule;
-                                reasonToLog = "as per its schedule";
-                            }
-                            else
-                            {
-                                minerState = MinerState.DisabledUnknownError;
-                                reasonToLog = "due to missing or incomplete schedule";
-                            }
-                        }
-                        break;
-                    default:
-                        minerState = MinerState.DisabledUnknownError;
-                        reasonToLog = "due to unknown state";
-                        break;
-                }
-
-                // GPU failsafes
-                if (isGPU)
-                {
-                    // note: check overheating FIRST every time, since it's complex and it manages variables
-                    if (Settings.tempStopWhenOverheat)
-                    {
-                        DateTime now = DateTime.Now;
-                        if (GPUOverheatShutoffTime != DateTime.MinValue)
-                        {
-                            // we're already shut off due to overheating
-                            if (now > GPUOverheatShutoffTime.AddSeconds(Settings.tempStopWhenOverheatSecs))
-                            {
-                                // overheating wait time exceeded, reset it
-                                GPUOverheatShutoffTime = DateTime.MinValue;
-                            }
-                            else
-                            {
-                                // inside overheating wait time, ensure we're shut off
-                                if (minerState == MinerState.Running)
-                                {
-                                    SyncMinerState(isGPU, MinerState.DisabledByOverheating, "due to overheating");
-                                    return;
-                                }
-                            }
-                        }
-                        else
-                        {                            
-                            if (!(new[] { Const.UnknownTemp, string.Empty }).Contains(GetStat(cGPUMemJuncTemp)))
-                            {
-                                if ((GetStat(cGPUMemJuncTemp) != Const.BlankInfo) && (Convert.ToInt32(GetStat(cGPUMemJuncTemp)) > Settings.tempMax) && (Settings.tempSpeedStep == 1))
-                                {
-                                    // we're overheated: temp is over the max and we're at lowest power
-                                    if (GPUOverheatStartTime == DateTime.MinValue)
-                                    {
-                                        // we weren't overheated before, so record the start time
-                                        GPUOverheatStartTime = now;
-                                    }
-                                    else if (now > GPUOverheatStartTime.AddSeconds(Settings.tempStopWhenOverheatThresholdSecs))
-                                    {
-                                        // we were overheated before, and we've exceeded the threshold for shutoff
-                                        // reset the threshold time and start the shutoff timer
-                                        GPUOverheatStartTime = DateTime.MinValue;
-                                        GPUOverheatShutoffTime = now;
-                                        // inside overheating wait time, ensure we're shut off
-                                        if (minerState == MinerState.Running)
-                                        {
-                                            SyncMinerState(isGPU, MinerState.DisabledByOverheating, "due to overheating");
-                                        }                                        
-                                        return;
-                                    }
-                                }
-                                else
-                                {
-                                    // we're not overheated, so reset the start time
-                                    GPUOverheatStartTime = DateTime.MinValue;
-                                }
-                            }
-                        }                        
-                    }
-
-                    if (Settings.tempStopWhenTempUnknown && (GetStat(cGPUMemJuncTemp) == Const.UnknownTemp) && (minerState == MinerState.Running))
-                    {
-                        // inside overheating wait time, ensure we're shut off                        
-                        SyncMinerState(isGPU, MinerState.DisabledByUnknownTemp, "due to unknown temp");
-                        return;                        
-                    }                    
-                }                
-
-                // user activity -- last in priority, so we only disable if nobody else did
-                if (isGPU && Settings.minerGPUUserActivityShutoff && (minerState == MinerState.Running) && (LastUserInput.GetLastInputTimeInSecs() < (Settings.minerUserActivityTimeoutMins * 60)))
-                {
-                    SyncMinerState(isGPU, MinerState.DisabledByUserActivity, "due to user activity");
-                    return;
-                }
-                if (!isGPU && Settings.minerCPUUserActivityShutoff && (minerState == MinerState.Running) && (LastUserInput.GetLastInputTimeInSecs() < (Settings.minerUserActivityTimeoutMins * 60)))
-                {                    
-                    SyncMinerState(isGPU, MinerState.DisabledByUserActivity, "due to user activity");
-                    return;
-                }
-
-                // default to normal miner mode
-                if (minerState != MinerState.Uninitialized)
-                    SyncMinerState(isGPU, minerState, reasonToLog);
-            }
-            else
-            {
-                if (minerMode != MinerMode.DontControl)
-                {
-                    SyncMinerState(isGPU, MinerState.DisabledByUser, "");
-                }
-            }
-        }
-
-        /// <summary>
-        /// Synchronizes miner state with input values. ONLY does work if the input values would change miner state.
-        /// </summary>
-        /// <param name="doOnGPU">Act on GPU miner if true, CPU miner if false</param>
-        /// <param name="newMinerState">Desired state of the miner</param>
-        /// <param name="reasonToLog">Explanation for the state change to be logged. If blank, no reason will be logged</param>
-        private void SyncMinerState(bool doOnGPU, MinerState newMinerState, string reasonToLog)
-        {            
-            bool runMiner = newMinerState == MinerState.Running;    
-            if (doOnGPU)
-            {
-                GPUState = newMinerState;                
-                if (runMiner && !ProcessUtils.IsProcessRunningFromObject(ProcessGPUMiner))
-                {
-                    if (reasonToLog.Length > 0)
-                    {
-                        AddLogEntry($"GPU Miner launching {reasonToLog}");
-                    }
-
-                    string status = (string)dataGridViewApps.Rows[cAppGPUMinerIndex].Cells[ColAppStatus.Index].Value;
-                    ProcessUtils.LaunchProcess(ProcessGPUMiner, Settings.appGPUMinerPath, Settings.appGPUMinerName,
-                        cAppGPUMiner, ref isGPUMinerRunning, true, ref status, ProcessOutputReceived, this);
-                    dataGridViewApps.Rows[cAppGPUMinerIndex].Cells[ColAppStatus.Index].Value = status;
-                }
-                else if (!runMiner && ProcessUtils.IsProcessRunningByName(Settings.appGPUMinerName))
-                {
-                    if (reasonToLog.Length > 0)
-                    {
-                        AddLogEntry($"GPU Miner closing {reasonToLog}");
-                    }
-
-                    string status = (string)dataGridViewApps.Rows[cAppGPUMinerIndex].Cells[ColAppStatus.Index].Value;
-                    ProcessUtils.CloseProcess(ProcessGPUMiner, Settings.appGPUMinerPath, Settings.appGPUMinerName, cAppGPUMiner, ref isGPUMinerRunning,
-                        ref status, ProcessOutputReceived, this);
-                    dataGridViewApps.Rows[cAppGPUMinerIndex].Cells[ColAppStatus.Index].Value = status;
-                }
-            }
-            else
-            {
-                CPUState = newMinerState;                
-                if (runMiner && !ProcessUtils.IsProcessRunningFromObject(ProcessCPUMiner))
-                {
-                    if (reasonToLog.Length > 0)
-                    {
-                        AddLogEntry($"CPU Miner launching {reasonToLog}");
-                    }
-
-                    string status = (string)dataGridViewApps.Rows[cAppCPUMinerIndex].Cells[ColAppStatus.Index].Value;
-                    ProcessUtils.LaunchProcess(ProcessCPUMiner, Settings.appCPUMinerPath, Settings.appCPUMinerName,
-                        cAppCPUMiner, ref isCPUMinerRunning, true, ref status, ProcessOutputReceived, this);
-                    dataGridViewApps.Rows[cAppCPUMinerIndex].Cells[ColAppStatus.Index].Value = status;
-                }
-                else if (!runMiner && ProcessUtils.IsProcessRunningByName(Settings.appCPUMinerName))
-                {
-                    if (reasonToLog.Length > 0)
-                    {
-                        AddLogEntry($"CPU Miner closing {reasonToLog}");
-                    }
-
-                    string status = (string)dataGridViewApps.Rows[cAppCPUMinerIndex].Cells[ColAppStatus.Index].Value;
-                    ProcessUtils.CloseProcess(ProcessCPUMiner, Settings.appCPUMinerPath, Settings.appCPUMinerName, cAppCPUMiner, ref isCPUMinerRunning,
-                        ref status, ProcessOutputReceived, this);
-                    dataGridViewApps.Rows[cAppCPUMinerIndex].Cells[ColAppStatus.Index].Value = status;
-                }
-            }
-            SysTrayIcon.UpdateTextIcon(notifyIconMain, false, GPUState, CPUState, Settings.tempSpeedStep, (SysTrayIconTextMode)Settings.generalSysTrayDisplayMode);
         }
 
         /// <summary>
@@ -1489,7 +1288,7 @@ namespace MineControl
             // calculate average
             if (Series(cGPUPowerStep).Points.Count > 0 && Metric(cGPUPowerStep).IsEnabled)
             {
-                SetStat(cAvgGPUPowerStep, CalculateAverage(Series(cGPUPowerStep), CalculationMethod.Lookahead).ToString());                
+                SetStat(cAvgGPUPowerStep, ChartUtils.CalculateAverage(Series(cGPUPowerStep), CalculationMethod.Lookahead).ToString());                
             }
 
             // current GPU temp - covered elsewhere            
@@ -1497,26 +1296,26 @@ namespace MineControl
             // average GPU temp
             if (Series(cGPUMemJuncTemp).Points.Count > 0 && Metric(cGPUMemJuncTemp).IsEnabled)
             {
-                SetStat(cAvgGPUMemJuncTemp, CalculateAverage(Series(cGPUMemJuncTemp), CalculationMethod.Lookahead).ToString());
+                SetStat(cAvgGPUMemJuncTemp, ChartUtils.CalculateAverage(Series(cGPUMemJuncTemp), CalculationMethod.Lookahead).ToString());
             }
 
             // average GPU hash rate
             if (Series(cGPUHashRate).Points.Count > 0 && Metric(cGPUHashRate).IsEnabled)
             {
-                SetStat(cAvgGPUHashRate, CalculateAverage(Series(cGPUHashRate), CalculationMethod.Lookbehind).ToString());
+                SetStat(cAvgGPUHashRate, ChartUtils.CalculateAverage(Series(cGPUHashRate), CalculationMethod.Lookbehind).ToString());
             }
 
             // CPU temp and average
             if (Series(cCPUTemp).Points.Count > 0 && Metric(cCPUTemp).IsEnabled)
             {
                 SetStat(cCPUTemp, Metric(cCPUTemp).NumericResult.ToString());
-                SetStat(cAvgCPUTemp, CalculateAverage(Series(cCPUTemp), CalculationMethod.Lookahead).ToString());
+                SetStat(cAvgCPUTemp, ChartUtils.CalculateAverage(Series(cCPUTemp), CalculationMethod.Lookahead).ToString());
             }
 
             // average CPU hash rate
             if (Series(cCPUHashRate).Points.Count > 0 && Metric(cCPUHashRate).IsEnabled)
             {
-                SetStat(cAvgCPUHashRate, CalculateAverage(Series(cCPUHashRate), CalculationMethod.Lookbehind).ToString());
+                SetStat(cAvgCPUHashRate, ChartUtils.CalculateAverage(Series(cCPUHashRate), CalculationMethod.Lookbehind).ToString());
             }
 
             // total power
@@ -1528,9 +1327,9 @@ namespace MineControl
             // average total power and kWh
             if (Series(cTotalPower).Points.Count > 0 && Metric(cTotalPower).IsEnabled)
             {
-                SetStat(cAvgTotalPower, CalculateAverage(Series(cTotalPower), CalculationMethod.Lookbehind).ToString());
+                SetStat(cAvgTotalPower, ChartUtils.CalculateAverage(Series(cTotalPower), CalculationMethod.Lookbehind).ToString());
                 // kWh = sum of watts per second / 60 (seconds in a minute) * 60 (minutes in an hour) * 1000 (kilo)
-                SetStat(cTotalPowerUse, CalculateRate(Series(cTotalPower), 60 * 60 * 1000, CalculationMethod.Lookbehind).ToString());
+                SetStat(cTotalPowerUse, ChartUtils.CalculateRate(Series(cTotalPower), 60 * 60 * 1000, CalculationMethod.Lookbehind).ToString());
             }
 
             // current GPU power
@@ -1542,9 +1341,9 @@ namespace MineControl
             // average GPU power and kWh
             if (Series(cGPUPower).Points.Count > 0 && Metric(cGPUPower).IsEnabled)
             {
-                SetStat(cAvgGPUPower, CalculateAverage(Series(cGPUPower), CalculationMethod.Lookbehind).ToString());
+                SetStat(cAvgGPUPower, ChartUtils.CalculateAverage(Series(cGPUPower), CalculationMethod.Lookbehind).ToString());
                 // kWh = sum of watts per second / 60 (seconds in a minute) * 60 (minutes in an hour) * 1000 (kilo)
-                SetStat(cGPUPowerUse, CalculateRate(Series(cGPUPower), 60 * 60 * 1000, CalculationMethod.Lookbehind).ToString());
+                SetStat(cGPUPowerUse, ChartUtils.CalculateRate(Series(cGPUPower), 60 * 60 * 1000, CalculationMethod.Lookbehind).ToString());
             }
 
             // current GPU power
@@ -1556,9 +1355,9 @@ namespace MineControl
             // average GPU power and kWh
             if (Series(cCPUPower).Points.Count > 0 && Metric(cCPUPower).IsEnabled)
             {
-                SetStat(cAvgCPUPower, CalculateAverage(Series(cCPUPower), CalculationMethod.Lookbehind).ToString());
+                SetStat(cAvgCPUPower, ChartUtils.CalculateAverage(Series(cCPUPower), CalculationMethod.Lookbehind).ToString());
                 // kWh = sum of watts per second / 60 (seconds in a minute) * 60 (minutes in an hour) * 1000 (kilo)
-                SetStat(cCPUPowerUse, CalculateRate(Series(cCPUPower), 60 * 60 * 1000, CalculationMethod.Lookbehind).ToString());
+                SetStat(cCPUPowerUse, ChartUtils.CalculateRate(Series(cCPUPower), 60 * 60 * 1000, CalculationMethod.Lookbehind).ToString());
             }
             
             // runtime (elapsed time since application start)         
@@ -1568,64 +1367,9 @@ namespace MineControl
             SetStat(cRuntime, formattedRuntime);
         }
         
-        private (double, double) CalculateAreaAndTotalTime(Series series, CalculationMethod calculationMethod)
-        {            
-            if (series == null || !series.Points.Any())
-            {
-                return (double.NaN, double.NaN);
-            }
-
-            // get total time and x+y area            
-            DataPoint previousPoint = null;
-            double totalArea = 0.0;
-            double totalTime = 0.0;
-            double lastTime;
-            foreach (DataPoint point in series.Points)
-            {
-                if (previousPoint != null)
-                {
-                    lastTime = (DateTime.FromOADate(point.XValue) - DateTime.FromOADate(previousPoint.XValue)).TotalSeconds;
-                    totalTime += lastTime;
-                    totalArea += (calculationMethod == CalculationMethod.Lookahead ? previousPoint.YValues[0] : point.YValues[0]) * lastTime;
-                }
-                previousPoint = point;
-            }
-
-            // include area after last point if we're using the lookahead method            
-            DataPoint lastP = series.Points.Last();
-            if (calculationMethod == CalculationMethod.Lookahead && !double.IsNaN(lastP.YValues[0]))
-            {
-                lastTime = (DateTime.Now - DateTime.FromOADate(lastP.XValue)).TotalSeconds;
-                totalTime += lastTime;
-                totalArea += lastP.YValues[0] * lastTime;
-            }
-
-            return (totalArea, totalTime);
-        }
-
-        private double CalculateAverage(Series series, CalculationMethod calculationMethod)
-        {            
-            double totalArea;
-            double totalTime;
-            (totalArea, totalTime) = CalculateAreaAndTotalTime(series, calculationMethod);
-            
-            // calculate average as (previous total area + total area since last data point [if doing Lookahead]) / total elapsed time            
-            return Math.Round(totalArea / totalTime, 2);
-        }
-
-        private object CalculateRate(Series series, double denominator, CalculationMethod calculationMethod)
-        {
-            double totalArea;
-            double totalTime;
-            (totalArea, totalTime) = CalculateAreaAndTotalTime(series, calculationMethod);
-
-            // calculate rate as (previous total area + total area since last data point [if doing Lookahead]) / denominator
-            return Math.Round(totalArea / denominator, 3);
-        }
-
         private void UpdateChartScales(bool includeGPUPowerStep, bool forceUpdate = false)
         {   
-            // don't bother updating scales if user won't see the chart
+            // don't use resources to update scales if user won't see the chart
             if (!forceUpdate && (WindowState == FormWindowState.Minimized || tabControlMain.SelectedTab != tabPageAnalytics))
             {
                 return;
@@ -1633,16 +1377,12 @@ namespace MineControl
 
             ChartUtils.UpdateChartYAxisScale(Chart(cGPU), AxisType.Secondary,
                 Settings.chartMinTempOnYAxisEnabled ? new(Series, int)[] {(Series(cGPUMemJuncTemp), Settings.chartMinTempOnYAxisValue)} : null);
-
             if (includeGPUPowerStep)
             {
                 // always set GPU power step axis to the available power steps
                 ChartUtils.SetChartYAxisScale(Chart(cGPU).ChartAreas[0].AxisY, trackBarGPUPowerStep.Minimum, trackBarGPUPowerStep.Maximum, Chart(cGPU).Height);                
-            }
-
-            // update CPU axes to fit current data            
+            }                        
             ChartUtils.UpdateChartYAxisScale(Chart(cCPU));
-
             ChartUtils.UpdateChartYAxisScale(Chart(cResources));
         }
 
@@ -1878,6 +1618,7 @@ namespace MineControl
             }
         }
 
+        Schedule IActiveSchedules.GPU => ScheduleGPU;
         private Schedule ScheduleGPU 
         { 
             get 
@@ -1892,6 +1633,8 @@ namespace MineControl
                 }
             } 
         }
+
+        Schedule IActiveSchedules.CPU => ScheduleCPU;
         private Schedule ScheduleCPU 
         { 
             get
@@ -2048,7 +1791,7 @@ namespace MineControl
             }
         }
 
-        private void ChartShowConfigChanged(object sender, EventArgs e)
+        private void ChartShowConfigOptionsChanged(object sender, EventArgs e)
         {
             foreach (Chart chart in Charts)
             {
@@ -2070,22 +1813,11 @@ namespace MineControl
                         case "Days":
                             chart.ChartAreas[0].AxisX.Minimum = DateTime.Now.AddDays(-(int)numericUpDownChartShowLastX.Value).ToOADate();
                             break;
-
                     }
                 }
             }
 
             UpdateChartScales(true, true);
-        }
-
-        private void OpenLink(string link)
-        {
-            using (Process p = new Process())
-            {
-                p.StartInfo.UseShellExecute = true;
-                p.StartInfo.FileName = link;
-                p.Start();
-            }
         }
 
         private void PromptToSelectAppPathForRow(int rowIndex)
@@ -2143,9 +1875,11 @@ namespace MineControl
 
         private void FormMineControl_Load(object sender, EventArgs e)
         {
-            Archiver = new Archiver(DataTableLog, Charts, this, this);
+            // later calls depend on basic UI things, so this must be first
             InitializeUI();
+
             ConfigUtils.LoadSettingsFile(Settings, this);
+            InitializeInternals();
             LoadSettingsToUI(true);
             UpdateSettingsEvents();
             CanSave = true;
@@ -2173,8 +1907,8 @@ namespace MineControl
         {
             // just clean up timed tasks and apps, since stopping automation fully would change the config
             timerMain.Enabled = false;
-            SyncMinerState(true, MinerState.DisabledClosing, "due to application shutdown");
-            SyncMinerState(false, MinerState.DisabledClosing, "due to application shutdown");
+            MinerUtils.SyncMinerState(true, MinerState.DisabledClosing, "due to application shutdown");
+            MinerUtils.SyncMinerState(false, MinerState.DisabledClosing, "due to application shutdown");
 
             // archive everything remaining on exit
             DateTime now = DateTime.Now;
@@ -2185,8 +1919,8 @@ namespace MineControl
             CanSave = false;
 
             // dispose all class IDisposables
-            ProcessGPUMiner.Dispose();
-            ProcessCPUMiner.Dispose();
+            MinerUtils.ProcessGPUMiner.Dispose();
+            MinerUtils.ProcessCPUMiner.Dispose();
             ProcessHardwareMonitor.Dispose();
             ProcessGPUController.Dispose();
             bindingSourceSchedules.Dispose();
@@ -2459,7 +2193,7 @@ namespace MineControl
                     case "Info":
                         switch (dataGridViewLog.Rows[e.RowIndex].Cells[0].Value.ToString())
                         {
-                            case "MineControl":
+                            case cAppMC:
                                 color = Color.Black;
                                 break;
                             case cAppGPUMiner:
@@ -2754,7 +2488,7 @@ namespace MineControl
 
         private void linkLabelAboutLicense_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            OpenLink("https://creativecommons.org/licenses/by-sa/4.0/");
+            ProcessUtils.OpenLinkInDefaultBrowser("https://creativecommons.org/licenses/by-sa/4.0/");
         }
 
         private void buttonDataLoadPreset_Click(object sender, EventArgs e)
@@ -2803,7 +2537,7 @@ namespace MineControl
 
         private void richTextBoxAboutAttribution_LinkClicked(object sender, LinkClickedEventArgs e)
         {
-            OpenLink(e.LinkText);
+            ProcessUtils.OpenLinkInDefaultBrowser(e.LinkText);
         }
     }
 }

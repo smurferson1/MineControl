@@ -127,5 +127,66 @@ namespace MineControl.Lib.Utils
                 chartAxis.Interval = 1;
             }
         }
+
+        /// <summary>
+        /// For a chart series with time on X axis, finds total area and total time with the given calculation method
+        /// </summary>
+        /// <param name="series"></param>
+        /// <param name="calculationMethod"></param>
+        /// <returns></returns>
+        public static (double, double) CalculateAreaAndTotalTime(Series series, CalculationMethod calculationMethod)
+        {
+            if (series == null || !series.Points.Any())
+            {
+                return (double.NaN, double.NaN);
+            }
+
+            // get total time and x+y area            
+            DataPoint previousPoint = null;
+            double totalArea = 0.0;
+            double totalTime = 0.0;
+            double lastTime;
+            foreach (DataPoint point in series.Points)
+            {
+                if (previousPoint != null)
+                {
+                    lastTime = (DateTime.FromOADate(point.XValue) - DateTime.FromOADate(previousPoint.XValue)).TotalSeconds;
+                    totalTime += lastTime;
+                    totalArea += (calculationMethod == CalculationMethod.Lookahead ? previousPoint.YValues[0] : point.YValues[0]) * lastTime;
+                }
+                previousPoint = point;
+            }
+
+            // include area after last point if we're using the lookahead method            
+            DataPoint lastP = series.Points.Last();
+            if (calculationMethod == CalculationMethod.Lookahead && !double.IsNaN(lastP.YValues[0]))
+            {
+                lastTime = (DateTime.Now - DateTime.FromOADate(lastP.XValue)).TotalSeconds;
+                totalTime += lastTime;
+                totalArea += lastP.YValues[0] * lastTime;
+            }
+
+            return (totalArea, totalTime);
+        }
+
+        public static double CalculateAverage(Series series, CalculationMethod calculationMethod)
+        {
+            double totalArea;
+            double totalTime;
+            (totalArea, totalTime) = CalculateAreaAndTotalTime(series, calculationMethod);
+
+            // calculate average as (previous total area + total area since last data point [if doing Lookahead]) / total elapsed time            
+            return Math.Round(totalArea / totalTime, 2);
+        }
+
+        public static object CalculateRate(Series series, double denominator, CalculationMethod calculationMethod)
+        {
+            double totalArea;
+            double totalTime;
+            (totalArea, totalTime) = CalculateAreaAndTotalTime(series, calculationMethod);
+
+            // calculate rate as (previous total area + total area since last data point [if doing Lookahead]) / denominator
+            return Math.Round(totalArea / denominator, 3);
+        }
     }
 }

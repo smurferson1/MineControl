@@ -1333,7 +1333,7 @@ namespace MineControl
             this.comboBoxChartShowLastUnit.Size = new System.Drawing.Size(89, 23);
             this.comboBoxChartShowLastUnit.TabIndex = 18;
             this.toolTipMain.SetToolTip(this.comboBoxChartShowLastUnit, "Limits visible area of all charts. Doesn\'t maintain itself over time.");
-            this.comboBoxChartShowLastUnit.SelectedValueChanged += new System.EventHandler(this.ChartShowConfigChanged);
+            this.comboBoxChartShowLastUnit.SelectedValueChanged += new System.EventHandler(this.ChartShowConfigOptionsChanged);
             // 
             // numericUpDownChartShowLastX
             // 
@@ -1359,7 +1359,7 @@ namespace MineControl
             0,
             0,
             0});
-            this.numericUpDownChartShowLastX.ValueChanged += new System.EventHandler(this.ChartShowConfigChanged);
+            this.numericUpDownChartShowLastX.ValueChanged += new System.EventHandler(this.ChartShowConfigOptionsChanged);
             // 
             // radioButtonChartShowLastX
             // 
@@ -1374,7 +1374,7 @@ namespace MineControl
             this.toolTipMain.SetToolTip(this.radioButtonChartShowLastX, "Limits visible data of all charts by X axis (time). Doesn\'t maintain itself over " +
         "time.");
             this.radioButtonChartShowLastX.UseVisualStyleBackColor = true;
-            this.radioButtonChartShowLastX.CheckedChanged += new System.EventHandler(this.ChartShowConfigChanged);
+            this.radioButtonChartShowLastX.CheckedChanged += new System.EventHandler(this.ChartShowConfigOptionsChanged);
             // 
             // radioButtonChartShowAll
             // 
@@ -1390,7 +1390,7 @@ namespace MineControl
             this.radioButtonChartShowAll.Text = "Show All";
             this.toolTipMain.SetToolTip(this.radioButtonChartShowAll, "Shows all available chart data on the X (time) axis.");
             this.radioButtonChartShowAll.UseVisualStyleBackColor = true;
-            this.radioButtonChartShowAll.CheckedChanged += new System.EventHandler(this.ChartShowConfigChanged);
+            this.radioButtonChartShowAll.CheckedChanged += new System.EventHandler(this.ChartShowConfigOptionsChanged);
             // 
             // numericUpDownChartMinGPUTempOnYAxisValue
             // 
