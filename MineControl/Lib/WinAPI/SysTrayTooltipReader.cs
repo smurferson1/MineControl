@@ -10,7 +10,7 @@ namespace MineControl.Lib.WinAPI
         // Modified code originally from: https://stackoverflow.com/questions/51887744/trouble-implementing-code-example-using-pinvoke-declarations/51892012?noredirect=1#comment90762185_51892012
         public static string GetAllSysTrayToolbarText()
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
 
             var handle = GetSystemTrayHandle();
             if (handle == IntPtr.Zero)

@@ -2,10 +2,12 @@
 using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.Versioning;
 using System.Windows.Forms;
 
 namespace MineControl.Lib.Utils
 {
+    [SupportedOSPlatform("windows")]
     public static class MinerUtils
     {
         private static readonly Properties.Settings Settings = Properties.Settings.Default;
@@ -17,9 +19,9 @@ namespace MineControl.Lib.Utils
         public static MinerState GPUState { get; set; } = MinerState.Uninitialized;
         public static MinerState CPUState { get; set; } = MinerState.Uninitialized;
         public static Process ProcessGPUMiner { get; } = new Process();
-        public static bool isGPUMinerRunning = false;
+        private static bool isGPUMinerRunning = false;
         public static Process ProcessCPUMiner { get; } = new Process();
-        public static bool isCPUMinerRunning = false;
+        private static bool isCPUMinerRunning = false;
 
         // TODO: extra bad UI coupling
         private static NotifyIcon StatusIcon { get; set; }
@@ -196,6 +198,7 @@ namespace MineControl.Lib.Utils
         /// <param name="doOnGPU">Act on GPU miner if true, CPU miner if false</param>
         /// <param name="newMinerState">Desired state of the miner</param>
         /// <param name="reasonToLog">Explanation for the state change to be logged. If blank, no reason will be logged</param>
+        [SupportedOSPlatform("windows")]
         public static void SyncMinerState(bool doOnGPU, MinerState newMinerState, string reasonToLog)
         {
             bool runMiner = newMinerState == MinerState.Running;

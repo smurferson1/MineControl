@@ -40,11 +40,6 @@ namespace MineControl.Lib.Schedule
             return JsonSerializer.Deserialize<Schedule>(scheduleAsSerializedJson);
         }
 
-        public bool ValidateNode(Guid parentGuid, ScheduleNode node, ScheduleNode nextNode)
-        {
-            return true;
-        }
-
         /// <summary>
         /// Adds node to parent with parentId if present, before nextNode if present.
         /// </summary>
@@ -53,29 +48,25 @@ namespace MineControl.Lib.Schedule
         /// <param name="nextNode">New node is inserted before nextNode, or at the last valid location in the list if null</param>
         /// <returns></returns>
         public bool AddNode(Guid parentId, ScheduleNode node, ScheduleNode nextNode)
-        {
-            if (ValidateNode(parentId, node, nextNode))
+        {   
+            List<ScheduleNode> nodes = GetNodesById(parentId);
+            if ((nextNode == null) || (nodes.Find(x => x == nextNode) == null))
             {
-                List<ScheduleNode> nodes = GetNodesById(parentId);
-                if ((nextNode == null) || (nodes.Find(x => x == nextNode) == null))
-                {
-                    nodes.Add(node);
-                }
-                else
-                {
-                    nodes.Insert(nodes.IndexOf(nodes.Find(x => x == nextNode)), node);
-                }
-
-                // now ensure the else node is at the end
-                ElseNode elseNode = (ElseNode)nodes.Find(x => x is ElseNode);
-                if ((elseNode != null) && (elseNode != nodes.Last()))
-                {
-                    nodes.Remove(elseNode);
-                    nodes.Add(elseNode);
-                }
-                return true;
+                nodes.Add(node);
             }
-            return false;
+            else
+            {
+                nodes.Insert(nodes.IndexOf(nodes.Find(x => x == nextNode)), node);
+            }
+
+            // now ensure the else node is at the end
+            ElseNode elseNode = (ElseNode)nodes.Find(x => x is ElseNode);
+            if ((elseNode != null) && (elseNode != nodes.Last()))
+            {
+                nodes.Remove(elseNode);
+                nodes.Add(elseNode);
+            }
+            return true;           
         }
 
         /// <summary>
@@ -201,7 +192,7 @@ namespace MineControl.Lib.Schedule
         /// <returns>All evaluated actions</returns>
         public List<ScheduleAction> Evaluate()
         {
-            List<ScheduleAction> result = new List<ScheduleAction>();
+            List<ScheduleAction> result = new();
 
             foreach (ScheduleNode node in Nodes)
             {
@@ -376,7 +367,7 @@ namespace MineControl.Lib.Schedule
         /// Returns true if replacing oldNode with newNode would be valid.
         /// Ignores movability other nodes in the collection.
         /// </summary>
-        private bool CanReplaceNode(ScheduleNode oldNode, ScheduleNode newNode)
+        private static bool CanReplaceNode(ScheduleNode oldNode, ScheduleNode newNode)
         {
             return oldNode.GetType().Equals(newNode.GetType()) 
                 || ((oldNode is BranchingNode) && (newNode is BranchingNode) && !(oldNode is ElseNode) && !(newNode is ElseNode)

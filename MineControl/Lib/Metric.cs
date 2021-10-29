@@ -357,7 +357,7 @@ namespace MineControl.Lib
                     if (Query.Trim() != string.Empty)
                     {
                         // handle as a regex
-                        Regex rx = new Regex(Query, RegexOptions.Compiled);
+                        Regex rx = new(Query, RegexOptions.Compiled);
 
                         MatchCollection matches = rx.Matches(input);
 
@@ -446,9 +446,9 @@ namespace MineControl.Lib
                     if (Series.Points.Count == 0 || !Series.Points.Last().IsEmpty)
                     {
                         Series.Points.AddXY(DateTime.Now, double.NaN);
-                        Series.Points[Series.Points.Count - 1].IsEmpty = true;
-                        Series.Points[Series.Points.Count - 1].Label = "X";
-                        Series.Points[Series.Points.Count - 1].LabelForeColor = Color.Red;
+                        Series.Points[^1].IsEmpty = true;
+                        Series.Points[^1].Label = "X";
+                        Series.Points[^1].LabelForeColor = Color.Red;
                         Series.Enabled = IsEnabled && Series.Points.Count > 0;
                     }
                 }

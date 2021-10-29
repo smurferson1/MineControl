@@ -62,7 +62,7 @@ namespace MineControl.Lib.Schedule
         {
             if ((StartTime != DateTime.MinValue) && (EndTime != DateTime.MinValue))
             {   
-                return $"Time is between {StartTime.ToString("hh:mm tt")} and {EndTime.ToString("hh:mm tt")}";
+                return $"Time is between {StartTime:hh:mm tt} and {EndTime:hh:mm tt}";
             }
 
             return "Undefined time range";

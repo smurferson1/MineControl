@@ -197,12 +197,10 @@ namespace MineControl.Lib.Utils
         
         public static void OpenLinkInDefaultBrowser(string link)
         {
-            using (Process p = new Process())
-            {
-                p.StartInfo.UseShellExecute = true;
-                p.StartInfo.FileName = link;
-                p.Start();
-            }
+            using Process p = new();
+            p.StartInfo.UseShellExecute = true;
+            p.StartInfo.FileName = link;
+            p.Start();
         }
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto)]

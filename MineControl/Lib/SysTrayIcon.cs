@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Drawing.Text;
 using System.Runtime.InteropServices;
+using System.Runtime.Versioning;
 using System.Windows.Forms;
 
 namespace MineControl.Lib
@@ -19,6 +20,7 @@ namespace MineControl.Lib
         /// Updates icon, but only if it's different from before
         /// </summary>        
         /// <returns>True if icon was updated</returns>
+        [SupportedOSPlatform("windows")]
         public static bool UpdateTextIcon(NotifyIcon notifyIcon, bool forceRedraw, MinerState gpuState, MinerState cpuState, int gpuPowerStep, SysTrayIconTextMode iconDisplayMode)
         {
             Color gpuColor = GetColorFromMinerState(gpuState);
@@ -70,29 +72,19 @@ namespace MineControl.Lib
 
         private static Color GetColorFromMinerState(MinerState minerState)
         {
-            switch (minerState)
+            return minerState switch
             {
-                case MinerState.Uninitialized:
-                    return Color.Black;
-                case MinerState.Running:
-                    return Color.LimeGreen;
-                case MinerState.DisabledByUser:
-                    return Color.Black;
-                case MinerState.DisabledBySchedule:
-                    return Color.DarkGray;
-                case MinerState.DisabledByUnknownTemp:
-                    return Color.Orange;
-                case MinerState.DisabledByOverheating:
-                    return Color.Orange;
-                case MinerState.DisabledByUserActivity:
-                    return Color.Yellow;
-                case MinerState.DisabledUnknownError:
-                    return Color.Red;
-                case MinerState.DisabledClosing:
-                    return Color.Black;
-                default:
-                    return Color.Red;
-            }
+                MinerState.Uninitialized => Color.Black,
+                MinerState.Running => Color.LimeGreen,
+                MinerState.DisabledByUser => Color.Black,
+                MinerState.DisabledBySchedule => Color.DarkGray,
+                MinerState.DisabledByUnknownTemp => Color.Orange,
+                MinerState.DisabledByOverheating => Color.Orange,
+                MinerState.DisabledByUserActivity => Color.Yellow,
+                MinerState.DisabledUnknownError => Color.Red,
+                MinerState.DisabledClosing => Color.Black,
+                _ => Color.Red,
+            };
         }
 
         /// <summary>
@@ -100,13 +92,14 @@ namespace MineControl.Lib
         /// If only one of the chars is present, that char is drawn in the center at a larger font.
         /// Provides option for colored bars on left and right as well.
         /// </summary>        
+        [SupportedOSPlatform("windows")]
         private static void SetTextIcon(NotifyIcon notifyIcon, char? char1, char? char2, Color char1Color, Color char2Color, Color barColorLeft, Color barColorRight)
         {
             using Brush brush1 = new SolidBrush(char1Color);
             using Brush brush2 = new SolidBrush(char2Color);
             using Brush brushBarLeft = new SolidBrush(barColorLeft);
             using Brush brushBarRight = new SolidBrush(barColorRight);
-            using Bitmap bitmap = new Bitmap(16, 16);
+            using Bitmap bitmap = new(16, 16);
             using Graphics g = Graphics.FromImage(bitmap);
 
             // fill background and bars
@@ -119,13 +112,13 @@ namespace MineControl.Lib
             g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
             if (char1 != null && char2 != null)
             {
-                using Font font = new Font("Tahoma", 11, FontStyle.Bold, GraphicsUnit.Pixel);
+                using Font font = new("Tahoma", 11, FontStyle.Bold, GraphicsUnit.Pixel);
                 g.DrawString(char1.ToString(), font, brush1, -1, 1);
                 g.DrawString(char2.ToString(), font, brush2, 7, 1);
             }
             else if (char1 != null || char2 != null)
             {
-                using Font font = new Font("Tahoma", 15, FontStyle.Bold, GraphicsUnit.Pixel);
+                using Font font = new("Tahoma", 15, FontStyle.Bold, GraphicsUnit.Pixel);
                 g.DrawString(
                     char1 != null ? char1.ToString() : char2.ToString(),
                     font,

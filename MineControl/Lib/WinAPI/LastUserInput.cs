@@ -23,7 +23,7 @@ namespace MineControl.Lib.WinAPI
         public static uint GetLastInputTimeInSecs()
         {
             uint idleTime = 0;
-            LastInputInfo lastInputInfo = new LastInputInfo();
+            LastInputInfo lastInputInfo = new();
             lastInputInfo.cbSize = (uint)Marshal.SizeOf(lastInputInfo);
             lastInputInfo.dwTime = 0;
 

@@ -13,6 +13,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Versioning;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -21,6 +22,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace MineControl
 {
+    [SupportedOSPlatform("windows")]
     public partial class FormMineControl : Form, IChartManager, ILog, ISettingsFile, IStats, IActiveSchedules
     {
         #region Local Consts
@@ -109,20 +111,20 @@ namespace MineControl
         private Archiver Archiver { get; set; }
 
         // serialization
-        JsonSerializerOptions jsonOptionsScheduleNodes = new JsonSerializerOptions
+        private readonly JsonSerializerOptions jsonOptionsScheduleNodes = new()
         {
             Converters = { new ScheduleNodeConverter() },
             WriteIndented = true,
             PropertyNameCaseInsensitive = true,
             IncludeFields = true
         };
-        JsonSerializerOptions jsonOptionsMetrics = new JsonSerializerOptions
+        private readonly JsonSerializerOptions jsonOptionsMetrics = new()
         {
             WriteIndented = true,
             PropertyNameCaseInsensitive = true,
             ReferenceHandler = ReferenceHandler.Preserve
         };
-        JsonSerializerOptions jsonOptionsMetricQueryOptions = new JsonSerializerOptions
+        private readonly JsonSerializerOptions jsonOptionsMetricQueryOptions = new()
         {
             WriteIndented = true,
             PropertyNameCaseInsensitive = true
@@ -266,19 +268,19 @@ namespace MineControl
             comboBoxChartShowLastUnit.SelectedIndex = comboBoxChartShowLastUnit.Items.IndexOf("Hours");
 
             // bind other data sources
-            bindingSourceSchedules = new BindingSource();
+            bindingSourceSchedules = new();
             bindingSourceSchedules.DataSource = Schedules;
             comboBoxScheduleSchedules.DataSource = bindingSourceSchedules;
             comboBoxScheduleSchedules.DisplayMember = "Name";
             comboBoxScheduleSchedules.ValueMember = "Id";
 
-            bindingSourceGPUSchedule = new BindingSource();
+            bindingSourceGPUSchedule = new();
             bindingSourceGPUSchedule.DataSource = Schedules;
             comboBoxMinerGPUSchedule.DataSource = bindingSourceGPUSchedule;
             comboBoxMinerGPUSchedule.DisplayMember = "Name";
             comboBoxMinerGPUSchedule.ValueMember = "Id";
 
-            bindingSourceCPUSchedule = new BindingSource();
+            bindingSourceCPUSchedule = new();
             bindingSourceCPUSchedule.DataSource = Schedules;
             comboBoxMinerCPUSchedule.DataSource = bindingSourceCPUSchedule;
             comboBoxMinerCPUSchedule.DisplayMember = "Name";
@@ -352,10 +354,10 @@ namespace MineControl
                 // make the tab and chart controls if not found
                 // tab page
                 tabControlCharts.TabPages.Add(chartName);
-                tab = tabControlCharts.TabPages[tabControlCharts.TabPages.Count - 1];
+                tab = tabControlCharts.TabPages[^1];
 
                 // chart
-                chart = new Chart();
+                chart = new();
                 chart.Name = chartName;
                 Charts.Add(chart);
                 tab.Controls.Add(chart);
@@ -578,7 +580,7 @@ namespace MineControl
         /// <returns>A text description of the changes made, one per line</returns>
         private string LoadMetricsViaMerge(string serializedMetrics, bool previewOnly = false)
         {
-            List<string> changes = new List<string>();
+            List<string> changes = new();
 
             List<Metric> loadedMetrics = JsonSerializer.Deserialize<List<Metric>>(serializedMetrics, jsonOptionsMetrics);
             foreach (Metric metric in loadedMetrics)
@@ -1022,7 +1024,7 @@ namespace MineControl
                     // process the input
                     bool inputFound = false;
                     string inputValue;
-                    StringBuilder inputLogValues = new StringBuilder();
+                    StringBuilder inputLogValues = new();
                     try
                     {
                         foreach (Metric metric in Metrics)
@@ -1159,7 +1161,7 @@ namespace MineControl
                     processParams = Settings.tempPowerStepParam5;
                 }
 
-                using (Process p = new Process())
+                using (Process p = new())
                 {
                     p.StartInfo.FileName = Settings.appGPUControllerPath;
                     p.StartInfo.Arguments = processParams;
@@ -1176,7 +1178,7 @@ namespace MineControl
             }
         }
 
-        void ILog.Append(string entry, LogType logType = LogType.Info, LogSource logSource = LogSource.Internal) => AddLogEntry(entry, logType, logSource);
+        void ILog.Append(string entry, LogType logType, LogSource logSource) => AddLogEntry(entry, logType, logSource);
         private void AddLogEntry(string entry, LogType logType = LogType.Info, LogSource logSource = LogSource.Internal)
         {
             // can't invoke until control has been created, so entries at this stage are lost
@@ -1187,22 +1189,13 @@ namespace MineControl
             
             Invoke(new Action(() =>
             {
-                string logSourceText;
-                switch (logSource)
+                string logSourceText = logSource switch
                 {
-                    case LogSource.Internal:
-                        logSourceText = cAppMC;
-                        break;
-                    case LogSource.GPUMiner:
-                        logSourceText = cAppGPUMiner;
-                        break;
-                    case LogSource.CPUMiner:
-                        logSourceText = cAppCPUMiner;
-                        break;
-                    default:
-                        logSourceText = cAppMC;
-                        break;
-                }
+                    LogSource.Internal => cAppMC,
+                    LogSource.GPUMiner => cAppGPUMiner,
+                    LogSource.CPUMiner => cAppCPUMiner,
+                    _ => cAppMC,
+                };
 
                 // add the row                
                 DataTableLog.Rows.Add(logSourceText, Enum.GetName(typeof(LogType), logType), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"), entry);
@@ -1564,7 +1557,7 @@ namespace MineControl
         {
             int startDay = comboBoxScheduleStartDay.Text == "Last" ? 32 : Convert.ToInt32(comboBoxScheduleStartDay.Text);
             int endDay = comboBoxScheduleEndDay.Text == "Last" ? 32 : Convert.ToInt32(comboBoxScheduleEndDay.Text);
-            CalendarNode scheduleNode = new CalendarNode(Guid.Empty,
+            CalendarNode scheduleNode = new(Guid.Empty,
                 Convert.ToInt32(comboBoxScheduleStartMonth.SelectedIndex + 1),
                 Convert.ToInt32(comboBoxScheduleEndMonth.SelectedIndex + 1),
                 startDay,
@@ -1713,9 +1706,9 @@ namespace MineControl
                 TreeNode treeNode = treeNodes.Add(schedule.GetNodeDescription(node.Id));
                 treeNode.Tag = node.Id;
 
-                if (node is BranchingNode)
+                if (node is BranchingNode branchingNode)
                 {
-                    LoadNodesToTreeView(treeNode.Nodes, ((BranchingNode)node).Children, schedule);
+                    LoadNodesToTreeView(treeNode.Nodes, branchingNode.Children, schedule);
                 }
             }
 
@@ -2187,40 +2180,20 @@ namespace MineControl
         {
             if (checkBoxLogColorCode.Checked)
             {
-                Color color;
-                switch (dataGridViewLog.Rows[e.RowIndex].Cells[1].Value.ToString())
+                var color = dataGridViewLog.Rows[e.RowIndex].Cells[1].Value.ToString() switch
                 {
-                    case "Info":
-                        switch (dataGridViewLog.Rows[e.RowIndex].Cells[0].Value.ToString())
-                        {
-                            case cAppMC:
-                                color = Color.Black;
-                                break;
-                            case cAppGPUMiner:
-                                color = Color.DarkGray;
-                                break;
-                            case cAppCPUMiner:
-                                color = Color.Gray;
-                                break;
-                            default:
-                                color = Color.Black;
-                                break;
-                        }
-                        break;
-                    case "Warning":
-                        color = Color.Orange;
-                        break;
-                    case "Error":
-                        color = Color.Red;
-                        break;
-                    case "Input":
-                        color = Color.Blue;
-                        break;
-                    default:
-                        color = Color.Black;
-                        break;
-                }
-
+                    "Info" => dataGridViewLog.Rows[e.RowIndex].Cells[0].Value.ToString() switch
+                    {
+                        cAppMC => Color.Black,
+                        cAppGPUMiner => Color.DarkGray,
+                        cAppCPUMiner => Color.Gray,
+                        _ => Color.Black,
+                    },
+                    "Warning" => Color.Orange,
+                    "Error" => Color.Red,
+                    "Input" => Color.Blue,
+                    _ => Color.Black,
+                };
                 e.CellStyle.ForeColor = color;                
             }
         }
@@ -2260,13 +2233,9 @@ namespace MineControl
 
         private void dataGridViewMetrics_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
-            if (dataGridViewMetrics.CurrentCell.OwningColumn == ColDataQuery)
-            {
-                ComboBox combo = e.Control as ComboBox;
-                if (combo != null)
-                {
-                    combo.DropDownStyle = ComboBoxStyle.DropDown;
-                }
+            if (dataGridViewMetrics.CurrentCell.OwningColumn == ColDataQuery && e.Control is ComboBox combo)
+            {                
+                combo.DropDownStyle = ComboBoxStyle.DropDown;                
             }            
         }
 

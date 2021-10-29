@@ -182,8 +182,7 @@ namespace MineControl.Lib.Utils
         public static object CalculateRate(Series series, double denominator, CalculationMethod calculationMethod)
         {
             double totalArea;
-            double totalTime;
-            (totalArea, totalTime) = CalculateAreaAndTotalTime(series, calculationMethod);
+            (totalArea, _) = CalculateAreaAndTotalTime(series, calculationMethod);
 
             // calculate rate as (previous total area + total area since last data point [if doing Lookahead]) / denominator
             return Math.Round(totalArea / denominator, 3);

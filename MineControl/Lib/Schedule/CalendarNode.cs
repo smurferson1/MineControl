@@ -92,9 +92,9 @@ namespace MineControl.Lib.Schedule
         {
             if ((StartDay > 0) && (EndDay > 0) && (ValidMonths.Count > 0))
             {
-                DateTime temp = new DateTime(DateTime.Now.Year, ValidMonths[0], 1);
+                DateTime temp = new(DateTime.Now.Year, ValidMonths[0], 1);
                 string startMonth = temp.ToString("MMMM");
-                temp = new DateTime(DateTime.Now.Year, ValidMonths.Last(), 1);
+                temp = new(DateTime.Now.Year, ValidMonths.Last(), 1);
                 string endMonth = temp.ToString("MMMM");
                 string startDay = StartDay == 32 ? "[Last Day]" : StartDay.ToString();
                 string endDay = EndDay == 32 ? "[Last Day]" : EndDay.ToString();

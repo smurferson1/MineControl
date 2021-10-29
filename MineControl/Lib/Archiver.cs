@@ -37,7 +37,7 @@ namespace MineControl.Lib
                 int deletedConfigCount = 0;
 
                 // delete old log archives
-                DirectoryInfo directory = new DirectoryInfo(GetArchiveFolder());
+                DirectoryInfo directory = new(GetArchiveFolder());
                 var files = directory.GetFiles("*.*").Where(f => f.LastWriteTime < archiveAgeCutoff && Path.GetExtension(f.Name) == ".txt");
                 foreach (var file in files)
                 {
@@ -72,22 +72,13 @@ namespace MineControl.Lib
 
             // find next archive time
             DateTime now = DateTime.Now;
-            DateTime nextArchiveEval;
-            switch (Settings.archivesArchiveIntervalUnit)
+            var nextArchiveEval = Settings.archivesArchiveIntervalUnit switch
             {
-                case "Days":
-                    nextArchiveEval = LastArchiveEval.AddDays(Settings.archivesArchiveInterval);
-                    break;
-                case "Hours":
-                    nextArchiveEval = LastArchiveEval.AddHours(Settings.archivesArchiveInterval);
-                    break;
-                case "Minutes":
-                    nextArchiveEval = LastArchiveEval.AddMinutes(Settings.archivesArchiveInterval);
-                    break;
-                default:
-                    throw new Exception("Unknown archive interval unit");
-            }
-
+                "Days" => LastArchiveEval.AddDays(Settings.archivesArchiveInterval),
+                "Hours" => LastArchiveEval.AddHours(Settings.archivesArchiveInterval),
+                "Minutes" => LastArchiveEval.AddMinutes(Settings.archivesArchiveInterval),
+                _ => throw new Exception("Unknown archive interval unit"),
+            };
             if (now >= nextArchiveEval)
             {
                 evalStartTime = now;
@@ -175,7 +166,7 @@ namespace MineControl.Lib
                     if (archiveEnabled)
                     {
                         // one archive file per day
-                        string archiveFile = Path.Combine(GetArchiveFolder(), $"LogArchive{evalStartTime.ToString("yyyy-MM-dd")}.txt");
+                        string archiveFile = Path.Combine(GetArchiveFolder(), $"LogArchive{evalStartTime:yyyy-MM-dd}.txt");
 
                         if (File.Exists(archiveFile))
                         {
@@ -215,19 +206,15 @@ namespace MineControl.Lib
             }
         }
 
-        public DateTime GetTimeCutoff(DateTime evalStartTime, string unit, int value)
+        public static DateTime GetTimeCutoff(DateTime evalStartTime, string unit, int value)
         {
-            switch (unit)
+            return unit switch
             {
-                case "Days":
-                    return evalStartTime.AddDays(-value);
-                case "Hours":
-                    return evalStartTime.AddHours(-value);
-                case "Minutes":
-                    return evalStartTime.AddMinutes(-value);
-                default:
-                    throw new Exception("Unknown unit");
-            }
+                "Days" => evalStartTime.AddDays(-value),
+                "Hours" => evalStartTime.AddHours(-value),
+                "Minutes" => evalStartTime.AddMinutes(-value),
+                _ => throw new Exception("Unknown unit"),
+            };
         }
 
         public string GetArchiveFolder()

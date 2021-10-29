@@ -82,7 +82,7 @@ namespace MineControl.Lib.Schedule
         {
             if (SelectedDays.Count > 0)
             {
-                StringBuilder result = new StringBuilder("Day is ");
+                StringBuilder result = new("Day is ");
                 bool firstDay = true;
 
                 foreach (DayOfWeek day in SelectedDays)
