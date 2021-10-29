@@ -153,7 +153,7 @@ namespace MineControl
         /// </summary>
         private void InitializeInternals()
         {
-            MinerUtils.Initialize(
+            MinerUtils.Setup(
                 this,
                 this,
                 notifyIconMain,
@@ -1878,7 +1878,7 @@ namespace MineControl
             // later calls depend on basic UI things, so this must be first
             InitializeUI();
 
-            ConfigUtils.LoadSettingsFile(Settings, this);
+            SettingsUtils.LoadSettingsFile(Settings, this);
             InitializeInternals();
             LoadSettingsToUI(true);
             UpdateSettingsEvents();
@@ -1902,7 +1902,7 @@ namespace MineControl
                 Hide();
             }
         }
-
+       
         private void FormMineControl_FormClosed(object sender, FormClosedEventArgs e)
         {
             // just clean up timed tasks and apps, since stopping automation fully would change the config
@@ -1918,15 +1918,14 @@ namespace MineControl
             //  avoid unintended saves while disposing binding sources
             CanSave = false;
 
-            // dispose all class IDisposables
-            MinerUtils.ProcessGPUMiner.Dispose();
-            MinerUtils.ProcessCPUMiner.Dispose();
-            ProcessHardwareMonitor.Dispose();
-            ProcessGPUController.Dispose();
+            // dispose all class IDisposables            
             bindingSourceSchedules.Dispose();
             bindingSourceGPUSchedule.Dispose();
             bindingSourceCPUSchedule.Dispose();
-            ProcessUtils.Job.Dispose();
+            ProcessHardwareMonitor.Dispose();
+            ProcessGPUController.Dispose();
+            MinerUtils.DisposeChildren();
+            ProcessUtils.DisposeChildren();
         }
 
         private void timerMain_Tick(object sender, EventArgs e)
@@ -1972,7 +1971,8 @@ namespace MineControl
 
         private void toolStripMenuItemSysTrayExit_Click(object sender, EventArgs e)
         {
-            CanQuit = true; // only allow quit through systray
+            // only allow quit through systray
+            CanQuit = true; 
             Application.Exit();
         }
 

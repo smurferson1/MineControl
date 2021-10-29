@@ -11,9 +11,6 @@ namespace MineControl.Lib.Utils
         private static readonly Properties.Settings Settings = Properties.Settings.Default;
         private static IActiveSchedules SelectedSchedules { get; set; }
         private static ILog Log { get; set; }
-        private static NotifyIcon StatusIcon { get; set; }
-        private static DataGridViewCell GPUStatusCell { get; set; }
-        private static DataGridViewCell CPUStatusCell { get; set; }
         private static DataReceivedEventHandler ReceivedProcessData { get; set; }
         private static DateTime GPUOverheatStartTime { get; set; } = DateTime.MinValue;
         private static DateTime GPUOverheatShutoffTime { get; set; } = DateTime.MinValue;
@@ -24,7 +21,12 @@ namespace MineControl.Lib.Utils
         public static Process ProcessCPUMiner { get; } = new Process();
         public static bool isCPUMinerRunning = false;
 
-        public static void Initialize(IActiveSchedules selectedSchedules, ILog log, NotifyIcon statusIcon, DataGridViewCell gpuStatusCell, 
+        // TODO: extra bad UI coupling
+        private static NotifyIcon StatusIcon { get; set; }
+        private static DataGridViewCell GPUStatusCell { get; set; }
+        private static DataGridViewCell CPUStatusCell { get; set; }
+
+        public static void Setup(IActiveSchedules selectedSchedules, ILog log, NotifyIcon statusIcon, DataGridViewCell gpuStatusCell, 
             DataGridViewCell cpuStatusCell, DataReceivedEventHandler receivedProcessData)
         {
             SelectedSchedules = selectedSchedules;
@@ -33,6 +35,12 @@ namespace MineControl.Lib.Utils
             GPUStatusCell = gpuStatusCell;
             CPUStatusCell = cpuStatusCell;
             ReceivedProcessData = receivedProcessData;
+        }
+
+        public static void DisposeChildren()
+        {
+            ProcessGPUMiner.Dispose();
+            ProcessCPUMiner.Dispose();
         }
 
         public static void UpdateMinerState(bool isGPU, string gpuTempStr = "")

@@ -14,6 +14,11 @@ namespace MineControl.Lib.Utils
     {
         public static Job Job { get; } = new Job();
 
+        public static void DisposeChildren()
+        {
+            Job.Dispose();
+        }
+
         /// <summary>
         /// Refreshes process info and returns running status
         /// </summary>

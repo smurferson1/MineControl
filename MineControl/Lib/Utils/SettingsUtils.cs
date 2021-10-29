@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Configuration;
 
 namespace MineControl.Lib.Utils
 {
-    public static class ConfigUtils
+    public static class SettingsUtils
     {
         /// <summary>
         /// Ensures current settings file is loaded if one exists, upgrading (migrating) from previous versions as needed.
