@@ -1,0 +1,68 @@
+{
+  "$id": "1",
+  "$values": [
+    {
+      "$id": "2",
+      "IsEnabled": true,
+      "Name": "GPU/Mem Junc Temp",
+      "Type": 0,
+      "Source": 3,
+      "Method": 0,
+      "Query": "(?\u003C=GPU Memory Junction Temperature\u002B[\\r\\n])\\w\u002B[.]?\\w\u002B"
+    },
+    {
+      "$id": "3",
+      "IsEnabled": true,
+      "Name": "GPU/Mem Junc Temp Unit",
+      "Type": 1,
+      "Source": 2,
+      "Method": 1,
+      "Query": "C"
+    },
+    {
+      "$id": "4",
+      "IsEnabled": true,
+      "Name": "CPU Temp",
+      "Type": 0,
+      "Source": 3,
+      "Method": 0,
+      "Query": "(?\u003C=Core Max\u002B[\\r\\n])\\w\u002B[.]?\\w\u002B"
+    },
+    {
+      "$id": "5",
+      "IsEnabled": true,
+      "Name": "CPU Temp Unit",
+      "Type": 1,
+      "Source": 2,
+      "Method": 1,
+      "Query": "C"
+    },
+    {
+      "$id": "6",
+      "IsEnabled": true,
+      "Name": "Total Power (W)",
+      "Type": 0,
+      "Source": 3,
+      "Method": 0,
+      "Query": "(?\u003C=PSU Power \\(sum\\)\u002B[\\r\\n])\\w\u002B[.]?\\w\u002B"
+    },
+    {
+      "$id": "7",
+      "IsEnabled": true,
+      "Name": "GPU Power (W)",
+      "Type": 0,
+      "Source": 3,
+      "Method": 0,
+      "Query": "(?\u003C=GPU Power[\\r\\n])\\w\u002B[.]?\\w\u002B"
+    },
+    {
+      "$id": "8",
+      "IsEnabled": true,
+      "Name": "CPU Power (W)",
+      "Type": 0,
+      "Source": 3,
+      "Method": 0,
+      "Query": "(?\u003C=CPU Package Power[\\r\\n])\\w\u002B[.]?\\w\u002B"
+    }
+  ]
+}

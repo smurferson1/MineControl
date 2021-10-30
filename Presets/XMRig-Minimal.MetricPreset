@@ -1,0 +1,32 @@
+{
+  "$id": "1",
+  "$values": [
+    {
+      "$id": "2",
+      "IsEnabled": true,
+      "Name": "CPU Hash Rate",
+      "Type": 0,
+      "Source": 1,
+      "Method": 0,
+      "Query": "(?\u003C=miner[ ]\u002Bspeed [0-9ms/]\u002B[ ][0-9\\.]\u002B[ ])\\d\u002B[.]*\\d\u002B"
+    },
+    {
+      "$id": "3",
+      "IsEnabled": true,
+      "Name": "CPU Hash Rate Unit",
+      "Type": 1,
+      "Source": 2,
+      "Method": 1,
+      "Query": "H/s"
+    },
+    {
+      "$id": "4",
+      "IsEnabled": false,
+      "Name": "CPU Hash Algo",
+      "Type": 1,
+      "Source": 2,
+      "Method": 1,
+      "Query": "Various"
+    }
+  ]
+}

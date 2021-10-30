@@ -1,0 +1,32 @@
+{
+  "$id": "1",
+  "$values": [    
+    {
+      "$id": "3",
+      "IsEnabled": true,
+      "Name": "GPU Hash Rate",
+      "Type": 0,
+      "Source": 0,
+      "Method": 0,
+      "Query": "(?\u003C=.\u002BTotal[ ]\u002Bethash[:][ ])\\d\u002B[.]\\d\u002B"
+    },
+    {
+      "$id": "4",
+      "IsEnabled": true,
+      "Name": "GPU Hash Rate Unit",
+      "Type": 1,
+      "Source": 0,
+      "Method": 0,
+      "Query": "(?\u003C=[E][t][h][ ][s][p][e][e][d][:][ ]\\d\u002B[.]\\d\u002B[ ])[A-Za-z/]\u002B"
+    },
+    {
+      "$id": "5",
+      "IsEnabled": true,
+      "Name": "GPU Hash Algo",
+      "Type": 1,
+      "Source": 2,
+      "Method": 1,
+      "Query": "Ethash"
+    }
+  ]
+}
