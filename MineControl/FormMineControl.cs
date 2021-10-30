@@ -155,6 +155,7 @@ namespace MineControl
         /// </summary>
         private void InitializeInternals()
         {
+            ChartUtils.Setup(this);
             MinerUtils.Setup(
                 this,
                 this,
@@ -236,7 +237,8 @@ namespace MineControl
             CreateChartSeriesForMetric(cCPU, Metric(cCPUHashRate), SeriesChartType.Line, AxisType.Secondary);
             CreateChartSeriesForMetric(cResources, Metric(cTotalPower), SeriesChartType.Line, AxisType.Secondary);
             CreateChartSeriesForMetric(cResources, Metric(cGPUPower), SeriesChartType.Line, AxisType.Secondary);
-            CreateChartSeriesForMetric(cResources, Metric(cCPUPower), SeriesChartType.Line, AxisType.Secondary);                        
+            CreateChartSeriesForMetric(cResources, Metric(cCPUPower), SeriesChartType.Line, AxisType.Secondary);
+            UpdateChartScales(true, true);
 
             // init stats in a logical order            
             SetStat(cGPUPowerStep, "");
@@ -593,11 +595,13 @@ namespace MineControl
             {
                 if (!Metrics.Any(x => x.Name == metric.Name))
                 {
-                    if (!previewOnly)
+                    // user-defined metrics not currently supported
+                    /*if (!previewOnly)
                     {
                         Metrics.Add(metric);
                     }
-                    changes.Add($"Add metric '{metric.Name}'");
+                    changes.Add($"Add metric '{metric.Name}'");*/
+                    changes.Add($"WARNING: metric '{metric.Name}' wasn't found (check the name)");
                 }
                 else if (Metric(metric.Name).IsInternal)
                 {
@@ -616,6 +620,10 @@ namespace MineControl
                     // pull in external metrics fully
                     if (!previewOnly)
                     {
+                        if (!ColDataQuery.Items.Contains(metric.Query))
+                        {
+                            ColDataQuery.Items.Add(metric.Query);
+                        }
                         Metric(metric.Name).Assign(metric);
                     }
                     changes.Add($"Update values for metric '{metric.Name}'");
@@ -2367,9 +2375,8 @@ namespace MineControl
             foreach (Chart chart in Charts)
             {
                 if (radioButtonChartShowAll.Checked)
-                {
-                    chart.ChartAreas[0].AxisX.Minimum = Double.NaN;
-                    chart.ChartAreas[0].AxisX.Maximum = Double.NaN;
+                {                    
+                    chart.ChartAreas[0].AxisX.Minimum = ChartUtils.GetMinXValue(chart);                    
                 }
                 else if (radioButtonChartShowLastX.Checked)
                 {
@@ -2388,7 +2395,7 @@ namespace MineControl
                 }
             }
 
-            UpdateChartScales(true, true);
+            UpdateChartScales(false);
         }
 
         private void linkLabelGithub_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

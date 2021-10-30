@@ -9,6 +9,13 @@ namespace MineControl.Lib.Utils
 {
     public static class ChartUtils
     {
+        private static ILog Log { get; set; } = null;
+
+        public static void Setup(ILog log)
+        {
+            Log = log;
+        }
+
         /// <summary>
         /// Get min and max Y value for the given chart and axis. 0 is always the floor.
         /// </summary>
@@ -20,37 +27,45 @@ namespace MineControl.Lib.Utils
             double min = double.NaN;
             double max = double.NaN;
             double seriesMinFloor = 0;
-            foreach (Series series in chart.Series)
+            try
             {
-                if (series.Points.Count > 0 && series.YAxisType == axisType)
+                foreach (Series series in chart.Series)
                 {
-                    if (scaleRestrictions != null && scaleRestrictions.Any(x => x.series == series))
+                    if (series.Points.Count > 0 && series.YAxisType == axisType)
                     {
-                        seriesMinFloor = scaleRestrictions.Last(x => x.series == series).minFloor;
+                        if (scaleRestrictions != null && scaleRestrictions.Any(x => x.series == series))
+                        {
+                            seriesMinFloor = scaleRestrictions.Last(x => x.series == series).minFloor;
+                        }
+                        else
+                        {
+                            seriesMinFloor = 0;
+                        }
+                        min = min.Equals(double.NaN) ?
+                            Math.Max(GetMinYValue(series, chart.ChartAreas[0].AxisX.Minimum) - padding, seriesMinFloor) :
+                            Math.Min(min, Math.Max(GetMinYValue(series, chart.ChartAreas[0].AxisX.Minimum) - padding, seriesMinFloor));
+                        max = max.Equals(double.NaN) ? GetMaxYValue(series) + padding : Math.Max(max, GetMaxYValue(series) + padding);
+                    }
+                }
+
+                // avoid invalid conditions resulting from scale restrictions
+                if (min > max)
+                {
+                    if (max >= padding + 1)
+                    {
+                        min = max - 1 - padding;
                     }
                     else
                     {
-                        seriesMinFloor = 0;
+                        max = min + 1 + padding;
                     }
-                    min = min.Equals(double.NaN) ?
-                        Math.Max(GetMinYValue(series, chart.ChartAreas[0].AxisX.Minimum) - padding, seriesMinFloor) :
-                        Math.Min(min, Math.Max(GetMinYValue(series, chart.ChartAreas[0].AxisX.Minimum) - padding, seriesMinFloor));
-                    max = max.Equals(double.NaN) ? GetMaxYValue(series) + padding : Math.Max(max, GetMaxYValue(series) + padding);
                 }
+            }
+            catch (Exception ex)
+            {
+                Log?.Append($"Exception in ChartUtils.GetMinAndMaxYValue: {ex.GetType()} - {ex.Message}");
             }
 
-            // avoid invalid conditions resulting from scale restrictions
-            if (min > max)
-            {
-                if (max >= padding + 1)
-                {
-                    min = max - 1 - padding;
-                }
-                else
-                {
-                    max = min + 1 + padding;
-                }
-            }
             return (min, max);
         }
 
@@ -97,34 +112,48 @@ namespace MineControl.Lib.Utils
         /// <param name="axisType">Represents axis to scale. When null, both axes are scaled.</param>
         public static void UpdateChartYAxisScale(Chart chart, AxisType? axisType = null, (Series series, int minFloor)[] scaleRestrictions = null)
         {
-            double min;
-            double max;
-            if (axisType == AxisType.Primary || axisType == null)
+            try
             {
-                (min, max) = GetMinAndMaxYValue(chart, AxisType.Primary, 2, scaleRestrictions);
-                SetChartYAxisScale(chart.ChartAreas[0].AxisY, min, max, chart.Height);
+                double min;
+                double max;
+                if (axisType == AxisType.Primary || axisType == null)
+                {
+                    (min, max) = GetMinAndMaxYValue(chart, AxisType.Primary, 2, scaleRestrictions);
+                    SetChartYAxisScale(chart.ChartAreas[0].AxisY, min, max, chart.Height);
+                }
+                if (axisType == AxisType.Secondary || axisType == null)
+                {
+                    (min, max) = GetMinAndMaxYValue(chart, AxisType.Secondary, 2, scaleRestrictions);
+                    SetChartYAxisScale(chart.ChartAreas[0].AxisY2, min, max, chart.Height);
+                }
             }
-            if (axisType == AxisType.Secondary || axisType == null)
+            catch (Exception ex)
             {
-                (min, max) = GetMinAndMaxYValue(chart, AxisType.Secondary, 2, scaleRestrictions);
-                SetChartYAxisScale(chart.ChartAreas[0].AxisY2, min, max, chart.Height);
+                Log?.Append($"Exception in ChartUtils.UpdateChartYAxisScale: {ex.GetType()} - {ex.Message}");
             }
         }
 
         public static void SetChartYAxisScale(Axis chartAxis, double min, double max, double height)
         {
-            if (!min.Equals(double.NaN) && !max.Equals(double.NaN))
+            try
             {
-                chartAxis.Minimum = Math.Round(Math.Max(min, 0), 0);
-                chartAxis.Maximum = Math.Round(Math.Max(max, 0), 0);
-                chartAxis.Interval = Math.Max(Math.Round((chartAxis.Maximum - chartAxis.Minimum) / (height / 15)), 1);
+                if (!min.Equals(double.NaN) && !max.Equals(double.NaN))
+                {
+                    chartAxis.Minimum = Math.Round(Math.Max(min, 0), 0);
+                    chartAxis.Maximum = Math.Round(Math.Max(max, 0), 0);
+                    chartAxis.Interval = Math.Max(Math.Round((chartAxis.Maximum - chartAxis.Minimum) / (height / 15)), 1);
+                }
+                else
+                {
+                    // dummy values
+                    chartAxis.Minimum = 0;
+                    chartAxis.Maximum = 1;
+                    chartAxis.Interval = 1;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                // dummy values
-                chartAxis.Minimum = 0;
-                chartAxis.Maximum = 1;
-                chartAxis.Interval = 1;
+                Log?.Append($"Exception in ChartUtils.SetChartYAxisScale: {ex.GetType()} - {ex.Message}");
             }
         }
 
@@ -138,21 +167,28 @@ namespace MineControl.Lib.Utils
         /// <returns>HitTestResult for closest DataPoint to x and y within maxDistance, or null if not found</returns>
         public static HitTestResult NearHitTest(Chart chart, int maxDistance, int x, int y)
         {
-            HitTestResult hitTestResult; 
-            for (int distance = 0; distance <= maxDistance; ++distance)
+            HitTestResult hitTestResult;
+            try
             {
-                for (int curX = x - distance; curX <= x + distance; ++curX)
+                for (int distance = 0; distance <= maxDistance; ++distance)
                 {
-                    for (int curY = y - distance; curY <= y + distance; ++curY)
+                    for (int curX = x - distance; curX <= x + distance; ++curX)
                     {
-                        hitTestResult = chart.HitTest(curX, curY);
-                        if (hitTestResult.Object is DataPoint)
+                        for (int curY = y - distance; curY <= y + distance; ++curY)
                         {
-                            return hitTestResult;
+                            hitTestResult = chart.HitTest(curX, curY);
+                            if (hitTestResult.Object is DataPoint)
+                            {
+                                return hitTestResult;
+                            }
                         }
                     }
                 }
-            }            
+            }
+            catch (Exception ex)
+            {
+                Log?.Append($"Exception in ChartUtils.NearHitTest: {ex.GetType()} - {ex.Message}");
+            }
             return null;
         }
 
@@ -163,35 +199,41 @@ namespace MineControl.Lib.Utils
         /// <param name="calculationMethod"></param>
         /// <returns></returns>
         public static (double, double) CalculateAreaAndTotalTime(Series series, CalculationMethod calculationMethod)
-        {
+        {             
             if (series == null || !series.Points.Any())
             {
                 return (double.NaN, double.NaN);
             }
-
-            // get total time and x+y area            
+                        
             DataPoint previousPoint = null;
             double totalArea = 0.0;
             double totalTime = 0.0;
             double lastTime;
-            foreach (DataPoint point in series.Points)
+            try
             {
-                if (previousPoint != null)
+                foreach (DataPoint point in series.Points)
                 {
-                    lastTime = (DateTime.FromOADate(point.XValue) - DateTime.FromOADate(previousPoint.XValue)).TotalSeconds;
-                    totalTime += lastTime;
-                    totalArea += (calculationMethod == CalculationMethod.Lookahead ? previousPoint.YValues[0] : point.YValues[0]) * lastTime;
+                    if (previousPoint != null)
+                    {
+                        lastTime = (DateTime.FromOADate(point.XValue) - DateTime.FromOADate(previousPoint.XValue)).TotalSeconds;
+                        totalTime += lastTime;
+                        totalArea += (calculationMethod == CalculationMethod.Lookahead ? previousPoint.YValues[0] : point.YValues[0]) * lastTime;
+                    }
+                    previousPoint = point;
                 }
-                previousPoint = point;
-            }
 
-            // include area after last point if we're using the lookahead method            
-            DataPoint lastP = series.Points.Last();
-            if (calculationMethod == CalculationMethod.Lookahead && !double.IsNaN(lastP.YValues[0]))
+                // include area after last point if we're using the lookahead method            
+                DataPoint lastP = series.Points.Last();
+                if (calculationMethod == CalculationMethod.Lookahead && !double.IsNaN(lastP.YValues[0]))
+                {
+                    lastTime = (DateTime.Now - DateTime.FromOADate(lastP.XValue)).TotalSeconds;
+                    totalTime += lastTime;
+                    totalArea += lastP.YValues[0] * lastTime;
+                }
+            }
+            catch (Exception ex)
             {
-                lastTime = (DateTime.Now - DateTime.FromOADate(lastP.XValue)).TotalSeconds;
-                totalTime += lastTime;
-                totalArea += lastP.YValues[0] * lastTime;
+                Log?.Append($"Exception in ChartUtils.CalculateAreaAndTotalTime: {ex.GetType()} - {ex.Message}");
             }
 
             return (totalArea, totalTime);
@@ -214,6 +256,26 @@ namespace MineControl.Lib.Utils
 
             // calculate rate as (previous total area + total area since last data point [if doing Lookahead]) / denominator
             return Math.Round(totalArea / denominator, 3);
+        }
+
+        public static double GetMinXValue(Chart chart)
+        {
+            double min = double.NaN;
+            try
+            {
+                foreach (Series series in chart.Series)
+                {
+                    if (series.Points.Count > 0)
+                    {
+                        min = double.IsNaN(min) ? series.Points.FindMinByValue("X").XValue : Math.Min(min, series.Points.FindMinByValue("X").XValue);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log?.Append($"Exception in ChartUtils.GetMinXValue: {ex.GetType()} - {ex.Message}");
+            }
+            return min;
         }
     }
 }
