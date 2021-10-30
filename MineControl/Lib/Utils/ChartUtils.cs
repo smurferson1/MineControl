@@ -7,6 +7,10 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace MineControl.Lib.Utils
 {
+    /// <summary>
+    /// Charting-related utilities.
+    /// Note: charts are considered non-essential, so most exceptions aren't raised.
+    /// </summary>
     public static class ChartUtils
     {
         private static ILog Log { get; set; } = null;
@@ -63,7 +67,7 @@ namespace MineControl.Lib.Utils
             }
             catch (Exception ex)
             {
-                Log?.Append($"Exception in ChartUtils.GetMinAndMaxYValue: {ex.GetType()} - {ex.Message}");
+                Log?.Append($"Exception in ChartUtils.GetMinAndMaxYValue: {ex.GetType()} - {ex.Message}", LogType.Warning);
             }
 
             return (min, max);
@@ -129,7 +133,7 @@ namespace MineControl.Lib.Utils
             }
             catch (Exception ex)
             {
-                Log?.Append($"Exception in ChartUtils.UpdateChartYAxisScale: {ex.GetType()} - {ex.Message}");
+                Log?.Append($"Exception in ChartUtils.UpdateChartYAxisScale: {ex.GetType()} - {ex.Message}", LogType.Warning);
             }
         }
 
@@ -153,7 +157,7 @@ namespace MineControl.Lib.Utils
             }
             catch (Exception ex)
             {
-                Log?.Append($"Exception in ChartUtils.SetChartYAxisScale: {ex.GetType()} - {ex.Message}");
+                Log?.Append($"Exception in ChartUtils.SetChartYAxisScale: {ex.GetType()} - {ex.Message}", LogType.Warning);
             }
         }
 
@@ -187,7 +191,7 @@ namespace MineControl.Lib.Utils
             }
             catch (Exception ex)
             {
-                Log?.Append($"Exception in ChartUtils.NearHitTest: {ex.GetType()} - {ex.Message}");
+                Log?.Append($"Exception in ChartUtils.NearHitTest: {ex.GetType()} - {ex.Message}", LogType.Warning);
             }
             return null;
         }
@@ -233,7 +237,7 @@ namespace MineControl.Lib.Utils
             }
             catch (Exception ex)
             {
-                Log?.Append($"Exception in ChartUtils.CalculateAreaAndTotalTime: {ex.GetType()} - {ex.Message}");
+                Log?.Append($"Exception in ChartUtils.CalculateAreaAndTotalTime: {ex.GetType()} - {ex.Message}", LogType.Warning);
             }
 
             return (totalArea, totalTime);
@@ -273,7 +277,7 @@ namespace MineControl.Lib.Utils
             }
             catch (Exception ex)
             {
-                Log?.Append($"Exception in ChartUtils.GetMinXValue: {ex.GetType()} - {ex.Message}");
+                Log?.Append($"Exception in ChartUtils.GetMinXValue: {ex.GetType()} - {ex.Message}", LogType.Warning);
             }
             return min;
         }
