@@ -1374,15 +1374,25 @@ namespace MineControl
                 return;
             }
 
-            ChartUtils.UpdateChartYAxisScale(Chart(cGPU), AxisType.Secondary,
-                Settings.chartMinTempOnYAxisEnabled ? new(Series, int)[] {(Series(cGPUMemJuncTemp), Settings.chartMinTempOnYAxisValue)} : null);
-            if (includeGPUPowerStep)
+            // only update scales for the currently visible chart
+            if (tabControlCharts.SelectedTab.Controls.IndexOf(Chart(cGPU)) >= 0)
             {
-                // always set GPU power step axis to the available power steps
-                ChartUtils.SetChartYAxisScale(Chart(cGPU).ChartAreas[0].AxisY, trackBarGPUPowerStep.Minimum, trackBarGPUPowerStep.Maximum, Chart(cGPU).Height);                
-            }                        
-            ChartUtils.UpdateChartYAxisScale(Chart(cCPU));
-            ChartUtils.UpdateChartYAxisScale(Chart(cResources));
+                ChartUtils.UpdateChartYAxisScale(Chart(cGPU), AxisType.Secondary,
+                    Settings.chartMinTempOnYAxisEnabled ? new (Series, int)[] { (Series(cGPUMemJuncTemp), Settings.chartMinTempOnYAxisValue) } : null);
+                if (includeGPUPowerStep)
+                {
+                    // always set GPU power step axis to the available power steps
+                    ChartUtils.SetChartYAxisScale(Chart(cGPU).ChartAreas[0].AxisY, trackBarGPUPowerStep.Minimum, trackBarGPUPowerStep.Maximum, Chart(cGPU).Height);
+                }
+            }
+            else if (tabControlCharts.SelectedTab.Controls.IndexOf(Chart(cCPU)) >= 0)
+            {
+                ChartUtils.UpdateChartYAxisScale(Chart(cCPU));
+            }
+            else if (tabControlCharts.SelectedTab.Controls.IndexOf(Chart(cResources)) >= 0)
+            {
+                ChartUtils.UpdateChartYAxisScale(Chart(cResources));
+            }
         }
 
         private void UpdatePolledMetrics()
@@ -1788,35 +1798,6 @@ namespace MineControl
             {
                 MessageBox.Show($"Error exporting config: {ex.GetType()} - {ex.Message}");
             }
-        }
-
-        private void ChartShowConfigOptionsChanged(object sender, EventArgs e)
-        {
-            foreach (Chart chart in Charts)
-            {
-                if (radioButtonChartShowAll.Checked)
-                {
-                    chart.ChartAreas[0].AxisX.Minimum = Double.NaN;
-                    chart.ChartAreas[0].AxisX.Maximum = Double.NaN;
-                }
-                else if (radioButtonChartShowLastX.Checked)
-                {
-                    switch (comboBoxChartShowLastUnit.SelectedItem.ToString())
-                    {
-                        case "Minutes":
-                            chart.ChartAreas[0].AxisX.Minimum = DateTime.Now.AddMinutes(-(int)numericUpDownChartShowLastX.Value).ToOADate();
-                            break;
-                        case "Hours":
-                            chart.ChartAreas[0].AxisX.Minimum = DateTime.Now.AddHours(-(int)numericUpDownChartShowLastX.Value).ToOADate();
-                            break;
-                        case "Days":
-                            chart.ChartAreas[0].AxisX.Minimum = DateTime.Now.AddDays(-(int)numericUpDownChartShowLastX.Value).ToOADate();
-                            break;
-                    }
-                }
-            }
-
-            UpdateChartScales(true, true);
         }
 
         private void PromptToSelectAppPathForRow(int rowIndex)
@@ -2370,8 +2351,44 @@ namespace MineControl
         {                        
             if (e.TabPage.Equals(tabPageAnalytics))
             {
-                UpdateChartScales(false);
+                foreach (Control control in tabControlCharts.SelectedTab.Controls)
+                {
+                    if (control is Chart chart)
+                    {
+                        UpdateChartScales(false);
+                        chart.Update();
+                    }
+                }
             }
+        }
+
+        private void charts_ShowConfigOptionsChanged(object sender, EventArgs e)
+        {
+            foreach (Chart chart in Charts)
+            {
+                if (radioButtonChartShowAll.Checked)
+                {
+                    chart.ChartAreas[0].AxisX.Minimum = Double.NaN;
+                    chart.ChartAreas[0].AxisX.Maximum = Double.NaN;
+                }
+                else if (radioButtonChartShowLastX.Checked)
+                {
+                    switch (comboBoxChartShowLastUnit.SelectedItem.ToString())
+                    {
+                        case "Minutes":
+                            chart.ChartAreas[0].AxisX.Minimum = DateTime.Now.AddMinutes(-(int)numericUpDownChartShowLastX.Value).ToOADate();
+                            break;
+                        case "Hours":
+                            chart.ChartAreas[0].AxisX.Minimum = DateTime.Now.AddHours(-(int)numericUpDownChartShowLastX.Value).ToOADate();
+                            break;
+                        case "Days":
+                            chart.ChartAreas[0].AxisX.Minimum = DateTime.Now.AddDays(-(int)numericUpDownChartShowLastX.Value).ToOADate();
+                            break;
+                    }
+                }
+            }
+
+            UpdateChartScales(true, true);
         }
 
         private void linkLabelGithub_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -2583,6 +2600,18 @@ namespace MineControl
                         --series.BorderWidth;
                         series.Tag = null;
                     }                    
+                }
+            }
+        }
+
+        private void tabControlCharts_Selected(object sender, TabControlEventArgs e)
+        {
+            foreach (Control control in e.TabPage.Controls)
+            {
+                if (control is Chart chart)
+                {
+                    UpdateChartScales(false);
+                    chart.Update();
                 }
             }
         }

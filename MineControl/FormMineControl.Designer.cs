@@ -31,9 +31,9 @@ namespace MineControl
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMineControl));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.timerMain = new System.Windows.Forms.Timer(this.components);
             this.toolTipMain = new System.Windows.Forms.ToolTip(this.components);
             this.checkBoxStartUpAutomation = new System.Windows.Forms.CheckBox();
@@ -197,6 +197,7 @@ namespace MineControl
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBoxCharts = new System.Windows.Forms.GroupBox();
+            this.buttonChartUpdate = new System.Windows.Forms.Button();
             this.tabControlCharts = new System.Windows.Forms.TabControl();
             this.tabControlAnalytics = new System.Windows.Forms.TabControl();
             this.tabPageStats = new System.Windows.Forms.TabPage();
@@ -1308,10 +1309,10 @@ namespace MineControl
             // buttonChartClearData
             // 
             this.buttonChartClearData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonChartClearData.Location = new System.Drawing.Point(564, 592);
+            this.buttonChartClearData.Location = new System.Drawing.Point(584, 595);
             this.buttonChartClearData.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.buttonChartClearData.Name = "buttonChartClearData";
-            this.buttonChartClearData.Size = new System.Drawing.Size(90, 27);
+            this.buttonChartClearData.Size = new System.Drawing.Size(70, 23);
             this.buttonChartClearData.TabIndex = 19;
             this.buttonChartClearData.Text = "Clear Data";
             this.toolTipMain.SetToolTip(this.buttonChartClearData, "Clears ALL data on ALL charts.");
@@ -1333,7 +1334,7 @@ namespace MineControl
             this.comboBoxChartShowLastUnit.Size = new System.Drawing.Size(89, 23);
             this.comboBoxChartShowLastUnit.TabIndex = 18;
             this.toolTipMain.SetToolTip(this.comboBoxChartShowLastUnit, "Limits visible area of all charts. Doesn\'t maintain itself over time.");
-            this.comboBoxChartShowLastUnit.SelectedValueChanged += new System.EventHandler(this.ChartShowConfigOptionsChanged);
+            this.comboBoxChartShowLastUnit.SelectedValueChanged += new System.EventHandler(this.charts_ShowConfigOptionsChanged);
             // 
             // numericUpDownChartShowLastX
             // 
@@ -1359,7 +1360,7 @@ namespace MineControl
             0,
             0,
             0});
-            this.numericUpDownChartShowLastX.ValueChanged += new System.EventHandler(this.ChartShowConfigOptionsChanged);
+            this.numericUpDownChartShowLastX.ValueChanged += new System.EventHandler(this.charts_ShowConfigOptionsChanged);
             // 
             // radioButtonChartShowLastX
             // 
@@ -1374,7 +1375,7 @@ namespace MineControl
             this.toolTipMain.SetToolTip(this.radioButtonChartShowLastX, "Limits visible data of all charts by X axis (time). Doesn\'t maintain itself over " +
         "time.");
             this.radioButtonChartShowLastX.UseVisualStyleBackColor = true;
-            this.radioButtonChartShowLastX.CheckedChanged += new System.EventHandler(this.ChartShowConfigOptionsChanged);
+            this.radioButtonChartShowLastX.CheckedChanged += new System.EventHandler(this.charts_ShowConfigOptionsChanged);
             // 
             // radioButtonChartShowAll
             // 
@@ -1390,7 +1391,7 @@ namespace MineControl
             this.radioButtonChartShowAll.Text = "Show All";
             this.toolTipMain.SetToolTip(this.radioButtonChartShowAll, "Shows all available chart data on the X (time) axis.");
             this.radioButtonChartShowAll.UseVisualStyleBackColor = true;
-            this.radioButtonChartShowAll.CheckedChanged += new System.EventHandler(this.ChartShowConfigOptionsChanged);
+            this.radioButtonChartShowAll.CheckedChanged += new System.EventHandler(this.charts_ShowConfigOptionsChanged);
             // 
             // numericUpDownChartMinGPUTempOnYAxisValue
             // 
@@ -2543,6 +2544,7 @@ namespace MineControl
             this.groupBoxCharts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBoxCharts.Controls.Add(this.buttonChartUpdate);
             this.groupBoxCharts.Controls.Add(this.tabControlCharts);
             this.groupBoxCharts.Controls.Add(this.buttonChartClearData);
             this.groupBoxCharts.Controls.Add(this.comboBoxChartShowLastUnit);
@@ -2558,6 +2560,16 @@ namespace MineControl
             this.groupBoxCharts.TabStop = false;
             this.groupBoxCharts.Text = "Charts";
             // 
+            // buttonChartUpdate
+            // 
+            this.buttonChartUpdate.Location = new System.Drawing.Point(495, 595);
+            this.buttonChartUpdate.Name = "buttonChartUpdate";
+            this.buttonChartUpdate.Size = new System.Drawing.Size(82, 23);
+            this.buttonChartUpdate.TabIndex = 20;
+            this.buttonChartUpdate.Text = "Update View";
+            this.buttonChartUpdate.UseVisualStyleBackColor = true;
+            this.buttonChartUpdate.Click += new System.EventHandler(this.charts_ShowConfigOptionsChanged);
+            // 
             // tabControlCharts
             // 
             this.tabControlCharts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -2569,6 +2581,7 @@ namespace MineControl
             this.tabControlCharts.SelectedIndex = 0;
             this.tabControlCharts.Size = new System.Drawing.Size(648, 568);
             this.tabControlCharts.TabIndex = 16;
+            this.tabControlCharts.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControlCharts_Selected);
             // 
             // tabControlAnalytics
             // 
@@ -2622,9 +2635,9 @@ namespace MineControl
             // ColStatsStat
             // 
             this.ColStatsStat.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.ColStatsStat.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.ColStatsStat.DefaultCellStyle = dataGridViewCellStyle4;
             this.ColStatsStat.HeaderText = "Stat";
             this.ColStatsStat.Name = "ColStatsStat";
             this.ColStatsStat.ReadOnly = true;
@@ -2633,10 +2646,10 @@ namespace MineControl
             // ColStatsValue
             // 
             this.ColStatsValue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.NullValue = null;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.ColStatsValue.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.NullValue = null;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.ColStatsValue.DefaultCellStyle = dataGridViewCellStyle5;
             this.ColStatsValue.HeaderText = "Value";
             this.ColStatsValue.Name = "ColStatsValue";
             this.ColStatsValue.ReadOnly = true;
@@ -2745,8 +2758,8 @@ namespace MineControl
             // ColLogMessage
             // 
             this.ColLogMessage.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.ColLogMessage.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.ColLogMessage.DefaultCellStyle = dataGridViewCellStyle6;
             this.ColLogMessage.HeaderText = "Message";
             this.ColLogMessage.MinimumWidth = 30;
             this.ColLogMessage.Name = "ColLogMessage";
@@ -3305,6 +3318,7 @@ namespace MineControl
         private System.Windows.Forms.SaveFileDialog saveFileDialogPresets;
         private System.Windows.Forms.RichTextBox richTextBoxAboutAttribution;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button buttonChartUpdate;
     }
 }
 
