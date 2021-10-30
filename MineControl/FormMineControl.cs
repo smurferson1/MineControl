@@ -170,10 +170,10 @@ namespace MineControl
         /// Sets up very particular UI pieces needed to show info, mainly grids and charts. Things would break without this.
         /// </summary>
         private void InitializeUI()
-        {   
+        {
             // display version
-            this.Text += $" v{Assembly.GetEntryAssembly().GetName().Version}";
-            labelAboutVersion.Text = Assembly.GetEntryAssembly().GetName().Version.ToString();
+            Text += $" v{Application.ProductVersion}";
+            labelAboutVersion.Text = Application.ProductVersion;
 
             // display attribution   
             richTextBoxAboutAttribution.Text = Properties.Resources.txtAttribution;
@@ -302,6 +302,23 @@ namespace MineControl
             comboBoxScheduleEndMonth.SelectedText = CultureInfo.InvariantCulture.DateTimeFormat.MonthNames.Take(12).Last();
             UpdateScheduleDaysComboBoxesFromUI();
             PositionNodeButtons();
+
+            // initial directories
+            string presetPath = Path.Combine(Application.StartupPath, "Presets");
+            if (Directory.Exists(presetPath))
+            {
+                openFileDialogPresets.InitialDirectory = presetPath;
+                saveFileDialogPresets.InitialDirectory = presetPath;
+            }
+            else
+            {
+                presetPath = Path.Combine(Application.CommonAppDataPath, "Presets");
+                if (Directory.Exists(presetPath))
+                {
+                    openFileDialogPresets.InitialDirectory = presetPath;
+                    saveFileDialogPresets.InitialDirectory = presetPath;
+                }
+            }
         }
 
         private void PositionNodeButtons()
