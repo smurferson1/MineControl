@@ -564,12 +564,12 @@ namespace MineControl
             {
                 BindingList<string> loadedQueryOptions = JsonSerializer.Deserialize<BindingList<string>>(Settings.metricsSerializedMetricQueryOptions);
                 foreach (string option in loadedQueryOptions)
-                {                     
+                {
                     if (!ColDataQuery.Items.Contains(option))
                     {
                         ColDataQuery.Items.Add(option);
                     }
-                }                
+                }
             }
             if (Settings.metricsSerializedMetrics.Trim().Length > 0)
             {
@@ -825,7 +825,7 @@ namespace MineControl
                         Archiver.IsConfigArchiveNeeded = true;
                         break;
 
-                    // applied automatically but needs archiving
+                    // applied automatically but need archiving
                     case nameof(Settings.controlMinimizeToSysTray):
                     case nameof(Settings.controlStartupMinimize):
                     case nameof(Settings.controlStartupRememberAutomation):
@@ -870,10 +870,6 @@ namespace MineControl
                         Archiver.IsConfigArchiveNeeded = true;
                         break;
 
-                    // nothing required
-                    case nameof(Settings.controlRunning):    
-                        break;
-
                     // miner changes that can be applied immediately
                     case nameof(Settings.minerCPUMode):
                         MinerUtils.UpdateMinerState(false);
@@ -886,12 +882,13 @@ namespace MineControl
                     case nameof(Settings.minerEnableAutomation):
                     case nameof(Settings.tempEnableAutomation):
                         MinerUtils.UpdateMinerState(true, GetStat(cGPUMemJuncTemp));
-                        MinerUtils.UpdateMinerState(false);        
+                        MinerUtils.UpdateMinerState(false);
+                        SysTrayIcon.UpdateTextIconFromSettings(notifyIconMain);
                         // note: basic control setting that does not trigger archiving
                         break;
+                    case nameof(Settings.controlRunning):
                     case nameof(Settings.tempSpeedStep):  // Note: applying this setting is handled elsewhere                    
-                        SysTrayIcon.UpdateTextIcon(notifyIconMain, false, MinerUtils.GPUState, MinerUtils.CPUState, 
-                            Settings.tempSpeedStep, (SysTrayIconTextMode)Settings.generalSysTrayDisplayMode);
+                        SysTrayIcon.UpdateTextIconFromSettings(notifyIconMain);
                         break;
 
                     // other changes that can be applied immediately

@@ -258,7 +258,7 @@ namespace MineControl.Lib.Utils
                     CPUStatusCell.Value = status;
                 }
             }
-            SysTrayIcon.UpdateTextIcon(StatusIcon, false, GPUState, CPUState, Settings.tempSpeedStep, (SysTrayIconTextMode)Settings.generalSysTrayDisplayMode);
+            SysTrayIcon.UpdateTextIconFromSettings(StatusIcon);
         }
     }
 }

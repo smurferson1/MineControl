@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MineControl.Lib.Utils;
+using System;
 using System.Drawing;
 using System.Drawing.Text;
 using System.Runtime.InteropServices;
@@ -7,11 +8,15 @@ using System.Windows.Forms;
 
 namespace MineControl.Lib
 {
+    [SupportedOSPlatform("windows")]
     public static class SysTrayIcon
     {
-        public static Color GPUColor { get; set; } = Color.Transparent;
-        public static Color CPUColor { get; set; } = Color.Transparent;
-        public static int GPUPowerStep { get; set; } = -1;
+        private static Properties.Settings Settings = Properties.Settings.Default;
+        public static Color GPUColor { get; private set; } = Color.Transparent;
+        public static Color CPUColor { get; private set; } = Color.Transparent;
+        public static int GPUPowerStep { get; private set; } = -1;
+        public static bool IsGPUTempManageEnabled { get; private set; }
+        
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         extern static bool DestroyIcon(IntPtr handle);
@@ -19,9 +24,8 @@ namespace MineControl.Lib
         /// <summary>
         /// Updates icon, but only if it's different from before
         /// </summary>        
-        /// <returns>True if icon was updated</returns>
-        [SupportedOSPlatform("windows")]
-        public static bool UpdateTextIcon(NotifyIcon notifyIcon, bool forceRedraw, MinerState gpuState, MinerState cpuState, int gpuPowerStep, SysTrayIconTextMode iconDisplayMode)
+        /// <returns>True if icon was updated</returns>        
+        public static bool UpdateTextIcon(NotifyIcon notifyIcon, bool forceRedraw, MinerState gpuState, MinerState cpuState, int gpuPowerStep, bool isGPUTempManageEnabled, SysTrayIconTextMode iconDisplayMode)
         {
             Color gpuColor = GetColorFromMinerState(gpuState);
             Color cpuColor = GetColorFromMinerState(cpuState);
@@ -49,16 +53,17 @@ namespace MineControl.Lib
 
                 case SysTrayIconTextMode.MinerActiveStatus:
                 case SysTrayIconTextMode.GPUPowerStep:
-                    if (forceRedraw || (GPUPowerStep != gpuPowerStep) || (gpuColor != GPUColor) || (cpuColor != CPUColor))
+                    if (forceRedraw || (GPUPowerStep != gpuPowerStep) || (gpuColor != GPUColor) || (cpuColor != CPUColor) || IsGPUTempManageEnabled != isGPUTempManageEnabled)
                     {
                         GPUColor = gpuColor;
                         CPUColor = cpuColor;
                         GPUPowerStep = gpuPowerStep;
+                        IsGPUTempManageEnabled = isGPUTempManageEnabled;
                         SetTextIcon(
                             notifyIcon,
                             GPUPowerStep.ToString()[0],
                             null,
-                            Color.White,
+                            isGPUTempManageEnabled ? Color.White : Color.DarkGray,
                             Color.Transparent,
                             gpuColor,
                             cpuColor);
@@ -68,6 +73,12 @@ namespace MineControl.Lib
             }
 
             return false;
+        }
+
+        public static bool UpdateTextIconFromSettings(NotifyIcon notifyIcon)
+        {
+            return UpdateTextIcon(notifyIcon, false, MinerUtils.GPUState, MinerUtils.CPUState, Settings.tempSpeedStep, 
+                Settings.controlRunning && Settings.tempEnableAutomation, (SysTrayIconTextMode)Settings.generalSysTrayDisplayMode);
         }
 
         private static Color GetColorFromMinerState(MinerState minerState)
