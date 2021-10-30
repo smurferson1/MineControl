@@ -26,9 +26,10 @@
     <RepositoryUrl>https://github.com/smurferson1/MineControl.git</RepositoryUrl>
     <PackageProjectUrl>https://github.com/smurferson1/MineControl</PackageProjectUrl>
     <RepositoryType>Git</RepositoryType>
-    <PackageLicenseExpression>CC BY-SA 4.0</PackageLicenseExpression>
+    <PackageLicenseExpression></PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageReleaseNotes></PackageReleaseNotes>
+    <PackageLicenseFile>License.txt</PackageLicenseFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>x64</PlatformTarget>
@@ -77,6 +78,10 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Update="Resources\MineControlLogo.ico">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="..\License.txt">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>

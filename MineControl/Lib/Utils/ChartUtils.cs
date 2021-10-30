@@ -129,6 +129,34 @@ namespace MineControl.Lib.Utils
         }
 
         /// <summary>
+        /// Checks for data points from the exact x and y coordinates, moving out to maxDistance.
+        /// </summary>
+        /// <param name="chart"></param>
+        /// <param name="maxDistance"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns>HitTestResult for closest DataPoint to x and y within maxDistance, or null if not found</returns>
+        public static HitTestResult NearHitTest(Chart chart, int maxDistance, int x, int y)
+        {
+            HitTestResult hitTestResult; 
+            for (int distance = 0; distance <= maxDistance; ++distance)
+            {
+                for (int curX = x - distance; curX <= x + distance; ++curX)
+                {
+                    for (int curY = y - distance; curY <= y + distance; ++curY)
+                    {
+                        hitTestResult = chart.HitTest(curX, curY);
+                        if (hitTestResult.Object is DataPoint)
+                        {
+                            return hitTestResult;
+                        }
+                    }
+                }
+            }            
+            return null;
+        }
+
+        /// <summary>
         /// For a chart series with time on X axis, finds total area and total time with the given calculation method
         /// </summary>
         /// <param name="series"></param>

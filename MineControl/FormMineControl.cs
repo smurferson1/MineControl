@@ -365,8 +365,12 @@ namespace MineControl
                 chart.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
                 chart.Dock = DockStyle.Fill;
                 chart.Dock = DockStyle.Fill;
-                chart.GetToolTipText += new EventHandler<ToolTipEventArgs>(chartMain_GetToolTipText);
+                chart.MouseMove += Chart_MouseMove;
+                chart.MouseLeave += Chart_MouseLeave;
                 chart.Palette = ChartColorPalette.None;
+                chart.Annotations.Add(new CalloutAnnotation());
+                (chart.Annotations[0] as CalloutAnnotation).Alignment = ContentAlignment.MiddleLeft;
+                (chart.Annotations[0] as CalloutAnnotation).CalloutStyle = CalloutStyle.RoundedRectangle;                
 
                 // chart area
                 ChartArea chartArea = chart.ChartAreas.Add("chartArea1");
@@ -423,7 +427,8 @@ namespace MineControl
                 series.XValueType = ChartValueType.DateTime;
                 series.YAxisType = yAxisType;
                 // color is autocalculated to match axis color scheme, with Y1 blue-based, Y2 red-based
-                series.Color = yAxisType == AxisType.Primary ? Color.Blue : Color.Red;     
+                series.Color = yAxisType == AxisType.Primary ? Color.Blue : Color.Red;
+
                 while (chart.Series.Count(x => x.Color == series.Color) > 1)
                 {
                     series.Color = ControlPaint.Dark(series.Color, 15);                    
@@ -439,7 +444,7 @@ namespace MineControl
             {
                 AddLogEntry("Chart series could not be created due to missing chart", LogType.Error, LogSource.Internal);
             }            
-        }        
+        }
 
         /// <summary>
         /// Loads all settings from settings object, optionally including schedules
@@ -2001,15 +2006,6 @@ namespace MineControl
             }
         }
 
-        private void chartMain_GetToolTipText(object sender, ToolTipEventArgs e)
-        {
-            if (e.HitTestResult.Object is DataPoint)
-            {
-                DataPoint point = (e.HitTestResult.Object as DataPoint);
-                e.Text = string.Format("Series: {0}\nX: {1}\nY: {2}", e.HitTestResult.Series.Name, DateTime.FromOADate(point.XValue), point.YValues[0]);
-            }
-        }
-
         private void buttonScheduleCreateNode_Click(object sender, EventArgs e)
         {                   
             if ((treeViewSchedule.Nodes.Count == 0) || (treeViewSchedule.SelectedNode == null))
@@ -2507,6 +2503,87 @@ namespace MineControl
         private void richTextBoxAboutAttribution_LinkClicked(object sender, LinkClickedEventArgs e)
         {
             ProcessUtils.OpenLinkInDefaultBrowser(e.LinkText);
+        }
+
+        private void Chart_MouseLeave(object sender, EventArgs e)
+        {
+            if (sender is Chart activeChart)
+            {
+                foreach (Series series in activeChart.Series)
+                {
+                    if (series.Tag != null)
+                    {
+                        --series.BorderWidth;
+                        series.Tag = null;
+                    }
+                    foreach (DataPoint point in series.Points)
+                    {
+                        if (point.Tag != null)
+                        {
+                            point.MarkerSize -= 4;
+                            point.Tag = null;
+                        }
+                    }
+                }
+                (activeChart.Annotations[0] as CalloutAnnotation).Visible = false;
+                (activeChart.Annotations[0] as CalloutAnnotation).AnchorDataPoint = null;
+            }
+        }
+
+        private void Chart_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (sender is Chart activeChart)
+            {
+                HitTestResult hitTestResult = ChartUtils.NearHitTest(activeChart, 5, e.X, e.Y);
+                Series activeSeries = null;
+                DataPoint activePoint = null;
+                if (hitTestResult != null && hitTestResult.Object is DataPoint hitPoint)
+                {
+                    activePoint = hitPoint;
+                    if (hitTestResult.Series != null)
+                    {
+                        activeSeries = hitTestResult.Series;
+                        if (hitTestResult.Series.Tag == null)
+                        {
+                            ++hitTestResult.Series.BorderWidth;
+                            hitTestResult.Series.Tag = true;
+                        }
+                    }
+                    if (activePoint.Tag == null)
+                    {
+                        if (activeSeries != null)
+                        {
+                            (activeChart.Annotations[0] as CalloutAnnotation).Visible = true;
+                            (activeChart.Annotations[0] as CalloutAnnotation).AnchorDataPoint = activePoint;
+                            (activeChart.Annotations[0] as CalloutAnnotation).Text =
+                                $"\n{activeSeries.Name}\nX: {DateTime.FromOADate(hitPoint.XValue)}\nY: {hitPoint.YValues[0]}\n\n";
+                        }
+                        activePoint.MarkerSize += 4;
+                        activePoint.Tag = true;
+                    }
+                }
+                else
+                {
+                    (activeChart.Annotations[0] as CalloutAnnotation).Visible = false;
+                    (activeChart.Annotations[0] as CalloutAnnotation).AnchorDataPoint = null;
+                }
+                foreach (Series series in activeChart.Series)
+                {
+                    if (series != activeSeries && series.Tag != null)
+                    {
+                        --series.BorderWidth;
+                        series.Tag = null;
+                    }
+                    foreach (DataPoint point in series.Points)
+                    {
+                        if (point != activePoint && point.Tag != null)
+                        {
+                            point.MarkerSize -= 4;
+                            point.Tag = null;
+                        }
+                    }
+                }
+            }
         }
     }
 }
