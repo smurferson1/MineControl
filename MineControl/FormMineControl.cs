@@ -2418,7 +2418,7 @@ namespace MineControl
         private void linkLabelGithub_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
 #if RELEASE
-            OpenLink("https://github.com/smurferson1/MineControl");
+            ProcessUtils.OpenLinkInDefaultBrowser("https://github.com/smurferson1/MineControl");
 #else
             MessageBox.Show("Link clicked");
 #endif
