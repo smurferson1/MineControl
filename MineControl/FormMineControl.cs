@@ -361,13 +361,14 @@ namespace MineControl
                 chart.Name = chartName;
                 Charts.Add(chart);
                 tab.Controls.Add(chart);
-                chart.Cursor = Cursors.Cross;
+                chart.Cursor = Cursors.Hand;
                 chart.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
                 chart.Dock = DockStyle.Fill;
                 chart.Dock = DockStyle.Fill;
                 chart.MouseMove += Chart_MouseMove;
                 chart.MouseLeave += Chart_MouseLeave;
                 chart.Palette = ChartColorPalette.None;
+                // there is ALWAYS a callout annotation defined for later display of point info
                 chart.Annotations.Add(new CalloutAnnotation());
                 (chart.Annotations[0] as CalloutAnnotation).Alignment = ContentAlignment.MiddleLeft;
                 (chart.Annotations[0] as CalloutAnnotation).CalloutStyle = CalloutStyle.RoundedRectangle;                
@@ -2515,18 +2516,15 @@ namespace MineControl
                     {
                         --series.BorderWidth;
                         series.Tag = null;
-                    }
-                    foreach (DataPoint point in series.Points)
-                    {
-                        if (point.Tag != null)
-                        {
-                            point.MarkerSize -= 4;
-                            point.Tag = null;
-                        }
-                    }
+                    }                    
                 }
-                (activeChart.Annotations[0] as CalloutAnnotation).Visible = false;
-                (activeChart.Annotations[0] as CalloutAnnotation).AnchorDataPoint = null;
+                CalloutAnnotation annotation = (activeChart.Annotations[0] as CalloutAnnotation);
+                if (annotation.AnchorDataPoint != null)
+                {
+                    annotation.AnchorDataPoint.MarkerSize -= 4;
+                    annotation.Visible = false;
+                    annotation.AnchorDataPoint = null;
+                }
             }
         }
 
@@ -2536,10 +2534,8 @@ namespace MineControl
             {
                 HitTestResult hitTestResult = ChartUtils.NearHitTest(activeChart, 5, e.X, e.Y);
                 Series activeSeries = null;
-                DataPoint activePoint = null;
                 if (hitTestResult != null && hitTestResult.Object is DataPoint hitPoint)
                 {
-                    activePoint = hitPoint;
                     if (hitTestResult.Series != null)
                     {
                         activeSeries = hitTestResult.Series;
@@ -2549,23 +2545,36 @@ namespace MineControl
                             hitTestResult.Series.Tag = true;
                         }
                     }
-                    if (activePoint.Tag == null)
-                    {
+                    CalloutAnnotation annotation = (activeChart.Annotations[0] as CalloutAnnotation);
+                    if (annotation.AnchorDataPoint != hitPoint)
+                    { 
+                        // de-select old data point
+                        if (annotation.AnchorDataPoint != null)
+                        {
+                            annotation.AnchorDataPoint.MarkerSize -= 4;
+                        }
+
+                        // select new data point
+                        hitPoint.MarkerSize += 4;
+
+                        // display annotation
                         if (activeSeries != null)
                         {
-                            (activeChart.Annotations[0] as CalloutAnnotation).Visible = true;
-                            (activeChart.Annotations[0] as CalloutAnnotation).AnchorDataPoint = activePoint;
-                            (activeChart.Annotations[0] as CalloutAnnotation).Text =
-                                $"\n{activeSeries.Name}\nX: {DateTime.FromOADate(hitPoint.XValue)}\nY: {hitPoint.YValues[0]}\n\n";
-                        }
-                        activePoint.MarkerSize += 4;
-                        activePoint.Tag = true;
+                            annotation.Visible = true;
+                            annotation.AnchorDataPoint = hitPoint;
+                            annotation.Text = $"\n{activeSeries.Name}\nX: {DateTime.FromOADate(hitPoint.XValue)}\nY: {hitPoint.YValues[0]}\n\n";
+                        }                        
                     }
                 }
                 else
                 {
-                    (activeChart.Annotations[0] as CalloutAnnotation).Visible = false;
-                    (activeChart.Annotations[0] as CalloutAnnotation).AnchorDataPoint = null;
+                    CalloutAnnotation annotation = (activeChart.Annotations[0] as CalloutAnnotation);
+                    if (annotation.AnchorDataPoint != null)
+                    {
+                        annotation.AnchorDataPoint.MarkerSize -= 4;
+                        annotation.Visible = false;
+                        annotation.AnchorDataPoint = null;
+                    }
                 }
                 foreach (Series series in activeChart.Series)
                 {
@@ -2573,15 +2582,7 @@ namespace MineControl
                     {
                         --series.BorderWidth;
                         series.Tag = null;
-                    }
-                    foreach (DataPoint point in series.Points)
-                    {
-                        if (point != activePoint && point.Tag != null)
-                        {
-                            point.MarkerSize -= 4;
-                            point.Tag = null;
-                        }
-                    }
+                    }                    
                 }
             }
         }
