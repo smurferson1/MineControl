@@ -750,9 +750,12 @@ namespace MineControl
             Settings.metricsSerializedMetricQueryOptions = JsonSerializer.Serialize(ColDataQuery.Items, jsonOptionsMetricQueryOptions);
             
             // commit the changes
-            Settings.Save();    
+            Settings.Save();
 
-            Archiver.ArchiveConfigIfNeeded();
+            if (!Directory.GetFiles(Archiver.GetConfigArchiveFolder()).Any())
+            {
+                Archiver.ArchiveConfigIfNeeded();
+            }
         }
         
         /// <summary>
@@ -1772,14 +1775,14 @@ namespace MineControl
             }
         }
 
-        void ISettingsFile.Export(string destFilePath) => ExportConfig(destFilePath);
-        private void ExportConfig(string destFilePath)
+        void ISettingsFile.Export(string destFilePath, string verb) => ExportConfig(destFilePath, verb);
+        private void ExportConfig(string destFilePath, string verb = "")
         {
             try
             {
                 var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal);
                 config.SaveAs(destFilePath);
-                ShowTooltipNotification("Config exported successfully");
+                ShowTooltipNotification($"Config {(verb == string.Empty ? "export" : verb)} successful");
             }
             catch (Exception ex)
             {

@@ -8,6 +8,6 @@ namespace MineControl.Lib
 {
     public interface ISettingsFile
     {
-        void Export(string destFilePath);
+        void Export(string destFilePath, string verb = "");
     }
 }

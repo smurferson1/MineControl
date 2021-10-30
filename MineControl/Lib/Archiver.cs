@@ -126,7 +126,7 @@ namespace MineControl.Lib
                 if (Settings.archivesArchiveConfig && (IsConfigArchiveNeeded || !Directory.GetFiles(GetConfigArchiveFolder()).Any()))
                 {
                     IsConfigArchiveNeeded = false;
-                    SettingsFile.Export(GetNextConfigArchiveFilePath());
+                    SettingsFile.Export(GetNextConfigArchiveFilePath(), "archive");
                 }
             }
             catch (Exception ex)
