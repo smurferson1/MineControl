@@ -702,7 +702,7 @@ namespace MineControl.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Archive &amp; Clear")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Archive & Clear")]
         public string archivesLogManagementType {
             get {
                 return ((string)(this["archivesLogManagementType"]));

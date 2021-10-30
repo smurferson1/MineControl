@@ -466,7 +466,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="archivesLogManagementType" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Archive &amp;amp; Clear</Value>
+      <Value Profile="(Default)">Archive &amp; Clear</Value>
     </Setting>
     <Setting Name="archivesLogManagementValue" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">2</Value>
