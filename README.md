@@ -89,7 +89,7 @@ Note: Steps assume you have nothing already on your PC. For experienced miners, 
 ## Basic Tips
 
 - Most settings have tooltips to explain what they do, and are saved automatically. Exception: most Analytics tab (visual) settings aren't saved.
-- **Don't** run MineControl elevated (like, with Windows administrator privileges), especially if controlling a GPU or CPU miner. In testing, there was a problem with PhoenixMiner that caused **massively** increased GPU temps when MineControl was elevated, for no apparent reason. You might have better luck, but don't count on it.
+- **Don't** run MineControl elevated (like, with "Run as Administrator"), especially if controlling a GPU or CPU miner. In testing, there was a problem with PhoenixMiner that caused **massively** increased GPU temps when MineControl was elevated, for no apparent reason. You might have better luck, but don't count on it.
   - The log will tell you whether or not MineControl is running elevated at startup.
 - **Do** run MineControl while logged in with a Windows administrator account so that **external** apps can be launched as admin. Popular hardware monitor and GPU controller software *does* require running as admin.
   - You can launch external apps manually, though MineControl can't capture miner data using this method.
