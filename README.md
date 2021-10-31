@@ -25,7 +25,7 @@ Note: CC BY-SA is specifically required due to adaptation of certain code from S
 
 ## DISCLAIMERS
 
-- While it is designed with care to improve your mining experience, MineControl isn't guaranteed to work correctly in all circumstances. It's in development and subject to being shite, making mistakes, or missing *YOUR* mistakes. **Use it at your own risk**. Things *can* go wrong if you misconfigure MineControl or it makes a booboo.
+- While it is designed with care to improve your mining experience, MineControl isn't guaranteed to work correctly in all circumstances. It's in development and subject to being shite, making mistakes, or missing *YOUR* mistakes. **Use it at your own risk**.
 - MineControl is *complex* and **requires thoughtful configuration**. Please configure MineControl per requirements and instructions below, and monitor until you're confident that it's doing what you want it to.
 - MineControl won't do nefarious things like take your mining profits or send *anything* outside of your PC, **as long as you download it from this GitHub repo**. Feel free to inspect or compile the code yourself, but **do not** download MineControl from anywhere or anyone else, since software can easily be compromised by attackers and redistributed in a nearly identical form.
 - As with most other software developed in free time for fun, there is no guarantee from the developer to provide support or updates of any kind.
