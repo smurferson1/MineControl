@@ -62,8 +62,8 @@ See Issues area for comprehensive list, and add to it if you find a bug.
 
 ## Requirements
 
-- Windows 10 x64 (at least)
-- [.NET 5](https://dotnet.microsoft.com/download/dotnet/thank-you/runtime-desktop-5.0.11-windows-x64-installer) installed
+- Windows 10 x64 (at least).
+- [.NET 5](https://dotnet.microsoft.com/download/dotnet/thank-you/runtime-desktop-5.0.11-windows-x64-installer) with desktop runtime.
 - A hardware monitor app, *if* MineControl should monitor hardware sensors and automate actions based on sensor readings.
 - A GPU controller app, *if* MineControl should automate GPU power stepping for temperature control.
 - A GPU and/or CPU miner app that outputs to a console window, *if* MineControl should aggregate GPU/CPU miner data and control their execution.
