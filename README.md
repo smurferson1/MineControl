@@ -57,7 +57,7 @@ Note: CC BY-SA is specifically required due to adaptation of certain code from S
 - Can't automatically get rid of popups or do other user tasks when launching other apps.
 - Probably some allowed configurations that would make no sense or cause errors or crashes.
 - "Classic" Windows styling, maybe ugly. Partly for performance reasons (no GPU usage).
-- Developer: Engineered badly in some ways, with a bunch of logic embedded in the form code, no automated tests, etc. Focus was on features, not technical excellence.
+- Developer: Engineered badly in some ways, with a bunch of logic embedded in the form code, no automated tests, etc. Features and performance over form, thus far. It may be better rewritten, but who knows if that will happen?
 - Developer: There are lots of included DLLs, with 80%+ from Microsoft.Windows.Compatibility (an obnoxious kitchen sink package), most of which aren't actually called (and _none_ of the web-related controls are called). In fact, most of the DLLs could possibly be deleted without impact, this just hasn't been tested. This extra bulk was added _solely_ for the legacy chart controls, which should probably be replaced.
 
 See Issues area for comprehensive list, and add to it if you find a bug.
