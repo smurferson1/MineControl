@@ -6,6 +6,8 @@ A **power tool** for automated temperature management, scheduling, and/or data a
 - Managing execution of your chosen **external** GPU and/or CPU mining app and capturing their output for charting/logging.
 - Finding relevant data in the sea of output using customizable regular expressions (some presets are provided).
 
+MineControl is open source, mainly to foster trust.
+
 Names of specific hardware monitor and GPU controller apps are omitted to avoid legal issues, but the default config happens to be compatible with the most popular hardware monitor app and GPU controller app. Hint: the apps support both NVIDIA and AMD GPUs, and may rhyme with **RidesharePimpo** and **WhoStoleMy ButterChurner**.
 
 ![image](https://user-images.githubusercontent.com/91922614/138532772-a657dc16-2947-4f0b-8315-203717929fcc.png)
