@@ -1,18 +1,18 @@
 # MineControl
 
-A **power tool** for automated temperature management, scheduling, and/or data aggregation when mining cryptocurrency. For us plebs with a single GPU and CPU running **Windows 10 x64**. It can automatically keep your chosen miners and hardware running within your parameters and give you nice data (e.g. charts, averages, kWh). This is accomplished by optionally:
+A **power tool** for automated temperature management, scheduling, and/or data aggregation when mining cryptocurrency. For us plebs with a single GPU and CPU running **Windows 10 x64**. It automatically keeps your chosen miners and hardware running within your parameters and gives you nice data (e.g. charts, averages, kWh). This is accomplished by (optionally):
 - Reading sensor data from your chosen **external** hardware monitor app.
 - Setting GPU power profile through your chosen **external** GPU controller app.
 - Managing execution of your chosen **external** GPU and/or CPU mining app and capturing their output for charting/logging.
-- Finding relevant data in the raw output using customizable regular expressions (some presets are provided).
+- Finding relevant data in the sea of output using customizable regular expressions (some presets are provided).
 
-Names of specific hardware monitor and GPU controller apps are omitted in order to avoid legal issues, but the default config is compatible with the most popular hardware monitor and GPU controller app. These support both NVIDIA and AMD GPUs. Hint: they rhyme with **RidesharePimpo** and **WhoStoleMy ButterChurner**.
+Names of specific hardware monitor and GPU controller apps are omitted to avoid legal issues, but the default config happens to be compatible with the most popular hardware monitor app and GPU controller app. Hint: the apps support both NVIDIA and AMD GPUs, and may rhyme with **RidesharePimpo** and **WhoStoleMy ButterChurner**.
 
 ![image](https://user-images.githubusercontent.com/91922614/138532772-a657dc16-2947-4f0b-8315-203717929fcc.png)
 
 ## Donations
 
-MineControl is free and open source. Crypto donations are however appreciated and will keep the [developer](https://github.com/smurferson1) motivated to fix and improve things. Current wallets for donation:
+MineControl is entirely free. Crypto donations are however appreciated, and will motivate the [developer](https://github.com/smurferson1) to fix and improve things.  Current wallets for donation:
 - Ethereum or any ERC20 token (mainnet or Polygon please): 0x709Fc86a8Ce362602038b47fB3530De167573967
 
 If you want to see additional donation options added here, please contact the [developer](https://github.com/smurferson1).
@@ -26,7 +26,7 @@ Note: CC BY-SA is specifically required due to adaptation of certain code from S
 ## DISCLAIMERS
 
 - While it is designed with care to improve your mining experience, MineControl isn't guaranteed to work correctly in all circumstances. It's in development and subject to being shite, making mistakes, or missing *YOUR* mistakes. **Use it at your own risk**. Things *can* go wrong if you misconfigure MineControl or it makes a booboo.
-- MineControl is *complex* and **requires thoughtful configuration**. Please configure MineControl per requirements and instructions below, then monitor until you're confident that it's doing what you want it to.
+- MineControl is *complex* and **requires thoughtful configuration**. Please configure MineControl per requirements and instructions below, and monitor until you're confident that it's doing what you want it to.
 - MineControl won't do nefarious things like take your mining profits or send *anything* outside of your PC, **as long as you download it from this GitHub repo**. Feel free to inspect or compile the code yourself, but **do not** download MineControl from anywhere or anyone else, since software can easily be compromised by attackers and redistributed in a nearly identical form.
 - As with most other software developed in free time for fun, there is no guarantee from the developer to provide support or updates of any kind.
 
@@ -50,13 +50,13 @@ Note: CC BY-SA is specifically required due to adaptation of certain code from S
 - _Only_ supports up to one GPU miner and one CPU miner.
 - Most temperature/power management features are GPU-only, and only one GPU can be controlled.
 - Not internationalized, translated, or respectful of most Windows regional settings.
-- Not very user friendly.
+- Not very user friendly. Hopefully will improve in time.
 - Chart data and stats aren't remembered or archived yet, i.e. you lose them when MineControl closes.
 - Can't automatically get rid of popups or do other user tasks when launching other apps.
 - Probably some allowed configurations that would make no sense or cause errors or crashes.
-- Engineered badly in some ways, with a bunch of logic embedded in the form code, no automated tests, etc. Sorry.
-- Kind of ugly. We'll just say this is for performance reasons.
-- Developer note: There are way too many included DLLs, mainly from Microsoft.Windows.Compatibility (a big all-or-nothing package). Some of these sound web-related, but these aren't actually called. In fact many DLLs aren't used and you may even be able to delete some. This extra bulk was required _solely_ to use old chart controls, which should probably be replaced.
+- "Classic" Windows styling, maybe ugly. Partly for performance reasons (no GPU usage).
+- Developer: Engineered badly in some ways, with a bunch of logic embedded in the form code, no automated tests, etc. Focus was on features, not technical excellence.
+- Developer: There are lots of included DLLs, with 80%+ from Microsoft.Windows.Compatibility (an obnoxious kitchen sink package), most of which aren't actually called (and _none_ of the web-related controls are called). In fact, most of the DLLs could possibly be deleted without impact, this just hasn't been tested. This extra bulk was added _solely_ for the legacy chart controls, which should probably be replaced.
 
 See Issues area for comprehensive list, and add to it if you find a bug.
 
