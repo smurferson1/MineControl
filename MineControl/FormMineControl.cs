@@ -178,10 +178,10 @@ namespace MineControl
             richTextBoxAboutAttribution.Text = Properties.Resources.txtAttribution;
             
             // set up grids and their data sources
-            dataGridViewApps.Rows.Add(cAppGPUMiner, "", "Unknown", "");
-            dataGridViewApps.Rows.Add(cAppCPUMiner, "", "Unknown", "");
-            dataGridViewApps.Rows.Add(cAppHWMonitor, "", "Unknown", "");
-            dataGridViewApps.Rows.Add(cAppGPUController, "", "Unknown", "");            
+            dataGridViewApps.Rows.Add(cAppGPUMiner, "Unknown", "", "");
+            dataGridViewApps.Rows.Add(cAppCPUMiner, "Unknown", "", "");
+            dataGridViewApps.Rows.Add(cAppHWMonitor, "Unknown", "", "");
+            dataGridViewApps.Rows.Add(cAppGPUController, "Unknown", "", "");            
             DataTableLog.Columns.Add("Source");
             DataTableLog.Columns.Add("Type");
             DataTableLog.Columns.Add("Time");
@@ -998,7 +998,7 @@ namespace MineControl
 
         private void InitializeAutomationFromSavedState()
         {
-            if (Settings.controlStartupRememberAutomation && Settings.controlRunning)
+            if (Settings.controlStartupRememberAutomation && Settings.controlRunning && !SettingsUtils.IsDefaultOrMigratedSettingsLoaded)
             {
                 StartAutomation();
             }
@@ -1841,6 +1841,13 @@ namespace MineControl
             }
         }
 
+        private void ShowIntroDialog()
+        {
+            FormIntro formIntro = new();
+            formIntro.Location = new Point(this.Location.X + (this.Width / 8), this.Location.Y + (this.Height / 8));
+            formIntro.Show(this);
+        }
+
         private Metric Metric(string metricName)
         {
             try
@@ -1886,11 +1893,30 @@ namespace MineControl
             InitializeInternals();
             LoadSettingsToUI(true);
             UpdateSettingsEvents();
+            LogProcessElevation();
             CanSave = true;
+        }
+
+        private void LogProcessElevation()
+        {
+            if (ProcessUtils.IsCurrentProcessRunningAsAdmin())
+            {
+                AddLogEntry(
+                    "MINECONTROL IS RUNNING AS ADMIN. This is BAD and may degrade mining performance significantly in some cases. Run without admin privileges if possible.", 
+                    LogType.Warning);
+            }
+            else
+            {
+                AddLogEntry("MineControl is running without admin privileges. This is good!");
+            }
         }
 
         private void FormMineControl_Shown(object sender, EventArgs e)
         {
+            if (SettingsUtils.IsDefaultOrMigratedSettingsLoaded)
+            {
+                ShowIntroDialog();
+            }
             InitializeAutomationFromSavedState();
             if (Settings.controlStartupMinimize)
             {
@@ -2638,5 +2664,10 @@ namespace MineControl
                 }
             }
         }
+
+        private void buttonGeneralDisplayIntro_Click(object sender, EventArgs e)
+        {
+            ShowIntroDialog();
+        }                
     }
 }

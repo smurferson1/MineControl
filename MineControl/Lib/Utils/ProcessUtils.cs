@@ -1,15 +1,14 @@
 ﻿using MineControl.Lib.WinAPI;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.Versioning;
+using System.Security.Principal;
 
 namespace MineControl.Lib.Utils
 {
+    [SupportedOSPlatform("windows")]
     public static class ProcessUtils
     {
         public static Job Job { get; } = new Job();
@@ -201,6 +200,11 @@ namespace MineControl.Lib.Utils
             p.StartInfo.UseShellExecute = true;
             p.StartInfo.FileName = link;
             p.Start();
+        }
+
+        public static bool IsCurrentProcessRunningAsAdmin()
+        {            
+            return new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);            
         }
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto)]

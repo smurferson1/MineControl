@@ -157,8 +157,8 @@ namespace MineControl
             this.groupBoxMinersAndApps = new System.Windows.Forms.GroupBox();
             this.dataGridViewApps = new System.Windows.Forms.DataGridView();
             this.ColAppType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColAppName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColAppStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColAppName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColAppPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColAppChooseButton = new System.Windows.Forms.DataGridViewButtonColumn();
             this.tabPageSchedule = new System.Windows.Forms.TabPage();
@@ -214,6 +214,7 @@ namespace MineControl
             this.ColLogTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColLogMessage = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPageAbout = new System.Windows.Forms.TabPage();
+            this.buttonGeneralDisplayIntro = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.richTextBoxAboutAttribution = new System.Windows.Forms.RichTextBox();
             this.linkLabelAboutLicense = new System.Windows.Forms.LinkLabel();
@@ -226,7 +227,6 @@ namespace MineControl
             this.label3 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBoxControl = new System.Windows.Forms.GroupBox();
-            this.linkLabelHelpDonate = new System.Windows.Forms.LinkLabel();
             this.labelStatusDisplay = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.buttonStopAutomation = new System.Windows.Forms.Button();
@@ -753,7 +753,7 @@ namespace MineControl
             // label30
             // 
             this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(180, 153);
+            this.label30.Location = new System.Drawing.Point(180, 149);
             this.label30.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(33, 15);
@@ -793,7 +793,7 @@ namespace MineControl
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(10, 153);
+            this.label21.Location = new System.Drawing.Point(10, 149);
             this.label21.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(120, 15);
@@ -805,7 +805,7 @@ namespace MineControl
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(158, 121);
+            this.label23.Location = new System.Drawing.Point(158, 118);
             this.label23.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(52, 15);
@@ -816,7 +816,7 @@ namespace MineControl
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(10, 120);
+            this.label22.Location = new System.Drawing.Point(10, 117);
             this.label22.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(86, 15);
@@ -831,7 +831,7 @@ namespace MineControl
             0,
             0,
             0});
-            this.numericUpDownTempPollingInterval.Location = new System.Drawing.Point(96, 118);
+            this.numericUpDownTempPollingInterval.Location = new System.Drawing.Point(96, 115);
             this.numericUpDownTempPollingInterval.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.numericUpDownTempPollingInterval.Maximum = new decimal(new int[] {
             10000,
@@ -1641,7 +1641,7 @@ namespace MineControl
             // 
             // numericUpDownMinerUserActivityTimeout
             // 
-            this.numericUpDownMinerUserActivityTimeout.Location = new System.Drawing.Point(131, 151);
+            this.numericUpDownMinerUserActivityTimeout.Location = new System.Drawing.Point(131, 147);
             this.numericUpDownMinerUserActivityTimeout.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.numericUpDownMinerUserActivityTimeout.Name = "numericUpDownMinerUserActivityTimeout";
             this.numericUpDownMinerUserActivityTimeout.Size = new System.Drawing.Size(47, 23);
@@ -1988,8 +1988,8 @@ namespace MineControl
             this.dataGridViewApps.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewApps.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColAppType,
-            this.ColAppName,
             this.ColAppStatus,
+            this.ColAppName,
             this.ColAppPath,
             this.ColAppChooseButton});
             this.dataGridViewApps.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -2015,16 +2015,6 @@ namespace MineControl
             this.ColAppType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.ColAppType.Width = 59;
             // 
-            // ColAppName
-            // 
-            this.ColAppName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.ColAppName.Frozen = true;
-            this.ColAppName.HeaderText = "Process Name";
-            this.ColAppName.Name = "ColAppName";
-            this.ColAppName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.ColAppName.ToolTipText = "Exact name of launched process as shown in Task Manager, WITHOUT file extension";
-            this.ColAppName.Width = 82;
-            // 
             // ColAppStatus
             // 
             this.ColAppStatus.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
@@ -2034,6 +2024,16 @@ namespace MineControl
             this.ColAppStatus.ReadOnly = true;
             this.ColAppStatus.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.ColAppStatus.Width = 43;
+            // 
+            // ColAppName
+            // 
+            this.ColAppName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.ColAppName.Frozen = true;
+            this.ColAppName.HeaderText = "Process Name";
+            this.ColAppName.Name = "ColAppName";
+            this.ColAppName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ColAppName.ToolTipText = "Exact name of launched process as shown in Task Manager, WITHOUT file extension";
+            this.ColAppName.Width = 82;
             // 
             // ColAppPath
             // 
@@ -2768,6 +2768,7 @@ namespace MineControl
             // tabPageAbout
             // 
             this.tabPageAbout.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPageAbout.Controls.Add(this.buttonGeneralDisplayIntro);
             this.tabPageAbout.Controls.Add(this.panel1);
             this.tabPageAbout.Controls.Add(this.linkLabelAboutLicense);
             this.tabPageAbout.Controls.Add(this.linkLabelAboutLink);
@@ -2783,13 +2784,24 @@ namespace MineControl
             this.tabPageAbout.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageAbout.Size = new System.Drawing.Size(914, 915);
             this.tabPageAbout.TabIndex = 3;
-            this.tabPageAbout.Text = "About";
+            this.tabPageAbout.Text = "About / Help";
+            // 
+            // buttonGeneralDisplayIntro
+            // 
+            this.buttonGeneralDisplayIntro.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.buttonGeneralDisplayIntro.Location = new System.Drawing.Point(20, 119);
+            this.buttonGeneralDisplayIntro.Name = "buttonGeneralDisplayIntro";
+            this.buttonGeneralDisplayIntro.Size = new System.Drawing.Size(122, 25);
+            this.buttonGeneralDisplayIntro.TabIndex = 15;
+            this.buttonGeneralDisplayIntro.Text = "Show Intro Help";
+            this.buttonGeneralDisplayIntro.UseVisualStyleBackColor = true;
+            this.buttonGeneralDisplayIntro.Click += new System.EventHandler(this.buttonGeneralDisplayIntro_Click);
             // 
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.richTextBoxAboutAttribution);
-            this.panel1.Location = new System.Drawing.Point(20, 153);
+            this.panel1.Location = new System.Drawing.Point(20, 180);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(869, 368);
             this.panel1.TabIndex = 14;
@@ -2841,7 +2853,7 @@ namespace MineControl
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(20, 135);
+            this.label27.Location = new System.Drawing.Point(20, 162);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(65, 15);
             this.label27.TabIndex = 9;
@@ -2896,7 +2908,6 @@ namespace MineControl
             // groupBoxControl
             // 
             this.groupBoxControl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.groupBoxControl.Controls.Add(this.linkLabelHelpDonate);
             this.groupBoxControl.Controls.Add(this.labelStatusDisplay);
             this.groupBoxControl.Controls.Add(this.label1);
             this.groupBoxControl.Controls.Add(this.buttonStopAutomation);
@@ -2911,17 +2922,6 @@ namespace MineControl
             this.groupBoxControl.TabIndex = 8;
             this.groupBoxControl.TabStop = false;
             this.groupBoxControl.Text = "Automation Control";
-            // 
-            // linkLabelHelpDonate
-            // 
-            this.linkLabelHelpDonate.AutoSize = true;
-            this.linkLabelHelpDonate.Location = new System.Drawing.Point(631, 21);
-            this.linkLabelHelpDonate.Name = "linkLabelHelpDonate";
-            this.linkLabelHelpDonate.Size = new System.Drawing.Size(81, 15);
-            this.linkLabelHelpDonate.TabIndex = 5;
-            this.linkLabelHelpDonate.TabStop = true;
-            this.linkLabelHelpDonate.Text = "Help / Donate";
-            this.linkLabelHelpDonate.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelGithub_LinkClicked);
             // 
             // labelStatusDisplay
             // 
@@ -3284,7 +3284,6 @@ namespace MineControl
         private System.Windows.Forms.DataGridViewTextBoxColumn ColLogType;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColLogTime;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColLogMessage;
-        private System.Windows.Forms.LinkLabel linkLabelHelpDonate;
         private System.Windows.Forms.TabPage tabPageAbout;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.PictureBox pictureBox1;
@@ -3298,11 +3297,6 @@ namespace MineControl
         private System.Windows.Forms.Button buttonScheduleMoveNodeUp;
         private System.Windows.Forms.Button buttonDataRemoveUnusedQueryOptions;
         private System.Windows.Forms.LinkLabel linkLabelAboutLicense;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColAppType;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColAppName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColAppStatus;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColAppPath;
-        private System.Windows.Forms.DataGridViewButtonColumn ColAppChooseButton;
         private System.Windows.Forms.DataGridViewCheckBoxColumn ColDataEnableTracking;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColDataMetric;
         private System.Windows.Forms.DataGridViewComboBoxColumn ColDataType;
@@ -3319,6 +3313,12 @@ namespace MineControl
         private System.Windows.Forms.RichTextBox richTextBoxAboutAttribution;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button buttonChartUpdate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColAppType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColAppStatus;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColAppName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColAppPath;
+        private System.Windows.Forms.DataGridViewButtonColumn ColAppChooseButton;
+        private System.Windows.Forms.Button buttonGeneralDisplayIntro;
     }
 }
 

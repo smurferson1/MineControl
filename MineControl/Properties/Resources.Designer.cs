@@ -71,7 +71,14 @@ namespace MineControl.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Note: named individuals are not affiliated with MineControl in any way.
+        ///   Looks up a localized string similar to Note: Code snippets were simply grabbed from public websites. The named authors had no involvement in the creation of MineControl. 
+        ///
+        ///Code For: Job objects
+        ///Usage: Adapted from original
+        ///Link: https://stackoverflow.com/questions/6266820/working-example-of-createjobobject-setinformationjobobject-pinvoke-in-net/9164742#9164742
+        ///Author(s): Alexander Yezutov (https://stackoverflow.com/users/607959), based on content from Matt Howells (https://stackoverflow.com/users/16881)
+        ///
+        ///__________________________________ [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string txtAttribution {
             get {

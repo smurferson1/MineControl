@@ -11,7 +11,7 @@ namespace MineControl.Lib
     [SupportedOSPlatform("windows")]
     public static class SysTrayIcon
     {
-        private static Properties.Settings Settings = Properties.Settings.Default;
+        private static Properties.Settings Settings { get; } = Properties.Settings.Default;
         public static Color GPUColor { get; private set; } = Color.Transparent;
         public static Color CPUColor { get; private set; } = Color.Transparent;
         public static int GPUPowerStep { get; private set; } = -1;
