@@ -13,7 +13,7 @@ Names of specific hardware monitor and GPU controller apps are omitted in order 
 ## Donations
 
 MineControl is free and open source. Crypto donations are however appreciated and will keep the [developer](https://github.com/smurferson1) motivated to fix and improve things. Current wallets for donation:
-- TBD
+- Ethereum or any ERC20 token (mainnet or Polygon please): 0x709Fc86a8Ce362602038b47fB3530De167573967
 
 If you want to see additional donation options added here, please contact the [developer](https://github.com/smurferson1).
 
