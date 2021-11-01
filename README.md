@@ -16,17 +16,6 @@ MineControl is licensed under the Creative Commons Attribution-ShareAlike 4.0 In
 
 Note: CC BY-SA is specifically required due to adaptation of certain code from StackOverflow. For attribution, see MineControl's About tab, or the source code.
 
-## Donations
-
-MineControl is entirely free. Crypto donations are however appreciated, and will motivate the [developer](https://github.com/smurferson1) to fix and improve things (see [Issues](https://github.com/smurferson1/MineControl/issues)). Current wallets for donation:
-- Ethereum or any ERC20 token (mainnet or Polygon please): 0x709Fc86a8Ce362602038b47fB3530De167573967
-- Bitcoin: 12v8VLcanjoetQbmzsBP4vw6WGL5dxmVKW
-- Cardano: addr1qx2he7qs7606r3l6chrwr2calx4h5maxp66nycl6ytd78szjr620fnyg2yv0jmgvhgkvmv4e8qame086zm5f4x20cujqp34fj8
-- Dogecoin: DNRzZekh73wTqU4uyEwRBjUPSAnrahxExS
-- Nano: nano_13uzii9s9pxqb8kd8166xhbwdpqrbbu5kawzo11isgzq1ebtue63zktgcyog
-
-If you want to see additional donation options added here, please contact the [developer](https://github.com/smurferson1).
-
 ## Example Screenshots
 
 Setup in this example: 
@@ -88,6 +77,17 @@ Note: This shows chart data being split between two algorithms as XMRig auto-swi
 - Developer: There are lots of included DLLs, with 80%+ from Microsoft.Windows.Compatibility (an obnoxious kitchen sink package), most of which aren't actually called (and _none_ of the web-related controls are called). In fact, most of the DLLs could possibly be deleted without impact, this just hasn't been tested. This extra bulk was added _solely_ for the legacy chart controls, which should probably be replaced.
 
 See Issues area for comprehensive list, and add to it if you find a bug.
+
+## Donations
+
+MineControl is entirely free. Crypto donations are however appreciated, and will motivate the [developer](https://github.com/smurferson1) to fix and improve things (see [Issues](https://github.com/smurferson1/MineControl/issues)). Current wallets for donation:
+- Ethereum or any ERC20 token (mainnet or Polygon please): 0x709Fc86a8Ce362602038b47fB3530De167573967
+- Bitcoin: 12v8VLcanjoetQbmzsBP4vw6WGL5dxmVKW
+- Cardano: addr1qx2he7qs7606r3l6chrwr2calx4h5maxp66nycl6ytd78szjr620fnyg2yv0jmgvhgkvmv4e8qame086zm5f4x20cujqp34fj8
+- Dogecoin: DNRzZekh73wTqU4uyEwRBjUPSAnrahxExS
+- Nano: nano_13uzii9s9pxqb8kd8166xhbwdpqrbbu5kawzo11isgzq1ebtue63zktgcyog
+
+If you want to see additional donation options added here, please contact the [developer](https://github.com/smurferson1).
 
 ## Requirements
 
