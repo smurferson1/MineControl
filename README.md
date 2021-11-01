@@ -10,9 +10,9 @@ MineControl is open source, mainly to foster trust.
 
 Names of specific hardware monitor and GPU controller apps are omitted to avoid legal issues, but the default config happens to be compatible with the most popular hardware monitor app and GPU controller app. Hint: the apps support both NVIDIA and AMD GPUs, and may rhyme with **RidesharePimpo** and **WhoStoleMy ButterChurner**.
 
-## Examples
+## Example
 
-Example configuration: 
+Configuration: 
 - i7-9700k mining with XMRig (MoneroOcean)
 - RTX 3090 mining with PhoenixMiner (Ethereum)
 - Target GPU memory junction temps between 88C and 90C.
