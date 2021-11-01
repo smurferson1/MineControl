@@ -29,7 +29,7 @@ If you want to see additional donation options added here, please contact the [d
 
 ## Example Screenshots
 
-Configuration: 
+Setup in this example: 
 - i7-9700k mining with XMRig (MoneroOcean)
 - RTX 3090 mining with PhoenixMiner (Ethereum)
 - Target GPU memory junction temps between 88C and 90C.
