@@ -23,7 +23,7 @@ Example configuration:
 
 **Analytics - GPU**
 
-Note: An overnight run where max power and hash rate was achieved within target temps as the ambient (room) temperature lowered. Note the changes in power step as memory junction temperature moved above or below the target range (up to the max power step).
+Note: An overnight run where max power and hash rate was achieved within target temps as the ambient (room) temperature lowered. Note the changes in power step as memory junction temp moved outside of the target range.
 ![](https://user-images.githubusercontent.com/91922614/139613574-a9b29ae7-a233-49c6-84be-c7d12b404ef2.png)
 
 **Analytics - CPU**
