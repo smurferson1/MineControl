@@ -8,7 +8,7 @@ A **power tool** for automated temperature management, scheduling, and/or data a
 
 MineControl is open source, mainly to foster trust.
 
-Names of specific hardware monitor and GPU controller apps are omitted to avoid legal issues, but the default config happens to be compatible with the most popular hardware monitor app and GPU controller app. Hint: the apps support both NVIDIA and AMD GPUs, and may rhyme with **RidesharePimpo** and **WhoStoleMy ButterChurner**.
+Names of specific hardware monitor and GPU controller apps are omitted to avoid legal issues, but the default config happens to be compatible with the most popular hardware monitor app and GPU controller app. Hint: the apps support both NVIDIA and AMD GPUs, and possibly rhyme with **RidesharePimpo** and **WhoStoleMy ButterChurner**.
 
 ## Example
 
