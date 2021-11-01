@@ -18,12 +18,16 @@ Note: CC BY-SA is specifically required due to adaptation of certain code from S
 
 ## Donations
 
-MineControl is entirely free. Crypto donations are however appreciated, and will motivate the [developer](https://github.com/smurferson1) to fix and improve things.  Current wallets for donation:
+MineControl is entirely free. Crypto donations are however appreciated, and will motivate the [developer](https://github.com/smurferson1) to fix and improve things (see [Issues](https://github.com/smurferson1/MineControl/issues)). Current wallets for donation:
 - Ethereum or any ERC20 token (mainnet or Polygon please): 0x709Fc86a8Ce362602038b47fB3530De167573967
+- Bitcoin: 12v8VLcanjoetQbmzsBP4vw6WGL5dxmVKW
+- Cardano: addr1qx2he7qs7606r3l6chrwr2calx4h5maxp66nycl6ytd78szjr620fnyg2yv0jmgvhgkvmv4e8qame086zm5f4x20cujqp34fj8
+- Dogecoin: DNRzZekh73wTqU4uyEwRBjUPSAnrahxExS
+- Nano: nano_13uzii9s9pxqb8kd8166xhbwdpqrbbu5kawzo11isgzq1ebtue63zktgcyog
 
 If you want to see additional donation options added here, please contact the [developer](https://github.com/smurferson1).
 
-## Example
+## Example Screenshots
 
 Configuration: 
 - i7-9700k mining with XMRig (MoneroOcean)
