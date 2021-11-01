@@ -11,20 +11,28 @@ MineControl is open source, mainly to foster trust.
 Names of specific hardware monitor and GPU controller apps are omitted to avoid legal issues, but the default config happens to be compatible with the most popular hardware monitor app and GPU controller app. Hint: the apps support both NVIDIA and AMD GPUs, and may rhyme with **RidesharePimpo** and **WhoStoleMy ButterChurner**.
 
 ## Examples
-Example configuration: i7-9700k and RTX 3090, mining with XMRig on CPU (MoneroOcean) and PhoenixMiner (Ethereum) on GPU, with target GPU memory junction temps between 88C and 90C.
+
+Example configuration: 
+- i7-9700k mining with XMRig (MoneroOcean)
+- RTX 3090 mining with PhoenixMiner (Ethereum)
+- Target GPU memory junction temps between 88C and 90C.
 
 **Config**
+
 ![](https://user-images.githubusercontent.com/91922614/139613521-6e221017-d977-4bf8-9317-cf85be40f455.png)
 
 **Analytics - GPU**
-Note: This shows an overnight run where max power and hash rate was achieved as the ambient (room) temperature lowered.
+
+Note: This shows an overnight run where max power and hash rate was achieved as the ambient (room) temperature lowered. Note the changes in power step when memory junction temperature moved outside of the target range.
 ![](https://user-images.githubusercontent.com/91922614/139613574-a9b29ae7-a233-49c6-84be-c7d12b404ef2.png)
 
 **Analytics - CPU**
+
 Note: This shows chart data being split between two algorithms as XMRig auto-switched.
 ![](https://user-images.githubusercontent.com/91922614/139613599-fa00c8ef-2d14-4da7-972a-861d7c1fb259.png)
 
 **Analytics - Resources**
+
 ![](https://user-images.githubusercontent.com/91922614/139613633-88ee8be8-2793-4d9a-af6b-4ab546ad816c.png)
 
 ## Donations
