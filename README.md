@@ -10,6 +10,19 @@ MineControl is open source, mainly to foster trust.
 
 Names of specific hardware monitor and GPU controller apps are omitted to avoid legal issues, but the default config happens to be compatible with the most popular hardware monitor app and GPU controller app. Hint: the apps support both NVIDIA and AMD GPUs, and possibly rhyme with **RidesharePimpo** and **WhoStoleMy ButterChurner**.
 
+## License
+
+MineControl is licensed under the Creative Commons Attribution-ShareAlike 4.0 International Public License, a.k.a. **CC BY-SA 4.0** (see License.txt).
+
+Note: CC BY-SA is specifically required due to adaptation of certain code from StackOverflow. For attribution, see MineControl's About tab, or the source code.
+
+## Donations
+
+MineControl is entirely free. Crypto donations are however appreciated, and will motivate the [developer](https://github.com/smurferson1) to fix and improve things.  Current wallets for donation:
+- Ethereum or any ERC20 token (mainnet or Polygon please): 0x709Fc86a8Ce362602038b47fB3530De167573967
+
+If you want to see additional donation options added here, please contact the [developer](https://github.com/smurferson1).
+
 ## Example
 
 Configuration: 
@@ -34,19 +47,6 @@ Note: This shows chart data being split between two algorithms as XMRig auto-swi
 **Analytics - Resources**
 
 ![](https://user-images.githubusercontent.com/91922614/139613633-88ee8be8-2793-4d9a-af6b-4ab546ad816c.png)
-
-## Donations
-
-MineControl is entirely free. Crypto donations are however appreciated, and will motivate the [developer](https://github.com/smurferson1) to fix and improve things.  Current wallets for donation:
-- Ethereum or any ERC20 token (mainnet or Polygon please): 0x709Fc86a8Ce362602038b47fB3530De167573967
-
-If you want to see additional donation options added here, please contact the [developer](https://github.com/smurferson1).
-
-## License
-
-MineControl is licensed under the Creative Commons Attribution-ShareAlike 4.0 International Public License, a.k.a. **CC BY-SA 4.0** (see License.txt).
-
-Note: CC BY-SA is specifically required due to adaptation of certain code from StackOverflow. For attribution, see MineControl's About tab, or the source code.
 
 ## DISCLAIMERS
 
