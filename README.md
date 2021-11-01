@@ -23,7 +23,7 @@ Example configuration:
 
 **Analytics - GPU**
 
-Note: This shows an overnight run where max power and hash rate was achieved as the ambient (room) temperature lowered. Note the changes in power step when memory junction temperature moved outside of the target range.
+Note: An overnight run where max power and hash rate was achieved within target temps as the ambient (room) temperature lowered. Note the changes in power step as memory junction temperature moved above or below the target range.
 ![](https://user-images.githubusercontent.com/91922614/139613574-a9b29ae7-a233-49c6-84be-c7d12b404ef2.png)
 
 **Analytics - CPU**
@@ -135,6 +135,7 @@ Note: Steps assume you have nothing already on your PC. For experienced miners, 
   - When MineControl recognizes a log entry from a miner as input for a metric (like when a RegEx match is found), it categorizes the log entry as "Input" and appends what it found. This can be used to verify/debug your data tracking customizations if needed. Note: This only shows up if Keep Logs for the miner is enabled.
   - Also consider saving/sharing presets with the dev for possible inclusion in the next MineControl version! You'll get attribution, and other plebs may thank you.
   - The "UserValue" method will just output whatever you put in the Query/UserValue cell for the metric all the time.
+  - Some Source/Method combinations don't make sense and aren't allowed. For example, UserValues always come from MineControl (the Query / User Value cell).
 - Hardware sensor data and GPU power step only update on charts when their value changes, so there may be large gaps in the chart data if a value doesn't change.
 - MineControl can't get data from sensors that don't exist. Some power supplies provide wattage sensor readings and some don't, for example. Your GPU may also not report a memory junction temperature. Sensor data grabbing was tested using a Corsair power supply and RTX 3090.
 - Maintaining high performance/low resource consumption:
