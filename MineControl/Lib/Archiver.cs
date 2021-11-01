@@ -110,6 +110,7 @@ namespace MineControl.Lib
                             Log.Append($"Clearing chart data older than {timeCutoff}");
                             logged = true;
                         }
+                        points[i].Dispose();
                         series.Points.Remove(points[i]);
                     }
                 }

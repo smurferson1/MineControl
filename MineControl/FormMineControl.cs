@@ -2032,6 +2032,10 @@ namespace MineControl
                 {
                     foreach (Series series in chart.Series)
                     {
+                        foreach (DataPoint point in series.Points)
+                        {
+                            point.Dispose();
+                        }
                         series.Points.Clear();
                     }
                 }
