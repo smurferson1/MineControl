@@ -1259,13 +1259,20 @@ namespace MineControl
                 MinerUtils.UpdateMinerState(true, GetStat(cGPUMemJuncTemp));
                 MinerUtils.UpdateMinerState(false);
 
-                // other UI updates
-                UpdatePolledMetrics();
-                UpdateChartScales(false);
+                // metrics and stats
+                UpdatePolledMetrics();                
                 UpdatePolledStats();
                 UpdateStatColors();
 
+                // charts
+                DateTime archiveStart = DateTime.Now;
                 Archiver.RunArchiveAndClearIfNeeded();
+                // update minimums if chart data was recently cleared (removes empty chart space)
+                if (Archiver.LastChartClear > archiveStart)
+                {
+                    UpdateChartXMinimums();
+                }
+                UpdateChartScales(false);
             }
             catch (Exception ex)
             {
@@ -1416,6 +1423,32 @@ namespace MineControl
             else if (tabControlCharts.SelectedTab.Controls.IndexOf(Chart(cResources)) >= 0)
             {
                 ChartUtils.UpdateChartYAxisScale(Chart(cResources));
+            }
+        }
+
+        private void UpdateChartXMinimums()
+        {
+            foreach (Chart chart in Charts)
+            {
+                if (radioButtonChartShowAll.Checked)
+                {
+                    chart.ChartAreas[0].AxisX.Minimum = ChartUtils.GetMinXValue(chart);
+                }
+                else if (radioButtonChartShowLastX.Checked)
+                {
+                    switch (comboBoxChartShowLastUnit.SelectedItem.ToString())
+                    {
+                        case "Minutes":
+                            chart.ChartAreas[0].AxisX.Minimum = DateTime.Now.AddMinutes(-(int)numericUpDownChartShowLastX.Value).ToOADate();
+                            break;
+                        case "Hours":
+                            chart.ChartAreas[0].AxisX.Minimum = DateTime.Now.AddHours(-(int)numericUpDownChartShowLastX.Value).ToOADate();
+                            break;
+                        case "Days":
+                            chart.ChartAreas[0].AxisX.Minimum = DateTime.Now.AddDays(-(int)numericUpDownChartShowLastX.Value).ToOADate();
+                            break;
+                    }
+                }
             }
         }
 
@@ -2418,29 +2451,7 @@ namespace MineControl
 
         private void charts_ShowConfigOptionsChanged(object sender, EventArgs e)
         {
-            foreach (Chart chart in Charts)
-            {
-                if (radioButtonChartShowAll.Checked)
-                {                    
-                    chart.ChartAreas[0].AxisX.Minimum = ChartUtils.GetMinXValue(chart);                    
-                }
-                else if (radioButtonChartShowLastX.Checked)
-                {
-                    switch (comboBoxChartShowLastUnit.SelectedItem.ToString())
-                    {
-                        case "Minutes":
-                            chart.ChartAreas[0].AxisX.Minimum = DateTime.Now.AddMinutes(-(int)numericUpDownChartShowLastX.Value).ToOADate();
-                            break;
-                        case "Hours":
-                            chart.ChartAreas[0].AxisX.Minimum = DateTime.Now.AddHours(-(int)numericUpDownChartShowLastX.Value).ToOADate();
-                            break;
-                        case "Days":
-                            chart.ChartAreas[0].AxisX.Minimum = DateTime.Now.AddDays(-(int)numericUpDownChartShowLastX.Value).ToOADate();
-                            break;
-                    }
-                }
-            }
-
+            UpdateChartXMinimums();
             UpdateChartScales(false);
         }
 

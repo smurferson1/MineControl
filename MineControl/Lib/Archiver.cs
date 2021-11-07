@@ -18,7 +18,8 @@ namespace MineControl.Lib
         private DateTime LastArchiveEval { get; set; } = DateTime.Now;
         public bool IsConfigArchiveNeeded { get; set; } = false;
         public List<Chart> Charts { get; set; }
-        public DataTable LogData { get; set; }
+        public DataTable LogData { get; set; }        
+        public DateTime LastChartClear { get; private set; } = DateTime.MinValue;
         
         public Archiver(DataTable logData, List<Chart> charts, ISettingsFile settingsFile, ILog log)
         {
@@ -108,6 +109,7 @@ namespace MineControl.Lib
                         {
                             // only log the clearing if we actually found something to clear
                             Log.Append($"Clearing chart data older than {timeCutoff}");
+                            LastChartClear = timeCutoff;
                             logged = true;
                         }
                         points[i].Dispose();
