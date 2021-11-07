@@ -3,21 +3,12 @@
 A **power tool** for automated temperature management, scheduling, and/or data aggregation when mining cryptocurrency. For us plebs with a single GPU and CPU running **Windows 10 x64**. It automatically keeps your chosen miner(s) and hardware running within your parameters and gives you nice data (e.g. charts, averages, kWh). This is accomplished by (optionally):
 - Reading sensor data from your chosen **external** hardware monitor app.
 - Setting GPU power profile through your chosen **external** GPU controller app.
-- Managing execution of your chosen **external** GPU and/or CPU mining app and capturing their output for charting/logging.
+- Managing execution of your chosen **external** GPU and/or CPU mining app and capturing their output for charting/logging. Tested with PhoenixMiner, XMRig, and TeamRedMiner, but any miner with console output can be configured.
 - Finding relevant data in the sea of output using customizable regular expressions (some presets are provided).
 
 MineControl is open source, mainly to foster trust.
 
-Names of specific hardware monitor and GPU controller apps are omitted to avoid legal issues, but the default config happens to be compatible with the most popular hardware monitor app and GPU controller app. Hint: the apps support both NVIDIA and AMD GPUs, and may rhyme with **RidesharePimpo** and **WhoStoleMy ButterChurner**.
-
-![image](https://user-images.githubusercontent.com/91922614/138532772-a657dc16-2947-4f0b-8315-203717929fcc.png)
-
-## Donations
-
-MineControl is entirely free. Crypto donations are however appreciated, and will motivate the [developer](https://github.com/smurferson1) to fix and improve things.  Current wallets for donation:
-- Ethereum or any ERC20 token (mainnet or Polygon please): 0x709Fc86a8Ce362602038b47fB3530De167573967
-
-If you want to see additional donation options added here, please contact the [developer](https://github.com/smurferson1).
+Names of specific hardware monitor and GPU controller apps are omitted to avoid legal issues, but the default config happens to be compatible with the most popular hardware monitor app and GPU controller app. Hint: the apps support both NVIDIA and AMD GPUs, and possibly rhyme with **RidesharePimpo** and **WhoStoleMy ButterChurner**.
 
 ## License
 
@@ -25,11 +16,36 @@ MineControl is licensed under the Creative Commons Attribution-ShareAlike 4.0 In
 
 Note: CC BY-SA is specifically required due to adaptation of certain code from StackOverflow. For attribution, see MineControl's About tab, or the source code.
 
+## Example Screenshots
+
+Setup in this example: 
+- i7-9700k mining with XMRig (MoneroOcean)
+- RTX 3090 mining with PhoenixMiner (Ethereum)
+- Target GPU memory junction temps between 88C and 90C.
+
+**Config**
+
+![](https://user-images.githubusercontent.com/91922614/139613521-6e221017-d977-4bf8-9317-cf85be40f455.png)
+
+**Analytics - GPU**
+
+Note: An overnight run where max power and hash rate was achieved within target temps as the ambient (room) temperature lowered. Note the changes in power step whenever memory junction temp moved outside of the target range (until max power was hit, anyway).
+![](https://user-images.githubusercontent.com/91922614/139613574-a9b29ae7-a233-49c6-84be-c7d12b404ef2.png)
+
+**Analytics - CPU**
+
+Note: This shows chart data being split between two algorithms as XMRig auto-switched.
+![](https://user-images.githubusercontent.com/91922614/139613599-fa00c8ef-2d14-4da7-972a-861d7c1fb259.png)
+
+**Analytics - Resources**
+
+![](https://user-images.githubusercontent.com/91922614/139613633-88ee8be8-2793-4d9a-af6b-4ab546ad816c.png)
+
 ## DISCLAIMERS
 
-- While it is designed with care to improve your mining experience, MineControl isn't guaranteed to work correctly in all circumstances. It's in development and subject to being shite, making mistakes, or missing *YOUR* mistakes. **Use it at your own risk**.
-- MineControl is *complex* and **requires thoughtful configuration**. Please configure MineControl per requirements and instructions below, and monitor until you're confident that it's doing what you want it to.
-- MineControl won't do nefarious things like take your mining profits or send *anything* outside of your PC, **as long as you download it from this GitHub repo**. Feel free to inspect or compile the code yourself, but **do not** download MineControl from anywhere or anyone else, since software can easily be compromised by attackers and redistributed in a nearly identical form.
+- While it is designed with care to improve your mining experience, MineControl isn't guaranteed to work correctly in all circumstances. It's in development and subject to being shit, making mistakes, or missing *YOUR* mistakes. **Use it at your own risk**.
+- MineControl is complex and **requires thoughtful configuration**. Please configure per requirements and instructions below, and monitor until you're confident that it's doing what you want it to.
+- MineControl won't do nefarious things like take your mining profits or send *anything* outside of your PC, **as long as you download it from this GitHub repo**. Feel free to inspect or compile the code yourself, but **do not** download it from anywhere or anyone else, since software can easily be compromised by attackers and redistributed in a nearly identical form.
 - As with most other software developed in free time for fun, there is no guarantee from the developer to provide support or updates of any kind.
 
 ## Key Features
@@ -62,6 +78,17 @@ Note: CC BY-SA is specifically required due to adaptation of certain code from S
 
 See Issues area for comprehensive list, and add to it if you find a bug.
 
+## Donations
+
+MineControl is entirely free. Crypto donations are however appreciated, and will motivate the [developer](https://github.com/smurferson1) to fix and improve things (see [Issues](https://github.com/smurferson1/MineControl/issues)). Current wallets for donation:
+- Ethereum or any ERC20 token (mainnet or Polygon please): 0x709Fc86a8Ce362602038b47fB3530De167573967
+- Bitcoin: 12v8VLcanjoetQbmzsBP4vw6WGL5dxmVKW
+- Cardano: addr1qx2he7qs7606r3l6chrwr2calx4h5maxp66nycl6ytd78szjr620fnyg2yv0jmgvhgkvmv4e8qame086zm5f4x20cujqp34fj8
+- Dogecoin: DNRzZekh73wTqU4uyEwRBjUPSAnrahxExS
+- Nano: nano_13uzii9s9pxqb8kd8166xhbwdpqrbbu5kawzo11isgzq1ebtue63zktgcyog
+
+If you want to see additional donation options added here, please contact the [developer](https://github.com/smurferson1).
+
 ## Requirements
 
 - Windows 10 x64 (at least).
@@ -81,7 +108,7 @@ Note: Steps assume you have nothing already on your PC. For experienced miners, 
 2) Configure and test the miner(s) independently to make sure they run correctly and send crypto to your wallet address.
 3) Configure the hardware monitor output from *inside* of the hardware monitor application. For RidesharePimpo, this means starting up with the **"sensors only"** option, then **enabling system tray output** for the metrics you want to track (like GPU memory junction temp), since MineControl relies on systray tooltips to read data. SysTray output can be enabled from the right-click menu for the sensor row. In addition, the **systray icons must be visible on the taskbar to be read by MineControl**, not hidden in the overflow area (screensaver/screen lock isn't an issue). To be really sure, you can enable the "Always show all icons in the notification area" option in Windows taskbar settings for notification icons.
 4) Configure the power profiles *inside* of the GPU controller application. You have full control over your power profiles, so you can set voltage curves or whatever you like. These should progress from lowest power (lowest temp) in profile 1 to highest power in profile 5. **Your temperature control and hash rates will only be as good as your power profiles.**
-5) Extract MineControl to a folder somewhere and exclude from virus scanning if needed.
+5) [Download MineControl](https://github.com/smurferson1/MineControl/releases) (the EXE) and extract it a folder somewhere. Exclude it from virus scanning if needed.
 6) Configure miners and applications by pointing to their executables at the top of the Config tab. Simple batch files are supported but you **must** set the exact application (EXE) name of the miner *without* extension in the "Process Name" grid cell.
 7) Configure Data Tracking metrics as needed for your miners and applications, and disable metrics you don't need. There are presets for some common miners/apps (use "Load Preset" button). Manual customization may not be necessary if there are presets for your apps, or you use the default config of PhoenixMiner/XMRig + RidesharePimpo + WhoStoleMy ButterChurner. Select the "RegEx" method in the grid. See Advanced Tips section for more help.
 8) Configure your target GPU temps and anything else you care about. Defaults for most other things are fine. Note: default target temps are tailored for an RTX 3090, so may be too hot for your GPU!
@@ -112,6 +139,7 @@ Note: Steps assume you have nothing already on your PC. For experienced miners, 
   - When MineControl recognizes a log entry from a miner as input for a metric (like when a RegEx match is found), it categorizes the log entry as "Input" and appends what it found. This can be used to verify/debug your data tracking customizations if needed. Note: This only shows up if Keep Logs for the miner is enabled.
   - Also consider saving/sharing presets with the dev for possible inclusion in the next MineControl version! You'll get attribution, and other plebs may thank you.
   - The "UserValue" method will just output whatever you put in the Query/UserValue cell for the metric all the time.
+  - Some Source/Method combinations don't make sense and aren't allowed. For example, UserValues always come from MineControl (the Query / User Value cell).
 - Hardware sensor data and GPU power step only update on charts when their value changes, so there may be large gaps in the chart data if a value doesn't change.
 - MineControl can't get data from sensors that don't exist. Some power supplies provide wattage sensor readings and some don't, for example. Your GPU may also not report a memory junction temperature. Sensor data grabbing was tested using a Corsair power supply and RTX 3090.
 - Maintaining high performance/low resource consumption:
