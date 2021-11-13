@@ -384,6 +384,7 @@ namespace MineControl.Lib.Schedule
         /// </summary>
         public void RegenerateIds()
         {
+            Id = Guid.NewGuid();
             foreach (ScheduleNode node in Nodes)
             {
                 node.RegenerateIds();
