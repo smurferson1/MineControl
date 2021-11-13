@@ -2620,10 +2620,10 @@ namespace MineControl
                     if (hitTestResult.Series != null)
                     {
                         activeSeries = hitTestResult.Series;
-                        if (hitTestResult.Series.Tag == null)
+                        if (activeSeries.Tag == null)
                         {
-                            ++hitTestResult.Series.BorderWidth;
-                            hitTestResult.Series.Tag = true;
+                            ++activeSeries.BorderWidth;
+                            activeSeries.Tag = true;
                         }
                     }
                     CalloutAnnotation annotation = (activeChart.Annotations[0] as CalloutAnnotation);
