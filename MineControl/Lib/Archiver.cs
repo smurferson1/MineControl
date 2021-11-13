@@ -109,7 +109,7 @@ namespace MineControl.Lib
                         {
                             // only log the clearing if we actually found something to clear
                             Log.Append($"Clearing chart data older than {timeCutoff}");
-                            LastChartClear = timeCutoff;
+                            LastChartClear = DateTime.Now;
                             logged = true;
                         }
                         points[i].Dispose();
