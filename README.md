@@ -1,14 +1,14 @@
 # MineControl
 
-A **power tool** for automated temperature management, scheduling, and/or data aggregation when mining cryptocurrency. For us plebs with a single GPU and CPU running **Windows 10 x64**. It automatically keeps your chosen miner(s) and hardware running within your parameters and gives you nice data (e.g. charts, averages, kWh). This is accomplished by (optionally):
+A **free and open source power tool** for automated temperature management, scheduling, and/or data aggregation when mining cryptocurrency. Made for us plebs with a **single GPU and CPU** running **Windows 10 x64**. It automatically keeps your chosen miner(s) and hardware running within your parameters and gives you nice data (e.g. charts, averages, kWh). This is accomplished by (optionally):
 - Reading sensor data from your chosen **external** hardware monitor app.
 - Setting GPU power profile through your chosen **external** GPU controller app.
 - Managing execution of your chosen **external** GPU and/or CPU mining app and capturing their output for charting/logging. Tested with PhoenixMiner, XMRig, and TeamRedMiner, but any miner with console output can be configured.
 - Finding relevant data in the sea of output using customizable regular expressions (some presets are provided).
 
-MineControl is open source, mainly to foster trust.
+There is no dev fee or registration of any kind.
 
-Names of specific hardware monitor and GPU controller apps are omitted to avoid legal issues, but the default config happens to be compatible with the most popular hardware monitor app and GPU controller app. Hint: the apps support both NVIDIA and AMD GPUs, and possibly rhyme with **RidesharePimpo** and **WhoStoleMy ButterChurner**.
+Names of specific hardware monitor and GPU controller apps are omitted to avoid legal issues, but the default config happens to be compatible with the most popular hardware monitor app and GPU controller app. Hint: apps support both NVIDIA and AMD GPUs, and might rhyme with **RidesharePimpo** and **WhoStoleMy ButterChurner**.
 
 ## License
 
