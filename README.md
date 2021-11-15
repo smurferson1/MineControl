@@ -1,6 +1,6 @@
 # MineControl
 
-A **free and open source power tool** for automated temperature management, scheduling, and/or data aggregation when mining cryptocurrency. Made for us plebs with a **single GPU and CPU** running **Windows 10 x64**. It automatically keeps your chosen miner(s) and hardware running within your parameters and gives you nice data (e.g. charts, averages, kWh). This is accomplished by (optionally):
+A **free and open source power tool** for automated temperature management, scheduling, and/or data aggregation when mining cryptocurrency. Made for us plebs with a **single GPU and CPU** running **Windows 10 x64**. It automatically keeps your chosen miner(s) and hardware running within your parameters and gives you nice data (e.g. charts, averages, kWh). This is accomplished by:
 - Reading sensor data from your chosen **external** hardware monitor app.
 - Setting GPU power profile through your chosen **external** GPU controller app.
 - Managing execution of your chosen **external** GPU and/or CPU mining app and capturing their output for charting/logging. Tested with PhoenixMiner, XMRig, and TeamRedMiner, but any miner with console output can be configured.
@@ -43,9 +43,9 @@ Note: This shows chart data being split between two algorithms as XMRig auto-swi
 
 ## DISCLAIMERS
 
-- While it is designed with care to improve your mining experience, MineControl isn't guaranteed to work correctly in all circumstances. It's in development and subject to being shit, making mistakes, or missing *YOUR* mistakes. **Use it at your own risk**.
+- While it is designed with care to improve your mining experience, MineControl isn't guaranteed to work correctly in all circumstances. It's in development and subject to being janky, making mistakes, or missing *YOUR* mistakes. **Use it at your own risk**.
 - MineControl is complex and **requires thoughtful configuration**. Please configure per requirements and instructions below, and monitor until you're confident that it's doing what you want it to.
-- MineControl won't do nefarious things like take your mining profits or send *anything* outside of your PC, **as long as you download it from this GitHub repo**. Feel free to inspect or compile the code yourself, but **do not** download it from anywhere or anyone else, since software can easily be compromised by attackers and redistributed in a nearly identical form.
+- MineControl won't do anything nefarious, **as long as you download it from this GitHub repo**. Feel free to inspect or compile the code yourself, but **do not** download it from anywhere or anyone else, since software can easily be compromised by attackers and redistributed in a nearly identical form.
 - As with most other software developed in free time for fun, there is no guarantee from the developer to provide support or updates of any kind.
 
 ## Key Features
@@ -54,11 +54,11 @@ Note: This shows chart data being split between two algorithms as XMRig auto-swi
 - Set GPU temperature (or memory junction temperature) min and max targets, and control with up to 5 power profiles.
 - Turn off pretty much anything you don't want. If you just want to control temps without driving miners, or the other way around, that'll work.
 - Schedule execution of GPU and CPU miner with advanced options, for example to shut down a miner when electricity is most expensive on weekdays during summer.
-- Get charts and statistics for many metrics like GPU temperature (or memory junction temperature), hash rate, power usage (W and kWh), averages, etc. Hash rate chart data can be split by algorithm when using a miner that supports algo-switching.
+- Get charts and statistics for many metrics like GPU temperature (or memory junction temperature), hash rate, power usage (W and kWh), averages, etc. Hash rate chart data is split by algorithm when using a miner that supports algo-switching (in progress).
 - Low resource consumption. Designed to use 0% GPU and <1% CPU *when minimized*.
 - Capture output from external apps using regular expressions, via either system tray tooltips or console (stdout redirection).
 - System tray display of GPU power level and GPU/CPU miner statuses. Example: (![SysTray](https://user-images.githubusercontent.com/91922614/138613630-875d578a-4d48-4b32-8d4f-acfb1e9fed93.png)).
-- Enable GPU failsafe protections to shut off GPU miner when max temp is exceeded at lowest power step, or temperature is unknown.
+- Enable GPU failsafe protections to shut off GPU miner when max temp is exceeded at lowest power step, or when temperature is unknown.
 - Crash safety: if MineControl crashes, miners under its control will also close to prevent controlled temps.
 - Shut off either miner automatically during user activity if desired.
 - Archive logs and configuration.
@@ -68,8 +68,8 @@ Note: This shows chart data being split between two algorithms as XMRig auto-swi
 - _Only_ supports up to one GPU miner and one CPU miner.
 - Most temperature/power management features are GPU-only, and only one GPU can be controlled.
 - Not internationalized, translated, or respectful of most Windows regional settings.
-- Not very user friendly. Hopefully will improve in time.
-- Chart data and stats aren't remembered or archived yet, i.e. you lose them when MineControl closes.
+- Not user friendly or pretty. Hopefully will improve in time.
+- Chart data and stats aren't remembered or archived (yet), i.e. you lose them when MineControl closes.
 - Can't automatically get rid of popups or do other user tasks when launching other apps.
 - Probably some allowed configurations that would make no sense or cause errors or crashes.
 - "Classic" Windows styling, maybe ugly. Partly for performance reasons (no GPU usage).
