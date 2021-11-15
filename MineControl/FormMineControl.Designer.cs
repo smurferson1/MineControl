@@ -161,6 +161,41 @@ namespace MineControl
             this.ColAppName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColAppPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColAppChooseButton = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.tabPageGPUConfig = new System.Windows.Forms.TabPage();
+            this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.label42 = new System.Windows.Forms.Label();
+            this.numericUpDown8 = new System.Windows.Forms.NumericUpDown();
+            this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.label47 = new System.Windows.Forms.Label();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.label46 = new System.Windows.Forms.Label();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.label45 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.radioButtonGPUOCModeUser = new System.Windows.Forms.RadioButton();
+            this.label37 = new System.Windows.Forms.Label();
+            this.dataGridViewGPUOC = new System.Windows.Forms.DataGridView();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label44 = new System.Windows.Forms.Label();
+            this.numericUpDown10 = new System.Windows.Forms.NumericUpDown();
+            this.label43 = new System.Windows.Forms.Label();
+            this.numericUpDown9 = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown6 = new System.Windows.Forms.NumericUpDown();
+            this.label41 = new System.Windows.Forms.Label();
+            this.numericUpDown7 = new System.Windows.Forms.NumericUpDown();
+            this.label39 = new System.Windows.Forms.Label();
+            this.numericUpDown5 = new System.Windows.Forms.NumericUpDown();
+            this.label38 = new System.Windows.Forms.Label();
+            this.numericUpDown4 = new System.Windows.Forms.NumericUpDown();
+            this.label29 = new System.Windows.Forms.Label();
+            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+            this.label26 = new System.Windows.Forms.Label();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.label40 = new System.Windows.Forms.Label();
+            this.panelGPUOC = new System.Windows.Forms.Panel();
             this.tabPageSchedule = new System.Windows.Forms.TabPage();
             this.groupBoxScheduleNodeDetails = new System.Windows.Forms.GroupBox();
             this.panelScheduleNodeButtons = new System.Windows.Forms.Panel();
@@ -241,6 +276,15 @@ namespace MineControl
             this.folderBrowserDialogBackups = new System.Windows.Forms.FolderBrowserDialog();
             this.openFileDialogPresets = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialogPresets = new System.Windows.Forms.SaveFileDialog();
+            this.ColGPUOCPowerPercent = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColGPUOCUserCoreOffset = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColGPUOCOptimizedCoreOffset = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColGPUOCUserMemOffset = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColGPUOCOptimizedMemOffset = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColGPUOCOptimizeStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColGPUOCLastOptimized = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColGPUOCMaxUserHashRate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColGPUOCMaxOptimizedHashRate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempSteppingBuffer)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTempMin)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarGPUPowerStep)).BeginInit();
@@ -269,6 +313,21 @@ namespace MineControl
             this.groupBox9.SuspendLayout();
             this.groupBoxMinersAndApps.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewApps)).BeginInit();
+            this.tabPageGPUConfig.SuspendLayout();
+            this.groupBox11.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown8)).BeginInit();
+            this.groupBox10.SuspendLayout();
+            this.groupBox8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewGPUOC)).BeginInit();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown10)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown9)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown7)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.tabPageSchedule.SuspendLayout();
             this.groupBoxScheduleNodeDetails.SuspendLayout();
             this.panelScheduleNodeButtons.SuspendLayout();
@@ -1547,6 +1606,7 @@ namespace MineControl
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControlMain.Controls.Add(this.tabPageConfig);
+            this.tabControlMain.Controls.Add(this.tabPageGPUConfig);
             this.tabControlMain.Controls.Add(this.tabPageSchedule);
             this.tabControlMain.Controls.Add(this.tabPageAnalytics);
             this.tabControlMain.Controls.Add(this.tabPageAbout);
@@ -2053,6 +2113,510 @@ namespace MineControl
             this.ColAppChooseButton.Text = "...";
             this.ColAppChooseButton.UseColumnTextForButtonValue = true;
             this.ColAppChooseButton.Width = 5;
+            // 
+            // tabPageGPUConfig
+            // 
+            this.tabPageGPUConfig.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPageGPUConfig.Controls.Add(this.groupBox11);
+            this.tabPageGPUConfig.Controls.Add(this.groupBox10);
+            this.tabPageGPUConfig.Controls.Add(this.groupBox8);
+            this.tabPageGPUConfig.Controls.Add(this.label37);
+            this.tabPageGPUConfig.Controls.Add(this.dataGridViewGPUOC);
+            this.tabPageGPUConfig.Controls.Add(this.groupBox1);
+            this.tabPageGPUConfig.Controls.Add(this.panelGPUOC);
+            this.tabPageGPUConfig.Location = new System.Drawing.Point(4, 24);
+            this.tabPageGPUConfig.Name = "tabPageGPUConfig";
+            this.tabPageGPUConfig.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageGPUConfig.Size = new System.Drawing.Size(914, 915);
+            this.tabPageGPUConfig.TabIndex = 4;
+            this.tabPageGPUConfig.Text = "GPU Config";
+            // 
+            // groupBox11
+            // 
+            this.groupBox11.Controls.Add(this.label42);
+            this.groupBox11.Controls.Add(this.numericUpDown8);
+            this.groupBox11.Location = new System.Drawing.Point(713, 825);
+            this.groupBox11.Name = "groupBox11";
+            this.groupBox11.Size = new System.Drawing.Size(195, 72);
+            this.groupBox11.TabIndex = 8;
+            this.groupBox11.TabStop = false;
+            this.groupBox11.Text = "Constants";
+            // 
+            // label42
+            // 
+            this.label42.AutoSize = true;
+            this.label42.Location = new System.Drawing.Point(16, 31);
+            this.label42.Name = "label42";
+            this.label42.Size = new System.Drawing.Size(74, 15);
+            this.label42.TabIndex = 10;
+            this.label42.Text = "Fan Speed %";
+            // 
+            // numericUpDown8
+            // 
+            this.numericUpDown8.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.numericUpDown8.Location = new System.Drawing.Point(115, 29);
+            this.numericUpDown8.Minimum = new decimal(new int[] {
+            40,
+            0,
+            0,
+            0});
+            this.numericUpDown8.Name = "numericUpDown8";
+            this.numericUpDown8.Size = new System.Drawing.Size(42, 23);
+            this.numericUpDown8.TabIndex = 9;
+            this.numericUpDown8.Value = new decimal(new int[] {
+            40,
+            0,
+            0,
+            0});
+            // 
+            // groupBox10
+            // 
+            this.groupBox10.Controls.Add(this.label47);
+            this.groupBox10.Controls.Add(this.textBox3);
+            this.groupBox10.Controls.Add(this.label46);
+            this.groupBox10.Controls.Add(this.textBox2);
+            this.groupBox10.Controls.Add(this.label45);
+            this.groupBox10.Controls.Add(this.button1);
+            this.groupBox10.Controls.Add(this.textBox1);
+            this.groupBox10.Location = new System.Drawing.Point(394, 715);
+            this.groupBox10.Name = "groupBox10";
+            this.groupBox10.Size = new System.Drawing.Size(297, 194);
+            this.groupBox10.TabIndex = 7;
+            this.groupBox10.TabStop = false;
+            this.groupBox10.Text = "External Config File";
+            // 
+            // label47
+            // 
+            this.label47.AutoSize = true;
+            this.label47.Location = new System.Drawing.Point(8, 85);
+            this.label47.Name = "label47";
+            this.label47.Size = new System.Drawing.Size(50, 15);
+            this.label47.TabIndex = 68;
+            this.label47.Text = "Content";
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(8, 103);
+            this.textBox3.Multiline = true;
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(282, 85);
+            this.textBox3.TabIndex = 67;
+            // 
+            // label46
+            // 
+            this.label46.AutoSize = true;
+            this.label46.Location = new System.Drawing.Point(8, 57);
+            this.label46.Name = "label46";
+            this.label46.Size = new System.Drawing.Size(46, 15);
+            this.label46.TabIndex = 66;
+            this.label46.Text = "Section";
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(63, 54);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(227, 23);
+            this.textBox2.TabIndex = 65;
+            // 
+            // label45
+            // 
+            this.label45.AutoSize = true;
+            this.label45.Location = new System.Drawing.Point(8, 25);
+            this.label45.Name = "label45";
+            this.label45.Size = new System.Drawing.Size(53, 15);
+            this.label45.TabIndex = 64;
+            this.label45.Text = "Full Path";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(262, 21);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(28, 25);
+            this.button1.TabIndex = 63;
+            this.button1.Text = "...";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(63, 22);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(199, 23);
+            this.textBox1.TabIndex = 0;
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.radioButton1);
+            this.groupBox8.Controls.Add(this.radioButtonGPUOCModeUser);
+            this.groupBox8.Location = new System.Drawing.Point(713, 715);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(192, 93);
+            this.groupBox8.TabIndex = 6;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "Mode";
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Location = new System.Drawing.Point(30, 56);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(104, 19);
+            this.radioButton1.TabIndex = 1;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "Auto-Optimize";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonGPUOCModeUser
+            // 
+            this.radioButtonGPUOCModeUser.AutoSize = true;
+            this.radioButtonGPUOCModeUser.Location = new System.Drawing.Point(30, 26);
+            this.radioButtonGPUOCModeUser.Name = "radioButtonGPUOCModeUser";
+            this.radioButtonGPUOCModeUser.Size = new System.Drawing.Size(84, 19);
+            this.radioButtonGPUOCModeUser.TabIndex = 0;
+            this.radioButtonGPUOCModeUser.TabStop = true;
+            this.radioButtonGPUOCModeUser.Text = "User Values";
+            this.radioButtonGPUOCModeUser.UseVisualStyleBackColor = true;
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Location = new System.Drawing.Point(7, 492);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(105, 15);
+            this.label37.TabIndex = 5;
+            this.label37.Text = "GPU Clock Profiles";
+            // 
+            // dataGridViewGPUOC
+            // 
+            this.dataGridViewGPUOC.AllowUserToAddRows = false;
+            this.dataGridViewGPUOC.AllowUserToDeleteRows = false;
+            this.dataGridViewGPUOC.AllowUserToResizeRows = false;
+            this.dataGridViewGPUOC.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewGPUOC.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewGPUOC.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ColGPUOCPowerPercent,
+            this.ColGPUOCUserCoreOffset,
+            this.ColGPUOCOptimizedCoreOffset,
+            this.ColGPUOCUserMemOffset,
+            this.ColGPUOCOptimizedMemOffset,
+            this.ColGPUOCOptimizeStatus,
+            this.ColGPUOCLastOptimized,
+            this.ColGPUOCMaxUserHashRate,
+            this.ColGPUOCMaxOptimizedHashRate});
+            this.dataGridViewGPUOC.Location = new System.Drawing.Point(7, 510);
+            this.dataGridViewGPUOC.Name = "dataGridViewGPUOC";
+            this.dataGridViewGPUOC.RowHeadersVisible = false;
+            this.dataGridViewGPUOC.RowTemplate.Height = 25;
+            this.dataGridViewGPUOC.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.dataGridViewGPUOC.Size = new System.Drawing.Size(898, 190);
+            this.dataGridViewGPUOC.TabIndex = 4;
+            this.dataGridViewGPUOC.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dataGridViewGPUOC_CellValidating);
+            this.dataGridViewGPUOC.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dataGridViewGPUOC_DataBindingComplete);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.label44);
+            this.groupBox1.Controls.Add(this.numericUpDown10);
+            this.groupBox1.Controls.Add(this.label43);
+            this.groupBox1.Controls.Add(this.numericUpDown9);
+            this.groupBox1.Controls.Add(this.numericUpDown6);
+            this.groupBox1.Controls.Add(this.label41);
+            this.groupBox1.Controls.Add(this.numericUpDown7);
+            this.groupBox1.Controls.Add(this.label39);
+            this.groupBox1.Controls.Add(this.numericUpDown5);
+            this.groupBox1.Controls.Add(this.label38);
+            this.groupBox1.Controls.Add(this.numericUpDown4);
+            this.groupBox1.Controls.Add(this.label29);
+            this.groupBox1.Controls.Add(this.numericUpDown2);
+            this.groupBox1.Controls.Add(this.label26);
+            this.groupBox1.Controls.Add(this.numericUpDown1);
+            this.groupBox1.Controls.Add(this.label40);
+            this.groupBox1.Location = new System.Drawing.Point(7, 715);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(364, 194);
+            this.groupBox1.TabIndex = 3;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Limits And Increments";
+            // 
+            // label44
+            // 
+            this.label44.AutoSize = true;
+            this.label44.Location = new System.Drawing.Point(13, 122);
+            this.label44.Name = "label44";
+            this.label44.Size = new System.Drawing.Size(92, 15);
+            this.label44.TabIndex = 20;
+            this.label44.Text = "Mem Increment";
+            // 
+            // numericUpDown10
+            // 
+            this.numericUpDown10.Location = new System.Drawing.Point(112, 120);
+            this.numericUpDown10.Maximum = new decimal(new int[] {
+            120,
+            0,
+            0,
+            0});
+            this.numericUpDown10.Minimum = new decimal(new int[] {
+            40,
+            0,
+            0,
+            0});
+            this.numericUpDown10.Name = "numericUpDown10";
+            this.numericUpDown10.Size = new System.Drawing.Size(42, 23);
+            this.numericUpDown10.TabIndex = 19;
+            this.numericUpDown10.Value = new decimal(new int[] {
+            40,
+            0,
+            0,
+            0});
+            // 
+            // label43
+            // 
+            this.label43.AutoSize = true;
+            this.label43.Location = new System.Drawing.Point(13, 92);
+            this.label43.Name = "label43";
+            this.label43.Size = new System.Drawing.Size(89, 15);
+            this.label43.TabIndex = 18;
+            this.label43.Text = "Core Increment";
+            // 
+            // numericUpDown9
+            // 
+            this.numericUpDown9.Location = new System.Drawing.Point(112, 90);
+            this.numericUpDown9.Maximum = new decimal(new int[] {
+            120,
+            0,
+            0,
+            0});
+            this.numericUpDown9.Minimum = new decimal(new int[] {
+            40,
+            0,
+            0,
+            0});
+            this.numericUpDown9.Name = "numericUpDown9";
+            this.numericUpDown9.Size = new System.Drawing.Size(42, 23);
+            this.numericUpDown9.TabIndex = 17;
+            this.numericUpDown9.Value = new decimal(new int[] {
+            40,
+            0,
+            0,
+            0});
+            // 
+            // numericUpDown6
+            // 
+            this.numericUpDown6.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.numericUpDown6.Location = new System.Drawing.Point(295, 120);
+            this.numericUpDown6.Maximum = new decimal(new int[] {
+            1500,
+            0,
+            0,
+            0});
+            this.numericUpDown6.Minimum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDown6.Name = "numericUpDown6";
+            this.numericUpDown6.Size = new System.Drawing.Size(42, 23);
+            this.numericUpDown6.TabIndex = 15;
+            this.numericUpDown6.Value = new decimal(new int[] {
+            40,
+            0,
+            0,
+            0});
+            // 
+            // label41
+            // 
+            this.label41.AutoSize = true;
+            this.label41.Location = new System.Drawing.Point(182, 92);
+            this.label41.Name = "label41";
+            this.label41.Size = new System.Drawing.Size(110, 15);
+            this.label41.TabIndex = 14;
+            this.label41.Text = "Lowest Mem Offset";
+            // 
+            // numericUpDown7
+            // 
+            this.numericUpDown7.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.numericUpDown7.Location = new System.Drawing.Point(295, 90);
+            this.numericUpDown7.Maximum = new decimal(new int[] {
+            1500,
+            0,
+            0,
+            0});
+            this.numericUpDown7.Minimum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDown7.Name = "numericUpDown7";
+            this.numericUpDown7.Size = new System.Drawing.Size(42, 23);
+            this.numericUpDown7.TabIndex = 13;
+            this.numericUpDown7.Value = new decimal(new int[] {
+            40,
+            0,
+            0,
+            0});
+            // 
+            // label39
+            // 
+            this.label39.AutoSize = true;
+            this.label39.Location = new System.Drawing.Point(182, 54);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(111, 15);
+            this.label39.TabIndex = 12;
+            this.label39.Text = "Highest Core Offset";
+            // 
+            // numericUpDown5
+            // 
+            this.numericUpDown5.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.numericUpDown5.Location = new System.Drawing.Point(295, 52);
+            this.numericUpDown5.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numericUpDown5.Minimum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDown5.Name = "numericUpDown5";
+            this.numericUpDown5.Size = new System.Drawing.Size(42, 23);
+            this.numericUpDown5.TabIndex = 11;
+            this.numericUpDown5.Value = new decimal(new int[] {
+            40,
+            0,
+            0,
+            0});
+            // 
+            // label38
+            // 
+            this.label38.AutoSize = true;
+            this.label38.Location = new System.Drawing.Point(182, 24);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(107, 15);
+            this.label38.TabIndex = 10;
+            this.label38.Text = "Lowest Core Offset";
+            // 
+            // numericUpDown4
+            // 
+            this.numericUpDown4.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.numericUpDown4.Location = new System.Drawing.Point(295, 22);
+            this.numericUpDown4.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numericUpDown4.Minimum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDown4.Name = "numericUpDown4";
+            this.numericUpDown4.Size = new System.Drawing.Size(42, 23);
+            this.numericUpDown4.TabIndex = 9;
+            this.numericUpDown4.Value = new decimal(new int[] {
+            40,
+            0,
+            0,
+            0});
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(13, 54);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(97, 15);
+            this.label29.TabIndex = 6;
+            this.label29.Text = "Highest Power %";
+            // 
+            // numericUpDown2
+            // 
+            this.numericUpDown2.Location = new System.Drawing.Point(112, 52);
+            this.numericUpDown2.Maximum = new decimal(new int[] {
+            120,
+            0,
+            0,
+            0});
+            this.numericUpDown2.Minimum = new decimal(new int[] {
+            40,
+            0,
+            0,
+            0});
+            this.numericUpDown2.Name = "numericUpDown2";
+            this.numericUpDown2.Size = new System.Drawing.Size(42, 23);
+            this.numericUpDown2.TabIndex = 5;
+            this.numericUpDown2.Value = new decimal(new int[] {
+            90,
+            0,
+            0,
+            0});
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(13, 24);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(93, 15);
+            this.label26.TabIndex = 4;
+            this.label26.Text = "Lowest Power %";
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Location = new System.Drawing.Point(112, 22);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            120,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Minimum = new decimal(new int[] {
+            40,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(42, 23);
+            this.numericUpDown1.TabIndex = 3;
+            this.numericUpDown1.Value = new decimal(new int[] {
+            70,
+            0,
+            0,
+            0});
+            // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.Location = new System.Drawing.Point(182, 122);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(114, 15);
+            this.label40.TabIndex = 16;
+            this.label40.Text = "Highest Mem Offset";
+            // 
+            // panelGPUOC
+            // 
+            this.panelGPUOC.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelGPUOC.Location = new System.Drawing.Point(7, 20);
+            this.panelGPUOC.Name = "panelGPUOC";
+            this.panelGPUOC.Size = new System.Drawing.Size(898, 459);
+            this.panelGPUOC.TabIndex = 1;
             // 
             // tabPageSchedule
             // 
@@ -3017,6 +3581,64 @@ namespace MineControl
             this.saveFileDialogPresets.DefaultExt = "MetricPreset";
             this.saveFileDialogPresets.Filter = "Metric Presets|*.MetricPreset";
             // 
+            // ColGPUOCPowerPercent
+            // 
+            this.ColGPUOCPowerPercent.FillWeight = 60F;
+            this.ColGPUOCPowerPercent.HeaderText = "Power %";
+            this.ColGPUOCPowerPercent.Name = "ColGPUOCPowerPercent";
+            // 
+            // ColGPUOCUserCoreOffset
+            // 
+            this.ColGPUOCUserCoreOffset.FillWeight = 90F;
+            this.ColGPUOCUserCoreOffset.HeaderText = "User        Core Offset";
+            this.ColGPUOCUserCoreOffset.Name = "ColGPUOCUserCoreOffset";
+            this.ColGPUOCUserCoreOffset.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // ColGPUOCOptimizedCoreOffset
+            // 
+            this.ColGPUOCOptimizedCoreOffset.FillWeight = 90F;
+            this.ColGPUOCOptimizedCoreOffset.HeaderText = "Optimized Core Offset";
+            this.ColGPUOCOptimizedCoreOffset.Name = "ColGPUOCOptimizedCoreOffset";
+            this.ColGPUOCOptimizedCoreOffset.ReadOnly = true;
+            // 
+            // ColGPUOCUserMemOffset
+            // 
+            this.ColGPUOCUserMemOffset.FillWeight = 110F;
+            this.ColGPUOCUserMemOffset.HeaderText = "User       Memory Offset";
+            this.ColGPUOCUserMemOffset.Name = "ColGPUOCUserMemOffset";
+            // 
+            // ColGPUOCOptimizedMemOffset
+            // 
+            this.ColGPUOCOptimizedMemOffset.FillWeight = 110F;
+            this.ColGPUOCOptimizedMemOffset.HeaderText = "Optimized Memory Offset";
+            this.ColGPUOCOptimizedMemOffset.Name = "ColGPUOCOptimizedMemOffset";
+            this.ColGPUOCOptimizedMemOffset.ReadOnly = true;
+            // 
+            // ColGPUOCOptimizeStatus
+            // 
+            this.ColGPUOCOptimizeStatus.HeaderText = "Optimization Status";
+            this.ColGPUOCOptimizeStatus.Name = "ColGPUOCOptimizeStatus";
+            // 
+            // ColGPUOCLastOptimized
+            // 
+            this.ColGPUOCLastOptimized.HeaderText = "Last Optimized";
+            this.ColGPUOCLastOptimized.Name = "ColGPUOCLastOptimized";
+            this.ColGPUOCLastOptimized.ReadOnly = true;
+            // 
+            // ColGPUOCMaxUserHashRate
+            // 
+            this.ColGPUOCMaxUserHashRate.FillWeight = 110F;
+            this.ColGPUOCMaxUserHashRate.HeaderText = "Max User      Hash Rate";
+            this.ColGPUOCMaxUserHashRate.Name = "ColGPUOCMaxUserHashRate";
+            this.ColGPUOCMaxUserHashRate.ReadOnly = true;
+            // 
+            // ColGPUOCMaxOptimizedHashRate
+            // 
+            this.ColGPUOCMaxOptimizedHashRate.FillWeight = 110F;
+            this.ColGPUOCMaxOptimizedHashRate.HeaderText = "Max Optimized Hash Rate";
+            this.ColGPUOCMaxOptimizedHashRate.Name = "ColGPUOCMaxOptimizedHashRate";
+            this.ColGPUOCMaxOptimizedHashRate.ReadOnly = true;
+            // 
             // FormMineControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -3069,6 +3691,26 @@ namespace MineControl
             this.groupBox9.PerformLayout();
             this.groupBoxMinersAndApps.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewApps)).EndInit();
+            this.tabPageGPUConfig.ResumeLayout(false);
+            this.tabPageGPUConfig.PerformLayout();
+            this.groupBox11.ResumeLayout(false);
+            this.groupBox11.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown8)).EndInit();
+            this.groupBox10.ResumeLayout(false);
+            this.groupBox10.PerformLayout();
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewGPUOC)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown10)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown9)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown7)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.tabPageSchedule.ResumeLayout(false);
             this.tabPageSchedule.PerformLayout();
             this.groupBoxScheduleNodeDetails.ResumeLayout(false);
@@ -3319,6 +3961,50 @@ namespace MineControl
         private System.Windows.Forms.DataGridViewTextBoxColumn ColAppPath;
         private System.Windows.Forms.DataGridViewButtonColumn ColAppChooseButton;
         private System.Windows.Forms.Button buttonGeneralDisplayIntro;
+        private System.Windows.Forms.TabPage tabPageGPUConfig;
+        private System.Windows.Forms.Panel panelGPUOC;
+        private System.Windows.Forms.Label label37;
+        private System.Windows.Forms.DataGridView dataGridViewGPUOC;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.NumericUpDown numericUpDown2;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.RadioButton radioButtonGPUOCModeUser;
+        private System.Windows.Forms.NumericUpDown numericUpDown6;
+        private System.Windows.Forms.Label label41;
+        private System.Windows.Forms.NumericUpDown numericUpDown7;
+        private System.Windows.Forms.Label label39;
+        private System.Windows.Forms.NumericUpDown numericUpDown5;
+        private System.Windows.Forms.Label label38;
+        private System.Windows.Forms.NumericUpDown numericUpDown4;
+        private System.Windows.Forms.Label label40;
+        private System.Windows.Forms.GroupBox groupBox10;
+        private System.Windows.Forms.GroupBox groupBox11;
+        private System.Windows.Forms.Label label42;
+        private System.Windows.Forms.NumericUpDown numericUpDown8;
+        private System.Windows.Forms.Label label45;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label44;
+        private System.Windows.Forms.NumericUpDown numericUpDown10;
+        private System.Windows.Forms.Label label43;
+        private System.Windows.Forms.NumericUpDown numericUpDown9;
+        private System.Windows.Forms.Label label47;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.Label label46;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColGPUOCPowerPercent;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColGPUOCUserCoreOffset;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColGPUOCOptimizedCoreOffset;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColGPUOCUserMemOffset;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColGPUOCOptimizedMemOffset;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColGPUOCOptimizeStatus;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColGPUOCLastOptimized;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColGPUOCMaxUserHashRate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColGPUOCMaxOptimizedHashRate;
     }
 }
 

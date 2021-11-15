@@ -98,7 +98,19 @@ namespace MineControl.Lib
         /// Does not include time between last data point and now in calculation.        
         /// </summary>
         Lookbehind
-
     }
 
+    public enum ProfileStepMode
+    {
+        UserValues,
+        AutoOptimize,
+        External
+    }
+
+    public enum ProfileOptimizationStatus
+    {
+        NotStarted,
+        InProgress,
+        Complete
+    }
 }

@@ -78,8 +78,9 @@ namespace MineControl
 
         // temp management
         private DateTime LastGPUStepChange { get; set; } = DateTime.Now;
-        
-        // miner management        
+
+        // gpu config
+        private GPU gpu = new();
                 
         // schedules        
         private BindingList<Schedule> Schedules { get; set; } = new BindingList<Schedule>();
@@ -189,22 +190,49 @@ namespace MineControl
             DataTableLog.Columns.Add("Message");
             dataGridViewLog.AutoGenerateColumns = false;
             dataGridViewLog.DataSource = DataTableLog;
-            dataGridViewLog.Columns[0].DataPropertyName = "Source";
-            dataGridViewLog.Columns[1].DataPropertyName = "Type";
-            dataGridViewLog.Columns[2].DataPropertyName = "Time";
-            dataGridViewLog.Columns[3].DataPropertyName = "Message";            
+            dataGridViewLog.Columns[ColLogSource.Index].DataPropertyName = "Source";
+            dataGridViewLog.Columns[ColLogType.Index].DataPropertyName = "Type";
+            dataGridViewLog.Columns[ColLogTime.Index].DataPropertyName = "Time";
+            dataGridViewLog.Columns[ColLogMessage.Index].DataPropertyName = "Message";            
             dataGridViewMetrics.AutoGenerateColumns = false;
             dataGridViewMetrics.DataSource = Metrics;
-            dataGridViewMetrics.Columns[0].DataPropertyName = "IsEnabled";            
-            dataGridViewMetrics.Columns[1].DataPropertyName = "Name";            
-            dataGridViewMetrics.Columns[2].DataPropertyName = "Type";
-            dataGridViewMetrics.Columns[3].DataPropertyName = "Source";
-            dataGridViewMetrics.Columns[4].DataPropertyName = "Method";                      
-            dataGridViewMetrics.Columns[5].DataPropertyName = "Query";
             ColDataMethod.DataSource = Enum.GetValues(typeof(MetricMethod));
             ColDataInputSource.DataSource = Enum.GetValues(typeof(MetricSource));
-            ColDataType.DataSource = Enum.GetValues(typeof(MetricType));           
-            
+            ColDataType.DataSource = Enum.GetValues(typeof(MetricType));
+            dataGridViewMetrics.Columns[ColDataEnableTracking.Index].DataPropertyName = "IsEnabled";            
+            dataGridViewMetrics.Columns[ColDataMetric.Index].DataPropertyName = "Name";            
+            dataGridViewMetrics.Columns[ColDataType.Index].DataPropertyName = "Type";
+            dataGridViewMetrics.Columns[ColDataInputSource.Index].DataPropertyName = "Source";
+            dataGridViewMetrics.Columns[ColDataMethod.Index].DataPropertyName = "Method";                      
+            dataGridViewMetrics.Columns[ColDataQuery.Index].DataPropertyName = "Query";
+            dataGridViewGPUOC.AutoGenerateColumns = false;
+            dataGridViewGPUOC.DataSource = gpu.Profiles;         
+            dataGridViewGPUOC.Columns[ColGPUOCPowerPercent.Index].DataPropertyName = "PowerPercent";
+            dataGridViewGPUOC.Columns[ColGPUOCUserCoreOffset.Index].DataPropertyName = "UserCoreOffset";
+            dataGridViewGPUOC.Columns[ColGPUOCOptimizedCoreOffset.Index].DataPropertyName = "OptimizedCoreOffset";
+            dataGridViewGPUOC.Columns[ColGPUOCUserMemOffset.Index].DataPropertyName = "UserMemOffset";
+            dataGridViewGPUOC.Columns[ColGPUOCOptimizedMemOffset.Index].DataPropertyName = "OptimizedMemOffset";
+            dataGridViewGPUOC.Columns[ColGPUOCOptimizeStatus.Index].DataPropertyName = "OptimizationStatus";
+            dataGridViewGPUOC.Columns[ColGPUOCLastOptimized.Index].DataPropertyName = "LastOptimized";
+            dataGridViewGPUOC.Columns[ColGPUOCMaxUserHashRate.Index].DataPropertyName = "MaxRecordedUserHashRate";
+            dataGridViewGPUOC.Columns[ColGPUOCMaxOptimizedHashRate.Index].DataPropertyName = "MaxRecordedOptimizedHashRate";
+
+            // GPU profile charting
+            CreateChartSeriesForGPUProfile("GPUProfiles", "Power %", SeriesChartType.Column, AxisType.Primary);
+            gpu.Chart.Series[^1].Points.DataBind(gpu.Profiles, "PowerPercent", "PowerPercent", "");
+            CreateChartSeriesForGPUProfile("GPUProfiles", "User Core Offset", SeriesChartType.Column, AxisType.Secondary);
+            gpu.Chart.Series[^1].Points.DataBind(gpu.Profiles, "PowerPercent", "UserCoreOffset", "");
+            CreateChartSeriesForGPUProfile("GPUProfiles", "Optimized Core Offset", SeriesChartType.Column, AxisType.Secondary);
+            gpu.Chart.Series[^1].Points.DataBind(gpu.Profiles, "PowerPercent", "OptimizedCoreOffset", "");
+            CreateChartSeriesForGPUProfile("GPUProfiles", "User Memory Offset", SeriesChartType.Column, AxisType.Secondary);
+            gpu.Chart.Series[^1].Points.DataBind(gpu.Profiles, "PowerPercent", "UserMemoryOffset", "");
+            CreateChartSeriesForGPUProfile("GPUProfiles", "Optimized Memory Offset", SeriesChartType.Column, AxisType.Secondary);
+            gpu.Chart.Series[^1].Points.DataBind(gpu.Profiles, "PowerPercent", "OptimizedMemoryOffset", "");
+            CreateChartSeriesForGPUProfile("GPUProfiles", "Max User Hash Rate", SeriesChartType.Column, AxisType.Primary);
+            gpu.Chart.Series[^1].Points.DataBind(gpu.Profiles, "PowerPercent", "MaxRecordedUserHashRate", "");
+            CreateChartSeriesForGPUProfile("GPUProfiles", "Max Optimized Hash Rate", SeriesChartType.Column, AxisType.Primary);
+            gpu.Chart.Series[^1].Points.DataBind(gpu.Profiles, "PowerPercent", "MaxRecordedOptimizedHashRate", "");
+
             // system-defined metrics
             Metrics.Add(new Metric(true, cGPUPowerStep, MetricType.Number, MetricSource.MineControl, MetricMethod.InternalValue, "", this));
             Metric(cGPUPowerStep).IsInternal = true;  
@@ -463,6 +491,100 @@ namespace MineControl
             {
                 AddLogEntry("Chart series could not be created due to missing chart", LogType.Error, LogSource.Internal);
             }            
+        }
+
+        public void CreateChartSeriesForGPUProfile(string chartName, string seriesName, SeriesChartType seriesChartType, AxisType yAxisType)
+        {
+            Panel panel = panelGPUOC;
+            Chart chart = null;
+
+            // find the chart if it was already created
+            foreach (Control control in panel.Controls)
+            {
+                chart = control as Chart;
+            }
+
+            if (chart == null)
+            {   
+                // chart
+                chart = new();
+                chart.Name = chartName;
+                gpu.Chart = chart;
+                panel.Controls.Add(chart);
+                chart.Cursor = Cursors.Hand;
+                chart.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom;
+                chart.Dock = DockStyle.Fill;
+                chart.Dock = DockStyle.Fill;
+                //chart.MouseMove += Chart_MouseMove;
+                //chart.MouseLeave += Chart_MouseLeave;
+                chart.Palette = ChartColorPalette.None;
+                // there is ALWAYS a callout annotation defined for later display of point info
+                chart.Annotations.Add(new CalloutAnnotation());
+                (chart.Annotations[0] as CalloutAnnotation).Alignment = ContentAlignment.MiddleLeft;
+                (chart.Annotations[0] as CalloutAnnotation).CalloutStyle = CalloutStyle.RoundedRectangle;
+
+                // chart area
+                ChartArea chartArea = chart.ChartAreas.Add("chartArea1");
+                chartArea.AxisX.Interval = 1D;
+                
+                chartArea.AxisX.IsLabelAutoFit = false;    
+                chartArea.AxisX.MajorGrid.LineColor = Color.Silver;
+                chartArea.AxisX.MinorGrid.Enabled = true;
+                chartArea.AxisX.MinorGrid.LineColor = Color.Gainsboro;
+                chartArea.AxisX.Title = "Power %";
+                chartArea.AxisX.TitleFont = new Font(chartArea.AxisX.TitleFont, FontStyle.Bold);
+                //chartArea.AxisX.IsMarginVisible = false;
+                //chartArea.AxisX2.IsMarginVisible = false;                
+                chartArea.AxisY.Interval = 1D;                
+                chartArea.AxisY.IsLabelAutoFit = false;
+                chartArea.AxisY.LabelStyle.ForeColor = Color.Blue;
+                chartArea.AxisY.LabelStyle.Interval = 1D;
+                chartArea.AxisY.MajorGrid.LineColor = Color.SkyBlue;
+                chartArea.AxisY.MajorGrid.LineDashStyle = ChartDashStyle.Dash;
+                //chartArea.AxisY.IsMarginVisible = false;
+                chartArea.AxisY2.Interval = 1D;
+                chartArea.AxisY2.IntervalAutoMode = IntervalAutoMode.VariableCount;                
+                chartArea.AxisY2.IsLabelAutoFit = false;
+                chartArea.AxisY2.LabelStyle.ForeColor = Color.Red;
+                chartArea.AxisY2.MajorGrid.LineColor = Color.MistyRose;
+                chartArea.AxisY2.MajorGrid.LineDashStyle = ChartDashStyle.Dot;
+                //chartArea.AxisY2.IsMarginVisible = false;
+
+                // legend
+                Legend legend = chart.Legends.Add("legend1");
+                legend.Docking = Docking.Top;
+            }            
+
+            if (chart != null)
+            {
+                Series series;
+                series = chart.Series.Add("");
+
+                series.BorderWidth = seriesChartType == SeriesChartType.Line ? 1 : 2;
+                series.ChartArea = "chartArea1";
+                series.ChartType = seriesChartType;
+                series.Legend = "legend1";                
+                series.MarkerStyle = MarkerStyle.None;
+                series.MarkerSize = seriesChartType == SeriesChartType.Line ? 4 : 6;
+                series.SmartLabelStyle.IsOverlappedHidden = false;                
+                series.Name = seriesName;
+                series.YAxisType = yAxisType;
+                
+                // color is autocalculated to match axis color scheme, with Y1 blue-based, Y2 red-based
+                series.Color = yAxisType == AxisType.Primary ? Color.Blue : Color.Red;
+
+                while (chart.Series.Count(x => x.Color == series.Color) > 1)
+                {
+                    series.Color = ControlPaint.Dark(series.Color, 15);
+                    // alternate marker style for further clarity
+                    series.MarkerStyle = series.MarkerStyle == MarkerStyle.Circle ? MarkerStyle.Triangle : MarkerStyle.Circle;
+                }
+                series.MarkerColor = series.Color;
+            }
+            else
+            {
+                AddLogEntry("Chart series could not be created due to missing chart", LogType.Error, LogSource.Internal);
+            }
         }
 
         /// <summary>
@@ -2683,6 +2805,26 @@ namespace MineControl
         private void buttonGeneralDisplayIntro_Click(object sender, EventArgs e)
         {
             ShowIntroDialog();
-        }                
+        }
+
+        private void dataGridViewGPUOC_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        {
+            if (e.ColumnIndex == ColGPUOCUserCoreOffset.Index || e.ColumnIndex == ColGPUOCUserMemOffset.Index)
+            {
+                int value;
+                if (!Int32.TryParse((string)e.FormattedValue, out value))
+                {
+                    e.Cancel = true;
+                }
+            }            
+        }
+
+        private void dataGridViewGPUOC_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            foreach(DataGridViewRow row in dataGridViewGPUOC.Rows)
+            {
+                row.Visible = ((BindingList<GPUProfile>)dataGridViewGPUOC.DataSource)[row.Index].IsVisible;
+            }
+        }
     }
 }
